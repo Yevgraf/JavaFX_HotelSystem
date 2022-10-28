@@ -1,10 +1,6 @@
 package com.example.hotel.Model;
 
 
-import com.example.hotel.DataBase.DataBase;
-
-import java.sql.Connection;
-
 public class Cliente {
     private int idCliente;
     private String name;

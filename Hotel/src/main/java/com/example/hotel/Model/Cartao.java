@@ -5,7 +5,7 @@ public class Cartao {
     private String numCartao;
     private boolean cartaoMestre;
 
-    public cartao(){
+    public Cartao(){
 
     }
 
