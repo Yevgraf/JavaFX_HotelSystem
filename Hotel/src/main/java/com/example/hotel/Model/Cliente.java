@@ -1,7 +1,7 @@
 package com.example.hotel.Model;
 
 
-import com.example.hotel.DataBase.DataBase;
+/*import com.example.hotel.DataBase.DataBase;*/
 
 import java.sql.Connection;
 

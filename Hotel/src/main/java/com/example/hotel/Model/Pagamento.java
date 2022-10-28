@@ -4,7 +4,7 @@ public class Pagamento {
     private int idPagamento;
     private String metodoPagamento;
 
-    public pagamento(){
+    public void pagamento(){
 
     }
 
