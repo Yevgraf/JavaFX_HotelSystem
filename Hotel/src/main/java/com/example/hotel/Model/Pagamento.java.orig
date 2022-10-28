@@ -4,7 +4,11 @@ public class Pagamento {
     private int idPagamento;
     private String metodoPagamento;
 
+<<<<<<< HEAD
+    public void pagamento(){
+=======
     public Pagamento(){
+>>>>>>> 0b050dca72e74cb18d4e3c05612276c16f515a9c
 
     }
 

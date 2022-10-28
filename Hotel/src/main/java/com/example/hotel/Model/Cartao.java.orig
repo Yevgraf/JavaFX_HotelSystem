@@ -5,7 +5,11 @@ public class Cartao {
     private String numCartao;
     private boolean cartaoMestre;
 
+<<<<<<< HEAD
+    public void cartao(){
+=======
     public Cartao(){
+>>>>>>> 0b050dca72e74cb18d4e3c05612276c16f515a9c
 
     }
 
