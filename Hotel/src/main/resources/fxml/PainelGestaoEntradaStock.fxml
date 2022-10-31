@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Main_Manager">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="300.0" layoutX="9.0" layoutY="192.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
+      <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
+         <children>
+            <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Gestor" textFill="#2a1b3d">
+               <font>
+                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
+               </font>
+            </Label>
+            <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
+               <font>
+                  <Font name="Bernard MT Condensed" size="14.0" />
+               </font>
+            </Label>
+            <Circle fill="#1d1e1e00" layoutX="667.0" layoutY="64.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="btnDefGestor" fitHeight="26.0" fitWidth="26.0" layoutX="654.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Hotel-Management-System-master/src/view/13.jpeg" />
+               </image>
+            </ImageView>
+            <Circle fill="#1d1e1e00" layoutX="706.0" layoutY="64.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
+            <ImageView fx:id="btnLogOut" fitHeight="27.0" fitWidth="26.0" layoutX="693.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../Hotel-Management-System-master/src/view/9.jpeg" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="btnCloseApp" fitHeight="26.0" fitWidth="19.0" layoutX="704.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../../../../../Downloads/126467.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Label fx:id="lblHoras" layoutX="661.0" layoutY="477.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblData" layoutX="645.0" layoutY="504.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
+         <font>
+            <Font name="Bernard MT Condensed" size="14.0" />
+         </font>
+      </Label>
+      <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
+      <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
+      <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
+      <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
+      <Label fx:id="lblSamos" layoutX="341.0" layoutY="111.0" prefHeight="39.0" prefWidth="146.0" text="SAMOS" textFill="#e7ff0d">
+         <font>
+            <Font name="Old English Text MT" size="25.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblHotel" layoutX="288.0" layoutY="81.0" prefHeight="26.0" prefWidth="126.0" text="HOTEL" textFill="#b315c2">
+         <font>
+            <Font name="Modern No. 20" size="33.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblGestaoProdutos" layoutX="59.0" layoutY="147.0" prefHeight="45.0" prefWidth="238.0" text="Entrada de Stock" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="31.0" />
+         </font>
+      </Label>
+      <Button fx:id="btnGestorAdiconarStock" layoutX="597.0" layoutY="439.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="  Adicionar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="btnMinimizateApp" fitHeight="19.0" fitWidth="26.0" layoutX="673.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Downloads/output-onlinepngtools%20(6).png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../Hotel-Management-System-master/src/view/15.jpeg" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblHoras1" layoutX="93.0" layoutY="221.0" prefHeight="55.0" prefWidth="90.0" text="ID_Produto:" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblHoras12" layoutX="82.0" layoutY="289.0" prefHeight="55.0" prefWidth="107.0" text="Qunantidade:" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txtIdFornecedor" layoutX="191.0" layoutY="303.0" prefHeight="27.0" prefWidth="333.0" style="-fx-border-color: #ffffff;" />
+      <ImageView fx:id="imgGestorEntradaStock" fitHeight="36.0" fitWidth="36.0" layoutX="14.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../../../../Downloads/179468.png" />
+         </image>
+      </ImageView>
+      <ComboBox fx:id="cbxIdProduto" layoutX="191.0" layoutY="236.0" prefHeight="25.0" prefWidth="333.0" />
+   </children>
+</AnchorPane>

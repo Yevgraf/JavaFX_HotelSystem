@@ -1,6 +1,7 @@
 package com.example.hotel.Model;
 
 public class Stock {
+    private int idStock;
     private int idProduto;
     private int quantidade;
 
@@ -8,7 +9,8 @@ public class Stock {
 
     }
 
-    public Stock(int idProduto, int quantidade) {
+    public Stock(int idStock, int idProduto, int quantidade) {
+        this.idStock = idStock;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
     }
@@ -27,5 +29,13 @@ public class Stock {
 
     public int getQuantidade() {
         return quantidade;
+    }
+
+    public void setIdStock(int idStock) {
+        this.idStock = idStock;
+    }
+
+    public int getIdStock() {
+        return idStock;
     }
 }
