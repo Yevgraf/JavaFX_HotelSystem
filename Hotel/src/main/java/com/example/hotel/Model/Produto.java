@@ -3,16 +3,16 @@ package com.example.hotel.Model;
 public class Produto {
     private int idProduto;
     private  String nomeProduto;
-    private int idFornecedor;
+
 
     public Produto(){
 
     }
 
-    public Produto(int idProduto, String nomeProduto, int idFornecedor) {
+    public Produto(int idProduto, String nomeProduto) {
         this.idProduto = idProduto;
         this.nomeProduto = nomeProduto;
-        this.idFornecedor = idFornecedor;
+
     }
 
     public void setIdProduto(int idProduto) {
@@ -23,9 +23,6 @@ public class Produto {
         this.nomeProduto = nomeProduto;
     }
 
-    public void setIdFornecedor(int idFornecedor) {
-        this.idFornecedor = idFornecedor;
-    }
 
     public int getIdProduto() {
         return idProduto;
@@ -35,7 +32,4 @@ public class Produto {
         return nomeProduto;
     }
 
-    public int getIdFornecedor() {
-        return idFornecedor;
-    }
 }

@@ -2,16 +2,16 @@ package com.example.hotel.Model;
 
 public class ProdutoQuarto {
     private int idQuarto;
-    private int idProduto;
+    private int idServico;
     private int quantidade;
 
     public ProdutoQuarto(){
 
     }
 
-    public ProdutoQuarto(int idQuarto, int idProduto, int quantidade) {
+    public ProdutoQuarto(int idQuarto, int idServico, int quantidade) {
         this.idQuarto = idQuarto;
-        this.idProduto = idProduto;
+        this.idServico = idServico;
         this.quantidade = quantidade;
     }
 
@@ -19,9 +19,6 @@ public class ProdutoQuarto {
         this.idQuarto = idQuarto;
     }
 
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
-    }
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
@@ -31,8 +28,12 @@ public class ProdutoQuarto {
         return idQuarto;
     }
 
-    public int getIdProduto() {
-        return idProduto;
+    public void setIdServico(int idServico) {
+        this.idServico = idServico;
+    }
+
+    public int getIdServico() {
+        return idServico;
     }
 
     public int getQuantidade() {
