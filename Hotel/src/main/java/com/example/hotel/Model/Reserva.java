@@ -12,13 +12,13 @@ public class Reserva {
     private Date dataFim;
     private boolean servExtra;
     private double preco;
-    private int idTipoPagamento;
+    private int idPagamento;
 
     public Reserva(){
 
     }
 
-    public Reserva(int idReserva, int idCliente, int idColaborador, int idQuarto, int idCartao, Date dataInicio, Date dataFim, boolean servExtra, double preco, int idTipoPagamento) {
+    public Reserva(int idReserva, int idCliente, int idColaborador, int idQuarto, int idCartao, Date dataInicio, Date dataFim, boolean servExtra, double preco, int idPagamento) {
         this.idReserva = idReserva;
         this.idCliente = idCliente;
         this.idColaborador = idColaborador;
@@ -28,7 +28,7 @@ public class Reserva {
         this.dataFim = dataFim;
         this.servExtra = servExtra;
         this.preco = preco;
-        this.idTipoPagamento = idTipoPagamento;
+        this.idPagamento = idPagamento;
     }
 
     public void setIdReserva(int idReserva) {
@@ -67,9 +67,6 @@ public class Reserva {
         this.preco = preco;
     }
 
-    public void setIdTipoPagamento(int idTipoPagamento) {
-        this.idTipoPagamento = idTipoPagamento;
-    }
 
     public int getIdReserva() {
         return idReserva;
@@ -107,7 +104,11 @@ public class Reserva {
         return preco;
     }
 
-    public int getIdTipoPagamento() {
-        return idTipoPagamento;
+    public void setIdPagamento(int idPagamento) {
+        this.idPagamento = idPagamento;
+    }
+
+    public int getIdPagamento() {
+        return idPagamento;
     }
 }

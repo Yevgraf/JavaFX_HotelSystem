@@ -3,6 +3,7 @@ package com.example.hotel.Model;
 import java.util.Date;
 
 public class EntradaStock {
+    private int idEntradaStock;
     private int idProduto;
     private int idFornecedor;
     private int idColaborador;
@@ -14,7 +15,9 @@ public class EntradaStock {
 
     }
 
-    public EntradaStock(int idProduto, int idFornecedor, int idColaborador, Date dataEntrega, int quantidade, double preco) {
+
+    public EntradaStock(int idEntradaStock, int idProduto, int idFornecedor, int idColaborador, Date dataEntrega, int quantidade, double preco) {
+        this.idEntradaStock = idEntradaStock;
         this.idProduto = idProduto;
         this.idFornecedor = idFornecedor;
         this.idColaborador = idColaborador;
@@ -69,5 +72,13 @@ public class EntradaStock {
 
     public double getPreco() {
         return preco;
+    }
+
+    public void setIdEntradaStock(int idEntradaStock) {
+        this.idEntradaStock = idEntradaStock;
+    }
+
+    public int getIdEntradaStock() {
+        return idEntradaStock;
     }
 }

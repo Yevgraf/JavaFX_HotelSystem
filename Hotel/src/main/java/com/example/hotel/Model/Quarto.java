@@ -3,7 +3,7 @@ package com.example.hotel.Model;
 public class Quarto {
     private int idQuarto;
     private int piso;
-    private int tipoQuarto;
+    private int idTipoQuarto;
     private boolean wifi;
     private boolean cofre;
 
@@ -14,7 +14,7 @@ public class Quarto {
     public Quarto(int idQuarto, int piso, int tipoQuarto, boolean wifi, boolean cofre) {
         this.idQuarto = idQuarto;
         this.piso = piso;
-        this.tipoQuarto = tipoQuarto;
+        this.idTipoQuarto = idTipoQuarto;
         this.wifi = wifi;
         this.cofre = cofre;
     }
@@ -27,8 +27,8 @@ public class Quarto {
         this.piso = piso;
     }
 
-    public void setTipoQuarto(int tipoQuarto) {
-        this.tipoQuarto = tipoQuarto;
+    public void setIdTipoQuarto(int tipoQuarto) {
+        this.idTipoQuarto = idTipoQuarto;
     }
 
     public void setWifi(boolean wifi) {
@@ -47,8 +47,8 @@ public class Quarto {
         return piso;
     }
 
-    public int getTipoQuarto() {
-        return tipoQuarto;
+    public int getIdTipoQuarto() {
+        return idTipoQuarto;
     }
 
     public boolean isWifi() {
