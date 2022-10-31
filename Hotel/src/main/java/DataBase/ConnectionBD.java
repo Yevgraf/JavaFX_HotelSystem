@@ -12,9 +12,8 @@ public class ConnectionBD {
 
     }
 
-    //Alterar databaseName
     public  ConnectionBD(){
-        this.url = "jdbc:sqlserver://ctespbd.dei.isep.ipp.pt;databaseName=pato;TrustServerCertificate=True";
+        this.url = "jdbc:sqlserver://ctespbd.dei.isep.ipp.pt;databaseName=2022_F_LP3_G4;TrustServerCertificate=True";
         this.user = "2022_F_LP3_G4";
         this.pass = "123+qwe*123";
     }
