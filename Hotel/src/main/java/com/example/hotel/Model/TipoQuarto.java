@@ -1,15 +1,15 @@
 package com.example.hotel.Model;
 
-public class tipoQuarto {
+public class TipoQuarto {
     private int idTipoQuarto;
     private String tipo;
     private boolean vista;
 
-    public tipoQuarto(){
+    public TipoQuarto(){
 
     }
 
-    public tipoQuarto(int idTipoQuarto, String tipo, boolean vista) {
+    public TipoQuarto(int idTipoQuarto, String tipo, boolean vista) {
         this.idTipoQuarto = idTipoQuarto;
         this.tipo = tipo;
         this.vista = vista;
