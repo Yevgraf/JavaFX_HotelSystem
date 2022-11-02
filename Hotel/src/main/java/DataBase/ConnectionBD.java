@@ -3,41 +3,23 @@ import java.sql.*;
 
 public class ConnectionBD {
 
-    private String url, user, pass;
 
-    public static void main(String[] args) {
+   private static String dbURL = "jdbc:sqlserver://ctespbd.dei.isep.ipp.pt;databaseName=2022_F_LP3_G4;TrustServerCertificate=True";
+    private static String user = "2022_F_LP3_G4";
+    private static String pass = "123+qwe*123";
 
-        ConnectionBD a = new ConnectionBD();
-        a.TestConnection();
-
-    }
-
-    public  ConnectionBD(){
-        this.url = "jdbc:sqlserver://ctespbd.dei.isep.ipp.pt;databaseName=2022_F_LP3_G4;TrustServerCertificate=True";
-        this.user = "2022_F_LP3_G4";
-        this.pass = "123+qwe*123";
-    }
-
-    public void TestConnection() {
+    public static Connection getConn() {
+        Connection conn = null;
         try {
-            Connection connection = DriverManager.getConnection(this.getUrl(), this.getUser(), this.getPass());
-            System.out.println("Connected!");
-        } catch (SQLException e) {
-            System.out.println("Connection Failed!");
-            e.printStackTrace();
+            //Class.forName(db_driver).newInstance();
+            conn= DriverManager.getConnection(dbURL,user,pass);
         }
-    }
 
-    public String getUrl() {
-        return url;
-    }
+        catch (SQLException ex)           {
+            System.err.println(ex.getMessage());
+        }
 
-    public String getUser() {
-        return user;
-    }
-
-    public String getPass() {
-        return pass;
+        return conn;
     }
 
 }
