@@ -1,13 +1,13 @@
-package com.example.hotel.Model;
+package Model;
 
-public class servicoReserva {
+public class ServicoReserva {
     private int idReserva;
     private int idServico;
 
-    public servicoReserva(){
+    public ServicoReserva(){
 
     }
-    public servicoReserva(int idReserva, int idServico) {
+    public ServicoReserva(int idReserva, int idServico) {
         this.idReserva = idReserva;
         this.idServico = idServico;
     }

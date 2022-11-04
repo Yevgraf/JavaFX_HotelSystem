@@ -1,4 +1,4 @@
-package com.example.hotel.Controller;
+package Controller;
 
 import javafx.event.ActionEvent;
 import javafx.event.Event;
