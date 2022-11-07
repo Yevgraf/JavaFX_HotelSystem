@@ -5,30 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/BLL/XMLReader.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/lib/dom-2.3.0-jaxb-1.0.6.jar" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/lib/entradaStock.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/Path.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/Path.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/switchScreen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/switchScreen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Cartao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Cartao.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Cliente.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Cliente.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/EntradaStock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/EntradaStock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Fornecedor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Fornecedor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Pagamento.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Pagamento.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Produto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Produto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/ProdutoQuarto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/ProdutoQuarto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Quarto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Quarto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Reserva.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Servico.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Servico.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Stock.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Stock.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/TipoQuarto.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/TipoQuarto.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/servicoReserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/ServicoReserva.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,6 +104,9 @@
       <workItem from="1667561408986" duration="49000" />
       <workItem from="1667574835152" duration="19000" />
       <workItem from="1667589113519" duration="183000" />
+      <workItem from="1667589675315" duration="84000" />
+      <workItem from="1667589963554" duration="500000" />
+      <workItem from="1667749458410" duration="598000" />
     </task>
     <servers />
   </component>
