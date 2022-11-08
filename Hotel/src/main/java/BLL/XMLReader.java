@@ -14,16 +14,27 @@ public class XMLReader {
     public void lerXML() {
 
         try {
-            File fXmlFile = new File("C:\\Repos\\LP3\\grupo4\\Hotel\\src\\main\\resources\\lib\\entradaStock.xml");
+            java.net.URL url = this.getClass().getClassLoader().getResource("\"..\\..\\..\\lib\\entradaStock.xml\"");
+            String filePath = url .getFile();
+            //Recebe ficheiro XML
+            File fXmlFile = new File(filePath);
+
+            //Define a API que instância o documento XML
             DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
             Document doc = dBuilder.parse(fXmlFile);
+
+            //Normaliza o XML
             doc.getDocumentElement().normalize();
 
+            //Recebe elemento Root
             System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+
+            //Grava numa NodeList
             NodeList nList = doc.getElementsByTagName("Line");
             System.out.println("----------------------------");
 
+            //Percorre a lista e faz o Get pelas respetivas Tags
             for (int temp = 0; temp < nList.getLength(); temp++) {
                 Node nNode = nList.item(temp);
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
@@ -63,7 +74,6 @@ public class XMLReader {
                     System.out.println("Local da taxa: "
                             + eElement.getElementsByTagName("TaxLocation")
                             .item(0).getTextContent());
-
                     System.out.println("----------------------------------------------");
                 }
             }
