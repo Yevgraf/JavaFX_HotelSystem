@@ -1,5 +1,4 @@
 package com.example.hotel;
-import BLL.DBconn;
 import BLL.XMLReader;
 
 public class Main {
@@ -8,7 +7,6 @@ public class Main {
 
        //DBconn conexao = new DBconn();
         // conexao.TestConnection();
-
 
         XMLReader teste = new XMLReader();
         teste.lerXML();
