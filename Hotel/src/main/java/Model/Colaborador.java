@@ -144,7 +144,7 @@ public class Colaborador {
 
             while (rs.next()) {
                 Colaborador obj = new Colaborador(rs.getInt("idColaborador"), rs.getString("nome"), rs.getString("email"),
-                        rs.getDate("dataNascimento"), rs.getString("morada"), rs.getString("contacto"),rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("contacto"),rs.getString("nif"),
                         rs.getString("password"),rs.getString("tipoColaborador"),rs.getString("utilizador"),rs.getInt("idCartao"));
                 listaColaborador.add(obj);
             }
@@ -246,7 +246,7 @@ public class Colaborador {
 
             while (rs.next()) {
                 obj = new Colaborador(rs.getInt("idColaborador"), rs.getString("nome"), rs.getString("email"),
-                        rs.getDate("dataNascimento"), rs.getString("morada"), rs.getString("contacto"),rs.getString("nif"),
+                        rs.getString("dataNascimento"), rs.getDate("morada"), rs.getString("contacto"),rs.getString("nif"),
                         rs.getString("password"),rs.getString("tipoColaborador"),rs.getString("utilizador"),rs.getInt("idCartao"));
 
             }
