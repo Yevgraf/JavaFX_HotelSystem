@@ -1,84 +1,89 @@
 package Model;
 
-import java.util.Date;
-
 public class EntradaStock {
-    private int idEntradaStock;
-    private int idProduto;
-    private int idFornecedor;
-    private int idColaborador;
-    private Date dataEntrega;
-    private int quantidade;
-    private double preco;
 
-    public EntradaStock(){
+    private Double taxa;
 
+    private Integer caixas;
+
+    private String descricao;
+
+    private String identificacao;
+
+    private String local;
+
+    private Double peso;
+
+    private Double precoSemTaxa;
+
+    private Double precoUnidade;
+
+    private Integer unidades;
+
+    private Double valorTaxa;
+
+    public Double getTaxa() {
+        return taxa;
     }
 
-
-    public EntradaStock(int idEntradaStock, int idProduto, int idFornecedor, int idColaborador, Date dataEntrega, int quantidade, double preco) {
-        this.idEntradaStock = idEntradaStock;
-        this.idProduto = idProduto;
-        this.idFornecedor = idFornecedor;
-        this.idColaborador = idColaborador;
-        this.dataEntrega = dataEntrega;
-        this.quantidade = quantidade;
-        this.preco = preco;
+    public Integer getCaixas() {
+        return caixas;
     }
 
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setIdFornecedor(int idFornecedor) {
-        this.idFornecedor = idFornecedor;
+    public String getIdentificacao() {
+        return identificacao;
     }
 
-    public void setIdColaborador(int idColaborador) {
-        this.idColaborador = idColaborador;
+    public String getLocal() {
+        return local;
     }
 
-    public void setDataEntrega(Date dataEntrega) {
-        this.dataEntrega = dataEntrega;
+    public Double getPeso() {
+        return peso;
     }
 
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public Double getPrecoSemTaxa() {
+        return precoSemTaxa;
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public Double getPrecoUnidade() {
+        return precoUnidade;
     }
 
-    public int getIdProduto() {
-        return idProduto;
+    public Integer getUnidades() {
+        return unidades;
     }
 
-    public int getIdFornecedor() {
-        return idFornecedor;
+    public Double getPrecoTotal() {
+        return precoTotal;
     }
 
-    public int getIdColaborador() {
-        return idColaborador;
+    public Double precoTotal;
+
+    public Double getValorTaxa() {
+        return valorTaxa;
     }
 
-    public Date getDataEntrega() {
-        return dataEntrega;
+    public EntradaStock(Double taxa, Integer caixas, String descricao, String identificacao, String local,
+                        Double peso, Double precoSemTaxa, Double precoUnidade,
+                        Integer unidades, Double valorTaxa, Double precoTotal) {
+        this.taxa = taxa;
+        this.caixas = caixas;
+        this.descricao = descricao;
+        this.identificacao = identificacao;
+        this.local = local;
+        this.peso = peso;
+        this.precoSemTaxa = precoSemTaxa;
+        this.precoUnidade = precoUnidade;
+        this.unidades = unidades;
+        this.valorTaxa = valorTaxa;
+        this.precoTotal = precoTotal;
     }
 
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public double getPreco() {
-        return preco;
-    }
-
-    public void setIdEntradaStock(int idEntradaStock) {
-        this.idEntradaStock = idEntradaStock;
-    }
-
-    public int getIdEntradaStock() {
-        return idEntradaStock;
+    public EntradaStock() {
     }
 }

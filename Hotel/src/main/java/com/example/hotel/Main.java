@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 350, 400);
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("XML Teste");
         stage.setScene(scene);
         stage.show();
