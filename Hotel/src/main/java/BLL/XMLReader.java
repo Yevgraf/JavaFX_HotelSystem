@@ -1,6 +1,5 @@
 package BLL;
 
-import Controller.CarregarXML;
 import Model.EntradaStock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -90,6 +89,11 @@ public class XMLReader {
                     Element lineBaseAmountElementElement = FindInChildren(lineElement, "LineBaseAmount");
                     Element CurrencyValueEl = FindInChildren(lineBaseAmountElementElement, "CurrencyValue");
                     double precoTotal = Double.parseDouble(CurrencyValueEl.getTextContent());
+
+                    // Igual unidades a caixas caso unidades seja 0
+                    if (unidades == 0) {
+                        unidades = caixas;
+                    }
 
                     item.add(new EntradaStock(taxa, caixas, descricao, identificacao, local, peso, precoSemTaxa, precoUnidade, unidades, valorTaxa, precoTotal));
                 }
