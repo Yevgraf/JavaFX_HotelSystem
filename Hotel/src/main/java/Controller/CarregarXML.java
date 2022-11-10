@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.DBconn;
 import BLL.XMLReader;
 import Model.EntradaStock;
 
@@ -16,6 +17,10 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -65,7 +70,36 @@ public class CarregarXML implements Initializable {
     private Button xmlBtn;
 
     XMLReader xmlreader;
+
+    @FXML
+    private Button addItensBtn;
+
     List<String> lstFile;
+
+   //identificacao VARCHAR (100),
+   //descricao VARCHAR (30),
+   //peso DECIMAL (4, 2),
+   //precoUnidade DECIMAL (7, 2),
+   //unidades INT
+    @FXML
+    void clickAddItens(ActionEvent event) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Stock(identificacao, descricao, peso, precoUnidade, unidades) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i <stock.size(); i++) {
+                ps2.setString(1, stock.get(i).getIdentificacao());
+                ps2.setString(2, stock.get(i).getDescricao());
+                ps2.setDouble(3, stock.get(i).getPeso());
+                ps2.setDouble(4, stock.get(i).getPrecoUnidade());
+                ps2.setInt(5, stock.get(i).getUnidades());
+                ps2.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
     @FXML
     void clickXmlBtn(ActionEvent event) {

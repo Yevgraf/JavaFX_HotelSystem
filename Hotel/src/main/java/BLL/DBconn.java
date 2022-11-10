@@ -10,13 +10,13 @@ public class DBconn {
     private String user = "2022_F_LP3_G4";
     private String pass = "123+qwe*123";
 
-    public void TestConnection() {
+    public Connection getConn() {
+        Connection conn = null;
         try {
-            Connection connection = DriverManager.getConnection(url, user, pass);
-            System.out.println("Connected!");
-        } catch (SQLException e) {
-            System.out.println("Connection Failed!");
-            e.printStackTrace();
+            conn= DriverManager.getConnection(url,user,pass);
+        }catch (SQLException ex)           {
+            System.err.println(ex.getMessage());
         }
-}
+        return conn;
+    }
 }
