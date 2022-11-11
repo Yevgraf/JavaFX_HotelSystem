@@ -12,12 +12,79 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class XMLReader {
 
+
+   // public ObservableList<EntradaStock> lerHeader(String path) {
+
+   //     try {
+   //         File fXmlFile = new File(path);
+
+   //         //Define a API que instancia o documento XML
+   //         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+   //         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+   //         Document doc = dBuilder.parse(fXmlFile);
+
+   //         //Normaliza o XML
+   //         doc.getDocumentElement().normalize();
+
+   //         //Grava numa NodeList
+   //         NodeList nList = doc.getElementsByTagName("Header");
+
+   //         //Percorre a lista e faz o Get pelas respetivas Tags
+   //         for (int temp = 0; temp < nList.getLength(); temp++) {
+   //             Node nNode = nList.item(temp);
+   //             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+   //                 // Header
+   //                 Element lineElement = (Element) nNode;
+
+   //                 // Order Number
+   //                 String ordemNum = lineElement.getElementsByTagName("OrderNumber").item(0).getTextContent();
+
+   //                 // OrderDate
+   //                 Element elDate = FindInChildren(lineElement, "Date");
+   //                 Element elYear = FindInChildren(elDate, "Year");
+   //                 Element elMonth = FindInChildren(elDate, "Month");
+   //                 Element elDay = FindInChildren(elDate, "Day");
+   //                 Integer ano = Integer.valueOf(elYear.getTextContent());
+   //                 Integer mes = Integer.valueOf(elMonth.getTextContent());
+   //                 Integer dia = Integer.valueOf(elDay.getTextContent());
+   //                 String stringData = dia + "/" + mes + "/" + ano;
+   //                 Date data = new SimpleDateFormat("dd/MM/yyyy").parse(stringData);
+
+   //                 // SupplierParty
+   //                 Element SupplierPartyElement = FindInChildren(lineElement, "SupplierParty");
+   //                 Element PartyIdentifiertElement = FindInChildren(SupplierPartyElement, "PartyIdentifier");
+   //                 Element PNameAdressElement = FindInChildren(SupplierPartyElement, "NameAddress");
+   //                 Element NameElement = FindInChildren(PartyIdentifiertElement, "Name");
+   //                 Element Address1Element = FindInChildren(SupplierPartyElement, "Address1");
+   //                 Element Address2Element = FindInChildren(PNameAdressElement, "Address2");
+   //                 Element CityElement = FindInChildren(PNameAdressElement, "City");
+   //                 Element PostalCodeElement = FindInChildren(PNameAdressElement, "PostalCode");
+   //                 Element CountryElement = FindInChildren(PNameAdressElement, "Country");
+   //                 String nomeFornecedor = (NameElement.getTextContent());
+   //                 String address1 = (Address1Element.getTextContent());
+   //                 String address2 = Address2Element.getTextContent();
+   //                 String city = (CityElement.getTextContent());
+   //                 String codigoPostal = (PostalCodeElement.getTextContent());
+   //                 String pais = (CountryElement.getTextContent());
+   //                 String morada = address1 + ", " + address2 + ", " + city;
+
+   //                 item.add(new EntradaStock(ordemNum, data, nomeFornecedor, codigoPostal, pais, morada));
+   //             }
+   //         }
+   //     } catch (Exception e) {
+   //         e.printStackTrace();
+   //     }
+   //     return item;
+   // }
+
     public ObservableList<EntradaStock> lerXML(String path) {
         ObservableList<EntradaStock> item = FXCollections.observableArrayList();
-
         try {
             File fXmlFile = new File(path);
 

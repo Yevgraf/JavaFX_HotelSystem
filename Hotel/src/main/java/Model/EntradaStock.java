@@ -1,5 +1,7 @@
 package Model;
 
+import java.util.Date;
+
 public class EntradaStock {
 
     private Double taxa;
@@ -21,6 +23,18 @@ public class EntradaStock {
     private Integer unidades;
 
     private Double valorTaxa;
+
+  // private String ordemNum;
+  //
+  // private Date ordemData;
+  //
+  // private String nomeFornecedor;
+  //
+  // private String codigoPostal;
+  //
+  // private String pais
+    //
+  // private String morada;
 
     public Double getTaxa() {
         return taxa;
@@ -71,6 +85,7 @@ public class EntradaStock {
     public EntradaStock(Double taxa, Integer caixas, String descricao, String identificacao, String local,
                         Double peso, Double precoSemTaxa, Double precoUnidade,
                         Integer unidades, Double valorTaxa, Double precoTotal) {
+
         this.taxa = taxa;
         this.caixas = caixas;
         this.descricao = descricao;

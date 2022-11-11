@@ -64,6 +64,28 @@ public class CarregarXML implements Initializable {
     private TableColumn<EntradaStock, Double> precoTotalTable;
 
     @FXML
+    private Text moradaTxt;
+
+    @FXML
+    private Text noneFornecedorTxt;
+
+    @FXML
+    private Text ordemTxt;
+
+    @FXML
+    private Text paisTxt;
+
+    @FXML
+    private Text idFornecedorTxt;
+
+    @FXML
+    private Text codigoPostalTxt;
+
+    @FXML
+    private Text dataTxt;
+
+
+    @FXML
     private Text urlText;
 
     @FXML
@@ -76,24 +98,54 @@ public class CarregarXML implements Initializable {
 
     List<String> lstFile;
 
-   //identificacao VARCHAR (100),
-   //descricao VARCHAR (30),
-   //peso DECIMAL (4, 2),
-   //precoUnidade DECIMAL (7, 2),
-   //unidades INT
+    //identificacao VARCHAR (100),
+    //descricao VARCHAR (30),
+    //peso DECIMAL (4, 2),
+    //precoUnidade DECIMAL (7, 2),
+    //unidades INT
     @FXML
     void clickAddItens(ActionEvent event) {
+        clickAddItensStock();
+        clickAddItensEntradaStock();
+    }
+
+    void clickAddItensStock() {
         PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
             ps2 = connection.prepareStatement("INSERT INTO Stock(identificacao, descricao, peso, precoUnidade, unidades) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            for (int i = 0; i <stock.size(); i++) {
+            for (int i = 0; i < stock.size(); i++) {
                 ps2.setString(1, stock.get(i).getIdentificacao());
                 ps2.setString(2, stock.get(i).getDescricao());
                 ps2.setDouble(3, stock.get(i).getPeso());
                 ps2.setDouble(4, stock.get(i).getPrecoUnidade());
                 ps2.setInt(5, stock.get(i).getUnidades());
+                ps2.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    void clickAddItensEntradaStock() {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(identificacao, descricao, caixas, peso, unidades, precoUnidade, precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal) VALUES (?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i < stock.size(); i++) {
+                ps2.setString(1, stock.get(i).getIdentificacao());
+                ps2.setString(2, stock.get(i).getDescricao());
+                ps2.setInt(3, stock.get(i).getCaixas());
+                ps2.setDouble(4, stock.get(i).getPeso());
+                ps2.setInt(5, stock.get(i).getUnidades());
+                ps2.setDouble(6, stock.get(i).getPrecoUnidade());
+                ps2.setDouble(7, stock.get(i).getPrecoSemTaxa());
+                ps2.setDouble(8, stock.get(i).getTaxa());
+                ps2.setDouble(9, stock.get(i).getValorTaxa());
+                ps2.setString(10, stock.get(i).getLocal());
+                ps2.setDouble(11, stock.get(i).getPrecoTotal());
                 ps2.executeUpdate();
             }
         } catch (SQLException ex) {
@@ -111,7 +163,9 @@ public class CarregarXML implements Initializable {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
             stock = xmlreader.lerXML(path);
+            //stock = xmlreader.lerHeader(path);
             popularTabela();
+            //popularCabecalho();
         }
     }
 
@@ -122,6 +176,16 @@ public class CarregarXML implements Initializable {
         lstFile.add("*.xml");
         lstFile.add("*.XML");
     }
+
+    // private void popularCabecalho(){
+    //      moradaTxt.setText();
+    //      noneFornecedorTxt.setText();
+    //      ordemTxt.setText();
+    //      paisTxt.setText();
+    //      idFornecedorTxt.setText();
+    //      codigoPostalTxt.setText();
+    //      dataTxt.setText();
+    // }
 
     private void popularTabela() {
         if (stock != null && stock.size() > 0) {
