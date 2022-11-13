@@ -68,12 +68,6 @@
         <ImageView fx:id="imgGestorAdionarProd" fitHeight="55.0" fitWidth="107.0" layoutX="70.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
 
         </ImageView>
-        <Label layoutX="14.0" layoutY="74.0" prefHeight="55.0" prefWidth="90.0" text="idCartão" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="18.0" />
-            </font>
-        </Label>
-        <TextField fx:id="txt_idCartao" layoutX="162.0" layoutY="87.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
         <Label layoutX="12.0" layoutY="116.0" prefHeight="55.0" prefWidth="156.0" text="Número cartao" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
@@ -85,11 +79,10 @@
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <TableView fx:id="tv_funcionarios" layoutX="7.0" layoutY="341.0" prefHeight="148.0" prefWidth="709.0">
+        <TableView fx:id="tv_cartao" layoutX="7.0" layoutY="341.0" prefHeight="148.0" prefWidth="709.0">
             <columns>
-                <TableColumn fx:id="tbl_id" prefWidth="127.0" text="IdCartao" />
-                <TableColumn fx:id="tbl_tipoColaborador" prefWidth="127.0" text="NumCartao" />
-                <TableColumn fx:id="tbl_idCartao" prefWidth="118.0" text="CartaoMestre" />
+                <TableColumn fx:id="tbl_numCartao" prefWidth="127.0" text="NumCartao" />
+                <TableColumn fx:id="tbl_cartaoMestre" prefWidth="118.0" text="CartaoMestre" />
             </columns>
         </TableView>
         <Button fx:id="btn_add_Cartao" layoutX="31.0" layoutY="502.0" mnemonicParsing="false" onAction="#onActionAddCartao" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
