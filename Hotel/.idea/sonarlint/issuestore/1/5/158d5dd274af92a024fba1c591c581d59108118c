@@ -12,48 +12,48 @@ java:S4973Â"<Strings and Boxed types should be compared using "equals()".(Ñğªş
 o	java:S120"ZRename this package name to match the regular expression '^[a-z_]+(\.[a-z_][a-z0-9_]*)*$'.(ÆùÅˆ
 n
 java:S2259v"QA "NullPointerException" could be thrown; "productIdentifierEl" is nullable here.(•»–õ8…·×»Ç0
-k
-java:S22597"IA "NullPointerException" could be thrown; "yearElement" is nullable here.(ä–òúÿÿÿÿ8Š·×»Ç0
-x
-java:S2259™"UA "NullPointerException" could be thrown; "monAdjTaxPercentElement" is nullable here.(¬ˆÅ¡üÿÿÿÿ8‹·×»Ç0
-r
-java:S2259/"PA "NullPointerException" could be thrown; "orderNumberElement" is nullable here.(‰»‰Şüÿÿÿÿ8‹·×»Ç0
-l
-java:S2259H"OA "NullPointerException" could be thrown; "partyIdentifierEl" is nullable here.(†Ù˜8Œ·×»Ç0
 s
 java:S2259˜"UA "NullPointerException" could be thrown; "monAdjStartValueElement" is nullable here.(İµ­Ñ8Œ·×»Ç0
 o
-java:S2259G"MA "NullPointerException" could be thrown; "address2Element" is nullable here.(ÿ¿¥­øÿÿÿÿ8Œ·×»Ç0
-i
-java:S2259M"LA "NullPointerException" could be thrown; "countryElement" is nullable here.(Ë«½¨8·×»Ç0
-e
-java:S2259I"IA "NullPointerException" could be thrown; "nameElement" is nullable here.(‰Üş#8·×»Ç0
-p
-java:S2259 "MA "NullPointerException" could be thrown; "CurrencyValueEl" is nullable here.(§²¾ùÿÿÿÿ8·×»Ç0
-g
-java:S22598"JA "NullPointerException" could be thrown; "monthElement" is nullable here.(ù½8·×»Ç0
-t
-java:S2259š"VA "NullPointerException" could be thrown; "monAdjTaxLocationElement" is nullable here.(Øæ±Œ8”·×»Ç0
-|
-java:S2259›"YA "NullPointerException" could be thrown; "monAdjTaxAmountValueElement" is nullable here.(øØÌòüÿÿÿÿ8™·×»Ç0
+java:S2259‡"QA "NullPointerException" could be thrown; "iQUnitsValueElement" is nullable here.(ØÔëö8¸·×»Ç0
 f
 java:S2259J"IA "NullPointerException" could be thrown; "cityElement" is nullable here.(ÊÖ§Ï8Ÿ·×»Ç0
 s
 java:S2259"UA "NullPointerException" could be thrown; "ppuCurrencyValueElement" is nullable here.(é‘Ÿ8¦·×»Ç0
 j
 java:S22599"HA "NullPointerException" could be thrown; "dayElement" is nullable here.(€İ‘ºıÿÿÿÿ8¬·×»Ç0
+e
+java:S2259I"IA "NullPointerException" could be thrown; "nameElement" is nullable here.(‰Üş#8·×»Ç0
+x
+java:S2259™"UA "NullPointerException" could be thrown; "monAdjTaxPercentElement" is nullable here.(¬ˆÅ¡üÿÿÿÿ8‹·×»Ç0
+r
+java:S2259/"PA "NullPointerException" could be thrown; "orderNumberElement" is nullable here.(‰»‰Şüÿÿÿÿ8‹·×»Ç0
 o
 java:S2259"RA "NullPointerException" could be thrown; "iQWeightValueElement" is nullable here.(Õ¦ÿU8±·×»Ç0
+|
+java:S2259›"YA "NullPointerException" could be thrown; "monAdjTaxAmountValueElement" is nullable here.(øØÌòüÿÿÿÿ8™·×»Ç0
 o
-java:S2259‡"QA "NullPointerException" could be thrown; "iQUnitsValueElement" is nullable here.(ØÔëö8¸·×»Ç0
-t
-java:S2259w"RA "NullPointerException" could be thrown; "productDescriptionEl" is nullable here.(ùÍæøÿÿÿÿ8½·×»Ç0
-o
-java:S2259F"MA "NullPointerException" could be thrown; "address1Element" is nullable here.(ƒˆµ½ıÿÿÿÿ8Â·×»Ç0
+java:S2259G"MA "NullPointerException" could be thrown; "address2Element" is nullable here.(ÿ¿¥­øÿÿÿÿ8Œ·×»Ç0
+p
+java:S2259 "MA "NullPointerException" could be thrown; "CurrencyValueEl" is nullable here.(§²¾ùÿÿÿÿ8·×»Ç0
 j
 java:S2259|"MA "NullPointerException" could be thrown; "elQuantityValue" is nullable here.(›‡İü8Ã·×»Ç0
+l
+java:S2259H"OA "NullPointerException" could be thrown; "partyIdentifierEl" is nullable here.(†Ù˜8Œ·×»Ç0
+k
+java:S22597"IA "NullPointerException" could be thrown; "yearElement" is nullable here.(ä–òúÿÿÿÿ8Š·×»Ç0
+o
+java:S2259F"MA "NullPointerException" could be thrown; "address1Element" is nullable here.(ƒˆµ½ıÿÿÿÿ8Â·×»Ç0
+t
+java:S2259w"RA "NullPointerException" could be thrown; "productDescriptionEl" is nullable here.(ùÍæøÿÿÿÿ8½·×»Ç0
 q
 java:S2259L"OA "NullPointerException" could be thrown; "postalCodeElement" is nullable here.(¾Íÿşÿÿÿÿ8Ã·×»Ç0
+g
+java:S22598"JA "NullPointerException" could be thrown; "monthElement" is nullable here.(ù½8·×»Ç0
+t
+java:S2259š"VA "NullPointerException" could be thrown; "monAdjTaxLocationElement" is nullable here.(Øæ±Œ8”·×»Ç0
+i
+java:S2259M"LA "NullPointerException" could be thrown; "countryElement" is nullable here.(Ë«½¨8·×»Ç0
 P
 java:S2755"3Disable access to external entities in XML parsing.(²µŸš8Ã·×»Ç0
 P

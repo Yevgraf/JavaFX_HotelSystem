@@ -38,25 +38,25 @@ public class Cartao {
         return cartaoMestre;
     }
 
-    public static ObservableList<Cartao> getCartao() {
-        ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
+  // public ObservableList<Cartao> ObservableList<Cartao> getCartao() {
+  //     ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
 
-        try {
-            String cmd = "SELECT * FROM Cartao";
+  //     try {
+  //         String cmd = "SELECT * FROM Cartao";
 
-            Statement st = DBconn.getConn().createStatement();
+  //         Statement st = DBconn.getConn().createStatement();
 
-            ResultSet rs = st.executeQuery(cmd);
+  //         ResultSet rs = st.executeQuery(cmd);
 
-            while (rs.next()) {
-                Cartao objCartao = new Cartao(rs.getString("numCartao"),rs.getBoolean("cartaoMestre"));
-                lista2.add(objCartao);
-            }
+  //         while (rs.next()) {
+  //             Cartao objCartao = new Cartao(rs.getString("numCartao"),rs.getBoolean("cartaoMestre"));
+  //             lista2.add(objCartao);
+  //         }
 
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista2;
-    }
+  //         st.close();
+  //     } catch (Exception ex) {
+  //         System.err.println("Erro: " + ex.getMessage());
+  //     }
+  //     return lista2;
+  // }
 }
