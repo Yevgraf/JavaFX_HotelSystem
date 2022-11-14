@@ -5,13 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/PanelCriarFuncionario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PainelCriarFuncionario.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/5/158d5dd274af92a024fba1c591c581d59108118c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/c/6c7dad0d1d3cdc0f83ee836145081e4495fcc03e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/c/8c67ad505416cfcfd6ffd1cb97ed2c65e32fbf67" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/d/ad7e4c5558b79ace6d8f6c7f41f3fa28ab38962e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/Path.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/switchScreen.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Colaborador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarCartao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarCartao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Cartao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Cartao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,9 +30,6 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
-        <task path="$PROJECT_DIR$">
-          <activation />
-        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -59,71 +60,39 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ASKED_ADD_EXTERNAL_FILES": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/ASUS/Desktop/grupo4/Hotel",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.3816092",
-    "settings.editor.selected.configurable": "preferences.lookFeel"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Repos/LP3/grupo4/Hotel/src/main/resources/lib/dom-2.3.0-jaxb-1.0.6.jar&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.3816092&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "sqlserver"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;sqlserver&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.hotel" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.example.hotel.Main">
-    <configuration name="com.example.hotel.Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.hotel.Main" />
-      <module name="Hotel" />
-      <option name="VM_PARAMETERS" value="--module-path /path/to/JavaFX/lib --add-modules=javafx.controls" />
+      <module name="Hotel.main" />
+      <option name="VM_PARAMETERS" value="--module-path &quot;C:\openjfx-19_windows-x64_bin-sdk\javafx-sdk-19\lib&quot; --add-modules javafx.controls,javafx.fxml" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="Hotel [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value="buildDependents" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
-      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
-      <DebugAllEnabled>false</DebugAllEnabled>
-      <method v="2" />
-    </configuration>
-    <list>
-      <item itemvalue="Application.com.example.hotel.Main" />
-      <item itemvalue="Gradle.Hotel [buildDependents]" />
-    </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.Hotel [buildDependents]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -149,27 +118,12 @@
       <workItem from="1667589675315" duration="84000" />
       <workItem from="1667589963554" duration="500000" />
       <workItem from="1667749458410" duration="598000" />
-      <workItem from="1667857829043" duration="271000" />
-      <workItem from="1667859579299" duration="42000" />
-      <workItem from="1667867069124" duration="10100000" />
-      <workItem from="1667907351318" duration="5559000" />
-      <workItem from="1667932161824" duration="889000" />
+      <workItem from="1668453901736" duration="736000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
