@@ -1,4 +1,4 @@
-package com.example.hotel.Controller;
+package Controller;
 
 public class Path {
     public static String LOGINVIEW = "/login/Login.fxml";

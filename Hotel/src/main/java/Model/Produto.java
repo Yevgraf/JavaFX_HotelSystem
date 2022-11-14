@@ -1,4 +1,4 @@
-package com.example.hotel.Model;
+package Model;
 
 public class Produto {
     private int idProduto;

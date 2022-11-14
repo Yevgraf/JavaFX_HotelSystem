@@ -1,14 +1,14 @@
-package com.example.hotel.Model;
+package Model;
 
-public class servico {
+public class Servico {
     private int idServico;
     private String servico;
 
-    public servico(){
+    public Servico(){
 
     }
 
-    public servico(int idServico, String servico) {
+    public Servico(int idServico, String servico) {
         this.idServico = idServico;
         this.servico = servico;
     }

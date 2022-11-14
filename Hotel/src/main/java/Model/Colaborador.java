@@ -1,4 +1,4 @@
-package com.example.hotel.Model;
+package Model;
 
 import java.util.Date;
 
@@ -9,11 +9,9 @@ public class Colaborador {
     private String morada;
     private Date dataNascimento;
     private  String email;
-
     private String contacto;
     private String utilizador;
     private String password;
-
     private String tipoColaborador;
     private int idCartao;
 
