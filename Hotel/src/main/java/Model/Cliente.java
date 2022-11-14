@@ -3,7 +3,7 @@ package Model;
 
 public class Cliente {
     private int idCliente;
-    private String name;
+    private String nome;
     private String contacto;
     private String email;
     private String utilizador;
@@ -14,9 +14,9 @@ public class Cliente {
     public Cliente(){
 
     }
-    public Cliente(int idCliente, String name, String contacto, String email, String utilizador, String password, String nif) {
+    public Cliente(int idCliente, String nome, String contacto, String email, String utilizador, String password, String nif) {
         this.idCliente = idCliente;
-        this.name = name;
+        this.nome = nome;
         this.contacto = contacto;
         this.email = email;
         this.utilizador = utilizador;
@@ -28,8 +28,8 @@ public class Cliente {
         this.idCliente = idCliente;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public void setContacto(String contacto) {
@@ -57,8 +57,8 @@ public class Cliente {
         return idCliente;
     }
 
-    public String getName() {
-        return name;
+    public String getNome() {
+        return nome;
     }
 
     public String getContacto() {

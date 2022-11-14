@@ -5,13 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarFuncController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Model/MessageBoxes.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/PanelCriarFuncionario.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/PainelCriarFuncionario.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/Path.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/switchScreen.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Model/Colaborador.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,6 +26,9 @@
   <component name="ExternalProjectsManager">
     <system id="GRADLE">
       <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
         <projects_view>
           <tree_state>
             <expand />
@@ -38,7 +41,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Class" />
       </list>
     </option>
@@ -64,7 +66,7 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/Rafael/Desktop/projeto_dias",
+    "last_opened_file_path": "C:/Users/ASUS/Desktop/grupo4/Hotel",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.3816092",
@@ -81,14 +83,47 @@
       <recent name="com.example.hotel" />
     </key>
   </component>
-  <component name="RunManager">
-    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.com.example.hotel.Main">
+    <configuration name="com.example.hotel.Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
       <option name="MAIN_CLASS_NAME" value="com.example.hotel.Main" />
-      <module name="Hotel.main" />
+      <module name="Hotel" />
+      <option name="VM_PARAMETERS" value="--module-path /path/to/JavaFX/lib --add-modules=javafx.controls" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Hotel [buildDependents]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="buildDependents" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <list>
+      <item itemvalue="Application.com.example.hotel.Main" />
+      <item itemvalue="Gradle.Hotel [buildDependents]" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Hotel [buildDependents]" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -114,6 +149,11 @@
       <workItem from="1667589675315" duration="84000" />
       <workItem from="1667589963554" duration="500000" />
       <workItem from="1667749458410" duration="598000" />
+      <workItem from="1667857829043" duration="271000" />
+      <workItem from="1667859579299" duration="42000" />
+      <workItem from="1667867069124" duration="10100000" />
+      <workItem from="1667907351318" duration="5559000" />
+      <workItem from="1667932161824" duration="889000" />
     </task>
     <servers />
   </component>
