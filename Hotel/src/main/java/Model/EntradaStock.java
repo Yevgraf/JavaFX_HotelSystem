@@ -1,7 +1,5 @@
 package Model;
 
-import java.util.Date;
-
 public class EntradaStock {
 
     private Double taxa;
@@ -24,17 +22,23 @@ public class EntradaStock {
 
     private Double valorTaxa;
 
-  // private String ordemNum;
-  //
-  // private Date ordemData;
-  //
-  // private String nomeFornecedor;
-  //
-  // private String codigoPostal;
-  //
-  // private String pais
-    //
-  // private String morada;
+    private String ordemNum;
+
+    private String ordemData;
+
+    private String idFornecedor;
+
+    private String moradaFornecedor;
+
+    private String codPostalFornecedor;
+
+    private String paisFornecedor;
+
+    private String nomeFornecedor;
+
+    private String cidadeFornecedor;
+
+    private Double precoTotal;
 
     public Double getTaxa() {
         return taxa;
@@ -76,10 +80,40 @@ public class EntradaStock {
         return precoTotal;
     }
 
-    public Double precoTotal;
-
     public Double getValorTaxa() {
         return valorTaxa;
+    }
+
+    public String getOrdemNum() {
+        return ordemNum;
+    }
+
+    public String getOrdemData() {
+        return ordemData;
+    }
+
+    public String getIdFornecedor() {
+        return idFornecedor;
+    }
+
+    public String getMoradaFornecedor() {
+        return moradaFornecedor;
+    }
+
+    public String getCodPostalFornecedor() {
+        return codPostalFornecedor;
+    }
+
+    public String getPaisFornecedor() {
+        return paisFornecedor;
+    }
+
+    public String getNomeFornecedor() {
+        return nomeFornecedor;
+    }
+
+    public String getCidadeFornecedor() {
+        return cidadeFornecedor;
     }
 
     public EntradaStock(Double taxa, Integer caixas, String descricao, String identificacao, String local,
@@ -97,6 +131,18 @@ public class EntradaStock {
         this.unidades = unidades;
         this.valorTaxa = valorTaxa;
         this.precoTotal = precoTotal;
+    }
+
+    public EntradaStock(String ordemNum, String ordemData, String idFornecedor, String moradaFornecedor, String codPostalFornecedor,
+                        String paisFornecedor, String nomeFornecedor, String cidadeFornecedor) {
+        this.ordemNum = ordemNum;
+        this.ordemData= ordemData;
+        this.idFornecedor = idFornecedor;
+        this.moradaFornecedor = moradaFornecedor;
+        this.codPostalFornecedor = codPostalFornecedor;
+        this.paisFornecedor = paisFornecedor;
+        this.nomeFornecedor = nomeFornecedor;
+        this.cidadeFornecedor = cidadeFornecedor;
     }
 
     public EntradaStock() {

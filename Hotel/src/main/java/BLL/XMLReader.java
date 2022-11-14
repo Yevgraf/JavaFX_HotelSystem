@@ -12,79 +12,83 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class XMLReader {
 
+    public ObservableList<EntradaStock> lerXMLHeader(String path) {
+        ObservableList<EntradaStock> head = FXCollections.observableArrayList();
 
-   // public ObservableList<EntradaStock> lerHeader(String path) {
+        try {
+            File fXmlFile = new File(path);
 
-   //     try {
-   //         File fXmlFile = new File(path);
+            //Define a API que instancia o documento XML
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
 
-   //         //Define a API que instancia o documento XML
-   //         DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-   //         DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-   //         Document doc = dBuilder.parse(fXmlFile);
+            //Normaliza o XML
+            doc.getDocumentElement().normalize();
 
-   //         //Normaliza o XML
-   //         doc.getDocumentElement().normalize();
+            //----------------------------------- Header -----------------------------------
 
-   //         //Grava numa NodeList
-   //         NodeList nList = doc.getElementsByTagName("Header");
+            //Grava numa NodeList
+            NodeList nListHeader = doc.getElementsByTagName("Header");
 
-   //         //Percorre a lista e faz o Get pelas respetivas Tags
-   //         for (int temp = 0; temp < nList.getLength(); temp++) {
-   //             Node nNode = nList.item(temp);
-   //             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+            //Percorre a lista e faz o Get pelas respetivas Tags
+            for (int tempHeader = 0; tempHeader < nListHeader.getLength(); tempHeader++) {
+                Node hNode = nListHeader.item(tempHeader);
+                if (hNode.getNodeType() == Node.ELEMENT_NODE) {
 
-   //                 // Header
-   //                 Element lineElement = (Element) nNode;
+                    // Line
+                    Element HeadElement = (Element) hNode;
 
-   //                 // Order Number
-   //                 String ordemNum = lineElement.getElementsByTagName("OrderNumber").item(0).getTextContent();
+                    // Order Number
+                    Element orderNumberElement = FindInChildren(HeadElement, "OrderNumber");
+                    String ordemNum = orderNumberElement.getTextContent();
 
-   //                 // OrderDate
-   //                 Element elDate = FindInChildren(lineElement, "Date");
-   //                 Element elYear = FindInChildren(elDate, "Year");
-   //                 Element elMonth = FindInChildren(elDate, "Month");
-   //                 Element elDay = FindInChildren(elDate, "Day");
-   //                 Integer ano = Integer.valueOf(elYear.getTextContent());
-   //                 Integer mes = Integer.valueOf(elMonth.getTextContent());
-   //                 Integer dia = Integer.valueOf(elDay.getTextContent());
-   //                 String stringData = dia + "/" + mes + "/" + ano;
-   //                 Date data = new SimpleDateFormat("dd/MM/yyyy").parse(stringData);
+                    // OrderDate
+                    Element orderDateElement = FindInChildren(HeadElement, "OrderDate");
+                    Element dateElement = FindInChildren(orderDateElement, "Date");
+                    Element yearElement = FindInChildren(dateElement, "Year");
+                    Element monthElement = FindInChildren(dateElement, "Month");
+                    Element dayElement = FindInChildren(dateElement, "Day");
+                    Integer ano = Integer.valueOf(yearElement.getTextContent());
+                    Integer mes = Integer.valueOf(monthElement.getTextContent());
+                    Integer dia = Integer.valueOf(dayElement.getTextContent());
+                    String ordemData = dia + "/" + mes + "/" + ano;
 
-   //                 // SupplierParty
-   //                 Element SupplierPartyElement = FindInChildren(lineElement, "SupplierParty");
-   //                 Element PartyIdentifiertElement = FindInChildren(SupplierPartyElement, "PartyIdentifier");
-   //                 Element PNameAdressElement = FindInChildren(SupplierPartyElement, "NameAddress");
-   //                 Element NameElement = FindInChildren(PartyIdentifiertElement, "Name");
-   //                 Element Address1Element = FindInChildren(SupplierPartyElement, "Address1");
-   //                 Element Address2Element = FindInChildren(PNameAdressElement, "Address2");
-   //                 Element CityElement = FindInChildren(PNameAdressElement, "City");
-   //                 Element PostalCodeElement = FindInChildren(PNameAdressElement, "PostalCode");
-   //                 Element CountryElement = FindInChildren(PNameAdressElement, "Country");
-   //                 String nomeFornecedor = (NameElement.getTextContent());
-   //                 String address1 = (Address1Element.getTextContent());
-   //                 String address2 = Address2Element.getTextContent();
-   //                 String city = (CityElement.getTextContent());
-   //                 String codigoPostal = (PostalCodeElement.getTextContent());
-   //                 String pais = (CountryElement.getTextContent());
-   //                 String morada = address1 + ", " + address2 + ", " + city;
+                    // SupplierParty
+                    Element supplierPartyElement = FindInChildren(HeadElement, "SupplierParty");
+                    Element partyIdentifierEl = FindInChildren(supplierPartyElement, "PartyIdentifier");
+                    Element nameAddressElement = FindInChildren(supplierPartyElement, "NameAddress");
+                    Element nameElement = FindInChildren(nameAddressElement, "Name");
+                    Element address1Element = FindInChildren(nameAddressElement, "Address1");
+                    Element address2Element = FindInChildren(nameAddressElement, "Address2");
+                    Element cityElement = FindInChildren(nameAddressElement, "City");
+                    Element postalCodeElement = FindInChildren(nameAddressElement, "PostalCode");
+                    Element countryElement = FindInChildren(nameAddressElement, "Country");
+                    String address1 = address1Element.getTextContent();
+                    String address2 = address2Element.getTextContent();
+                    String idFornecedor = partyIdentifierEl.getTextContent();
+                    String nomeFornecedor = nameElement.getTextContent();
+                    String cidadeFornecedor = cityElement.getTextContent();
+                    String moradaFornecedor = address1 + ", " + address2;
+                    String codPostalFornecedor = postalCodeElement.getTextContent();
+                    String paisFornecedor = countryElement.getTextContent();
 
-   //                 item.add(new EntradaStock(ordemNum, data, nomeFornecedor, codigoPostal, pais, morada));
-   //             }
-   //         }
-   //     } catch (Exception e) {
-   //         e.printStackTrace();
-   //     }
-   //     return item;
-   // }
+                    head.add(new EntradaStock(ordemNum, ordemData, idFornecedor, moradaFornecedor, codPostalFornecedor, paisFornecedor, nomeFornecedor, cidadeFornecedor));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return head;
+    }
+    //----------------------------------- BODY -----------------------------------
 
-    public ObservableList<EntradaStock> lerXML(String path) {
+    public ObservableList<EntradaStock> lerXMLBody(String path) {
         ObservableList<EntradaStock> item = FXCollections.observableArrayList();
+
         try {
             File fXmlFile = new File(path);
 
@@ -134,8 +138,6 @@ public class XMLReader {
                     // PricePerUnit
                     Element ppuElement = FindInChildren(lineElement, "PricePerUnit");
                     Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
-                    Element ppuValueElement = FindInChildren(ppuElement, "Value");
-                    //Integer unidades = Integer.valueOf(ppuValueElement.getTextContent());
                     double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
                     // MonetaryAdjustment
@@ -157,7 +159,7 @@ public class XMLReader {
                     Element CurrencyValueEl = FindInChildren(lineBaseAmountElementElement, "CurrencyValue");
                     double precoTotal = Double.parseDouble(CurrencyValueEl.getTextContent());
 
-                    // Igual unidades a caixas caso unidades seja 0
+                    // Iguala nº de unidades ao nº de caixas caso unidades seja 0
                     if (unidades == 0) {
                         unidades = caixas;
                     }
@@ -170,6 +172,8 @@ public class XMLReader {
         }
         return item;
     }
+
+    //----------------------------------- FindInChildren -----------------------------------
 
     private Element FindInChildren(Element parent, String elementToGet) {
         NodeList list = parent.getChildNodes();

@@ -17,10 +17,7 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -28,6 +25,7 @@ import java.util.ResourceBundle;
 public class CarregarXML implements Initializable {
 
     private ObservableList<EntradaStock> stock;
+    private ObservableList<EntradaStock> head;
     @FXML
     private TableView<EntradaStock> table;
     @FXML
@@ -94,27 +92,29 @@ public class CarregarXML implements Initializable {
     XMLReader xmlreader;
 
     @FXML
+    private Text cidadeTxt;
+
+    @FXML
     private Button addItensBtn;
 
     List<String> lstFile;
 
-    //identificacao VARCHAR (100),
-    //descricao VARCHAR (30),
-    //peso DECIMAL (4, 2),
-    //precoUnidade DECIMAL (7, 2),
-    //unidades INT
     @FXML
     void clickAddItens(ActionEvent event) {
+        clickAddFornecedor();
         clickAddItensStock();
         clickAddItensEntradaStock();
     }
+
+    //----------------------------------- Conexão BD - Stock -----------------------------------
 
     void clickAddItensStock() {
         PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Stock(identificacao, descricao, peso, precoUnidade, unidades) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Stock(identificacao, descricao, peso, precoUnidade, unidades)" +
+                    "VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < stock.size(); i++) {
                 ps2.setString(1, stock.get(i).getIdentificacao());
                 ps2.setString(2, stock.get(i).getDescricao());
@@ -128,12 +128,39 @@ public class CarregarXML implements Initializable {
         }
     }
 
+    //----------------------------------- Conexão BD - Fornecedor -----------------------------------
+
+    void clickAddFornecedor() {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Fornecedor(id, nome, morada, codigoPostal, pais, cidade)" +
+                    "VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i < head.size(); i++) {
+                ps2.setString(1, head.get(i).getIdFornecedor());
+                ps2.setString(2, head.get(i).getNomeFornecedor());
+                ps2.setString(3, head.get(i).getMoradaFornecedor());
+                ps2.setString(4, head.get(i).getCodPostalFornecedor());
+                ps2.setString(5, head.get(i).getPaisFornecedor());
+                ps2.setString(6, head.get(i).getCidadeFornecedor());
+                ps2.executeUpdate();
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    //----------------------------------- Conexão BD - EntradaStock -----------------------------------
+
     void clickAddItensEntradaStock() {
         PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(identificacao, descricao, caixas, peso, unidades, precoUnidade, precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal) VALUES (?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(identificacao, descricao, caixas, peso, unidades," +
+                    "precoUnidade, precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal, ordemNumero, ordemData,idFornecedor)" +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < stock.size(); i++) {
                 ps2.setString(1, stock.get(i).getIdentificacao());
                 ps2.setString(2, stock.get(i).getDescricao());
@@ -146,12 +173,20 @@ public class CarregarXML implements Initializable {
                 ps2.setDouble(9, stock.get(i).getValorTaxa());
                 ps2.setString(10, stock.get(i).getLocal());
                 ps2.setDouble(11, stock.get(i).getPrecoTotal());
+                 for (int j = 0; j < 1; j++) {
+                     ps2.setString(12, head.get(j).getOrdemNum());
+                     ps2.setString(13, head.get(j).getOrdemData());
+                     ps2.setString(14, head.get(j).getIdFornecedor());
+
+                 }
                 ps2.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
+
+    //----------------------------------- Upload Ficheiro XML -----------------------------------
 
     @FXML
     void clickXmlBtn(ActionEvent event) {
@@ -162,10 +197,14 @@ public class CarregarXML implements Initializable {
         if (f != null) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
-            stock = xmlreader.lerXML(path);
-            //stock = xmlreader.lerHeader(path);
-            popularTabela();
-            //popularCabecalho();
+            stock = xmlreader.lerXMLBody(path);
+            head = xmlreader.lerXMLHeader(path);
+            if (stock.isEmpty() && head.isEmpty()) {
+                addItensBtn.setDisable(true);
+            } else {
+                addItensBtn.setDisable(false);
+                popularTabela();
+            }
         }
     }
 
@@ -177,17 +216,12 @@ public class CarregarXML implements Initializable {
         lstFile.add("*.XML");
     }
 
-    // private void popularCabecalho(){
-    //      moradaTxt.setText();
-    //      noneFornecedorTxt.setText();
-    //      ordemTxt.setText();
-    //      paisTxt.setText();
-    //      idFornecedorTxt.setText();
-    //      codigoPostalTxt.setText();
-    //      dataTxt.setText();
-    // }
+    //----------------------------------- Popular Tabela -----------------------------------
 
     private void popularTabela() {
+
+        //------- Popular Rows da Tabela -------
+
         if (stock != null && stock.size() > 0) {
             identificacaoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("identificacao"));
             descricaoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("descricao"));
@@ -202,6 +236,20 @@ public class CarregarXML implements Initializable {
             precoTotalTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("precoTotal"));
 
             table.setItems(stock);
+
+            //------- Popular Header -------
+
+            for (int i = 0; i < head.size(); i++) {
+                ordemTxt.setText(head.get(i).getOrdemNum());
+                moradaTxt.setText(head.get(i).getMoradaFornecedor());
+                noneFornecedorTxt.setText(head.get(i).getNomeFornecedor());
+                paisTxt.setText(head.get(i).getPaisFornecedor());
+                idFornecedorTxt.setText(head.get(i).getIdFornecedor());
+                codigoPostalTxt.setText(head.get(i).getCodPostalFornecedor());
+                dataTxt.setText(head.get(i).getOrdemData());
+                cidadeTxt.setText(head.get(i).getCidadeFornecedor());
+
+            }
         }
     }
 
