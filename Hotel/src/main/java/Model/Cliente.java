@@ -1,9 +1,16 @@
 package Model;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
+import BLL.DBconn;
+
 public class Cliente {
-    private int idCliente;
-    private String name;
+
+    private String nome;
     private String contacto;
     private String email;
     private String utilizador;
@@ -14,9 +21,9 @@ public class Cliente {
     public Cliente(){
 
     }
-    public Cliente(int idCliente, String name, String contacto, String email, String utilizador, String password, String nif) {
-        this.idCliente = idCliente;
-        this.name = name;
+
+    public Cliente(String nome, String contacto, String email, String utilizador, String password, String nif) {
+        this.nome = nome;
         this.contacto = contacto;
         this.email = email;
         this.utilizador = utilizador;
@@ -24,12 +31,8 @@ public class Cliente {
         this.nif = nif;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String nome) {
+        this.nome = nome;
     }
 
     public void setContacto(String contacto) {
@@ -53,12 +56,10 @@ public class Cliente {
     }
 
 
-    public int getIdCliente() {
-        return idCliente;
-    }
 
-    public String getName() {
-        return name;
+
+    public String getNome() {
+        return nome;
     }
 
     public String getContacto() {
@@ -80,6 +81,31 @@ public class Cliente {
     public String getNif() {
         return nif;
     }
+
+    public static ObservableList<Cliente> getCliente() {
+        ObservableList<Cliente> lista = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT * FROM Cliente";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Cliente obj = new Cliente(rs.getString("nome"), rs.getString("contacto"),rs.getString("email"),
+                        rs.getString("utilizador"),rs.getString("password"),rs.getString("nif"));
+                lista.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
+    }
+
+
 
 
 
