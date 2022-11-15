@@ -113,5 +113,10 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <Button fx:id="voltarBtn" layoutX="1198.0" layoutY="622.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
