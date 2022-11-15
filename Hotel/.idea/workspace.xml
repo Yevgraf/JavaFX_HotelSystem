@@ -5,11 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.zip" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.zip" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/1/5/158d5dd274af92a024fba1c591c581d59108118c" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/c/6c7dad0d1d3cdc0f83ee836145081e4495fcc03e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/c/8c67ad505416cfcfd6ffd1cb97ed2c65e32fbf67" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/a/d/ad7e4c5558b79ace6d8f6c7f41f3fa28ab38962e" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarReservaController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarReservaController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/DBconn.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarCartao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarCartao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Cartao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Cartao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,24 +119,11 @@
       <workItem from="1667589963554" duration="500000" />
       <workItem from="1667749458410" duration="598000" />
       <workItem from="1668453901736" duration="736000" />
-      <workItem from="1668512472755" duration="3922000" />
-      <workItem from="1668538057219" duration="1560000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />

@@ -177,5 +177,10 @@
       </Label>
       <TextField fx:id="txt_idCartao" layoutX="484.0" layoutY="256.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <ComboBox fx:id="cmb_tipocolaborador" layoutX="483.0" layoutY="217.0" prefWidth="150.0" />
+      <Button fx:id="VoltarBtn" layoutX="570.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

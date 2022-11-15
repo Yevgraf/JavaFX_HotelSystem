@@ -1,22 +1,28 @@
 package Controller;
 
 import Model.Colaborador;
+import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.DatePicker;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
+
 import BLL.DBconn;
+import javafx.stage.Stage;
 
 
 public class PanelCriarFuncController implements Initializable {
@@ -164,6 +170,21 @@ public class PanelCriarFuncController implements Initializable {
     @FXML
     private TextField txt_utilizador;
 
+    @FXML
+    private Button VoltarBtn;
+
+    @FXML
+    void clickVoltarBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
+        stage.setTitle("Pagina Gestor");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -224,11 +245,10 @@ public class PanelCriarFuncController implements Initializable {
             ps2.setString(5, txt_contacto.getText());
             ps2.setString(6, txt_utilizador.getText());
             ps2.setString(7, txt_password.getText());
-            ps2.setString(8,"funcionario");
-          //  ps2.setString(9, txt_idCartao.getText());
+            ps2.setString(8, "funcionario");
+            //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
-        }
-        catch(SQLException ex){
+        } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
 
@@ -248,4 +268,4 @@ public class PanelCriarFuncController implements Initializable {
         ObservableList<Colaborador> oblColab = FXCollections.observableArrayList(Colaborador.getColaborador());
         cmb_tipocolaborador.getItems().add((Colaborador) oblColab);
     }
-    }
+}
