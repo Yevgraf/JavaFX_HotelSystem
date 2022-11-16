@@ -1,9 +1,13 @@
 package Model;
 
+import BLL.DBconn;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.*;
 import java.util.Date;
 
 public class Colaborador {
-    private int idColaborador;
     private String nome;
     private String nif;
     private String morada;
@@ -13,14 +17,14 @@ public class Colaborador {
     private String utilizador;
     private String password;
     private String tipoColaborador;
-    private int idCartao;
+
+    private int idCartaoColaborador;
 
     public Colaborador(){
 
     }
 
-    public Colaborador(int idColaborador, String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, String tipoColaborador, int idCartao) {
-        this.idColaborador = idColaborador;
+    public Colaborador(String nome, String nif, String morada, java.sql.Date dataNascimento, String email, String contacto, String utilizador, String palavrapasse, String tipoColaborador) {
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
@@ -28,14 +32,10 @@ public class Colaborador {
         this.email = email;
         this.contacto = contacto;
         this.utilizador = utilizador;
-        this.password = password;
+        this.password = palavrapasse;
         this.tipoColaborador = tipoColaborador;
-        this.idCartao = idCartao;
     }
 
-    public void setIdColaborador(int idColaborador) {
-        this.idColaborador = idColaborador;
-    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -65,13 +65,10 @@ public class Colaborador {
         this.password = password;
     }
 
-    public void setIdCartao(int idCartao) {
-        this.idCartao = idCartao;
+    public void setIdCartaoColaborador(int idCartaoColaborador) {
+        this.idCartaoColaborador = idCartaoColaborador;
     }
 
-    public int getIdColaborador() {
-        return idColaborador;
-    }
 
     public String getNome() {
         return nome;
@@ -101,8 +98,8 @@ public class Colaborador {
         return password;
     }
 
-    public int getIdCartao() {
-        return idCartao;
+    public int getIdCartaoColaborador() {
+        return idCartaoColaborador;
     }
 
     public String getContacto() {
@@ -120,4 +117,27 @@ public class Colaborador {
     public void setTipoColaborador(String tipoColaborador) {
         this.tipoColaborador = tipoColaborador;
     }
-}
+
+    public static ObservableList<Colaborador> getColaborador() {
+             ObservableList<Colaborador> lista = FXCollections.observableArrayList();
+
+          try {
+              String cmd = "SELECT * FROM Colaborador";
+
+              Statement st = DBconn.getConn().createStatement();
+
+              ResultSet rs = st.executeQuery(cmd);
+
+              while (rs.next()) {
+                  Colaborador obj = new Colaborador(rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
+                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"));
+                  lista.add(obj);
+              }
+
+              st.close();
+          } catch (Exception ex) {
+              System.err.println("Erro: " + ex.getMessage());
+          }
+          return lista;
+        }
+    }

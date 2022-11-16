@@ -5,7 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/UploadXML.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/fxml/CarregarXML.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/BLL/XMLReader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/BLL/XMLReader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,39 +59,34 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/ASUS/Desktop/grupo4/Hotel&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.3816092&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/Ricardo/Downloads/openjfx-19_windows-x64_bin-sdk/javafx-sdk-19/lib",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.3816092",
+    "settings.editor.selected.configurable": "preferences.lookFeel"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;DatabaseDriversLRU&quot;: [
-      &quot;sqlserver&quot;
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "sqlserver"
     ]
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="E:\ISEP\Rep Git\LP3\grupo4\Hotel\src\main\resources\com\example\hotel" />
-    </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
       <recent name="com.example.hotel" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.com.example.hotel.Main">
-    <configuration name="com.example.hotel.Main" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="ALTERNATIVE_JRE_PATH" value="17" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+  <component name="RunManager" selected="Application.Main">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.hotel.Main" />
-      <module name="Hotel" />
+      <module name="Hotel.main" />
       <option name="VM_PARAMETERS" value="--module-path /path/to/JavaFX/lib --add-modules=javafx.controls" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -113,7 +114,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.com.example.hotel.Main" />
+      <item itemvalue="Application.Main" />
       <item itemvalue="Gradle.Hotel [buildDependents]" />
     </list>
     <recent_temporary>
@@ -150,8 +151,6 @@
       <workItem from="1667859579299" duration="42000" />
       <workItem from="1667867069124" duration="10100000" />
       <workItem from="1667907351318" duration="5559000" />
-      <workItem from="1667932161824" duration="889000" />
-      <workItem from="1668424964955" duration="100000" />
     </task>
     <servers />
   </component>
