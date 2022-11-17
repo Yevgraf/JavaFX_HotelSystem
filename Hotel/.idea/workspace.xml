@@ -5,40 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Controller/GestorController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/6/c/6c7dad0d1d3cdc0f83ee836145081e4495fcc03e" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/8/c/8c67ad505416cfcfd6ffd1cb97ed2c65e32fbf67" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/sonarlint/issuestore/index.pb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/adicionar.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/adicionar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/checkin_checkout.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/checkin_checkout.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/closeApp.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/closeApp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/definicoesUser.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/definicoesUser.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/editar.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/editar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/eliminar.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/eliminar.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/entradaStock.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/entradaStock.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoClientes.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoClientes.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoColaboradores.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoColaboradores.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoProdutos.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoProdutos.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoQuartos.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoQuartos.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoReservas.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoReservas.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoServicos.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoServicos.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/gestaoStock.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/gestaoStock.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/minimzateApp.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/minimzateApp.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/saidaStock.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/saidaStock.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/sairSessao.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/sairSessao.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/setaSubJanela.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/setaSubJanela.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/sugestoesQueixas.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/sugestoesQueixas.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/img/voltar.jpeg" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/img/voltar.jpeg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/CarregarXML.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/CarregarXML.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarFuncController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarFuncController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/DataBase/ConnectionBD.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Controller/PanelCriarFuncionario.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hotel/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hotel/CarregarXML.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hotel/CarregarXML.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelCriarFuncionario.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelCriarFuncionario.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelGestor.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelGestor.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

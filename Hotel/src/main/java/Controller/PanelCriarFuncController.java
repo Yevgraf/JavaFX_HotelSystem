@@ -217,6 +217,7 @@ public class PanelCriarFuncController implements Initializable {
         tbl_utilizador.setResizable(false);
         //tbl_idCartao.setResizable(false);
 
+        //tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
         tbl_name.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nome"));
         tbl_email.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("email"));
         tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Colaborador, Date>("dataNascimento"));
