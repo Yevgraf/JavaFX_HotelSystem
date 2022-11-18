@@ -1,41 +1,32 @@
 package Model;
 
 public class Stock {
-    private int idStock;
-    private int idProduto;
-    private int quantidade;
 
-    public Stock(){
+    private String idProduto;
 
-    }
+    private Integer unidades;
 
-    public Stock(int idStock, int idProduto, int quantidade) {
-        this.idStock = idStock;
-        this.idProduto = idProduto;
-        this.quantidade = quantidade;
-    }
-
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public int getIdProduto() {
+    public String getIdProduto() {
         return idProduto;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public void setIdProduto(String idProduto) {
+        this.idProduto = idProduto;
     }
 
-    public void setIdStock(int idStock) {
-        this.idStock = idStock;
+    public Integer getUnidades() {
+        return unidades;
     }
 
-    public int getIdStock() {
-        return idStock;
+    public void setUnidades(Integer unidades) {
+        this.unidades = unidades;
+    }
+
+    public Stock(String idProduto, Integer unidades) {
+        this.idProduto = idProduto;
+        this.unidades = unidades;
+    }
+
+    public Stock() {
     }
 }

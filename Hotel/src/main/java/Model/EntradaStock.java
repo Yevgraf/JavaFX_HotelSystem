@@ -1,22 +1,19 @@
 package Model;
 
+import java.sql.Date;
+
 public class EntradaStock {
 
     private Double taxa;
 
     private Integer caixas;
 
-    private String descricao;
 
-    private String identificacao;
+    private String idProduto;
 
     private String local;
 
-    private Double peso;
-
     private Double precoSemTaxa;
-
-    private Double precoUnidade;
 
     private Integer unidades;
 
@@ -40,6 +37,7 @@ public class EntradaStock {
 
     private Double precoTotal;
 
+
     public Double getTaxa() {
         return taxa;
     }
@@ -48,28 +46,16 @@ public class EntradaStock {
         return caixas;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public String getIdentificacao() {
-        return identificacao;
+    public String getIdProduto() {
+        return idProduto;
     }
 
     public String getLocal() {
         return local;
     }
 
-    public Double getPeso() {
-        return peso;
-    }
-
     public Double getPrecoSemTaxa() {
         return precoSemTaxa;
-    }
-
-    public Double getPrecoUnidade() {
-        return precoUnidade;
     }
 
     public Integer getUnidades() {
@@ -116,18 +102,14 @@ public class EntradaStock {
         return cidadeFornecedor;
     }
 
-    public EntradaStock(Double taxa, Integer caixas, String descricao, String identificacao, String local,
-                        Double peso, Double precoSemTaxa, Double precoUnidade,
+    public EntradaStock(Double taxa, Integer caixas, String idProduto, String local, Double precoSemTaxa,
                         Integer unidades, Double valorTaxa, Double precoTotal) {
 
         this.taxa = taxa;
         this.caixas = caixas;
-        this.descricao = descricao;
-        this.identificacao = identificacao;
+        this.idProduto = idProduto;
         this.local = local;
-        this.peso = peso;
         this.precoSemTaxa = precoSemTaxa;
-        this.precoUnidade = precoUnidade;
         this.unidades = unidades;
         this.valorTaxa = valorTaxa;
         this.precoTotal = precoTotal;

@@ -4,6 +4,8 @@ import BLL.DBconn;
 import BLL.XMLReader;
 import Model.EntradaStock;
 
+import Model.Produto;
+import Model.Stock;
 import com.example.hotel.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -29,15 +31,31 @@ import java.util.ResourceBundle;
 
 public class CarregarXML implements Initializable {
 
-    private ObservableList<EntradaStock> stock;
+    private ObservableList<EntradaStock> entradaStocks;
     private ObservableList<EntradaStock> head;
-    @FXML
-    private TableView<EntradaStock> table;
-    @FXML
-    private TableColumn<EntradaStock, Integer> caixasTable;
+    private ObservableList<Produto> produtos;
+    private ObservableList<Stock> stocks;
 
     @FXML
-    private TableColumn<EntradaStock, String> descricaoTable;
+    private TableView<Produto> produtoTable;
+
+    @FXML
+    private TableColumn<Produto, String> descricaoTable;
+
+    @FXML
+    private TableColumn<Produto, String> idProdTable;
+
+    @FXML
+    private TableColumn<Produto, Double> pesoTable;
+
+    @FXML
+    private TableColumn<Produto, Double> precoTable;
+
+    @FXML
+    private TableView<EntradaStock> table;
+
+    @FXML
+    private TableColumn<EntradaStock, Integer> caixasTable;
 
     @FXML
     private TableColumn<EntradaStock, String> identificacaoTable;
@@ -46,13 +64,7 @@ public class CarregarXML implements Initializable {
     private TableColumn<EntradaStock, String> localTable;
 
     @FXML
-    private TableColumn<EntradaStock, Double> pesoTable;
-
-    @FXML
     private TableColumn<EntradaStock, Double> precoSemTaxaTable;
-
-    @FXML
-    private TableColumn<EntradaStock, Double> precoUnidadeTable;
 
     @FXML
     private TableColumn<EntradaStock, Double> taxaTable;
@@ -121,31 +133,10 @@ public class CarregarXML implements Initializable {
 
     @FXML
     void clickAddItens(ActionEvent event) {
+        clickAddProduto();
         clickAddFornecedor();
-        clickAddItensStock();
+        clickAddStock();
         clickAddItensEntradaStock();
-    }
-
-    //----------------------------------- Conexão BD - Stock -----------------------------------
-
-    void clickAddItensStock() {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Stock(identificacao, descricao, peso, precoUnidade, unidades)" +
-                    "VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            for (int i = 0; i < stock.size(); i++) {
-                ps2.setString(1, stock.get(i).getIdentificacao());
-                ps2.setString(2, stock.get(i).getDescricao());
-                ps2.setDouble(3, stock.get(i).getPeso());
-                ps2.setDouble(4, stock.get(i).getPrecoUnidade());
-                ps2.setInt(5, stock.get(i).getUnidades());
-                ps2.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     //----------------------------------- Conexão BD - Fornecedor -----------------------------------
@@ -178,31 +169,69 @@ public class CarregarXML implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(identificacao, descricao, caixas, peso, unidades," +
-                    "precoUnidade, precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal, ordemNumero, ordemData,idFornecedor)" +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            for (int i = 0; i < stock.size(); i++) {
-                ps2.setString(1, stock.get(i).getIdentificacao());
-                ps2.setString(2, stock.get(i).getDescricao());
-                ps2.setInt(3, stock.get(i).getCaixas());
-                ps2.setDouble(4, stock.get(i).getPeso());
-                ps2.setInt(5, stock.get(i).getUnidades());
-                ps2.setDouble(6, stock.get(i).getPrecoUnidade());
-                ps2.setDouble(7, stock.get(i).getPrecoSemTaxa());
-                ps2.setDouble(8, stock.get(i).getTaxa());
-                ps2.setDouble(9, stock.get(i).getValorTaxa());
-                ps2.setString(10, stock.get(i).getLocal());
-                ps2.setDouble(11, stock.get(i).getPrecoTotal());
-                 for (int j = 0; j < 1; j++) {
-                     ps2.setString(12, head.get(j).getOrdemNum());
-                     ps2.setString(13, head.get(j).getOrdemData());
-                     ps2.setString(14, head.get(j).getIdFornecedor());
-
-                 }
+            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(idProduto, caixas, unidades," +
+                    "precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal, ordemNumero, ordemData,idFornecedor)" +
+                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i < entradaStocks.size(); i++) {
+                ps2.setString(1, entradaStocks.get(i).getIdProduto());
+                ps2.setInt(2, entradaStocks.get(i).getCaixas());
+                ps2.setInt(3, entradaStocks.get(i).getUnidades());
+                ps2.setDouble(4, entradaStocks.get(i).getPrecoSemTaxa());
+                ps2.setDouble(5, entradaStocks.get(i).getTaxa());
+                ps2.setDouble(6, entradaStocks.get(i).getValorTaxa());
+                ps2.setString(7, entradaStocks.get(i).getLocal());
+                ps2.setDouble(8, entradaStocks.get(i).getPrecoTotal());
+                for (int j = 0; j < 1; j++) {
+                    ps2.setString(9, head.get(j).getOrdemNum());
+                    ps2.setString(10, head.get(j).getOrdemData());
+                    ps2.setString(11, head.get(j).getIdFornecedor());
+                }
                 ps2.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    //----------------------------------- Conexão BD - Produto -----------------------------------
+
+    void clickAddProduto() {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade)" +
+                    "VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i < produtos.size(); i++) {
+                ps2.setString(1, produtos.get(i).getIdProduto());
+                ps2.setString(2, produtos.get(i).getDescricao());
+                ps2.setDouble(3, produtos.get(i).getPeso());
+                ps2.setDouble(4, produtos.get(i).getPrecoUnidade());
+                ps2.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    //----------------------------------- Conexão BD - Stock -----------------------------------
+
+    void clickAddStock() {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Stock(idProduto, quantidade)" +
+                    "VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            for (int i = 0; i < stocks.size(); i++) {
+                ps2.setString(1, stocks.get(i).getIdProduto());
+                ps2.setDouble(2, stocks.get(i).getUnidades());
+                ps2.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -217,13 +246,16 @@ public class CarregarXML implements Initializable {
         if (f != null) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
-            stock = xmlreader.lerXMLBody(path);
+            entradaStocks = xmlreader.lerXMLBody(path);
             head = xmlreader.lerXMLHeader(path);
-            if (stock.isEmpty() && head.isEmpty()) {
+            produtos = xmlreader.lerProduto(path);
+            stocks = xmlreader.lerStock(path);
+            if (entradaStocks.isEmpty() && head.isEmpty()) {
                 addItensBtn.setDisable(true);
             } else {
                 addItensBtn.setDisable(false);
-                popularTabela();
+                popularTabelaEntradaStock();
+                popularTabelaProduto();
             }
         }
     }
@@ -236,41 +268,52 @@ public class CarregarXML implements Initializable {
         lstFile.add("*.XML");
     }
 
-    //----------------------------------- Popular Tabela -----------------------------------
+    //----------------------------------- Popular Tabela EntradaStock -----------------------------------
 
-    private void popularTabela() {
+    private void popularTabelaEntradaStock() {
 
         //------- Popular Rows da Tabela -------
 
-        if (stock != null && stock.size() > 0) {
-            identificacaoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("identificacao"));
-            descricaoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("descricao"));
+        if (entradaStocks != null && entradaStocks.size() > 0) {
+            identificacaoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("idProduto"));
             taxaTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("taxa"));
             caixasTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Integer>("caixas"));
             localTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, String>("local"));
-            pesoTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("peso"));
             precoSemTaxaTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("precoSemTaxa"));
-            precoUnidadeTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("precoUnidade"));
             unidadesTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Integer>("unidades"));
             valorTaxaTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("valorTaxa"));
             precoTotalTable.setCellValueFactory(new PropertyValueFactory<EntradaStock, Double>("precoTotal"));
 
-            table.setItems(stock);
+            table.setItems(entradaStocks);
+        }
 
-            //------- Popular Header -------
+        //------- Popular Header -------
 
-            for (int i = 0; i < head.size(); i++) {
-                ordemTxt.setText(head.get(i).getOrdemNum());
-                moradaTxt.setText(head.get(i).getMoradaFornecedor());
-                noneFornecedorTxt.setText(head.get(i).getNomeFornecedor());
-                paisTxt.setText(head.get(i).getPaisFornecedor());
-                idFornecedorTxt.setText(head.get(i).getIdFornecedor());
-                codigoPostalTxt.setText(head.get(i).getCodPostalFornecedor());
-                dataTxt.setText(head.get(i).getOrdemData());
-                cidadeTxt.setText(head.get(i).getCidadeFornecedor());
-
-            }
+        for (int i = 0; i < head.size(); i++) {
+            ordemTxt.setText(head.get(i).getOrdemNum());
+            moradaTxt.setText(head.get(i).getMoradaFornecedor());
+            noneFornecedorTxt.setText(head.get(i).getNomeFornecedor());
+            paisTxt.setText(head.get(i).getPaisFornecedor());
+            idFornecedorTxt.setText(head.get(i).getIdFornecedor());
+            codigoPostalTxt.setText(head.get(i).getCodPostalFornecedor());
+            dataTxt.setText(head.get(i).getOrdemData());
+            cidadeTxt.setText(head.get(i).getCidadeFornecedor());
         }
     }
 
+    //----------------------------------- Popular Tabela Produto -----------------------------------
+
+    private void popularTabelaProduto() {
+
+        //------- Popular Rows da Tabela -------
+
+        if (produtos != null && produtos.size() > 0) {
+            idProdTable.setCellValueFactory(new PropertyValueFactory<Produto, String>("idProduto"));
+            descricaoTable.setCellValueFactory(new PropertyValueFactory<Produto, String>("descricao"));
+            pesoTable.setCellValueFactory(new PropertyValueFactory<Produto, Double>("peso"));
+            precoTable.setCellValueFactory(new PropertyValueFactory<Produto, Double>("precoUnidade"));
+
+            produtoTable.setItems(produtos);
+        }
+    }
 }
