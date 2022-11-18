@@ -1,6 +1,8 @@
 package BLL;
 
 import Model.EntradaStock;
+import Model.Produto;
+import Model.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
@@ -12,9 +14,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class XMLReader {
-
     public ObservableList<EntradaStock> lerXMLHeader(String path) {
         ObservableList<EntradaStock> head = FXCollections.observableArrayList();
 
@@ -55,7 +58,7 @@ public class XMLReader {
                     Integer ano = Integer.valueOf(yearElement.getTextContent());
                     Integer mes = Integer.valueOf(monthElement.getTextContent());
                     Integer dia = Integer.valueOf(dayElement.getTextContent());
-                    String ordemData = dia + "/" + mes + "/" + ano;
+                    String ordemData = ano + "/" + mes + "/" + dia;
 
                     // SupplierParty
                     Element supplierPartyElement = FindInChildren(HeadElement, "SupplierParty");
@@ -114,19 +117,12 @@ public class XMLReader {
                     // Product
                     Element productElement = FindInChildren(lineElement, "Product");
                     Element productIdentifierEl = FindInChildren(productElement, "ProductIdentifier");
-                    Element productDescriptionEl = FindInChildren(productElement, "ProductDescription");
-                    String identificacao = productIdentifierEl.getTextContent();
-                    String descricao = productDescriptionEl.getTextContent();
+                    String idProduto = productIdentifierEl.getTextContent();
 
                     // Quantity
                     Element elQuantity = FindInChildren(lineElement, "Quantity");
                     Element elQuantityValue = FindInChildren(elQuantity, "Value");
                     Integer caixas = Integer.valueOf(elQuantityValue.getTextContent());
-
-                    // InformationalQuantity
-                    Element iqWeightElement = FindInChildren(lineElement, "InformationalQuantity");
-                    Element iQWeightValueElement = FindInChildren(iqWeightElement, "Value");
-                    double peso = Double.parseDouble(iQWeightValueElement.getTextContent());
 
                     Element iqUnitsElement = FindInChildren(lineElement, "InformationalQuantity", 10);
                     Integer unidades = 0;
@@ -134,11 +130,6 @@ public class XMLReader {
                         Element iQUnitsValueElement = FindInChildren(iqUnitsElement, "Value");
                         unidades = Integer.valueOf(iQUnitsValueElement.getTextContent());
                     }
-
-                    // PricePerUnit
-                    Element ppuElement = FindInChildren(lineElement, "PricePerUnit");
-                    Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
-                    double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
                     // MonetaryAdjustment
                     Element monAdjElement = FindInChildren(lineElement, "MonetaryAdjustment");
@@ -164,13 +155,121 @@ public class XMLReader {
                         unidades = caixas;
                     }
 
-                    item.add(new EntradaStock(taxa, caixas, descricao, identificacao, local, peso, precoSemTaxa, precoUnidade, unidades, valorTaxa, precoTotal));
+                    item.add(new EntradaStock(taxa, caixas, idProduto, local, precoSemTaxa, unidades, valorTaxa, precoTotal));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return item;
+    }
+
+    //----------------------------------- Criar Produto -----------------------------------
+
+    public ObservableList<Produto> lerProduto(String path) {
+        ObservableList<Produto> produtos = FXCollections.observableArrayList();
+
+        try {
+            File fXmlFile = new File(path);
+
+            //Define a API que instancia o documento XML
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            //Normaliza o XML
+            doc.getDocumentElement().normalize();
+
+            //Grava numa NodeList
+            NodeList nList = doc.getElementsByTagName("Line");
+
+            //Percorre a lista e faz o Get pelas respetivas Tags
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    // Line
+                    Element lineElement = (Element) nNode;
+
+                    // Product
+                    Element productElement = FindInChildren(lineElement, "Product");
+                    Element productIdentifierEl = FindInChildren(productElement, "ProductIdentifier");
+                    Element productDescriptionEl = FindInChildren(productElement, "ProductDescription");
+                    String idProduto = productIdentifierEl.getTextContent();
+                    String descricao = productDescriptionEl.getTextContent();
+
+                    // InformationalQuantity
+                    Element iqWeightElement = FindInChildren(lineElement, "InformationalQuantity");
+                    Element iQWeightValueElement = FindInChildren(iqWeightElement, "Value");
+                    double peso = Double.parseDouble(iQWeightValueElement.getTextContent());
+
+                    // PricePerUnit
+                    Element ppuElement = FindInChildren(lineElement, "PricePerUnit");
+                    Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
+                    double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
+
+                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return produtos;
+    }
+
+    //----------------------------------- Cria Stock -----------------------------------
+
+    public ObservableList<Stock> lerStock(String path) {
+        ObservableList<Stock> stocks = FXCollections.observableArrayList();
+
+        try {
+            File fXmlFile = new File(path);
+
+            //Define a API que instancia o documento XML
+            DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+            Document doc = dBuilder.parse(fXmlFile);
+
+            //Normaliza o XML
+            doc.getDocumentElement().normalize();
+
+            //Grava numa NodeList
+            NodeList nList = doc.getElementsByTagName("Line");
+
+            //Percorre a lista e faz o Get pelas respetivas Tags
+            for (int temp = 0; temp < nList.getLength(); temp++) {
+                Node nNode = nList.item(temp);
+                if (nNode.getNodeType() == Node.ELEMENT_NODE) {
+
+                    // Line
+                    Element lineElement = (Element) nNode;
+
+                    // Product
+                    Element productElement = FindInChildren(lineElement, "Product");
+                    Element productIdentifierEl = FindInChildren(productElement, "ProductIdentifier");
+                    String idProduto = productIdentifierEl.getTextContent();
+
+                    // Quantity
+                    Element elQuantity = FindInChildren(lineElement, "Quantity");
+                    Element elQuantityValue = FindInChildren(elQuantity, "Value");
+                    Integer caixas = Integer.valueOf(elQuantityValue.getTextContent());
+
+                    Element iqUnitsElement = FindInChildren(lineElement, "InformationalQuantity", 10);
+                    Integer unidades = 0;
+                    if (iqUnitsElement != null) {
+                        Element iQUnitsValueElement = FindInChildren(iqUnitsElement, "Value");
+                        unidades = Integer.valueOf(iQUnitsValueElement.getTextContent());
+                    }
+                    if (unidades == 0) {
+                        unidades = caixas;
+                    }
+                    stocks.add(new Stock(idProduto, unidades));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stocks;
     }
 
     //----------------------------------- FindInChildren -----------------------------------

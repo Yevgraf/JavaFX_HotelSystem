@@ -4,7 +4,7 @@ public class Servico {
     private int idServico;
     private String servico;
 
-    public Servico(){
+    public Servico() {
 
     }
 
@@ -28,4 +28,5 @@ public class Servico {
     public String getServico() {
         return servico;
     }
+
 }
