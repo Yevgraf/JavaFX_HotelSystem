@@ -242,9 +242,12 @@ public class PanelCriarFuncController implements Initializable {
             ps2.setString(9, "funcionario");
             //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador inserido","Informação Colaborador");
 
         } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza os dados corretamente", "Erro Inserir");
             throw new RuntimeException(ex);
+
         }
 
     }
@@ -258,10 +261,11 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     public void OnActionRefresh(ActionEvent actionEvent) {
-        tv_funcionarios.getColumns().get(0).setVisible(true);
+
     }
 
     public void OnActionUpdate(ActionEvent actionEvent) {
+
 
 
     }
