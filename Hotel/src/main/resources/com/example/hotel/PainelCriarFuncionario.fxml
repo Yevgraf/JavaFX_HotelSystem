@@ -126,7 +126,7 @@
             <TableColumn fx:id="tbl_idCartao" prefWidth="75.0" text="IdCartao" />
         </columns>
       </TableView>
-      <Button fx:id="btn_remove_funcionario" layoutX="177.0" layoutY="502.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
+      <Button fx:id="btn_remove_funcionario" layoutX="177.0" layoutY="502.0" mnemonicParsing="false" onAction="#OnActionRemoveFuncionario" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>

@@ -1,6 +1,7 @@
 package Controller;
 
 import Model.Colaborador;
+import Model.MessageBoxes;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -257,11 +258,16 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     public void OnActionRefresh(ActionEvent actionEvent) {
-        tv_funcionarios.getColumns().get(0).setVisible(false);
         tv_funcionarios.getColumns().get(0).setVisible(true);
     }
 
     public void OnActionUpdate(ActionEvent actionEvent) {
+
+
+    }
+
+    public void OnActionRemoveFuncionario(ActionEvent actionEvent) {
+
         PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
@@ -272,11 +278,11 @@ public class PanelCriarFuncController implements Initializable {
                 ps2 = connection.prepareStatement("DELETE FROM Colaborador WHERE id = ?");
                 ps2.setInt(1, selectedID.getId());
                 ps2.executeUpdate();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador Removido", "Information");
             }
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
-
     }
 }
