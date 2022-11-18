@@ -226,7 +226,7 @@ public class CarregarXML implements Initializable {
                     "VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < stocks.size(); i++) {
                 ps2.setString(1, stocks.get(i).getIdProduto());
-                ps2.setDouble(2, stocks.get(i).getUnidades());
+                ps2.setDouble(2, stocks.get(i).getQuantidade());
                 ps2.executeUpdate();
             }
 
