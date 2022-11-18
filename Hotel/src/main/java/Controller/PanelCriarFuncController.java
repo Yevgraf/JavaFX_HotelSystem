@@ -38,6 +38,9 @@ public class PanelCriarFuncController implements Initializable {
     private ImageView btnDefGestor;
 
     @FXML
+    private Button btn_refresh;
+
+    @FXML
     private ImageView btnLogOut;
 
     @FXML
@@ -194,17 +197,6 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     private void initTable() {
-        tbl_id.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_name.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_email.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_dataNasc.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_morada.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_contacto.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_nif.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_password.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_tipoColaborador.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_utilizador.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        //tbl_idCartao.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
 
         tbl_name.setResizable(false);
         tbl_email.setResizable(false);
@@ -249,24 +241,42 @@ public class PanelCriarFuncController implements Initializable {
             ps2.setString(9, "funcionario");
             //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
+
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
 
     }
 
-    public void onActionRemoveFuncionario(ActionEvent actionEvent) {
-    }
 
-    public void onActionUpdateFuncionario(ActionEvent actionEvent) {
-    }
-
-    public void onActionVoltar(ActionEvent actionEvent) {
-    }
 
     private void initCombos() {
 
         ObservableList<Colaborador> oblColab = FXCollections.observableArrayList(Colaborador.getColaborador());
         cmb_tipocolaborador.getItems().add((Colaborador) oblColab);
+    }
+
+    public void OnActionRefresh(ActionEvent actionEvent) {
+        tv_funcionarios.getColumns().get(0).setVisible(false);
+        tv_funcionarios.getColumns().get(0).setVisible(true);
+    }
+
+    public void OnActionUpdate(ActionEvent actionEvent) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            Colaborador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
+            if (selectedID != null){
+                ps2 = connection.prepareStatement("DELETE FROM Colaborador WHERE id = ?");
+                ps2.setInt(1, selectedID.getId());
+                ps2.executeUpdate();
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+
     }
 }

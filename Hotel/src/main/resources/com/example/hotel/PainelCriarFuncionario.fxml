@@ -126,17 +126,17 @@
             <TableColumn fx:id="tbl_idCartao" prefWidth="75.0" text="IdCartao" />
         </columns>
       </TableView>
-      <Button fx:id="btn_add_funcionario" layoutX="31.0" layoutY="502.0" mnemonicParsing="false" onAction="#onActionAddFuncionario" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
-         <font>
-            <Font name="Bodoni MT Condensed" size="19.0" />
-         </font>
-      </Button>
       <Button fx:id="btn_remove_funcionario" layoutX="177.0" layoutY="502.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="btn_update_funcionario" layoutX="327.0" layoutY="502.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Atualizar">
+      <Button fx:id="btn_add_funcionario" layoutX="31.0" layoutY="502.0" mnemonicParsing="false" onAction="#onActionAddFuncionario" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="btn_update_funcionario" layoutX="322.0" layoutY="502.0" mnemonicParsing="false" onAction="#OnActionUpdate" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Atualizar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
@@ -171,11 +171,16 @@
       </Label>
       <TextField fx:id="txt_idCartao" layoutX="484.0" layoutY="256.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <ComboBox fx:id="cmb_tipocolaborador" layoutX="483.0" layoutY="217.0" prefWidth="150.0" promptText="selecione" />
-      <Button fx:id="VoltarBtn" layoutX="570.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+      <Button fx:id="VoltarBtn" layoutX="594.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
       <DatePicker fx:id="datePickerNasc" layoutX="160.0" layoutY="245.0" />
+      <Button fx:id="btn_refresh" layoutX="459.0" layoutY="502.0" mnemonicParsing="false" onAction="#OnActionRefresh" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Refresh">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
