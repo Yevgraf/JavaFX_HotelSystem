@@ -194,7 +194,7 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     private void initTable() {
-
+        tbl_id.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
         tbl_name.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
         tbl_email.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
         tbl_dataNasc.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
@@ -217,7 +217,7 @@ public class PanelCriarFuncController implements Initializable {
         tbl_utilizador.setResizable(false);
         //tbl_idCartao.setResizable(false);
 
-        //tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
         tbl_name.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nome"));
         tbl_email.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("email"));
         tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Colaborador, Date>("dataNascimento"));
@@ -237,16 +237,16 @@ public class PanelCriarFuncController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Colaborador( nome, nif, morada, email, contacto, utilizador, palavrapasse, tipoColaborador) VALUES (?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Colaborador( nome, nif, morada,dataNascimento, email, contacto, utilizador, palavrapasse, tipoColaborador) VALUES (?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, txt_nome.getText());
             ps2.setString(2, txt_nif.getText());
             ps2.setString(3, txt_morada.getText());
-            //ps2.setDate(5,  datePickerNasc.getPromptText());
-            ps2.setString(4, txt_email.getText());
-            ps2.setString(5, txt_contacto.getText());
-            ps2.setString(6, txt_utilizador.getText());
-            ps2.setString(7, txt_password.getText());
-            ps2.setString(8, "funcionario");
+            ps2.setString(4, datePickerNasc.getEditor().getText());
+            ps2.setString(5, txt_email.getText());
+            ps2.setString(6, txt_contacto.getText());
+            ps2.setString(7, txt_utilizador.getText());
+            ps2.setString(8, txt_password.getText());
+            ps2.setString(9, "funcionario");
             //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
         } catch (SQLException ex) {
