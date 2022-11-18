@@ -127,4 +127,15 @@ public class GestorController {
 
     }
 
+    @FXML
+    void clickBtngestorReservas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoReservas.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        stage.setTitle("Gerir Reservas");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
 }

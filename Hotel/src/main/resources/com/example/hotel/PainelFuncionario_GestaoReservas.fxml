@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Main_Manager">
+<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoReservas">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -69,7 +69,7 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoReserva" layoutX="59.0" layoutY="147.0" prefHeight="45.0" prefWidth="238.0" text="Gestão de Reservas" textFill="WHITE">
+      <Label fx:id="lblGestaoReserva" layoutX="79.0" layoutY="148.0" prefHeight="45.0" prefWidth="238.0" text="Gestão de Reservas" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
@@ -90,22 +90,22 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnGestorEliminarCliente" layoutX="428.0" layoutY="418.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEliminarCliente" layoutX="254.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickBtnGestorEliminarCliente" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="437.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="279.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="93.0" layoutY="418.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorAdicionarCliente" layoutX="25.0" layoutY="420.0" mnemonicParsing="false" onAction="#clickBtnGestorAdicionarCliente" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorGestaoReserva" fitHeight="45.0" fitWidth="68.0" layoutX="6.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorGestaoReserva" fitHeight="45.0" fitWidth="68.0" layoutX="26.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoReservas.png" />
          </image>
@@ -120,10 +120,15 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="108.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="40.0" layoutY="433.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/adicionar.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnVoltar" layoutX="497.0" layoutY="420.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
