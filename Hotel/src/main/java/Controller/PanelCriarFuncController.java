@@ -244,6 +244,7 @@ public class PanelCriarFuncController implements Initializable {
             ps2.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador inserido","Informação Colaborador");
 
+
         } catch (SQLException ex) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza os dados corretamente", "Erro Inserir");
             throw new RuntimeException(ex);
@@ -260,8 +261,15 @@ public class PanelCriarFuncController implements Initializable {
         cmb_tipocolaborador.getItems().add((Colaborador) oblColab);
     }
 
-    public void OnActionRefresh(ActionEvent actionEvent) {
+    public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarFuncionario.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btn_refresh.getScene().getWindow();
+        stage.setTitle("Criar Funcionario");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     public void OnActionUpdate(ActionEvent actionEvent) {
