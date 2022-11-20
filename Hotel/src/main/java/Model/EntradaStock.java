@@ -1,84 +1,132 @@
 package Model;
 
-import java.util.Date;
+import java.sql.Date;
 
 public class EntradaStock {
-    private int idEntradaStock;
-    private int idProduto;
-    private int idFornecedor;
-    private int idColaborador;
-    private Date dataEntrega;
-    private int quantidade;
-    private double preco;
 
-    public EntradaStock(){
+    private Double taxa;
 
+    private Integer caixas;
+
+
+    private String idProduto;
+
+    private String local;
+
+    private Double precoSemTaxa;
+
+    private Integer unidades;
+
+    private Double valorTaxa;
+
+    private String ordemNum;
+
+    private String ordemData;
+
+    private String idFornecedor;
+
+    private String moradaFornecedor;
+
+    private String codPostalFornecedor;
+
+    private String paisFornecedor;
+
+    private String nomeFornecedor;
+
+    private String cidadeFornecedor;
+
+    private Double precoTotal;
+
+
+    public Double getTaxa() {
+        return taxa;
     }
 
-
-    public EntradaStock(int idEntradaStock, int idProduto, int idFornecedor, int idColaborador, Date dataEntrega, int quantidade, double preco) {
-        this.idEntradaStock = idEntradaStock;
-        this.idProduto = idProduto;
-        this.idFornecedor = idFornecedor;
-        this.idColaborador = idColaborador;
-        this.dataEntrega = dataEntrega;
-        this.quantidade = quantidade;
-        this.preco = preco;
+    public Integer getCaixas() {
+        return caixas;
     }
 
-    public void setIdProduto(int idProduto) {
-        this.idProduto = idProduto;
-    }
-
-    public void setIdFornecedor(int idFornecedor) {
-        this.idFornecedor = idFornecedor;
-    }
-
-    public void setIdColaborador(int idColaborador) {
-        this.idColaborador = idColaborador;
-    }
-
-    public void setDataEntrega(Date dataEntrega) {
-        this.dataEntrega = dataEntrega;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
-    }
-
-    public int getIdProduto() {
+    public String getIdProduto() {
         return idProduto;
     }
 
-    public int getIdFornecedor() {
+    public String getLocal() {
+        return local;
+    }
+
+    public Double getPrecoSemTaxa() {
+        return precoSemTaxa;
+    }
+
+    public Integer getUnidades() {
+        return unidades;
+    }
+
+    public Double getPrecoTotal() {
+        return precoTotal;
+    }
+
+    public Double getValorTaxa() {
+        return valorTaxa;
+    }
+
+    public String getOrdemNum() {
+        return ordemNum;
+    }
+
+    public String getOrdemData() {
+        return ordemData;
+    }
+
+    public String getIdFornecedor() {
         return idFornecedor;
     }
 
-    public int getIdColaborador() {
-        return idColaborador;
+    public String getMoradaFornecedor() {
+        return moradaFornecedor;
     }
 
-    public Date getDataEntrega() {
-        return dataEntrega;
+    public String getCodPostalFornecedor() {
+        return codPostalFornecedor;
     }
 
-    public int getQuantidade() {
-        return quantidade;
+    public String getPaisFornecedor() {
+        return paisFornecedor;
     }
 
-    public double getPreco() {
-        return preco;
+    public String getNomeFornecedor() {
+        return nomeFornecedor;
     }
 
-    public void setIdEntradaStock(int idEntradaStock) {
-        this.idEntradaStock = idEntradaStock;
+    public String getCidadeFornecedor() {
+        return cidadeFornecedor;
     }
 
-    public int getIdEntradaStock() {
-        return idEntradaStock;
+    public EntradaStock(Double taxa, Integer caixas, String idProduto, String local, Double precoSemTaxa,
+                        Integer unidades, Double valorTaxa, Double precoTotal) {
+
+        this.taxa = taxa;
+        this.caixas = caixas;
+        this.idProduto = idProduto;
+        this.local = local;
+        this.precoSemTaxa = precoSemTaxa;
+        this.unidades = unidades;
+        this.valorTaxa = valorTaxa;
+        this.precoTotal = precoTotal;
+    }
+
+    public EntradaStock(String ordemNum, String ordemData, String idFornecedor, String moradaFornecedor, String codPostalFornecedor,
+                        String paisFornecedor, String nomeFornecedor, String cidadeFornecedor) {
+        this.ordemNum = ordemNum;
+        this.ordemData= ordemData;
+        this.idFornecedor = idFornecedor;
+        this.moradaFornecedor = moradaFornecedor;
+        this.codPostalFornecedor = codPostalFornecedor;
+        this.paisFornecedor = paisFornecedor;
+        this.nomeFornecedor = nomeFornecedor;
+        this.cidadeFornecedor = cidadeFornecedor;
+    }
+
+    public EntradaStock() {
     }
 }

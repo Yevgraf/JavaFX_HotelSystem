@@ -8,16 +8,15 @@ import java.sql.*;
 import java.util.Date;
 
 public class Colaborador {
+    private int id;
     private String nome;
     private String nif;
     private String morada;
     private Date dataNascimento;
     private  String email;
-
     private String contacto;
     private String utilizador;
     private String password;
-
     private String tipoColaborador;
 
     private int idCartaoColaborador;
@@ -26,7 +25,8 @@ public class Colaborador {
 
     }
 
-    public Colaborador(String nome, String nif, String morada, java.sql.Date dataNascimento, String email, String contacto, String utilizador, String palavrapasse, String tipoColaborador) {
+    public Colaborador(int id, String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, String tipoColaborador, int idCartaoColaborador) {
+        this.id = id;
         this.nome = nome;
         this.nif = nif;
         this.morada = morada;
@@ -34,10 +34,19 @@ public class Colaborador {
         this.email = email;
         this.contacto = contacto;
         this.utilizador = utilizador;
-        this.password = palavrapasse;
+        this.password = password;
         this.tipoColaborador = tipoColaborador;
+        this.idCartaoColaborador = idCartaoColaborador;
     }
 
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -121,31 +130,25 @@ public class Colaborador {
     }
 
     public static ObservableList<Colaborador> getColaborador() {
-        ObservableList<Colaborador> lista = FXCollections.observableArrayList();
+             ObservableList<Colaborador> lista = FXCollections.observableArrayList();
 
-        try {
-            String cmd = "SELECT * FROM Colaborador";
+          try {
+              String cmd = "SELECT * FROM Colaborador";
 
-            Statement st = DBconn.getConn().createStatement();
+              Statement st = DBconn.getConn().createStatement();
 
-            ResultSet rs = st.executeQuery(cmd);
+              ResultSet rs = st.executeQuery(cmd);
 
-            while (rs.next()) {
-                Colaborador obj = new Colaborador(rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
-                rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"));
-                lista.add(obj);
-            }
+              while (rs.next()) {
+                  Colaborador obj = new Colaborador(rs.getInt("id"),rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
+                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"), rs.getInt("idCartao"));
+                  lista.add(obj);
+              }
 
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
+              st.close();
+          } catch (Exception ex) {
+              System.err.println("Erro: " + ex.getMessage());
+          }
+          return lista;
         }
-        return lista;
     }
-    @Override
-    public String toString() {
-        return this.nome;
-    }
-
-
-}

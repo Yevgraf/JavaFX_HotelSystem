@@ -1,22 +1,29 @@
 package Controller;
 
 import Model.Colaborador;
+import Model.MessageBoxes;
+import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.DatePicker;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
+
 import BLL.DBconn;
+import javafx.stage.Stage;
 
 
 public class PanelCriarFuncController implements Initializable {
@@ -30,6 +37,9 @@ public class PanelCriarFuncController implements Initializable {
 
     @FXML
     private ImageView btnDefGestor;
+
+    @FXML
+    private Button btn_refresh;
 
     @FXML
     private ImageView btnLogOut;
@@ -164,6 +174,21 @@ public class PanelCriarFuncController implements Initializable {
     @FXML
     private TextField txt_utilizador;
 
+    @FXML
+    private Button VoltarBtn;
+
+    @FXML
+    void clickVoltarBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
+        stage.setTitle("Pagina Gestor");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -173,17 +198,6 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     private void initTable() {
-
-        tbl_name.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_email.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_dataNasc.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_morada.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_contacto.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_nif.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_password.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_tipoColaborador.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        tbl_utilizador.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
-        //tbl_idCartao.prefWidthProperty().bind(tv_funcionarios.widthProperty().multiply(0.11));
 
         tbl_name.setResizable(false);
         tbl_email.setResizable(false);
@@ -196,6 +210,7 @@ public class PanelCriarFuncController implements Initializable {
         tbl_utilizador.setResizable(false);
         //tbl_idCartao.setResizable(false);
 
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
         tbl_name.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nome"));
         tbl_email.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("email"));
         tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Colaborador, Date>("dataNascimento"));
@@ -215,37 +230,71 @@ public class PanelCriarFuncController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Colaborador( nome, nif, morada, email, contacto, utilizador, palavrapasse, tipoColaborador) VALUES (?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Colaborador( nome, nif, morada,dataNascimento, email, contacto, utilizador, palavrapasse, tipoColaborador) VALUES (?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, txt_nome.getText());
             ps2.setString(2, txt_nif.getText());
             ps2.setString(3, txt_morada.getText());
-            //ps2.setDate(5,  datePickerNasc.getPromptText());
-            ps2.setString(4, txt_email.getText());
-            ps2.setString(5, txt_contacto.getText());
-            ps2.setString(6, txt_utilizador.getText());
-            ps2.setString(7, txt_password.getText());
-            ps2.setString(8,"funcionario");
-          //  ps2.setString(9, txt_idCartao.getText());
+            ps2.setString(4, datePickerNasc.getEditor().getText());
+            ps2.setString(5, txt_email.getText());
+            ps2.setString(6, txt_contacto.getText());
+            ps2.setString(7, txt_utilizador.getText());
+            ps2.setString(8, txt_password.getText());
+            ps2.setString(9, "funcionario");
+            //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
-        }
-        catch(SQLException ex){
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador inserido","Informação Colaborador");
+
+
+        } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza os dados corretamente", "Erro Inserir");
             throw new RuntimeException(ex);
+
         }
 
     }
 
-    public void onActionRemoveFuncionario(ActionEvent actionEvent) {
-    }
 
-    public void onActionUpdateFuncionario(ActionEvent actionEvent) {
-    }
-
-    public void onActionVoltar(ActionEvent actionEvent) {
-    }
 
     private void initCombos() {
 
         ObservableList<Colaborador> oblColab = FXCollections.observableArrayList(Colaborador.getColaborador());
         cmb_tipocolaborador.getItems().add((Colaborador) oblColab);
     }
+
+    public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarFuncionario.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btn_refresh.getScene().getWindow();
+        stage.setTitle("Criar Funcionario");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
+
+    public void OnActionUpdate(ActionEvent actionEvent) {
+
+
+
+    }
+
+    public void OnActionRemoveFuncionario(ActionEvent actionEvent) {
+
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            Colaborador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
+            if (selectedID != null){
+                ps2 = connection.prepareStatement("DELETE FROM Colaborador WHERE id = ?");
+                ps2.setInt(1, selectedID.getId());
+                ps2.executeUpdate();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador Removido", "Information");
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+}
