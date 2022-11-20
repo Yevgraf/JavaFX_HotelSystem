@@ -21,6 +21,9 @@ public class GestaoReservas {
     private AnchorPane PainelGestorCliente;
 
     @FXML
+    private Button adicionarReservaBtn;
+
+    @FXML
     private ImageView btnBack;
 
     @FXML
@@ -30,12 +33,6 @@ public class GestaoReservas {
     private ImageView btnDefGestor;
 
     @FXML
-    private Button btnGestorAdicionarCliente;
-
-    @FXML
-    private Button btnGestorEliminarCliente;
-
-    @FXML
     private ImageView btnLogOut;
 
     @FXML
@@ -43,6 +40,9 @@ public class GestaoReservas {
 
     @FXML
     private Button btnVoltar;
+
+    @FXML
+    private Button eliminarReservaBtn;
 
     @FXML
     private ImageView imgGestorEliminarProduto;
@@ -99,13 +99,14 @@ public class GestaoReservas {
     private TableView<?> tblReservas;
 
     @FXML
-    void clickBtnGestorAdicionarCliente(ActionEvent event) {
-
-    }
-
-    @FXML
-    void clickBtnGestorEliminarCliente(ActionEvent event) {
-
+    void clickAdicionarReservaBtn(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoReservas_Adicionar.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) adicionarReservaBtn.getScene().getWindow();
+        stage.setTitle("Adicionar reserva");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     @FXML
@@ -117,6 +118,11 @@ public class GestaoReservas {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
+    }
+
+    @FXML
+    void clickEliminarReservaBtn(ActionEvent event) {
+
     }
 
 }
