@@ -90,7 +90,7 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnGestorEliminarCliente" layoutX="254.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickBtnGestorEliminarCliente" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
+      <Button fx:id="eliminarReservaBtn" layoutX="254.0" layoutY="421.0" mnemonicParsing="false" onAction="#clickEliminarReservaBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -100,7 +100,7 @@
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="25.0" layoutY="420.0" mnemonicParsing="false" onAction="#clickBtnGestorAdicionarCliente" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
+      <Button fx:id="adicionarReservaBtn" layoutX="25.0" layoutY="420.0" mnemonicParsing="false" onAction="#clickAdicionarReservaBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
