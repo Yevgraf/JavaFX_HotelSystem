@@ -25,6 +25,9 @@ public class GestorController {
     private ImageView btnDefGestor;
 
     @FXML
+    private Button btnEntradaStock;
+
+    @FXML
     private Button btnGestorCheck;
 
     @FXML
@@ -32,9 +35,6 @@ public class GestorController {
 
     @FXML
     private Button btnGestorColab;
-
-    @FXML
-    private Button btnGestorStock;
 
     @FXML
     private ImageView btnLogOut;
@@ -49,7 +49,7 @@ public class GestorController {
     private Button btngestorServico;
 
     @FXML
-    private Button btngestorSugs;
+    private Button gestaoStockBtn;
 
     @FXML
     private ImageView imgGestorCheck;
@@ -73,7 +73,7 @@ public class GestorController {
     private ImageView imgGestorStock;
 
     @FXML
-    private ImageView imgGestorSugs;
+    private ImageView imgGestorStock2;
 
     @FXML
     private Label lblData;
@@ -100,11 +100,10 @@ public class GestorController {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
-
     }
 
     @FXML
-    void clickGestaoStockBtn(ActionEvent event) throws IOException {
+    void clickEntradaStockBtn(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
@@ -113,7 +112,30 @@ public class GestorController {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
+    }
 
+    @FXML
+    void clickGestaoStock(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor_GestaoStock.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        stage.setTitle("Entrada Stock");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+
+    }
+
+    @FXML
+    void clickBtngestorReservas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoReservas.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        stage.setTitle("Gerir Reservas");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
 }
