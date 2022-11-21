@@ -123,7 +123,6 @@
             <TableColumn fx:id="tbl_utilizador" prefWidth="75.0" text="Utilizador" />
             <TableColumn fx:id="tbl_password" prefWidth="75.0" text="Password" />
             <TableColumn fx:id="tbl_tipoColaborador" prefWidth="75.0" text="TipoColaborador" />
-            <TableColumn fx:id="tbl_idCartao" prefWidth="75.0" text="IdCartao" />
         </columns>
       </TableView>
       <Button fx:id="btn_remove_funcionario" layoutX="177.0" layoutY="502.0" mnemonicParsing="false" onAction="#OnActionRemoveFuncionario" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
@@ -164,12 +163,6 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblHoras131111" layoutX="398.0" layoutY="243.0" prefHeight="55.0" prefWidth="90.0" text="IdCartao" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="txt_idCartao" layoutX="484.0" layoutY="256.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <ComboBox fx:id="cmb_tipocolaborador" layoutX="483.0" layoutY="217.0" prefWidth="150.0" promptText="selecione" />
       <Button fx:id="VoltarBtn" layoutX="594.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>

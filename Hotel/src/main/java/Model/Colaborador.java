@@ -19,13 +19,14 @@ public class Colaborador {
     private String password;
     private String tipoColaborador;
 
-    private int idCartaoColaborador;
 
     public Colaborador(){
 
     }
 
-    public Colaborador(int id, String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, String tipoColaborador, int idCartaoColaborador) {
+
+
+    public Colaborador(int id, String nome, String nif, String morada, java.sql.Date dataNascimento, String email, String contacto, String utilizador, String palavrapasse, String tipoColaborador) {
         this.id = id;
         this.nome = nome;
         this.nif = nif;
@@ -36,7 +37,7 @@ public class Colaborador {
         this.utilizador = utilizador;
         this.password = password;
         this.tipoColaborador = tipoColaborador;
-        this.idCartaoColaborador = idCartaoColaborador;
+
     }
 
 
@@ -76,10 +77,6 @@ public class Colaborador {
         this.password = password;
     }
 
-    public void setIdCartaoColaborador(int idCartaoColaborador) {
-        this.idCartaoColaborador = idCartaoColaborador;
-    }
-
 
     public String getNome() {
         return nome;
@@ -109,9 +106,6 @@ public class Colaborador {
         return password;
     }
 
-    public int getIdCartaoColaborador() {
-        return idCartaoColaborador;
-    }
 
     public String getContacto() {
         return contacto;
@@ -141,7 +135,7 @@ public class Colaborador {
 
               while (rs.next()) {
                   Colaborador obj = new Colaborador(rs.getInt("id"),rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
-                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"), rs.getInt("idCartao"));
+                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"));
                   lista.add(obj);
               }
 
