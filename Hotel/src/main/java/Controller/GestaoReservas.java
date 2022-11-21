@@ -1,42 +1,26 @@
 package Controller;
 
+import Model.Reserva;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class GestaoReservas {
-
-    @FXML
-    private AnchorPane PainelGestorCliente;
+public class GestaoReservas implements Initializable {
 
     @FXML
     private Button adicionarReservaBtn;
-
-    @FXML
-    private ImageView btnBack;
-
-    @FXML
-    private ImageView btnCloseApp;
-
-    @FXML
-    private ImageView btnDefGestor;
-
-    @FXML
-    private ImageView btnLogOut;
-
-    @FXML
-    private ImageView btnMinimizateApp;
 
     @FXML
     private Button btnVoltar;
@@ -45,58 +29,31 @@ public class GestaoReservas {
     private Button eliminarReservaBtn;
 
     @FXML
-    private ImageView imgGestorEliminarProduto;
+    private TableView<Reserva> tblReservas;
 
     @FXML
-    private ImageView imgGestorEntradaStock2;
+    private TableColumn<Reserva, Integer> tblCoIDColab;
 
     @FXML
-    private ImageView imgGestorGestaoReserva;
+    private TableColumn<Reserva, Integer> tblCoIDQuarto;
 
     @FXML
-    private Label lblData;
+    private TableColumn<Reserva, Double> tblCoPreco;
 
     @FXML
-    private Label lblGestaoReserva;
+    private TableColumn<Reserva, Integer> tblColDReserva;
 
     @FXML
-    private Label lblHoras;
+    private TableColumn<Reserva, String> tblColDataFim;
 
     @FXML
-    private Label lblHotel;
+    private TableColumn<Reserva, String> tblColDataIni;
 
     @FXML
-    private Label lblSamos;
+    private TableColumn<Reserva, Integer> tblColIDCliente;
 
     @FXML
-    private TableColumn<?, ?> tblCoIDCartao;
-
-    @FXML
-    private TableColumn<?, ?> tblCoIDColab;
-
-    @FXML
-    private TableColumn<?, ?> tblCoIDQuarto;
-
-    @FXML
-    private TableColumn<?, ?> tblCoPreco;
-
-    @FXML
-    private TableColumn<?, ?> tblColDReserva;
-
-    @FXML
-    private TableColumn<?, ?> tblColDataFim;
-
-    @FXML
-    private TableColumn<?, ?> tblColDataIni;
-
-    @FXML
-    private TableColumn<?, ?> tblColIDCliente;
-
-    @FXML
-    private TableColumn<?, ?> tblColServEx;
-
-    @FXML
-    private TableView<?> tblReservas;
+    private TableColumn<Reserva, String> tblColServEx;
 
     @FXML
     void clickAdicionarReservaBtn(ActionEvent event) throws IOException {
@@ -123,6 +80,25 @@ public class GestaoReservas {
     @FXML
     void clickEliminarReservaBtn(ActionEvent event) {
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initTable();
+    }
+
+    private void initTable() {
+
+        tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
+        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("nifCliente"));
+        tblCoIDColab.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idColaborador"));
+        tblCoIDQuarto.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idQuarto"));
+        tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
+        tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
+        tblColServEx.setCellValueFactory(new PropertyValueFactory<Reserva, String>("servExtra"));
+        tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
+
+        tblReservas.setItems(Reserva.getReservas());
     }
 
 }

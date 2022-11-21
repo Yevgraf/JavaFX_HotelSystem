@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="PainelGestorStock" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.StockController">
    <children>
@@ -74,22 +75,22 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="btnGestorSaidaStock" layoutX="254.0" layoutY="418.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
+      <Button fx:id="btnGestorSaidaStock" layoutX="219.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorSaidaStock" fitHeight="36.0" fitWidth="36.0" layoutX="261.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorSaidaStock" fitHeight="36.0" fitWidth="36.0" layoutX="233.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/saidaStock.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorProdutosStock" layoutX="26.0" layoutY="418.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
+      <Button fx:id="btnGestorProdutosStock" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="32.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="20.0" layoutY="484.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoProdutos.png" />
          </image>
@@ -99,16 +100,26 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="btnVoltar" layoutX="467.0" layoutY="418.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="429.0" layoutY="470.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" prefHeight="200.0" prefWidth="536.0">
+      <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" onMousePressed="#clickMostrarDescricao" prefHeight="200.0" prefWidth="536.0">
          <columns>
             <TableColumn fx:id="idProdutoTable" prefWidth="274.0" text="Id do produto" />
             <TableColumn fx:id="quantidadeTable" prefWidth="261.0" text="Quantidade" />
          </columns>
       </TableView>
+      <Text fill="WHITE" layoutX="87.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
+         </font>
+      </Text>
+      <Text fx:id="descricaoTxt" fill="WHITE" layoutX="88.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="544.13671875">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

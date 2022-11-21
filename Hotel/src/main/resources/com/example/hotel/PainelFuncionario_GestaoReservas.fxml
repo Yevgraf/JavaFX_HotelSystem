@@ -76,14 +76,14 @@
       </Label>
       <TableView fx:id="tblReservas" layoutX="26.0" layoutY="198.0" prefHeight="206.0" prefWidth="665.0" style="-fx-border-color: #000000; -fx-background-color: #c1c8e4;">
          <columns>
-            <TableColumn fx:id="tblColDReserva" prefWidth="75.0" text="ID_Reserva" />
-            <TableColumn fx:id="tblColIDCliente" prefWidth="75.0" text="ID_Cliente" />
-            <TableColumn fx:id="tblCoIDColab" prefWidth="75.0" text="ID_Colaborador" />
-            <TableColumn fx:id="tblCoIDQuarto" prefWidth="75.0" text="ID_Quarto" />
-            <TableColumn fx:id="tblCoIDCartao" prefWidth="75.0" text="ID_Cartao" />
-            <TableColumn fx:id="tblColDataIni" prefWidth="75.0" text="dataInicio" />
-            <TableColumn fx:id="tblColDataFim" prefWidth="75.0" text="dataFim" />
-            <TableColumn fx:id="tblColServEx" prefWidth="75.0" text="servExtra" />
+            <TableColumn fx:id="tblColDReserva" prefWidth="75.0" text="ID Reserva" />
+            <TableColumn fx:id="tblColIDCliente" prefWidth="75.0" text="NIF Cliente" />
+            <TableColumn fx:id="tblCoIDColab" prefWidth="75.0" text="ID Colaborador" />
+            <TableColumn fx:id="tblCoIDQuarto" prefWidth="75.0" text="ID Quarto" />
+            <TableColumn fx:id="tblCoIDCartao" prefWidth="75.0" text="ID Cartao" />
+            <TableColumn fx:id="tblColDataIni" prefWidth="75.0" text="Data de Inicio" />
+            <TableColumn fx:id="tblColDataFim" prefWidth="75.0" text="Data Final" />
+            <TableColumn fx:id="tblColServEx" prefWidth="75.0" text="Serviços Extras" />
             <TableColumn fx:id="tblCoPreco" prefWidth="75.0" text="Preço" />
          </columns>
          <columnResizePolicy>
