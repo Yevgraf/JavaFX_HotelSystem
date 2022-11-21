@@ -6,11 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="d3ef6ea7-3c13-4dd4-abea-bcdcc9804b63" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/1f910d9c-44eb-46ba-b525-06c47eda9e41/storage_v2/_src_/database/2022_F_LP3_G4.FwCBZg/schema/dbo.sYMBAA.meta" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarFuncController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Controller/PanelCriarFuncController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Model/Colaborador.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelCriarFuncionario.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hotel/PainelCriarFuncionario.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

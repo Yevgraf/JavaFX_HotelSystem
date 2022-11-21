@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -16,7 +15,11 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
+<<<<<<< HEAD
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Main_Manager">
+=======
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
+>>>>>>> efaa143778ca6137baf7fb710e4733e2e51260ad
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -124,6 +127,7 @@
             <TableColumn fx:id="tbl_utilizador" prefWidth="75.0" text="Utilizador" />
             <TableColumn fx:id="tbl_password" prefWidth="75.0" text="Password" />
             <TableColumn fx:id="tbl_tipoColaborador" prefWidth="75.0" text="TipoColaborador" />
+            <TableColumn fx:id="tbl_idCartao" prefWidth="75.0" text="IdCartao" />
         </columns>
       </TableView>
       <Button fx:id="btn_remove_funcionario" layoutX="177.0" layoutY="502.0" mnemonicParsing="false" onAction="#OnActionRemoveFuncionario" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
@@ -158,11 +162,18 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
+      <TextField fx:id="txt_password" layoutX="484.0" layoutY="171.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <Label fx:id="lblHoras13111" layoutX="390.0" layoutY="202.0" prefHeight="55.0" prefWidth="90.0" text="TipoColaborador" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
+      <Label fx:id="lblHoras131111" layoutX="398.0" layoutY="243.0" prefHeight="55.0" prefWidth="90.0" text="IdCartao" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
+         </font>
+      </Label>
+      <TextField fx:id="txt_idCartao" layoutX="484.0" layoutY="256.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <ComboBox fx:id="cmb_tipocolaborador" layoutX="483.0" layoutY="217.0" prefWidth="150.0" promptText="selecione" />
       <Button fx:id="VoltarBtn" layoutX="594.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>
@@ -175,6 +186,5 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <PasswordField fx:id="txt_password" layoutX="483.0" layoutY="172.0" prefHeight="27.0" prefWidth="224.0" />
    </children>
 </AnchorPane>

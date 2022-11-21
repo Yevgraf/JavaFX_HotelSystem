@@ -11,52 +11,37 @@ public class Cartao {
 
     private String numCartao;
     private boolean cartaoMestre;
+    private RegistoCartao registoCartao;
 
-    public Cartao(){
+    public Cartao(String numCartao, boolean cartaoMestre, String registo){
 
     }
 
-    public Cartao(String numCartao, boolean cartaoMestre) {
+    public Cartao(String numCartao, boolean cartaoMestre, RegistoCartao registoCartao) {
         this.numCartao = numCartao;
         this.cartaoMestre = cartaoMestre;
+        this.registoCartao = registoCartao;
     }
 
-    public void setNumCartao(String numCartao) {
-        this.numCartao = numCartao;
-    }
+   public static ObservableList<Cartao> getCartao() {
+       ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
 
-    public void setCartaoMestre(boolean cartaoMestre) {
-        this.cartaoMestre = cartaoMestre;
-    }
+      try {
+          String cmd = "SELECT * FROM Cartao";
 
+          Statement st = DBconn.getConn().createStatement();
 
-    public String getNumCartao() {
-        return numCartao;
-    }
+          ResultSet rs = st.executeQuery(cmd);
 
-    public boolean isCartaoMestre() {
-        return cartaoMestre;
-    }
+          while (rs.next()) {
+              Cartao objCartao = new Cartao(rs.getString("numCartao"),rs.getBoolean("cartaoMestre"),rs.getString("registo"));
+              lista2.add(objCartao);
+          }
 
-  // public ObservableList<Cartao> ObservableList<Cartao> getCartao() {
-  //     ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
-
-  //     try {
-  //         String cmd = "SELECT * FROM Cartao";
-
-  //         Statement st = DBconn.getConn().createStatement();
-
-  //         ResultSet rs = st.executeQuery(cmd);
-
-  //         while (rs.next()) {
-  //             Cartao objCartao = new Cartao(rs.getString("numCartao"),rs.getBoolean("cartaoMestre"));
-  //             lista2.add(objCartao);
-  //         }
-
-  //         st.close();
-  //     } catch (Exception ex) {
-  //         System.err.println("Erro: " + ex.getMessage());
-  //     }
-  //     return lista2;
-  // }
+          st.close();
+      } catch (Exception ex) {
+          System.err.println("Erro: " + ex.getMessage());
+      }
+      return lista2;
+  }
 }

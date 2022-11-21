@@ -169,7 +169,7 @@ public class PanelCriarFuncController implements Initializable {
     private TextField txt_nome;
 
     @FXML
-    private TextField txt_password;
+    private PasswordField txt_password;
 
     @FXML
     private TextField txt_utilizador;
@@ -192,6 +192,7 @@ public class PanelCriarFuncController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        //Desencriptacao();
         initTable();
 
 
@@ -227,6 +228,9 @@ public class PanelCriarFuncController implements Initializable {
 
     public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
         PreparedStatement ps2;
+        int contador, tamanho, codigoASCII;
+        String password;
+        String passwordCriptografada = "";
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -238,21 +242,30 @@ public class PanelCriarFuncController implements Initializable {
             ps2.setString(5, txt_email.getText());
             ps2.setString(6, txt_contacto.getText());
             ps2.setString(7, txt_utilizador.getText());
-            ps2.setString(8, txt_password.getText());
+            password = txt_password.getText();
+            tamanho = password.length();
+            password = password.toUpperCase();
+            contador = 0;
+
+            while (contador < tamanho) {
+                codigoASCII = password.charAt(contador) + 130;
+                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                contador++;
+            }
+            ps2.setString(8, passwordCriptografada);
             ps2.setString(9, "funcionario");
             //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador inserido","Informação Colaborador");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador inserido", "Informação Colaborador");
 
 
         } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza os dados corretamente", "Erro Inserir");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
             throw new RuntimeException(ex);
 
         }
 
     }
-
 
 
     private void initCombos() {
@@ -275,7 +288,6 @@ public class PanelCriarFuncController implements Initializable {
     public void OnActionUpdate(ActionEvent actionEvent) {
 
 
-
     }
 
     public void OnActionRemoveFuncionario(ActionEvent actionEvent) {
@@ -286,11 +298,11 @@ public class PanelCriarFuncController implements Initializable {
             Connection connection = dbConn.getConn();
 
             Colaborador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
-            if (selectedID != null){
+            if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM Colaborador WHERE id = ?");
                 ps2.setInt(1, selectedID.getId());
                 ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Colaborador Removido", "Information");
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador Removido", "Information");
             }
 
         } catch (SQLException ex) {
@@ -298,3 +310,33 @@ public class PanelCriarFuncController implements Initializable {
         }
     }
 }
+
+
+
+//    public  String Desencriptacao() {
+//
+//        //Descriptografa a String passada por parâmetro
+//        //PreparedStatement ps2;
+//        int contador, tamanho, codigoASCII;
+//        String password;
+//        String passwordCriptografada = "";
+//        //DBconn dbConn = new DBconn();
+//        //Connection connection = dbConn.getConn();
+//        //ps2 = connection.prepareStatement("SELECT palavrapasse * From Colaborador", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+//        for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
+//            //ps2.setString(1, Colaborador.getColaborador().get(a).getPassword());
+//            password = Colaborador.getColaborador().get(a).getPassword();
+//
+//            tamanho = password.length();
+//            password = password.toUpperCase();
+//            contador = 0;
+//
+//            while (contador < tamanho) {
+//                codigoASCII = password.charAt(contador) - 130;
+//                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+//                contador++;
+//            }
+//        }
+//        return passwordCriptografada;
+//    }
+//}
