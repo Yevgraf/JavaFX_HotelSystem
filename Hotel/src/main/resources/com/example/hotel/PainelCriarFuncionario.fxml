@@ -4,6 +4,7 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -157,7 +158,6 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_password" layoutX="484.0" layoutY="171.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
       <Label fx:id="lblHoras13111" layoutX="390.0" layoutY="202.0" prefHeight="55.0" prefWidth="90.0" text="TipoColaborador" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
@@ -175,5 +175,6 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
+      <PasswordField fx:id="txt_password" layoutX="483.0" layoutY="172.0" prefHeight="27.0" prefWidth="224.0" />
    </children>
 </AnchorPane>
