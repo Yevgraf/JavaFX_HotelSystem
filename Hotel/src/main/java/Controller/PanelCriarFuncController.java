@@ -169,7 +169,7 @@ public class PanelCriarFuncController implements Initializable {
     private TextField txt_nome;
 
     @FXML
-    private TextField txt_password;
+    private PasswordField txt_password;
 
     @FXML
     private TextField txt_utilizador;
