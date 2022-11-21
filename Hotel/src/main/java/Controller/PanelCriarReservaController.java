@@ -125,34 +125,34 @@ public class PanelCriarReservaController {
     @FXML
     private CheckBox cbServExtra;
 
-    void setCmbIDCliente()
-    {
-        DBconn dbConn = new DBconn();
-        String Query = "select * from Cliente";
+    //  void setCmbIDCliente()
+    //  {
+        //   DBconn dbConn = new DBconn();
+        //  String Query = "select * from Cliente";
 
-        try
-        {
-            psmt = dbConn.pre
-            BDconnection.Open();
-            reader = cmddatabase.ExecuteReader();
+        //  try
+        // {
+            //  psmt = dbConn.pre
+            //  BDconnection.Open();
+            // reader = cmddatabase.ExecuteReader();
 
-            while (reader.Read())
-            {
+            //   while (reader.Read())
+            //   {
 
-                string sName = reader.GetString("NOME");
-                CMBvendedor.Items.Add(sName);
+                //  string sName = reader.GetString("NOME");
+                //    CMBvendedor.Items.Add(sName);
 
-            }
-            BDconnection.Close();
-        }
+                // }
+            // BDconnection.Close();
+            //  }
 
-        catch (Exception ex)
-        {
-            MessageBox.Show(ex.Message);
+        //   catch (Exception ex)
+     //   {
+    //        MessageBox.Show(ex.Message);
 
-        }
+    //    }
 
-    }
+   // }
 
 
 }

@@ -192,6 +192,7 @@ public class PanelCriarFuncController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        Desencriptacao();
         initTable();
 
 
@@ -227,6 +228,9 @@ public class PanelCriarFuncController implements Initializable {
 
     public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
         PreparedStatement ps2;
+        int contador, tamanho,codigoASCII;
+        String password;
+        String passwordCriptografada = "";
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -238,7 +242,18 @@ public class PanelCriarFuncController implements Initializable {
             ps2.setString(5, txt_email.getText());
             ps2.setString(6, txt_contacto.getText());
             ps2.setString(7, txt_utilizador.getText());
-            ps2.setString(8, txt_password.getText());
+            password = txt_password.getText();
+            tamanho = password.length();
+            password = password.toUpperCase();
+            contador = 0;
+
+            while(contador <tamanho)
+            {
+                codigoASCII = password.charAt(contador)+130;
+                passwordCriptografada = passwordCriptografada +(char) codigoASCII;
+                contador++;
+            }
+            ps2.setString(8, passwordCriptografada);
             ps2.setString(9, "funcionario");
             //  ps2.setString(9, txt_idCartao.getText());
             ps2.executeUpdate();
@@ -296,5 +311,34 @@ public class PanelCriarFuncController implements Initializable {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+
+
+    public  String Desencriptacao() {
+
+        //Descriptografa a String passada por parâmetro
+        //PreparedStatement ps2;
+        int contador, tamanho, codigoASCII;
+        String password;
+        String passwordCriptografada = "";
+        //DBconn dbConn = new DBconn();
+        //Connection connection = dbConn.getConn();
+        //ps2 = connection.prepareStatement("SELECT palavrapasse * From Colaborador", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+        for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
+            //ps2.setString(1, Colaborador.getColaborador().get(a).getPassword());
+            password = Colaborador.getColaborador().get(a).getPassword();
+
+            tamanho = password.length();
+            password = password.toUpperCase();
+            contador = 0;
+
+            while (contador < tamanho) {
+                codigoASCII = password.charAt(contador) - 130;
+                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                contador++;
+            }
+        }
+        return passwordCriptografada;
     }
 }
