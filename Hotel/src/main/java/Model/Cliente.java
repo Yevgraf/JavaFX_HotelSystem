@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Cliente {
-    private int idCliente;
     private String nome;
     private String contacto;
     private String email;
@@ -18,11 +17,11 @@ public class Cliente {
     private int nif;
 
 
-    public Cliente(Integer nif, String nome, String contacto, String email, String utilizador, String password){
+   public Cliente(){
 
-    }
-    public Cliente(int idCliente, String nome, String contacto, String email, String utilizador, String password, int nif) {
-        this.idCliente = idCliente;
+   }
+    public Cliente(String nome, String contacto, String email, String utilizador, String password, int nif) {
+
         this.nome = nome;
         this.contacto = contacto;
         this.email = email;
@@ -31,9 +30,7 @@ public class Cliente {
         this.nif = nif;
     }
 
-    public void setIdCliente(int idCliente) {
-        this.idCliente = idCliente;
-    }
+
 
     public void setNome(String nome) {
         this.nome = nome;
@@ -60,9 +57,6 @@ public class Cliente {
     }
 
 
-    public int getIdCliente() {
-        return idCliente;
-    }
 
     public String getNome() {
         return nome;
@@ -99,7 +93,8 @@ public class Cliente {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Cliente obj = new Cliente(rs.getInt("nif"), rs.getString("nome"), rs.getString("contacto"),rs.getString("email"),rs.getString("utilizador"),rs.getString("password"));
+                Cliente obj = new Cliente(rs.getString("nome"),rs.getString("contacto"),rs.getString("email"),
+                        rs.getString("utilizador"),rs.getString("palavrapasse"),rs.getInt("nif"));
                 lista.add(obj);
             }
 

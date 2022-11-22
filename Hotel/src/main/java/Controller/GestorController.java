@@ -105,10 +105,10 @@ public class GestorController {
     @FXML
     void clickGestaoClienteBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoCliente.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
+        stage.setTitle("Gerir Clientes");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

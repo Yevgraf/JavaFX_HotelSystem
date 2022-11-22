@@ -265,7 +265,6 @@ public class PanelCriarFuncController implements Initializable {
 
     }
 
-
     private void initCombos() {
 
         ObservableList<Colaborador> oblColab = FXCollections.observableArrayList(Colaborador.getColaborador());
@@ -284,7 +283,6 @@ public class PanelCriarFuncController implements Initializable {
     }
 
     public void OnActionUpdate(ActionEvent actionEvent) {
-
 
     }
 

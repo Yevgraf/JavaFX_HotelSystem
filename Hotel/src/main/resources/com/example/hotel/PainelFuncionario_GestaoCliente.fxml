@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Main_Manager">
+<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoCliente">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -59,7 +59,7 @@
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
-      <Button fx:id="btnGestorEditarCliente" layoutX="262.0" layoutY="417.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEditarCliente" layoutX="191.0" layoutY="418.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="154.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -79,16 +79,15 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="271.0" layoutY="431.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="198.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/editar.png" />
          </image>
       </ImageView>
       <TableView fx:id="tblClientes" layoutX="26.0" layoutY="198.0" prefHeight="206.0" prefWidth="665.0" style="-fx-border-color: #000000; -fx-background-color: #c1c8e4;">
          <columns>
-            <TableColumn fx:id="tblColIDCliente" prefWidth="75.0" text="ID_Cliente" />
-            <TableColumn fx:id="tblColNomeCliente" prefWidth="75.0" text="Nome" />
-            <TableColumn fx:id="tblColContacto" prefWidth="75.0" text="Contacto" />
+            <TableColumn fx:id="tblColNomeCliente" prefWidth="108.79998397827148" text="Nome" />
+            <TableColumn fx:id="tblColContacto" prefWidth="112.0" text="Contacto" />
             <TableColumn fx:id="tblColEmail" prefWidth="75.0" text="E-mail" />
             <TableColumn fx:id="tblColUtilizador" prefWidth="75.0" text="Utilizador" />
             <TableColumn fx:id="tblColPassword" prefWidth="75.0" text="Password" />
@@ -98,17 +97,17 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="btnGestorEliminarCliente" layoutX="497.0" layoutY="417.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEliminarCliente" layoutX="370.0" layoutY="417.0" mnemonicParsing="false" onAction="#RemoveCliente" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="506.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="378.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="26.0" layoutY="418.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorAdicionarCliente" layoutX="26.0" layoutY="418.0" mnemonicParsing="false" onAction="#clickAddClienteBtn" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -128,10 +127,15 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="41.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="31.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/adicionar.png" />
          </image>
       </ImageView>
+      <Button fx:id="btnVoltar" layoutX="544.0" layoutY="417.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
