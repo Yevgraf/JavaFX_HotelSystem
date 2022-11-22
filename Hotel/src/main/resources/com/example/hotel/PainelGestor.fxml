@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="roomservices" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestorController">
+<AnchorPane fx:id="roomservices" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestorController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -117,7 +117,7 @@
             <Image url="@../../../img/gestaoServicos.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorCliente" disable="true" layoutX="61.0" layoutY="348.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Gestão de Clientes" textFill="#dfc6ff">
+      <Button fx:id="btnGestorCliente" disable="true" layoutX="61.0" layoutY="348.0" mnemonicParsing="false" onAction="#clickGestaoClienteBtn" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Gestão de Clientes" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
