@@ -35,7 +35,7 @@ public class Colaborador {
         this.email = email;
         this.contacto = contacto;
         this.utilizador = utilizador;
-        this.password = password;
+        this.password = palavrapasse;
         this.tipoColaborador = tipoColaborador;
 
     }

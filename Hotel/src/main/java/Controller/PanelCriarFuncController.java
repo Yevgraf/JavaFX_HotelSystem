@@ -209,7 +209,6 @@ public class PanelCriarFuncController implements Initializable {
         tbl_password.setResizable(false);
         tbl_tipoColaborador.setResizable(false);
         tbl_utilizador.setResizable(false);
-        //tbl_idCartao.setResizable(false);
 
         tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
         tbl_name.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nome"));
@@ -221,7 +220,6 @@ public class PanelCriarFuncController implements Initializable {
         tbl_password.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("password"));
         tbl_tipoColaborador.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("tipoColaborador"));
         tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("utilizador"));
-        //tbl_idCartao.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("idCartao"));
         tv_funcionarios.setItems(Colaborador.getColaborador());
     }
 
@@ -303,12 +301,14 @@ public class PanelCriarFuncController implements Initializable {
                 ps2.setInt(1, selectedID.getId());
                 ps2.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador Removido", "Information");
+
             }
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
     }
+
 }
 
 
