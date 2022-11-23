@@ -1,6 +1,6 @@
 package Model;
 
-public class TipoQuarto {
+public class    TipoQuarto {
     private int idTipoQuarto;
     private String tipo;
     private boolean vista;

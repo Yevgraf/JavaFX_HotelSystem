@@ -9,21 +9,44 @@ import java.sql.Statement;
 
 public class Cartao {
 
+    private int id;
     private String numCartao;
-    private boolean cartaoMestre;
-    private RegistoCartao registoCartao;
+    private int idQuarto;
 
-    public Cartao(String numCartao, boolean cartaoMestre, String registo){
-
+    public Cartao() {
     }
 
-    public Cartao(String numCartao, boolean cartaoMestre, RegistoCartao registoCartao) {
+    public Cartao(int id, String numCartao, int idQuarto) {
+        this.id = id;
         this.numCartao = numCartao;
-        this.cartaoMestre = cartaoMestre;
-        this.registoCartao = registoCartao;
+        this.idQuarto = idQuarto;
     }
 
-   public static ObservableList<Cartao> getCartao() {
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumCartao() {
+        return numCartao;
+    }
+
+    public void setNumCartao(String numCartao) {
+        this.numCartao = numCartao;
+    }
+
+    public int getIdQuarto() {
+        return idQuarto;
+    }
+
+    public void setIdQuarto(int idQuarto) {
+        this.idQuarto = idQuarto;
+    }
+
+    public static ObservableList<Cartao> getCartao() {
        ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
 
       try {
@@ -34,7 +57,7 @@ public class Cartao {
           ResultSet rs = st.executeQuery(cmd);
 
           while (rs.next()) {
-              Cartao objCartao = new Cartao(rs.getString("numCartao"),rs.getBoolean("cartaoMestre"),rs.getString("registo"));
+              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numCartao"),rs.getInt("idQuarto"));
               lista2.add(objCartao);
           }
 
