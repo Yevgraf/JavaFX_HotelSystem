@@ -150,4 +150,16 @@ public class GestorController {
         stage.show();
     }
 
+    @FXML
+    void btnGestaoQuartosOnAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
+        stage.setTitle("Criar Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+
 }

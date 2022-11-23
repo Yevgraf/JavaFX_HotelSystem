@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class Quarto {
     private int id;
-    private int idTipoQuarto;
+    private String TipoQuarto;
     private int piso;
     private boolean wifi;
     private double preco;
@@ -17,9 +17,9 @@ public class Quarto {
     public Quarto() {
     }
 
-    public Quarto(int id, int idTipoQuarto, int piso, boolean wifi, double preco) {
+    public Quarto(int id, String TipoQuarto, int piso, boolean wifi, double preco) {
         this.id = id;
-        this.idTipoQuarto = idTipoQuarto;
+        this.TipoQuarto = TipoQuarto;
         this.piso = piso;
         this.wifi = wifi;
         this.preco = preco;
@@ -33,12 +33,12 @@ public class Quarto {
         this.id = id;
     }
 
-    public int getIdTipoQuarto() {
-        return idTipoQuarto;
+    public String getTipoQuarto() {
+        return TipoQuarto;
     }
 
-    public void setIdTipoQuarto(int idTipoQuarto) {
-        this.idTipoQuarto = idTipoQuarto;
+    public void setIdTipoQuarto(String TipoQuarto) {
+        this.TipoQuarto = TipoQuarto;
     }
 
     public int getPiso() {
@@ -75,7 +75,7 @@ public class Quarto {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getInt("idTipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
+                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("idTipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
                         rs.getDouble("preco"));
                 lista3.add(objQuarto);
             }
@@ -86,4 +86,6 @@ public class Quarto {
         }
         return lista3;
     }
+
+
 }

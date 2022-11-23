@@ -1,36 +1,58 @@
 package Controller;
 
+import BLL.DBconn;
+import Model.Colaborador;
+import Model.MessageBoxes;
 import Model.Quarto;
+import Model.TipoQuarto;
+import com.example.hotel.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import org.bouncycastle.crypto.agreement.srp.SRP6Client;
 
-public class CriarQuartoController {
+import java.io.IOException;
+import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Date;
+import java.util.ResourceBundle;
+
+public class CriarQuartoController implements Initializable {
 
     @FXML
     private Button BtnAddProduto;
 
     @FXML
-    private AnchorPane PainelGestorProdutoAdicionar;
+    private AnchorPane CriarQuarto;
 
     @FXML
-    private Button adicionarReservaBtn;
+    private Button btnAddQuarto;
+
+    @FXML
+    private Button btnAddTipoQuarto;
 
     @FXML
     private ImageView btnBack;
 
     @FXML
-    private ComboBox<?> cmbTipoQuarto;
+    private ComboBox<TipoQuarto> cmbTipoQuarto;
+
 
     @FXML
-    private ComboBox<?> cmbWifi;
+    private CheckBox checkboxWifi;
 
     @FXML
     private ImageView imgGestorAdionarProd;
@@ -81,7 +103,7 @@ public class CriarQuartoController {
     private TableColumn<Quarto, Double> tbl_preco;
 
     @FXML
-    private TableColumn<Quarto, String> tbl_tipQuarto;
+    private TableColumn<Quarto, String > tbl_tipQuarto;
 
     @FXML
     private TableColumn<Quarto, Boolean> tbl_wifi;
@@ -99,12 +121,52 @@ public class CriarQuartoController {
     private Button voltarBtn;
 
     @FXML
+    void AddTipoQuartoOnAction(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelAddTipoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnAddTipoQuarto.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
     void addProduto(ActionEvent event) {
 
     }
 
     @FXML
     void clickAddQuarto(ActionEvent event) {
+        PreparedStatement ps2;
+
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco ) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2.setString(1, cmbTipoQuarto.getPromptText());
+            ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
+            if (checkboxWifi.isSelected()){
+                checkboxWifi.setSelected(true);
+            }else{
+                checkboxWifi.setSelected(false);
+            }
+            ps2.setBoolean(3,checkboxWifi.isSelected());
+            ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+
+
+
+
+            ps2.executeUpdate();
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
+
+
+        } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
+            throw new RuntimeException(ex);
+
+        }
 
     }
 
@@ -112,5 +174,36 @@ public class CriarQuartoController {
     void clickVoltarBtn(ActionEvent event) {
 
     }
+
+
+    private void initTable() {
+
+        tbl_id.setResizable(false);
+        tbl_tipQuarto.setResizable(false);
+        tbl_piso.setResizable(false);
+        tbl_preco.setResizable(false);
+
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
+        tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
+        tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("piso"));
+        tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
+
+        tv_Quarto.setItems(Quarto.getQuarto());
+    }
+    private void initCombos() {
+        ObservableList<TipoQuarto> oblTipoQuarto = FXCollections.observableArrayList(TipoQuarto.getTipoQuarto());
+            cmbTipoQuarto.getItems().addAll(oblTipoQuarto);
+
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initTable();
+        initCombos();
+
+
+    }
+
+
 
 }
