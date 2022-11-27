@@ -61,7 +61,7 @@
                 <Font name="Bernard MT Condensed" size="31.0" />
             </font>
         </Label>
-        <Button fx:id="btnAddQuarto" layoutX="465.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddQuarto" prefHeight="42.0" prefWidth="113.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
+        <Button fx:id="btnAddQuarto" layoutX="263.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
@@ -121,7 +121,7 @@
             <TableColumn fx:id="tbl_preco" prefWidth="87.0" text="Preço" />
             </columns>
         </TableView>
-        <Button fx:id="voltarBtn" layoutX="595.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+        <Button fx:id="voltarBtn" layoutX="606.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
@@ -130,5 +130,15 @@
         <TextField fx:id="txt_preco" layoutX="138.0" layoutY="366.0" prefHeight="25.0" prefWidth="206.0" />
       <Button fx:id="btnAddTipoQuarto" layoutX="356.0" layoutY="399.0" mnemonicParsing="false" onAction="#AddTipoQuartoOnAction" prefHeight="26.0" prefWidth="159.0" text="Adicionar Tipo de quarto" />
       <CheckBox fx:id="checkboxWifi" layoutX="149.0" layoutY="326.0" mnemonicParsing="false" text="CheckBox" textFill="WHITE" />
+      <Button fx:id="btnRmvQuarto" layoutX="378.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickRmvQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnEditar" layoutX="492.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
+         <font>
+            <Font name="Bodoni MT Condensed" size="19.0" />
+         </font>
+      </Button>
     </children>
 </AnchorPane>

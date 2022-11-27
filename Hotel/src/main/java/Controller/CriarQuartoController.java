@@ -118,6 +118,11 @@ public class CriarQuartoController implements Initializable {
     private TextField txt_preco;
 
     @FXML
+    private Button btnRmvQuarto;
+
+    @FXML
+    private Button btnEditar;
+    @FXML
     private Button voltarBtn;
 
     @FXML
@@ -147,15 +152,13 @@ public class CriarQuartoController implements Initializable {
             ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco ) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, cmbTipoQuarto.getPromptText());
             ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
-            if (checkboxWifi.isSelected()){
+            if (checkboxWifi.isSelected()) {
                 checkboxWifi.setSelected(true);
-            }else{
+            } else {
                 checkboxWifi.setSelected(false);
             }
-            ps2.setBoolean(3,checkboxWifi.isSelected());
+            ps2.setBoolean(3, checkboxWifi.isSelected());
             ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
-
-
 
 
             ps2.executeUpdate();
@@ -171,7 +174,15 @@ public class CriarQuartoController implements Initializable {
     }
 
     @FXML
-    void clickVoltarBtn(ActionEvent event) {
+    void clickVoltarBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
 
     }
 
@@ -190,9 +201,10 @@ public class CriarQuartoController implements Initializable {
 
         tv_Quarto.setItems(Quarto.getQuarto());
     }
+
     private void initCombos() {
         ObservableList<TipoQuarto> oblTipoQuarto = FXCollections.observableArrayList(TipoQuarto.getTipoQuarto());
-            cmbTipoQuarto.getItems().addAll(oblTipoQuarto);
+        cmbTipoQuarto.getItems().addAll(oblTipoQuarto);
 
     }
 
@@ -205,5 +217,55 @@ public class CriarQuartoController implements Initializable {
     }
 
 
+    public void clickEditar(ActionEvent actionEvent) {
 
+
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
+                ps2.setString(1, cmbTipoQuarto.getPromptText());
+                ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
+                if (checkboxWifi.isSelected()) {
+                    checkboxWifi.setSelected(true);
+                } else {
+                    checkboxWifi.setSelected(false);
+                }
+                ps2.setBoolean(3, checkboxWifi.isSelected());
+                ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+
+                ps2.executeUpdate();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
+
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+    public void clickRmvQuarto(ActionEvent actionEvent) {
+
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
+                ps2.setInt(1, selectedID.getId());
+                ps2.executeUpdate();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
+
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

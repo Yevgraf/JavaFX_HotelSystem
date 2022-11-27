@@ -75,7 +75,7 @@ public class Quarto {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("idTipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
+                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
                         rs.getDouble("preco"));
                 lista3.add(objQuarto);
             }
