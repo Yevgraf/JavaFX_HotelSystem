@@ -1,14 +1,13 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
 import Model.MessageBoxes;
+import Model.TipoColaborador;
 import Model.TipoQuarto;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -17,26 +16,18 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
-import java.util.ResourceBundle;
 
-public class TipoQuartoController implements Initializable {
+public class TipoColaboradorController {
 
     @FXML
-    private AnchorPane PainelAddTipoQuarto;
+    private AnchorPane PainelAddTipoColaborador;
 
     @FXML
     private ImageView btnBack;
-
-
-    @FXML
-    private Button btn_voltar;
-
 
     @FXML
     private ImageView btnCloseApp;
@@ -57,7 +48,7 @@ public class TipoQuartoController implements Initializable {
     private Button btn_remover;
 
     @FXML
-    private CheckBox checkBox_Vista;
+    private Button btn_voltar;
 
     @FXML
     private ImageView imgGestorAdionarProd;
@@ -87,16 +78,13 @@ public class TipoQuartoController implements Initializable {
     private Label lblSamos;
 
     @FXML
-    private TableColumn<TipoQuarto, Integer> tbl_Id;
+    private TableColumn<TipoColaborador, Integer> tbl_Id;
 
     @FXML
-    private TableColumn<TipoQuarto, String > tbl_tipo;
+    private TableColumn<TipoColaborador, String> tbl_tipo;
 
     @FXML
-    private TableColumn<TipoQuarto, Boolean> tbl_vista;
-
-    @FXML
-    private TableView<TipoQuarto> tv_TipoQuarto;
+    private TableView<TipoColaborador> tv_TipoColaborador;
 
     @FXML
     private TextField txt_tipo;
@@ -108,17 +96,11 @@ public class TipoQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO TipoQuarto(tipo,vista ) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO TipoColaborador(tipo ) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, txt_tipo.getText());
-            if (checkBox_Vista.isSelected()){
-                checkBox_Vista.setSelected(true);
-            }else{
-                checkBox_Vista.setSelected(false);
-            }
-            ps2.setBoolean(2,checkBox_Vista.isSelected());
 
             ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Colaborador inserido", "Informação Tipo de colaborador");
 
 
         } catch (SQLException ex) {
@@ -136,47 +118,45 @@ public class TipoQuartoController implements Initializable {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            TipoQuarto selectedID = tv_TipoQuarto.getSelectionModel().getSelectedItem();
+            TipoColaborador selectedID = tv_TipoColaborador.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM TipoQuarto WHERE id = ?");
-                ps2.setInt(1, selectedID.getIdTipoQuarto());
+                ps2 = connection.prepareStatement("DELETE FROM TipoColaborador WHERE id = ?");
+                ps2.setInt(1, selectedID.getId());
                 ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto Removido", "Information");
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Colaborador Removido", "Information");
 
             }
 
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+
+    }
+
+    @FXML
+    void btnVoltarAction(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarFuncionario.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btn_voltar.getScene().getWindow();
+        stage.setTitle("criar funcionario");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+
+
     }
 
     private void initTable() {
 
         tbl_Id.setResizable(false);
         tbl_tipo.setResizable(false);
-        tbl_vista.setResizable(false);
 
 
-        tbl_Id.setCellValueFactory(new PropertyValueFactory<TipoQuarto, Integer>("idTipoQuarto"));
-        tbl_tipo.setCellValueFactory(new PropertyValueFactory<TipoQuarto, String>("tipo"));
-        tbl_vista.setCellValueFactory(new PropertyValueFactory<TipoQuarto, Boolean>("vista"));
+        tbl_Id.setCellValueFactory(new PropertyValueFactory<TipoColaborador, Integer>("id"));
+        tbl_tipo.setCellValueFactory(new PropertyValueFactory<TipoColaborador, String>("tipo"));
 
-        tv_TipoQuarto.setItems(TipoQuarto.getTipoQuarto());
-    }
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initTable();
+        tv_TipoColaborador.setItems(TipoColaborador.getTipoColaborador());
     }
 
-
-    public void btnVoltarAction(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btn_voltar.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
 }
