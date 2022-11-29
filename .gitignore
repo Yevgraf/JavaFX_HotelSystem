@@ -40,3 +40,6 @@ bin/
 ### Mac OS ###
 .DS_Store
 /.run/hotel.run.xml
+/Hotel/.idea/dataSources.local.xml
+/Hotel/.idea/sonarlint/issuestore/index.pb
+/Hotel/.idea/workspace.xml
