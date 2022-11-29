@@ -91,6 +91,20 @@ public class GestorController {
     private AnchorPane roomservices;
 
     @FXML
+    private Button getBtngestorServicon;
+
+    @FXML
+    void clickBtngestorServico(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("InserirServico.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        stage.setTitle("Gerir Servicos");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
     void clickGestaoColabBtn(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarFuncionario.fxml"));

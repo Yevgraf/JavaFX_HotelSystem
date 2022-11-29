@@ -107,7 +107,7 @@
             <Image url="@../../../img/gestaoQuartos.png" />
          </image>
       </ImageView>
-      <Button fx:id="btngestorServico" disable="true" layoutX="427.0" layoutY="254.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Serviços" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="btngestorServico" layoutX="427.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtngestorServico" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Serviços" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
