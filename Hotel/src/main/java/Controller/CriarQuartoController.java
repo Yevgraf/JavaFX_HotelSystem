@@ -153,23 +153,24 @@ public class CriarQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (piso,wifi,preco,numeroCartao) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3.setString(1,(txt_numcartao.getText()));
-            ps2.setString(1, cmbTipoQuarto.getPromptText());
-            ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
+           // ps2.setString(1, cmbTipoQuarto.getPromptText());
+            ps2.setInt(1, Integer.parseInt(txt_piso.getText()));
             if (checkboxWifi.isSelected()) {
                 checkboxWifi.setSelected(true);
             } else {
                 checkboxWifi.setSelected(false);
             }
-            ps2.setBoolean(3, checkboxWifi.isSelected());
-            ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
-            ps2.setString(5,(txt_numcartao.getText()));
+            ps2.setBoolean(2, checkboxWifi.isSelected());
+            ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
+            ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
+            ps3.setString(1,(txt_numcartao.getText()));
 
 
-            ps2.executeUpdate();
             ps3.executeUpdate();
+            ps2.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
 
         } catch (SQLException ex) {
