@@ -11,15 +11,13 @@ public class Cartao {
 
     private int id;
     private String numCartao;
-    private int idQuarto;
 
-    public Cartao() {
+    public Cartao(int id, String numCartao) {
     }
 
     public Cartao(int id, String numCartao, int idQuarto) {
         this.id = id;
         this.numCartao = numCartao;
-        this.idQuarto = idQuarto;
     }
 
     public int getId() {
@@ -38,13 +36,6 @@ public class Cartao {
         this.numCartao = numCartao;
     }
 
-    public int getIdQuarto() {
-        return idQuarto;
-    }
-
-    public void setIdQuarto(int idQuarto) {
-        this.idQuarto = idQuarto;
-    }
 
     public static ObservableList<Cartao> getCartao() {
        ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
@@ -57,7 +48,7 @@ public class Cartao {
           ResultSet rs = st.executeQuery(cmd);
 
           while (rs.next()) {
-              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numCartao"),rs.getInt("idQuarto"));
+              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numCartao"));
               lista2.add(objCartao);
           }
 
