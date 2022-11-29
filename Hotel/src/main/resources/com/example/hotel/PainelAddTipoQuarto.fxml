@@ -115,7 +115,7 @@
         </Label>
       <CheckBox fx:id="checkBox_Vista" layoutX="453.0" layoutY="241.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Vista" textFill="WHITE" />
         <TextField fx:id="txt_tipo" layoutX="102.0" layoutY="240.0" prefHeight="27.0" prefWidth="333.0" style="-fx-border-color: #ffffff;" />
-      <TableView fx:id="tv_TipoColaborador" layoutX="64.0" layoutY="281.0" prefHeight="200.0" prefWidth="446.0">
+      <TableView fx:id="tv_TipoQuarto" layoutX="64.0" layoutY="281.0" prefHeight="200.0" prefWidth="446.0">
         <columns>
           <TableColumn fx:id="tbl_Id" prefWidth="75.0" text="Id" />
           <TableColumn fx:id="tbl_tipo" prefWidth="266.0" text="Tipo" />
