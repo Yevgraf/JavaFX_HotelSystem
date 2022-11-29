@@ -2,6 +2,8 @@ package Controller;
 
 import Model.Colaborador;
 import Model.MessageBoxes;
+import Model.TipoColaborador;
+import Model.TipoQuarto;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -39,6 +41,8 @@ public class PanelCriarFuncController implements Initializable {
     private ImageView btnDefGestor;
 
     @FXML
+    private Button btnAddTipoColab;
+    @FXML
     private Button btn_refresh;
 
     @FXML
@@ -60,7 +64,7 @@ public class PanelCriarFuncController implements Initializable {
     private Button btn_update_funcionario;
 
     @FXML
-    private ComboBox<Colaborador> cmb_tipocolaborador;
+    private ComboBox<TipoColaborador> cmb_tipocolaborador;
 
     @FXML
     private ImageView imgGestorAdionarProd;
@@ -194,7 +198,15 @@ public class PanelCriarFuncController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         //Desencriptacao();
         initTable();
+        initCombos();
 
+
+    }
+
+    private void initCombos() {
+
+        ObservableList<TipoColaborador> oblTipoColab = FXCollections.observableArrayList(TipoColaborador.getTipoColaborador());
+        cmb_tipocolaborador.getItems().addAll(oblTipoColab);
 
     }
 
@@ -265,11 +277,6 @@ public class PanelCriarFuncController implements Initializable {
 
     }
 
-    private void initCombos() {
-
-        ObservableList<Colaborador> oblColab = FXCollections.observableArrayList(Colaborador.getColaborador());
-        cmb_tipocolaborador.getItems().add((Colaborador) oblColab);
-    }
 
     public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 
@@ -307,6 +314,16 @@ public class PanelCriarFuncController implements Initializable {
         }
     }
 
+    public void btnAddTipoColabAction(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelAddTipoColaborador.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnAddTipoColab.getScene().getWindow();
+        stage.setTitle("Criar Tipo Colaborador");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 }
 
 

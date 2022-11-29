@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -15,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelAddTipoQuarto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TipoQuartoController">
+<AnchorPane fx:id="PainelAddTipoColaborador" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TipoColaboradorController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="9.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
         <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
@@ -73,7 +72,7 @@
                 <Font name="Modern No. 20" size="33.0" />
             </font>
         </Label>
-        <Label fx:id="lblGestaoClientes" layoutX="59.0" layoutY="147.0" prefHeight="46.0" prefWidth="325.0" text="Gestão de TipoQuarto" textFill="WHITE">
+        <Label fx:id="lblGestaoClientes" layoutX="59.0" layoutY="147.0" prefHeight="46.0" prefWidth="394.0" text="Gestão de Tipo Colaborador" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="31.0" />
             </font>
@@ -113,24 +112,22 @@
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-      <CheckBox fx:id="checkBox_Vista" layoutX="453.0" layoutY="241.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="68.0" text="Vista" textFill="WHITE" />
         <TextField fx:id="txt_tipo" layoutX="102.0" layoutY="240.0" prefHeight="27.0" prefWidth="333.0" style="-fx-border-color: #ffffff;" />
-      <TableView fx:id="tv_TipoColaborador" layoutX="64.0" layoutY="281.0" prefHeight="200.0" prefWidth="446.0">
-        <columns>
-          <TableColumn fx:id="tbl_Id" prefWidth="75.0" text="Id" />
-          <TableColumn fx:id="tbl_tipo" prefWidth="266.0" text="Tipo" />
-            <TableColumn fx:id="tbl_vista" prefWidth="94.0" text="Vista" />
-        </columns>
-      </TableView>
-      <Button fx:id="btn_remover" layoutX="528.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnRemoverAction" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
-         <font>
-            <Font name="Bodoni MT Condensed" size="19.0" />
-         </font>
-      </Button>
-      <Button fx:id="btn_voltar" layoutX="528.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnVoltarAction" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
-         <font>
-            <Font name="Bodoni MT Condensed" size="19.0" />
-         </font>
-      </Button>
+        <TableView fx:id="tv_TipoQuarto" layoutX="64.0" layoutY="281.0" prefHeight="200.0" prefWidth="446.0">
+            <columns>
+                <TableColumn fx:id="tbl_Id" prefWidth="75.0" text="Id" />
+                <TableColumn fx:id="tbl_tipo" prefWidth="370.0" text="Tipo" />
+            </columns>
+        </TableView>
+        <Button fx:id="btn_remover" layoutX="528.0" layoutY="366.0" mnemonicParsing="false" onAction="#btnRemoverAction" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
+            <font>
+                <Font name="Bodoni MT Condensed" size="19.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn_voltar" layoutX="528.0" layoutY="416.0" mnemonicParsing="false" onAction="#btnVoltarAction" prefHeight="42.0" prefWidth="126.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+            <font>
+                <Font name="Bodoni MT Condensed" size="19.0" />
+            </font>
+        </Button>
     </children>
 </AnchorPane>
