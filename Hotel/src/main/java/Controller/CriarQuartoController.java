@@ -112,6 +112,9 @@ public class CriarQuartoController implements Initializable {
     private TableView<Quarto> tv_Quarto;
 
     @FXML
+    private TextField txt_numcartao;
+
+    @FXML
     private TextField txt_piso;
 
     @FXML
@@ -145,11 +148,14 @@ public class CriarQuartoController implements Initializable {
     @FXML
     void clickAddQuarto(ActionEvent event) {
         PreparedStatement ps2;
+        PreparedStatement ps3;
 
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco ) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps3.setString(1,(txt_numcartao.getText()));
             ps2.setString(1, cmbTipoQuarto.getPromptText());
             ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
             if (checkboxWifi.isSelected()) {
@@ -159,11 +165,12 @@ public class CriarQuartoController implements Initializable {
             }
             ps2.setBoolean(3, checkboxWifi.isSelected());
             ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+            ps2.setString(5,(txt_numcartao.getText()));
 
 
             ps2.executeUpdate();
+            ps3.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
-
 
         } catch (SQLException ex) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
