@@ -306,35 +306,23 @@ public class PanelCriarFuncController implements Initializable {
             throw new RuntimeException(ex);
         }
     }
+    
+    public  String Desencriptacao() {
 
+       //Descriptografa a String passada por parâmetro
+
+        int contador, tamanho, codigoASCII;
+        String password; String passwordCriptografada = "";
+        for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
+           password = Colaborador.getColaborador().get(a).getPassword();
+
+            tamanho = password.length();
+            password = password.toUpperCase();
+           contador = 0;
+ while (contador < tamanho) {
+               codigoASCII = password.charAt(contador) - 130; passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+              contador++;
+           }
+       } return passwordCriptografada;
+   }
 }
-
-
-
-//    public  String Desencriptacao() {
-//
-//        //Descriptografa a String passada por parâmetro
-//        //PreparedStatement ps2;
-//        int contador, tamanho, codigoASCII;
-//        String password;
-//        String passwordCriptografada = "";
-//        //DBconn dbConn = new DBconn();
-//        //Connection connection = dbConn.getConn();
-//        //ps2 = connection.prepareStatement("SELECT palavrapasse * From Colaborador", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-//        for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
-//            //ps2.setString(1, Colaborador.getColaborador().get(a).getPassword());
-//            password = Colaborador.getColaborador().get(a).getPassword();
-//
-//            tamanho = password.length();
-//            password = password.toUpperCase();
-//            contador = 0;
-//
-//            while (contador < tamanho) {
-//                codigoASCII = password.charAt(contador) - 130;
-//                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-//                contador++;
-//            }
-//        }
-//        return passwordCriptografada;
-//    }
-//}
