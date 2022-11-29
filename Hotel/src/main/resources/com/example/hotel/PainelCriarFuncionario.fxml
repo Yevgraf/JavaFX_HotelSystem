@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -176,5 +176,6 @@
          </font>
       </Button>
       <PasswordField fx:id="txt_password" layoutX="483.0" layoutY="172.0" prefHeight="27.0" prefWidth="224.0" />
+      <Button fx:id="btnAddTipoColab" layoutX="639.0" layoutY="218.0" mnemonicParsing="false" onAction="#btnAddTipoColabAction" prefHeight="25.0" prefWidth="68.0" text="Adicionar" />
    </children>
 </AnchorPane>

@@ -3,6 +3,7 @@ package Model;
 public class ProdutoQuarto {
     private int idQuarto;
     private int idServico;
+
     private int quantidade;
 
     public ProdutoQuarto(){
