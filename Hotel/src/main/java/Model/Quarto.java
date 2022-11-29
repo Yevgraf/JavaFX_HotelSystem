@@ -14,15 +14,18 @@ public class Quarto {
     private boolean wifi;
     private double preco;
 
+    private String numCartao;
+
     public Quarto() {
     }
 
-    public Quarto(int id, String TipoQuarto, int piso, boolean wifi, double preco) {
+    public Quarto(int id, String TipoQuarto, int piso, boolean wifi, double preco, String numCartao) {
         this.id = id;
         this.TipoQuarto = TipoQuarto;
         this.piso = piso;
         this.wifi = wifi;
         this.preco = preco;
+        this.numCartao = numCartao;
     }
 
     public int getId() {
@@ -61,9 +64,18 @@ public class Quarto {
         return preco;
     }
 
+    public String getNumCartao() {
+        return numCartao;
+    }
+
+    public void setNumCartao(String numCartao) {
+        this.numCartao = numCartao;
+    }
+
     public void setPreco(double preco) {
         this.preco = preco;
     }
+
     public static ObservableList<Quarto> getQuarto() {
         ObservableList<Quarto> lista3 = FXCollections.observableArrayList();
 
@@ -76,7 +88,7 @@ public class Quarto {
 
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"));
+                        rs.getDouble("preco"), rs.getNString("numerocartao"));
                 lista3.add(objQuarto);
             }
 
