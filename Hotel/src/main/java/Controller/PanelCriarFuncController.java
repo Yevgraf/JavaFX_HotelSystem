@@ -314,8 +314,8 @@ public class PanelCriarFuncController implements Initializable {
         }
     }
     
-    public  String Desencriptacao() {
 
+        public void btnAddTipoColabAction(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelAddTipoColaborador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnAddTipoColab.getScene().getWindow();
@@ -326,7 +326,7 @@ public class PanelCriarFuncController implements Initializable {
     }
 
        //Descriptografa a String passada por parâmetro
-
+       public  String Desencriptacao() {
         int contador, tamanho, codigoASCII;
         String password; String passwordCriptografada = "";
         for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
