@@ -200,11 +200,13 @@ public class CriarQuartoController implements Initializable {
         tbl_id.setResizable(false);
         tbl_tipQuarto.setResizable(false);
         tbl_piso.setResizable(false);
+        tbl_wifi.setResizable(false);
         tbl_preco.setResizable(false);
 
         tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
         tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("piso"));
+        tbl_wifi.setCellValueFactory(new PropertyValueFactory<Quarto, Boolean>("wifi"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
 
         tv_Quarto.setItems(Quarto.getQuarto());

@@ -8,60 +8,64 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class Quarto {
-    private int id;
-    private String TipoQuarto;
-    private int piso;
-    private boolean wifi;
-    private double preco;
+    private Integer id;
+    private String tipoQuarto;
+    private Integer piso;
+    private Boolean wifi;
+    private Double preco;
 
     private String numCartao;
 
     public Quarto() {
     }
 
-    public Quarto(int id, String TipoQuarto, int piso, boolean wifi, double preco, String numCartao) {
+    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao) {
         this.id = id;
-        this.TipoQuarto = TipoQuarto;
+        this.tipoQuarto = tipoQuarto;
         this.piso = piso;
         this.wifi = wifi;
         this.preco = preco;
         this.numCartao = numCartao;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     public String getTipoQuarto() {
-        return TipoQuarto;
+        return tipoQuarto;
     }
 
-    public void setIdTipoQuarto(String TipoQuarto) {
-        this.TipoQuarto = TipoQuarto;
+    public void setTipoQuarto(String tipoQuarto) {
+        this.tipoQuarto = tipoQuarto;
     }
 
-    public int getPiso() {
+    public Integer getPiso() {
         return piso;
     }
 
-    public void setPiso(int piso) {
+    public void setPiso(Integer piso) {
         this.piso = piso;
     }
 
-    public boolean isWifi() {
+    public Boolean getWifi() {
         return wifi;
     }
 
-    public void setWifi(boolean wifi) {
+    public void setWifi(Boolean wifi) {
         this.wifi = wifi;
     }
 
-    public double getPreco() {
+    public Double getPreco() {
         return preco;
+    }
+
+    public void setPreco(Double preco) {
+        this.preco = preco;
     }
 
     public String getNumCartao() {
@@ -70,10 +74,6 @@ public class Quarto {
 
     public void setNumCartao(String numCartao) {
         this.numCartao = numCartao;
-    }
-
-    public void setPreco(double preco) {
-        this.preco = preco;
     }
 
     public static ObservableList<Quarto> getQuarto() {
@@ -88,7 +88,7 @@ public class Quarto {
 
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"), rs.getNString("numerocartao"));
+                        rs.getDouble("preco"), rs.getNString("numeroCartao"));
                 lista3.add(objQuarto);
             }
 
