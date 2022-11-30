@@ -37,7 +37,6 @@ public class TipoColaborador {
 
     public static ObservableList<TipoColaborador> getTipoColaborador() {
         ObservableList<TipoColaborador> lista = FXCollections.observableArrayList();
-
         try {
             String cmd = "SELECT * FROM TipoColaborador";
 
