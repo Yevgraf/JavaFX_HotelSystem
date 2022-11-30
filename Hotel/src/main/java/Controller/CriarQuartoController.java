@@ -156,7 +156,7 @@ public class CriarQuartoController implements Initializable {
             ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3.setString(1,(txt_numcartao.getText()));
-            ps2.setString(1, cmbTipoQuarto.getPromptText());
+            ps2.setString(1, cmbTipoQuarto.getValue());
             ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
             if (checkboxWifi.isSelected()) {
                 checkboxWifi.setSelected(true);
@@ -211,14 +211,9 @@ public class CriarQuartoController implements Initializable {
     }
 
     private void initCombos() {
-        ObservableList<TipoQuarto> oblTipoQuarto = FXCollections.observableArrayList(TipoQuarto.getTipoQuarto());
-
-        for (int i = 0; i < oblTipoQuarto.size(); i++) {
-            String tipo = oblTipoQuarto.get(i).getTipo();
-
-            cmbTipoQuarto.getItems().add(tipo);
-        }
-
+        cmbTipoQuarto.getItems().add("Singular");
+        cmbTipoQuarto.getItems().add("Duplo");
+        cmbTipoQuarto.getItems().add("Familiar");
 
     }
 
@@ -242,7 +237,7 @@ public class CriarQuartoController implements Initializable {
             Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
-                ps2.setString(1, cmbTipoQuarto.getPromptText());
+                ps2.setString(1, cmbTipoQuarto.getValue());
                 ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
                 if (checkboxWifi.isSelected()) {
                     checkboxWifi.setSelected(true);
