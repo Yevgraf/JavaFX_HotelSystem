@@ -48,7 +48,7 @@ public class CriarQuartoController implements Initializable {
     private ImageView btnBack;
 
     @FXML
-    private ComboBox<TipoQuarto> cmbTipoQuarto;
+    private ComboBox<String > cmbTipoQuarto;
 
 
     @FXML
@@ -153,19 +153,19 @@ public class CriarQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (piso,wifi,preco,numeroCartao) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3.setString(1,(txt_numcartao.getText()));
-           // ps2.setString(1, cmbTipoQuarto.getPromptText());
-            ps2.setInt(1, Integer.parseInt(txt_piso.getText()));
+            ps2.setString(1, cmbTipoQuarto.getPromptText());
+            ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
             if (checkboxWifi.isSelected()) {
                 checkboxWifi.setSelected(true);
             } else {
                 checkboxWifi.setSelected(false);
             }
-            ps2.setBoolean(2, checkboxWifi.isSelected());
-            ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
-            ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
+            ps2.setBoolean(3, checkboxWifi.isSelected());
+            ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+            ps2.setDouble(5, Double.parseDouble(txt_numcartao.getText()));
             ps3.setString(1,(txt_numcartao.getText()));
 
 
@@ -212,7 +212,13 @@ public class CriarQuartoController implements Initializable {
 
     private void initCombos() {
         ObservableList<TipoQuarto> oblTipoQuarto = FXCollections.observableArrayList(TipoQuarto.getTipoQuarto());
-        cmbTipoQuarto.getItems().addAll(oblTipoQuarto);
+
+        for (int i = 0; i < oblTipoQuarto.size(); i++) {
+            String tipo = oblTipoQuarto.get(i).getTipo();
+
+            cmbTipoQuarto.getItems().add(tipo);
+        }
+
 
     }
 

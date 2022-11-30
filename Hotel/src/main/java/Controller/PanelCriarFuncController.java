@@ -64,7 +64,7 @@ public class PanelCriarFuncController implements Initializable {
     private Button btn_update_funcionario;
 
     @FXML
-    private ComboBox<TipoColaborador> cmb_tipocolaborador;
+    private ComboBox<String> cmb_tipocolaborador;
 
     @FXML
     private ImageView imgGestorAdionarProd;
@@ -205,8 +205,8 @@ public class PanelCriarFuncController implements Initializable {
 
     private void initCombos() {
 
-        ObservableList<TipoColaborador> oblTipoColab = FXCollections.observableArrayList(TipoColaborador.getTipoColaborador());
-        cmb_tipocolaborador.getItems().addAll(oblTipoColab);
+        cmb_tipocolaborador.getItems().add("Gestor");
+        cmb_tipocolaborador.getItems().add("Funcionario");
 
     }
 
