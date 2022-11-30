@@ -88,7 +88,7 @@ public class Quarto {
 
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"), rs.getNString("numeroCartao"));
+                        rs.getDouble("preco"), rs.getString("numeroCartao"));
                 lista3.add(objQuarto);
             }
 
