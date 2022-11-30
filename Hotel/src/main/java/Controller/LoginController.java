@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
+import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -37,16 +38,29 @@ public class LoginController implements Initializable {
         PreparedStatement ps;
         try {
             DBconn dbConn = new DBconn();
+            int contador, tamanho, codigoASCII;
+            String password;
+            String passwordCriptografada = "";
             Connection connection = dbConn.getConn();
-            ps = connection.prepareStatement("SELECT * FROM Colaborador WHERE email = ? AND palavrapasse = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps = connection.prepareStatement("SELECT * FROM Colaborador WHERE utilizador = ? AND palavrapasse = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps.setString(1, userTxt.getText());
-            ps.setString(2, userTxt.getText());
+            password = passwordTxt.getText();
+            tamanho = password.length();
+            password = password.toUpperCase();
+            contador = 0;
+
+            while (contador < tamanho) {
+                codigoASCII = password.charAt(contador) + 130;
+                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                contador++;
+            }
+            ps.setString(2, passwordCriptografada);
             ResultSet result = ps.executeQuery();
             if (result.next()) {
                 if (result.first()) {
                     String tipo = result.getString("tipoColaborador");
                     if (tipo.equals("Gestor")) {
-                        FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("PainelGestor.fxml"));
+                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
                         Stage stage = new Stage();
                         Stage newStage = (Stage) loginBtn.getScene().getWindow();
                         stage.setTitle("Página do Gestor");
@@ -55,7 +69,7 @@ public class LoginController implements Initializable {
                         stage.show();
                     } else {
                         if (tipo.equals("Funcionario")) {
-                            FXMLLoader fxmlLoader = new FXMLLoader(LoginController.class.getResource("PainelFuncionario.fxml.fxml"));
+                            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                             Stage stage = new Stage();
                             Stage newStage = (Stage) loginBtn.getScene().getWindow();
                             stage.setTitle("Página do Funcionário");

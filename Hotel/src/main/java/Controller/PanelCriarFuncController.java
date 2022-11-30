@@ -263,8 +263,7 @@ public class PanelCriarFuncController implements Initializable {
                 contador++;
             }
             ps2.setString(8, passwordCriptografada);
-            ps2.setString(9, cmb_tipocolaborador.getPromptText());
-            //  ps2.setString(9, txt_idCartao.getText());
+            ps2.setString(9, cmb_tipocolaborador.getValue());
             ps2.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador inserido", "Informação Colaborador");
 
@@ -313,32 +312,24 @@ public class PanelCriarFuncController implements Initializable {
             throw new RuntimeException(ex);
         }
     }
-    
 
-        public void btnAddTipoColabAction(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelAddTipoColaborador.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnAddTipoColab.getScene().getWindow();
-        stage.setTitle("Criar Tipo Colaborador");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-       //Descriptografa a String passada por parâmetro
-       public  String Desencriptacao() {
+    //Descriptografa a String passada por parâmetro
+    public String Desencriptacao() {
         int contador, tamanho, codigoASCII;
-        String password; String passwordCriptografada = "";
+        String password;
+        String passwordCriptografada = "";
         for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
-           password = Colaborador.getColaborador().get(a).getPassword();
+            password = Colaborador.getColaborador().get(a).getPassword();
 
             tamanho = password.length();
             password = password.toUpperCase();
-           contador = 0;
- while (contador < tamanho) {
-               codigoASCII = password.charAt(contador) - 130; passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-              contador++;
-           }
-       } return passwordCriptografada;
-   }
+            contador = 0;
+            while (contador < tamanho) {
+                codigoASCII = password.charAt(contador) - 130;
+                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                contador++;
+            }
+        }
+        return passwordCriptografada;
+    }
 }
