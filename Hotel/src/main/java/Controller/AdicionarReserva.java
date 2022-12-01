@@ -108,10 +108,10 @@ public class AdicionarReserva implements Initializable {
             ps2.setString(6, servExtras);
             ps2.setDouble(7, preco);
             ps2.executeUpdate();
-            ps3 = connection.prepareStatement("UPDATE Quarto SET ativo=? WHERE id=?");
-            ps3.setBoolean(1,true);
-            ps3.setInt(2,cmbIDQuarto.getValue().getId().intValue());
-            ps3.executeUpdate();
+//            ps3 = connection.prepareStatement("UPDATE Quarto SET ativo=? WHERE id=?");
+//            ps3.setBoolean(1,true);
+//            ps3.setInt(2,cmbIDQuarto.getValue().getId().intValue());
+//            ps3.executeUpdate();
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
