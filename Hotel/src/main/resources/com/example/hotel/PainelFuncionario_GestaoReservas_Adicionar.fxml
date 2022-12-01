@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReserva">
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReserva">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="9.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
@@ -116,7 +116,7 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbIDQuarto" layoutX="138.0" layoutY="282.0" prefHeight="25.0" prefWidth="206.0" />
+      <ComboBox fx:id="cmbIDQuarto" layoutX="138.0" layoutY="282.0" onAction="#cmbIdQuartoAction" prefHeight="25.0" prefWidth="206.0" />
       <TableView fx:id="servicosTable" layoutX="351.0" layoutY="242.0" prefHeight="147.0" prefWidth="354.0">
         <columns>
           <TableColumn fx:id="idServicoTable" prefWidth="88.800048828125" text="id do Serviço" />

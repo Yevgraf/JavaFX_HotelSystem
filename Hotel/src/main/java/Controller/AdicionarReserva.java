@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
+import Model.Quarto;
 import Model.Reserva;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
@@ -8,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -17,12 +19,14 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class AdicionarReserva {
+public class AdicionarReserva implements Initializable {
 
     @FXML
     private Button addServicoBtn;
@@ -31,7 +35,7 @@ public class AdicionarReserva {
     private Button adicionarReservaBtn;
 
     @FXML
-    private ComboBox<?> cmbIDQuarto;
+    private ComboBox<Quarto> cmbIDQuarto;
 
     @FXML
     private TextField dataFim;
@@ -66,13 +70,13 @@ public class AdicionarReserva {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         Integer nif = 0;              //vai verificar se nof existe
         Integer idColadorador = 0;    //vai ser substituído pelo GET depois do login feito
-        Integer idQuarto = 0;         //falta fazer quartos, vai listar quartos disponíveis
+
         String dataInicioText = dataInicio.getText();
         String dataFimText = dataFim.getText();
         String servExtras = "SemExtras Teste";  //falta criar lista de serviços
         Double preco = 0.0;
 
-        reservas.add(new Reserva(nif, idColadorador, idQuarto, dataInicioText, dataFimText, servExtras, preco));
+       // reservas.add(new Reserva(nif, idColadorador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
 
         PreparedStatement ps2;
         try {
@@ -83,7 +87,8 @@ public class AdicionarReserva {
                     "VALUES (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setInt(1, nif);
             ps2.setInt(2, idColadorador);
-            ps2.setInt(3, idQuarto);
+
+         //   ps2.setInt(3, cmbIDQuarto);
             ps2.setString(4, dataInicioText);
             ps2.setString(5, dataFimText);
             ps2.setString(6, servExtras);
@@ -93,6 +98,15 @@ public class AdicionarReserva {
             throw new RuntimeException(e);
         }
     }
+    private void initCombos() {
+
+        for (int i = 0; i < Quarto.getQuarto().size(); i++) {
+            if (Quarto.getQuarto().get(i).getAtivo() == false) ;
+            cmbIDQuarto.getItems().addAll(Quarto.getQuarto());
+        }
+    }
+
+
 
     @FXML
     void clickAddServicoBtn(ActionEvent event) {
@@ -115,4 +129,13 @@ public class AdicionarReserva {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initCombos();
+
+    }
+
+    public void cmbIdQuartoAction(ActionEvent actionEvent) {
+        cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
+    }
 }

@@ -153,7 +153,7 @@ public class CriarQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao, ativo) VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3.setString(1,(txt_numcartao.getText()));
             ps2.setString(1, cmbTipoQuarto.getValue());
@@ -167,7 +167,7 @@ public class CriarQuartoController implements Initializable {
             ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
             ps2.setDouble(5, Double.parseDouble(txt_numcartao.getText()));
             ps3.setString(1,(txt_numcartao.getText()));
-
+            ps2.setBoolean(6,false);
 
             ps3.executeUpdate();
             ps2.executeUpdate();
@@ -274,7 +274,6 @@ public class CriarQuartoController implements Initializable {
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
 
             }
-
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
