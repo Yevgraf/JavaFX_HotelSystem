@@ -11,11 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -27,12 +23,24 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class AdicionarReserva implements Initializable {
+    @FXML
+    private DatePicker DatePickerFim;
+
+    @FXML
+    private DatePicker DatePickerInicio;
+
 
     @FXML
     private Button addServicoBtn;
 
     @FXML
     private Button adicionarReservaBtn;
+
+
+
+    @FXML
+    private Button btnRedictCriarCliente;
+
 
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
@@ -124,10 +132,7 @@ public class AdicionarReserva implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void dataFim(ActionEvent event) {
-
-    }
+   
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -137,5 +142,19 @@ public class AdicionarReserva implements Initializable {
 
     public void cmbIdQuartoAction(ActionEvent actionEvent) {
         cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
+    }
+
+    public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnRedictCriarCliente.getScene().getWindow();
+        stage.setTitle("Pagina Criar Cliente");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    public void cmbClienteAction(ActionEvent actionEvent) {
     }
 }
