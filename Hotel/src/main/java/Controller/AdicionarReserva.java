@@ -1,6 +1,8 @@
 package Controller;
 
 import BLL.DBconn;
+import Model.Cliente;
+import Model.MessageBoxes;
 import Model.Quarto;
 import Model.Reserva;
 import com.example.hotel.Main;
@@ -41,6 +43,8 @@ public class AdicionarReserva implements Initializable {
     @FXML
     private Button btnRedictCriarCliente;
 
+    @FXML
+    private ComboBox<Cliente> cmbClientes;
 
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
@@ -76,16 +80,15 @@ public class AdicionarReserva implements Initializable {
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
-        Integer nif = 0;              //vai verificar se nof existe
-        Integer idColadorador = 0;    //vai ser substituído pelo GET depois do login feito
 
-        String dataInicioText = dataInicio.getText();
-        String dataFimText = dataFim.getText();
-        String servExtras = "SemExtras Teste";  //falta criar lista de serviços
+        Integer idColadorador = 3;    //vai ser substituído pelo GET depois do login feito
+
+        String servExtras = "SemExtras";  //falta criar lista de serviços
         Double preco = 0.0;
 
        // reservas.add(new Reserva(nif, idColadorador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
 
+        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
         PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
@@ -93,15 +96,16 @@ public class AdicionarReserva implements Initializable {
             ps2 = connection.prepareStatement("INSERT INTO Reserva(nifCliente, idColaborador, idQuarto," +
                     "dataInicio, dataFim, servExtra, preco)" +
                     "VALUES (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setInt(1, nif);
+            ps2.setInt(1, cmbClientes.getValue().getNif());
             ps2.setInt(2, idColadorador);
 
-         //   ps2.setInt(3, cmbIDQuarto);
-            ps2.setString(4, dataInicioText);
-            ps2.setString(5, dataFimText);
+            ps2.setInt(3, cmbIDQuarto.getValue().getId());
+            ps2.setString(4, DatePickerInicio.getValue().toString());
+            ps2.setString(5, DatePickerFim.getValue().toString());
             ps2.setString(6, servExtras);
             ps2.setDouble(7, preco);
             ps2.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -112,6 +116,8 @@ public class AdicionarReserva implements Initializable {
             if (Quarto.getQuarto().get(i).getAtivo() == false) ;
             cmbIDQuarto.getItems().addAll(Quarto.getQuarto());
         }
+
+        cmbClientes.getItems().addAll(Cliente.getCliente());
     }
 
 
@@ -141,7 +147,7 @@ public class AdicionarReserva implements Initializable {
     }
 
     public void cmbIdQuartoAction(ActionEvent actionEvent) {
-        cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
+        //cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
     }
 
     public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
@@ -156,5 +162,6 @@ public class AdicionarReserva implements Initializable {
     }
 
     public void cmbClienteAction(ActionEvent actionEvent) {
+        //cmbClientes.getSelectionModel().getSelectedItem().getNif();
     }
 }

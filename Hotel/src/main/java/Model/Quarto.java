@@ -112,14 +112,11 @@ public class Quarto {
 
     @Override
     public String toString() {
-        return "Quarto{" +
-                "id=" + id +
-                ", tipoQuarto='" + tipoQuarto + '\'' +
-                ", piso=" + piso +
-                ", wifi=" + wifi +
-                ", preco=" + preco +
-                ", numCartao='" + numCartao + '\'' +
-                ", ativo=" + ativo +
-                '}';
+        return
+                " tipoQuarto='" + tipoQuarto + '\'' +
+                " piso=" + piso +
+                " wifi=" + wifi +
+                " preco=" + preco +
+                " numCartao='" + numCartao ;
     }
 }

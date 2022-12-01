@@ -48,7 +48,7 @@ public class Cartao {
           ResultSet rs = st.executeQuery(cmd);
 
           while (rs.next()) {
-              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numCartao"));
+              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numeroCartao"));
               lista2.add(objCartao);
           }
 
