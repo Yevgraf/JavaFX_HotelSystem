@@ -15,17 +15,27 @@ public class Quarto {
     private Double preco;
 
     private String numCartao;
+    private Boolean ativo ;
 
     public Quarto() {
     }
 
-    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao) {
+    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao,Boolean ativo ){
         this.id = id;
         this.tipoQuarto = tipoQuarto;
         this.piso = piso;
         this.wifi = wifi;
         this.preco = preco;
         this.numCartao = numCartao;
+        this.ativo = ativo;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public Integer getId() {
@@ -88,7 +98,7 @@ public class Quarto {
 
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"), rs.getString("numeroCartao"));
+                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"));
                 lista3.add(objQuarto);
             }
 
@@ -100,4 +110,13 @@ public class Quarto {
     }
 
 
+    @Override
+    public String toString() {
+        return
+                " tipoQuarto='" + tipoQuarto + '\'' +
+                " piso=" + piso +
+                " wifi=" + wifi +
+                " preco=" + preco +
+                " numCartao='" + numCartao ;
+    }
 }

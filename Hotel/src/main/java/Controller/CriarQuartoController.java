@@ -1,10 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
-import Model.MessageBoxes;
-import Model.Quarto;
-import Model.TipoQuarto;
+import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -153,7 +150,7 @@ public class CriarQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao, ativo) VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3.setString(1,(txt_numcartao.getText()));
             ps2.setString(1, cmbTipoQuarto.getValue());
@@ -167,7 +164,7 @@ public class CriarQuartoController implements Initializable {
             ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
             ps2.setDouble(5, Double.parseDouble(txt_numcartao.getText()));
             ps3.setString(1,(txt_numcartao.getText()));
-
+            ps2.setBoolean(6,false);
 
             ps3.executeUpdate();
             ps2.executeUpdate();
@@ -262,6 +259,7 @@ public class CriarQuartoController implements Initializable {
     public void clickRmvQuarto(ActionEvent actionEvent) {
 
         PreparedStatement ps2;
+        PreparedStatement ps;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -269,14 +267,26 @@ public class CriarQuartoController implements Initializable {
             Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
+                ps = connection.prepareStatement("DELETE FROM Cartao WHERE numeroCartao = ?");
                 ps2.setInt(1, selectedID.getId());
+
+                for (int i = 0; i < Cartao.getCartao().size(); i++) {
+                    String cartaoN = Cartao.getCartao().get(i).getNumCartao();
+                    if (cartaoN.equals(selectedID.getNumCartao())){
+
+                        ps.setString(1,cartaoN);
+                    }
+                }
+
                 ps2.executeUpdate();
+                ps.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
 
             }
-
         } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
             throw new RuntimeException(ex);
+
         }
     }
 }
