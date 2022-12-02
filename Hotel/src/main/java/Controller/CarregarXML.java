@@ -4,6 +4,7 @@ import BLL.DBconn;
 import BLL.XMLReader;
 import Model.EntradaStock;
 
+import Model.MessageBoxes;
 import Model.Produto;
 import Model.Stock;
 import com.example.hotel.Main;
@@ -13,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -135,8 +137,8 @@ public class CarregarXML implements Initializable {
     void clickAddItens(ActionEvent event) {
         clickAddProduto();
         clickAddFornecedor();
-        clickAddStock();
         clickAddItensEntradaStock();
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produtos inseridos com sucesso!", "Sucesso!");
     }
 
     //----------------------------------- Conexão BD - Fornecedor -----------------------------------
@@ -149,13 +151,15 @@ public class CarregarXML implements Initializable {
             ps2 = connection.prepareStatement("INSERT INTO Fornecedor(id, nome, morada, codigoPostal, pais, cidade)" +
                     "VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < head.size(); i++) {
-                ps2.setString(1, head.get(i).getIdFornecedor());
-                ps2.setString(2, head.get(i).getNomeFornecedor());
-                ps2.setString(3, head.get(i).getMoradaFornecedor());
-                ps2.setString(4, head.get(i).getCodPostalFornecedor());
-                ps2.setString(5, head.get(i).getPaisFornecedor());
-                ps2.setString(6, head.get(i).getCidadeFornecedor());
-                ps2.executeUpdate();
+                if (!verificaFornecedorExistente(head.get(i).getIdFornecedor(), connection)) {
+                    ps2.setString(1, head.get(i).getIdFornecedor());
+                    ps2.setString(2, head.get(i).getNomeFornecedor());
+                    ps2.setString(3, head.get(i).getMoradaFornecedor());
+                    ps2.setString(4, head.get(i).getCodPostalFornecedor());
+                    ps2.setString(5, head.get(i).getPaisFornecedor());
+                    ps2.setString(6, head.get(i).getCidadeFornecedor());
+                    ps2.executeUpdate();
+                }
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -165,28 +169,39 @@ public class CarregarXML implements Initializable {
     //----------------------------------- Conexão BD - EntradaStock -----------------------------------
 
     void clickAddItensEntradaStock() {
-        PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO EntradaStock(idProduto, caixas, unidades," +
-                    "precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal, ordemNumero, ordemData,idFornecedor)" +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < entradaStocks.size(); i++) {
-                ps2.setString(1, entradaStocks.get(i).getIdProduto());
-                ps2.setInt(2, entradaStocks.get(i).getCaixas());
-                ps2.setInt(3, entradaStocks.get(i).getUnidades());
-                ps2.setDouble(4, entradaStocks.get(i).getPrecoSemTaxa());
-                ps2.setDouble(5, entradaStocks.get(i).getTaxa());
-                ps2.setDouble(6, entradaStocks.get(i).getValorTaxa());
-                ps2.setString(7, entradaStocks.get(i).getLocal());
-                ps2.setDouble(8, entradaStocks.get(i).getPrecoTotal());
-                for (int j = 0; j < 1; j++) {
-                    ps2.setString(9, head.get(j).getOrdemNum());
-                    ps2.setString(10, head.get(j).getOrdemData());
-                    ps2.setString(11, head.get(j).getIdFornecedor());
+                PreparedStatement insertEntradaStockStatetement = connection.prepareStatement("INSERT INTO EntradaStock(idProduto, caixas, unidades," +
+                        "precoSemTaxa, taxa, valorTaxa, localTaxa, precoTotal, ordemNumero, ordemData,idFornecedor)" +
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                String idProduto = entradaStocks.get(i).getIdProduto();
+                insertEntradaStock(entradaStocks.get(i), insertEntradaStockStatetement);
+
+                if (!verificaStockExistente(entradaStocks.get(i).getIdProduto(), connection)) {
+                    insertStock(connection);
+                } else {
+                    Stock stock = null;
+
+                    PreparedStatement updateStatement = connection.prepareStatement("UPDATE Stock SET quantidade = ? WHERE idProduto = ?",
+                            ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                    for (int iteradorStock = 0; iteradorStock < stocks.size(); iteradorStock++) {
+                        if (stocks.get(iteradorStock).getIdProduto().equals(idProduto)) {
+                            stock = stocks.get(iteradorStock);
+                            break;
+                        }
+                    }
+
+                    if (stock != null) {
+
+                        Integer quantidade = selectStock(idProduto, connection);
+                        stock.setQuantidade(quantidade + entradaStocks.get(i).getUnidades());
+                        updateStock(stock, updateStatement);
+                    }
                 }
-                ps2.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
@@ -196,42 +211,42 @@ public class CarregarXML implements Initializable {
     //----------------------------------- Conexão BD - Produto -----------------------------------
 
     void clickAddProduto() {
-        PreparedStatement ps2;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade)" +
-                    "VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            for (int i = 0; i < produtos.size(); i++) {
-                ps2.setString(1, produtos.get(i).getIdProduto());
-                ps2.setString(2, produtos.get(i).getDescricao());
-                ps2.setDouble(3, produtos.get(i).getPeso());
-                ps2.setDouble(4, produtos.get(i).getPrecoUnidade());
-                ps2.executeUpdate();
-            }
 
+            for (int iteradorProduto = 0; iteradorProduto < produtos.size(); iteradorProduto++) {
+                String id = produtos.get(iteradorProduto).getIdProduto();
+                if (!verificaProdutoExistente(id, connection)) {
+                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade)" +
+                            "VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
+                    insertProduto(produtos.get(iteradorProduto), insertStatement);
+                }
+            }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro inesperado!", "Erro");
         }
     }
 
     //----------------------------------- Conexão BD - Stock -----------------------------------
 
-    void clickAddStock() {
-        PreparedStatement ps2;
+    void insertStock(Connection connection) {
         try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Stock(idProduto, quantidade)" +
+            PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Stock(idProduto, quantidade)" +
                     "VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+
             for (int i = 0; i < stocks.size(); i++) {
                 ps2.setString(1, stocks.get(i).getIdProduto());
                 ps2.setDouble(2, stocks.get(i).getQuantidade());
                 ps2.executeUpdate();
             }
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (Exception e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro inesperado!", "Erro");
         }
     }
 
@@ -315,5 +330,84 @@ public class CarregarXML implements Initializable {
 
             produtoTable.setItems(produtos);
         }
+    }
+
+    private boolean verificaProdutoExistente(String id, Connection connection) {
+        Statement ps2;
+        try {
+            ps2 = connection.createStatement();
+            ResultSet rs = ps2.executeQuery("SELECT id FROM Produto WHERE id = '" + id + "'");
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    private boolean verificaFornecedorExistente(String id, Connection connection) {
+        Statement ps2;
+        try {
+            ps2 = connection.createStatement();
+            ResultSet rs = ps2.executeQuery("SELECT id FROM Fornecedor WHERE id = '" + id + "'");
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    private boolean verificaStockExistente(String id, Connection connection) {
+        Statement ps2;
+        try {
+            ps2 = connection.createStatement();
+            ResultSet rs = ps2.executeQuery("SELECT idProduto FROM Stock WHERE idProduto = '" + id + "'");
+            return rs.isBeforeFirst();
+        } catch (SQLException e) {
+            return false;
+        }
+    }
+
+    private void insertEntradaStock(EntradaStock entradaStock, PreparedStatement statement) throws SQLException {
+        statement.setString(1, entradaStock.getIdProduto());
+        statement.setInt(2, entradaStock.getCaixas());
+        statement.setInt(3, entradaStock.getUnidades());
+        statement.setDouble(4, entradaStock.getPrecoSemTaxa());
+        statement.setDouble(5, entradaStock.getTaxa());
+        statement.setDouble(6, entradaStock.getValorTaxa());
+        statement.setString(7, entradaStock.getLocal());
+        statement.setDouble(8, entradaStock.getPrecoTotal());
+        for (int i = 0; i < 1; i++) {
+            statement.setString(9, head.get(i).getOrdemNum());
+            statement.setString(10, head.get(i).getOrdemData());
+            statement.setString(11, head.get(i).getIdFornecedor());
+        }
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    private void insertProduto(Produto produto, PreparedStatement statement) throws SQLException {
+        statement.setString(1, produto.getIdProduto());
+        statement.setString(2, produto.getDescricao());
+        statement.setDouble(3, produto.getPeso());
+        statement.setDouble(4, produto.getPrecoUnidade());
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    private void updateStock(Stock stock, PreparedStatement statement) throws SQLException {
+        statement.setInt(1, stock.getQuantidade());
+        statement.setString(2, stock.getIdProduto());
+        statement.executeUpdate();
+        statement.close();
+    }
+
+    private Integer selectStock(String idProduto, Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        ResultSet rs = statement.executeQuery("SELECT quantidade FROM Stock WHERE idProduto = '" + idProduto + "'");
+        Integer quantidade = 0;
+        while (rs.next()) {
+            quantidade = rs.getInt("quantidade");
+        }
+        statement.close();
+        return quantidade;
     }
 }
