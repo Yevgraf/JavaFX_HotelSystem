@@ -16,11 +16,12 @@ public class Quarto {
 
     private String numCartao;
     private Boolean ativo ;
+    private Boolean cofre;
 
     public Quarto() {
     }
 
-    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao,Boolean ativo ){
+    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao,Boolean ativo,Boolean cofre){
         this.id = id;
         this.tipoQuarto = tipoQuarto;
         this.piso = piso;
@@ -28,6 +29,7 @@ public class Quarto {
         this.preco = preco;
         this.numCartao = numCartao;
         this.ativo = ativo;
+        this.cofre = cofre;
     }
 
     public Boolean getAtivo() {
@@ -40,6 +42,14 @@ public class Quarto {
 
     public Integer getId() {
         return id;
+    }
+
+    public Boolean getCofre() {
+        return cofre;
+    }
+
+    public void setCofre(Boolean cofre) {
+        this.cofre = cofre;
     }
 
     public void setId(Integer id) {
@@ -98,7 +108,7 @@ public class Quarto {
 
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"));
+                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"),rs.getBoolean("cofre"));
                 lista3.add(objQuarto);
             }
 
@@ -109,14 +119,16 @@ public class Quarto {
         return lista3;
     }
 
-
     @Override
     public String toString() {
         return
-                " tipoQuarto='" + tipoQuarto + '\'' +
-                " piso=" + piso +
-                " wifi=" + wifi +
-                " preco=" + preco +
-                " numCartao='" + numCartao ;
+                "id=" + id +
+                ", tipoQuarto='" + tipoQuarto + '\'' +
+                ", piso=" + piso +
+                ", wifi=" + wifi +
+                ", preco=" + preco +
+                ", numCartao='" + numCartao + '\'' +
+                ", ativo=" + ativo +
+                ", cofre=" + cofre;
     }
 }

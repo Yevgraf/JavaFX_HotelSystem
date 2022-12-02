@@ -33,7 +33,6 @@ public class AdicionarReserva implements Initializable {
     @FXML
     private DatePicker DatePickerInicio;
 
-public class AdicionarReserva implements Initializable {
 
     @FXML
     private Button addServicoBtn;
@@ -182,10 +181,7 @@ public class AdicionarReserva implements Initializable {
         servicosTable.setItems(Servico.getServicoTable());
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initTable();
-    }
+
 }
 
 
