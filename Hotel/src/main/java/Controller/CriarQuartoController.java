@@ -1,10 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
-import Model.MessageBoxes;
-import Model.Quarto;
-import Model.TipoQuarto;
+import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -262,6 +259,7 @@ public class CriarQuartoController implements Initializable {
     public void clickRmvQuarto(ActionEvent actionEvent) {
 
         PreparedStatement ps2;
+        PreparedStatement ps;
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -269,13 +267,26 @@ public class CriarQuartoController implements Initializable {
             Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
+                ps = connection.prepareStatement("DELETE FROM Cartao WHERE numeroCartao = ?");
                 ps2.setInt(1, selectedID.getId());
+
+                for (int i = 0; i < Cartao.getCartao().size(); i++) {
+                    String cartaoN = Cartao.getCartao().get(i).getNumCartao();
+                    if (cartaoN.equals(selectedID.getNumCartao())){
+
+                        ps.setString(1,cartaoN);
+                    }
+                }
+
                 ps2.executeUpdate();
+                ps.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
 
             }
         } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
             throw new RuntimeException(ex);
+
         }
     }
 }

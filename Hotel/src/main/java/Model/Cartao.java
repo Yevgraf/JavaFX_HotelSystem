@@ -12,12 +12,23 @@ public class Cartao {
     private int id;
     private String numCartao;
 
-    public Cartao(int id, String numCartao) {
+    private Boolean ativo;
+
+    public Cartao() {
     }
 
-    public Cartao(int id, String numCartao, int idQuarto) {
+    public Cartao(int id, String numCartao, Boolean ativo) {
         this.id = id;
         this.numCartao = numCartao;
+        this.ativo = ativo;
+    }
+
+    public Boolean getAtivo() {
+        return ativo;
+    }
+
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
     public int getId() {
@@ -48,7 +59,7 @@ public class Cartao {
           ResultSet rs = st.executeQuery(cmd);
 
           while (rs.next()) {
-              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numeroCartao"));
+              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numeroCartao"),rs.getBoolean("ativo"));
               lista2.add(objCartao);
           }
 
@@ -58,4 +69,5 @@ public class Cartao {
       }
       return lista2;
   }
+
 }
