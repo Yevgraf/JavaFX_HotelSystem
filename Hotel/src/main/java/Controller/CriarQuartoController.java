@@ -31,6 +31,8 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     private Button BtnAddProduto;
+    @FXML
+    private Button ProdutoQuarto;
 
     @FXML
     private AnchorPane CriarQuarto;
@@ -150,21 +152,14 @@ public class CriarQuartoController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao, ativo) VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps3.setString(1,(txt_numcartao.getText()));
             ps2.setString(1, cmbTipoQuarto.getValue());
             ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
-            if (checkboxWifi.isSelected()) {
-                checkboxWifi.setSelected(true);
-            } else {
-                checkboxWifi.setSelected(false);
-            }
-            ps2.setBoolean(3, checkboxWifi.isSelected());
-            ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
-            ps2.setDouble(5, Double.parseDouble(txt_numcartao.getText()));
+            ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
+            ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
             ps3.setString(1,(txt_numcartao.getText()));
-            ps2.setBoolean(6,false);
+            ps2.setBoolean(5,false);
 
             ps3.executeUpdate();
             ps2.executeUpdate();
@@ -197,13 +192,11 @@ public class CriarQuartoController implements Initializable {
         tbl_id.setResizable(false);
         tbl_tipQuarto.setResizable(false);
         tbl_piso.setResizable(false);
-        tbl_wifi.setResizable(false);
         tbl_preco.setResizable(false);
 
         tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
         tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("piso"));
-        tbl_wifi.setCellValueFactory(new PropertyValueFactory<Quarto, Boolean>("wifi"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
 
         tv_Quarto.setItems(Quarto.getQuarto());
@@ -238,13 +231,7 @@ public class CriarQuartoController implements Initializable {
                 ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
                 ps2.setString(1, cmbTipoQuarto.getValue());
                 ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
-                if (checkboxWifi.isSelected()) {
-                    checkboxWifi.setSelected(true);
-                } else {
-                    checkboxWifi.setSelected(false);
-                }
-                ps2.setBoolean(3, checkboxWifi.isSelected());
-                ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+                ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
 
                 ps2.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
@@ -290,6 +277,13 @@ public class CriarQuartoController implements Initializable {
         }
     }
 
-    public void RedirectProdutoQuarto(ActionEvent actionEvent) {
+    public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelProdutoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) ProdutoQuarto.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 }
