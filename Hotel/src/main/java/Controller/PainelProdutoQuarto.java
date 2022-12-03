@@ -5,14 +5,19 @@ import Model.MessageBoxes;
 import Model.Produto;
 import Model.ProdutoQuarto;
 import Model.Quarto;
+import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -130,7 +135,7 @@ public class PainelProdutoQuarto implements Initializable {
 
             //ps3.executeUpdate();
             ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Produto quarto inserido", "Informação produto quarto");
 
         } catch (SQLException ex) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
@@ -150,8 +155,15 @@ public class PainelProdutoQuarto implements Initializable {
     }
 
     @FXML
-    void clickVoltarBtn(ActionEvent event) {
+    void clickVoltarBtn(ActionEvent event) throws IOException {
 
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     @Override

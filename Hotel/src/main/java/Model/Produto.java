@@ -63,8 +63,8 @@ public class Produto {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Produto obj = new Produto(rs.getString("id"),rs.getString("idProduto"),
-                        rs.getDouble("descricao"),rs.getDouble("peso"));
+                Produto obj = new Produto(rs.getString("id"),rs.getString("descricao"),
+                        rs.getDouble("precoPorUnidade"),rs.getDouble("peso"));
                 lista.add(obj);
             }
             st.close();
@@ -76,5 +76,14 @@ public class Produto {
 
     public Produto(String idProduto) {
         this.idProduto = idProduto;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "idProduto='" + idProduto + '\'' +
+                ", descricao='" + descricao + '\'' +
+                ", precoUnidade=" + precoUnidade +
+                ", peso=" + peso;
     }
 }
