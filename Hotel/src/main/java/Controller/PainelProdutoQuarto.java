@@ -1,10 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.MessageBoxes;
-import Model.Produto;
-import Model.ProdutoQuarto;
-import Model.Quarto;
+import Model.*;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -81,8 +78,11 @@ public class PainelProdutoQuarto implements Initializable {
     @FXML
     private Label lblSamos;
 
+
     @FXML
-    private TableColumn<ProdutoQuarto, Integer> tbl_idProduto;
+    private TableColumn<ProdutoQuarto, Integer> tbl_id;
+    @FXML
+    private TableColumn<ProdutoQuarto, String> tbl_idProduto;
 
     @FXML
     private TableColumn<ProdutoQuarto, Integer> tbl_idQuarto;
@@ -101,13 +101,14 @@ public class PainelProdutoQuarto implements Initializable {
 
     private void initTable() {
 
+        tbl_id.setResizable(false);
         tbl_idProduto.setResizable(false);
         tbl_idQuarto.setResizable(false);
         tbl_quantidade.setResizable(false);
 
-
+        tbl_id.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("id"));
         tbl_idQuarto.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("idQuarto"));
-        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("idProduto"));
+        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, String>("idProduto"));
         tbl_quantidade.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("quantidade"));
 
 
@@ -122,19 +123,32 @@ public class PainelProdutoQuarto implements Initializable {
     @FXML
     void clickAddProdutoQuarto(ActionEvent event) {
         PreparedStatement ps2;
-        //PreparedStatement ps3;
+        PreparedStatement ps3;
 
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
             ps2 = connection.prepareStatement("INSERT INTO ProdutoQuarto (idQuarto,idProduto,quantidade) VALUES (?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-           // ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps3 = connection.prepareStatement("UPDATE Stock set quantidade=? WHERE idProduto=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setInt(1, cmbQuarto.getValue().getId());
             ps2.setString(2, cmbProduto.getValue().getIdProduto());
             ps2.setString(3, txt_quantidade.getText());
 
             //ps3.executeUpdate();
             ps2.executeUpdate();
+            for (int i = 0; i < Stock.getStock().size(); i++) {
+                for (int j = 0; j < ProdutoQuarto.getProdutoQuarto().size(); j++) {
+                    if (Stock.getStock().get(i).getIdProduto().equals(ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
+                        int quantidadeStock = Stock.getStock().get(i).getQuantidade();
+                        int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
+                        quantidadeStock = quantidadeStock- quantidadeProdutoQuarto;
+                        ps3.setString(1, quantidadeStock,cmbProduto.getValue().getIdProduto());
+
+                        ps3.executeUpdate();
+                    }
+
+                }
+            }
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Produto quarto inserido", "Informação produto quarto");
 
         } catch (SQLException ex) {
@@ -151,6 +165,25 @@ public class PainelProdutoQuarto implements Initializable {
 
     @FXML
     void clickRmvProdutoQuarto(ActionEvent event) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            ProdutoQuarto selectedID = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("DELETE FROM ProdutoQuarto WHERE id =?");
+
+                ps2.setInt(1, selectedID.getId());
+                ps2.executeUpdate();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto removido", "Information");
+
+            }
+        } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
+            throw new RuntimeException(ex);
+
+        }
 
     }
 

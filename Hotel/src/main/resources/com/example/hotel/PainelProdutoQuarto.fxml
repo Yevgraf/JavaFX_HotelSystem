@@ -106,6 +106,7 @@
                 <TableColumn fx:id="tbl_idQuarto" prefWidth="118.0" text="idQuarto" />
                 <TableColumn fx:id="tbl_idProduto" prefWidth="123.0" text="idProduto" />
                 <TableColumn fx:id="tbl_quantidade" prefWidth="118.0" text="quantidade" />
+            <TableColumn fx:id="tbl_id" prefWidth="118.0" text="id" />
             </columns>
         </TableView>
         <Button fx:id="voltarBtn" layoutX="606.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">

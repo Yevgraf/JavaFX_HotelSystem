@@ -8,8 +8,9 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 public class ProdutoQuarto {
+    private int id;
     private int idQuarto;
-    private int idProduto;
+    private String idProduto;
 
     private int quantidade;
 
@@ -17,10 +18,19 @@ public class ProdutoQuarto {
 
     }
 
-    public ProdutoQuarto(int idQuarto, int idProduto, int quantidade) {
+    public ProdutoQuarto(int id,int idQuarto, String idProduto, int quantidade) {
+        this.id = id;
         this.idQuarto = idQuarto;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getIdQuarto() {
@@ -31,11 +41,11 @@ public class ProdutoQuarto {
         this.idQuarto = idQuarto;
     }
 
-    public int getIdProduto() {
+    public String getIdProduto() {
         return idProduto;
     }
 
-    public void setIdProduto(int idProduto) {
+    public void setIdProduto(String idProduto) {
         this.idProduto = idProduto;
     }
 
@@ -54,7 +64,7 @@ public class ProdutoQuarto {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                ProdutoQuarto obj = new ProdutoQuarto(rs.getInt("idQuarto"),rs.getInt("idProduto"),
+                ProdutoQuarto obj = new ProdutoQuarto(rs.getInt("id"),rs.getInt("idQuarto"),rs.getString("idProduto"),
                         rs.getInt("quantidade"));
                 lista.add(obj);
             }
