@@ -1,5 +1,8 @@
 package Controller;
 
+import BLL.DBconn;
+import Model.Colaborador;
+import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -7,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -15,6 +19,9 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class GestaoReservas implements Initializable {
@@ -79,7 +86,24 @@ public class GestaoReservas implements Initializable {
 
     @FXML
     void clickEliminarReservaBtn(ActionEvent event) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
 
+            Reserva selectedID = tblReservas.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("DELETE FROM Reserva WHERE id = ?");
+                ps2.setInt(1, selectedID.getId());
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "A reserva foi apagada", "Apagar reserva");
+                ps2.executeUpdate();
+
+
+            }
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @Override
