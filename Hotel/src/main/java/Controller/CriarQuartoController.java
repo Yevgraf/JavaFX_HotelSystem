@@ -289,4 +289,7 @@ public class CriarQuartoController implements Initializable {
 
         }
     }
+
+    public void RedirectProdutoQuarto(ActionEvent actionEvent) {
+    }
 }

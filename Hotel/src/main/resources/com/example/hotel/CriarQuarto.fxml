@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
@@ -91,12 +90,7 @@
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblDataIniicio" layoutX="93.0" layoutY="307.0" prefHeight="55.0" prefWidth="107.0" text="Wifi" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="18.0" />
-            </font>
-        </Label>
-        <Label fx:id="lblDataFim" layoutX="78.0" layoutY="351.0" prefHeight="55.0" prefWidth="107.0" text="Preço" textFill="WHITE">
+        <Label fx:id="lblDataFim" layoutX="86.0" layoutY="307.0" prefHeight="55.0" prefWidth="107.0" text="Preço" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
@@ -106,7 +100,7 @@
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblIdQuarto" layoutX="25.0" layoutY="268.0" prefHeight="55.0" prefWidth="107.0" text="Tipo Quarto" textFill="WHITE">
+        <Label fx:id="lblIdQuarto" layoutX="35.0" layoutY="268.0" prefHeight="55.0" prefWidth="107.0" text="Tipo Quarto" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
@@ -115,10 +109,9 @@
         <TableView fx:id="tv_Quarto" layoutX="351.0" layoutY="242.0" prefHeight="147.0" prefWidth="360.0">
             <columns>
                 <TableColumn fx:id="tbl_id" minWidth="9.0" prefWidth="44.0" text="id" />
-                <TableColumn fx:id="tbl_tipQuarto" prefWidth="148.0" text="TipoQuarto" />
-                <TableColumn fx:id="tbl_piso" prefWidth="39.0" text="Piso" />
-            <TableColumn fx:id="tbl_wifi" prefWidth="41.0" text="Wifi" />
-            <TableColumn fx:id="tbl_preco" prefWidth="87.0" text="Preço" />
+                <TableColumn fx:id="tbl_tipQuarto" prefWidth="162.0" text="TipoQuarto" />
+                <TableColumn fx:id="tbl_piso" prefWidth="64.0" text="Piso" />
+            <TableColumn fx:id="tbl_preco" prefWidth="89.0" text="Preço" />
             </columns>
         </TableView>
         <Button fx:id="voltarBtn" layoutX="606.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
@@ -127,8 +120,7 @@
             </font>
         </Button>
         <TextField fx:id="txt_piso" layoutX="138.0" layoutY="242.0" prefHeight="26.0" prefWidth="206.0" />
-        <TextField fx:id="txt_preco" layoutX="138.0" layoutY="366.0" prefHeight="25.0" prefWidth="206.0" />
-      <CheckBox fx:id="checkboxWifi" layoutX="149.0" layoutY="326.0" mnemonicParsing="false" text="CheckBox" textFill="WHITE" />
+        <TextField fx:id="txt_preco" layoutX="138.0" layoutY="321.0" prefHeight="25.0" prefWidth="206.0" />
       <Button fx:id="btnRmvQuarto" layoutX="378.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickRmvQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
@@ -139,11 +131,12 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <TextField fx:id="txt_numcartao" layoutX="138.0" layoutY="400.0" prefHeight="25.0" prefWidth="206.0" />
-      <Label fx:id="lblDataFim1" layoutX="62.0" layoutY="385.0" prefHeight="55.0" prefWidth="107.0" text="NºCartão" textFill="WHITE">
+      <TextField fx:id="txt_numcartao" layoutX="138.0" layoutY="358.0" prefHeight="25.0" prefWidth="206.0" />
+      <Label fx:id="lblDataFim1" layoutX="57.0" layoutY="341.0" prefHeight="55.0" prefWidth="107.0" text="NºCartão" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
+      <Button fx:id="ProdutoQuarto" layoutX="351.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
     </children>
 </AnchorPane>

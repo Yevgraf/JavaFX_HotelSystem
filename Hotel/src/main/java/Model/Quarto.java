@@ -11,7 +11,7 @@ public class Quarto {
     private Integer id;
     private String tipoQuarto;
     private Integer piso;
-    private Boolean wifi;
+
     private Double preco;
 
     private String numCartao;
@@ -21,11 +21,10 @@ public class Quarto {
     public Quarto() {
     }
 
-    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao,Boolean ativo,Boolean cofre){
+    public Quarto(Integer id, String tipoQuarto, Integer piso, Double preco, String numCartao,Boolean ativo,Boolean cofre){
         this.id = id;
         this.tipoQuarto = tipoQuarto;
         this.piso = piso;
-        this.wifi = wifi;
         this.preco = preco;
         this.numCartao = numCartao;
         this.ativo = ativo;
@@ -72,13 +71,6 @@ public class Quarto {
         this.piso = piso;
     }
 
-    public Boolean getWifi() {
-        return wifi;
-    }
-
-    public void setWifi(Boolean wifi) {
-        this.wifi = wifi;
-    }
 
     public Double getPreco() {
         return preco;
@@ -107,7 +99,7 @@ public class Quarto {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
+                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),
                         rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"),rs.getBoolean("cofre"));
                 lista3.add(objQuarto);
             }
@@ -125,7 +117,6 @@ public class Quarto {
                 "id=" + id +
                 ", tipoQuarto='" + tipoQuarto + '\'' +
                 ", piso=" + piso +
-                ", wifi=" + wifi +
                 ", preco=" + preco +
                 ", numCartao='" + numCartao + '\'' +
                 ", ativo=" + ativo +
