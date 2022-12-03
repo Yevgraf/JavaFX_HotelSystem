@@ -142,7 +142,7 @@ public class PainelProdutoQuarto implements Initializable {
                         int quantidadeStock = Stock.getStock().get(i).getQuantidade();
                         int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
                         quantidadeStock = quantidadeStock- quantidadeProdutoQuarto;
-                        ps3.setString(1, quantidadeStock,cmbProduto.getValue().getIdProduto());
+                        //ps3.setString(1, quantidadeStock,cmbProduto.getValue().getIdProduto());
 
                         ps3.executeUpdate();
                     }
