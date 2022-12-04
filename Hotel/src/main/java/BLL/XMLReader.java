@@ -208,7 +208,7 @@ public class XMLReader {
                     Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
                     double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
-                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade));
+                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade, false));
                 }
             }
         } catch (Exception e) {

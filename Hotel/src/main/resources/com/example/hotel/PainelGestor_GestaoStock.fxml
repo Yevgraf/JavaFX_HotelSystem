@@ -75,7 +75,7 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="btnGestorSaidaStock" layoutX="219.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
+      <Button fx:id="btnGestorSaidaStock" disable="true" layoutX="219.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -85,7 +85,7 @@
             <Image url="@../../../img/saidaStock.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorProdutosStock" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
+      <Button fx:id="btnGestorProdutosStock" disable="true" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -107,8 +107,9 @@
       </Button>
       <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" onMousePressed="#clickMostrarDescricao" prefHeight="200.0" prefWidth="536.0">
          <columns>
-            <TableColumn fx:id="idProdutoTable" prefWidth="274.0" text="Id do produto" />
-            <TableColumn fx:id="quantidadeTable" prefWidth="261.0" text="Quantidade" />
+            <TableColumn fx:id="idProdutoTable" prefWidth="146.0" text="Id do produto" />
+            <TableColumn fx:id="quantidadeTable" prefWidth="205.0" text="Quantidade" />
+            <TableColumn fx:id="consumivel" prefWidth="184.0" text="Consumivel" />
          </columns>
       </TableView>
       <Text fill="WHITE" layoutX="87.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:">
@@ -119,6 +120,13 @@
       <Text fx:id="descricaoTxt" fill="WHITE" layoutX="88.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="544.13671875">
          <font>
             <Font size="18.0" />
+         </font>
+      </Text>
+      <Button fx:id="consumivelBtn" layoutX="429.0" layoutY="393.0" mnemonicParsing="false" onAction="#clickConsumivelBtn" text="Consumivel" />
+      <Button fx:id="naoConsumivelBtn" layoutX="522.0" layoutY="393.0" mnemonicParsing="false" onAction="#clickNaoConsumivelBtn" text="Não consumivel" />
+      <Text fill="WHITE" layoutX="320.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marcar como:">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
    </children>

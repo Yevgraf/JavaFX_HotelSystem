@@ -4,11 +4,13 @@ public class Produto {
 
     private String idProduto;
 
-    private  String descricao;
+    private String descricao;
 
     private Double precoUnidade;
 
     private Double peso;
+
+    private Boolean consumivel;
 
     public String getIdProduto() {
         return idProduto;
@@ -42,14 +44,22 @@ public class Produto {
         this.peso = peso;
     }
 
-    public Produto(String idProduto, String descricao, Double precoUnidade, Double peso) {
+    public Boolean getConsumivel() {
+        return consumivel;
+    }
+
+    public void setConsumivel(Boolean consumivel) {
+        this.consumivel = consumivel;
+    }
+
+    public Produto() {
+    }
+
+    public Produto(String idProduto, String descricao, Double precoUnidade, Double peso, Boolean consumivel) {
         this.idProduto = idProduto;
         this.descricao = descricao;
         this.precoUnidade = precoUnidade;
         this.peso = peso;
-    }
-
-    public Produto(String idProduto) {
-        this.idProduto = idProduto;
+        this.consumivel = consumivel;
     }
 }

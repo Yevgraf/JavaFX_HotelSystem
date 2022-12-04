@@ -50,39 +50,6 @@ public class StockController implements Initializable {
     private Button btnGestorSaidaStock;
 
     @FXML
-    private ImageView btnLogOut;
-
-    @FXML
-    private ImageView btnMinimizateApp;
-
-    @FXML
-    private ImageView imgGestorEntradaStock;
-
-    @FXML
-    private ImageView imgGestorEntradaStock1;
-
-    @FXML
-    private ImageView imgGestorSaidaStock;
-
-    @FXML
-    private ImageView imgGestorStock;
-
-    @FXML
-    private Label lblData;
-
-    @FXML
-    private Label lblData1;
-
-    @FXML
-    private Label lblHoras;
-
-    @FXML
-    private Label lblHotel;
-
-    @FXML
-    private Label lblSamos;
-
-    @FXML
     private TableView<Stock> tblStock;
 
     @FXML
@@ -92,29 +59,66 @@ public class StockController implements Initializable {
     private TableColumn<Stock, Integer> quantidadeTable;
 
     @FXML
+    private TableColumn<Stock, Boolean> consumivel;
+
+    @FXML
     private Button btnVoltar;
 
     @FXML
     private Text descricaoTxt;
 
     @FXML
+    private Button consumivelBtn;
+
+    @FXML
+    private Button naoConsumivelBtn;
+
+    @FXML
+    void clickConsumivelBtn(ActionEvent event) {
+
+      //  PreparedStatement ps2;
+      //  try {
+      //      DBconn dbConn = new DBconn();
+      //      Connection connection = dbConn.getConn();
+//
+      //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
+      //      if (selectedID != null && selectedID.getConsumivel() == false) {
+      //          ps2 = connection.prepareStatement("UPDATE Stock SET consumivel WHERE consumivel = ?");
+      //          ps2.setBoolean(1, selectedID.getConsumivel() = true);
+      //          ps2.executeUpdate();
+      //          MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto passou a consumível", "Informação");
+      //      } else {
+      //          MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Produto já é consumível", "Erro!");
+      //      }
+//
+      //  } catch (SQLException ex) {
+      //      throw new RuntimeException(ex);
+      //  }
+    }
+
+    @FXML
+    void clickNaoConsumivelBtn(ActionEvent event) {
+
+    }
+
+    @FXML
     void clickMostrarDescricao(MouseEvent event) {
-     //  PreparedStatement ps2;
-     //  try {
-     //      DBconn dbConn = new DBconn();
-     //      Connection connection = dbConn.getConn();
+        //  PreparedStatement ps2;
+        //  try {
+        //      DBconn dbConn = new DBconn();
+        //      Connection connection = dbConn.getConn();
 
-     //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
-     //      if (selectedID != null){
-     //          ps2 = connection.prepareStatement("SELECT FROM Produto WHERE id = ?");
-     //          ps2.setString(1, selectedID.getIdProduto());
-     //          ps2.executeUpdate();
-     //
-     //      }
+        //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
+        //      if (selectedID != null){
+        //          ps2 = connection.prepareStatement("SELECT FROM Produto WHERE id = ?");
+        //          ps2.setString(1, selectedID.getIdProduto());
+        //          ps2.executeUpdate();
+        //
+        //      }
 
-     //  } catch (SQLException ex) {
-     //      throw new RuntimeException(ex);
-     //  }
+        //  } catch (SQLException ex) {
+        //      throw new RuntimeException(ex);
+        //  }
     }
 
     @FXML
@@ -134,6 +138,7 @@ public class StockController implements Initializable {
 
         idProdutoTable.setCellValueFactory(new PropertyValueFactory<Stock, String>("idProduto"));
         quantidadeTable.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("quantidade"));
+        consumivel.setCellValueFactory(new PropertyValueFactory<Stock, Boolean>("consumivel"));
         tblStock.setItems(Stock.getStock());
     }
 
