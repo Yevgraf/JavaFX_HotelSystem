@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoReservas">
+<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoReservas">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -80,7 +80,6 @@
             <TableColumn fx:id="tblColIDCliente" prefWidth="75.0" text="NIF Cliente" />
             <TableColumn fx:id="tblCoIDColab" prefWidth="75.0" text="ID Colaborador" />
             <TableColumn fx:id="tblCoIDQuarto" prefWidth="75.0" text="ID Quarto" />
-            <TableColumn fx:id="tblCoIDCartao" prefWidth="75.0" text="ID Cartao" />
             <TableColumn fx:id="tblColDataIni" prefWidth="75.0" text="Data de Inicio" />
             <TableColumn fx:id="tblColDataFim" prefWidth="75.0" text="Data Final" />
             <TableColumn fx:id="tblColServEx" prefWidth="75.0" text="Serviços Extras" />

@@ -9,8 +9,8 @@ import java.sql.Statement;
 
 public class Reserva {
 
-    private int idReserva;
-    private Integer idCliente;
+    private int id;
+    private Integer nifCliente;
     private Integer idColaborador;
     private Integer idQuarto;
     private String dataInicio;
@@ -18,20 +18,38 @@ public class Reserva {
     private String servExtra;
     private Double preco;
 
-    public int getIdReserva() {
-        return idReserva;
+
+
+
+    public Reserva() {
+
     }
 
-    public void setIdReserva(int idReserva) {
-        this.idReserva = idReserva;
+    public Reserva(int id, Integer nifCliente, Integer idColaborador, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
+        this.id = id;
+        this.nifCliente = nifCliente;
+        this.idColaborador = idColaborador;
+        this.idQuarto = idQuarto;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.servExtra = servExtra;
+        this.preco = preco;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public int getId() {
+        return id;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Integer getNifCliente() {
+        return nifCliente;
+    }
+
+    public void setNifCliente(Integer nifCliente) {
+        this.nifCliente = nifCliente;
     }
 
     public Integer getIdColaborador() {
@@ -82,23 +100,6 @@ public class Reserva {
         this.preco = preco;
     }
 
-    public Reserva() {
-
-    }
-
-    public Reserva(Integer idCliente, Integer idColaborador,
-                   Integer idQuarto, String dataInicio, String dataFim,
-                   String servExtra, Double preco) {
-        this.idReserva = idReserva;
-        this.idCliente = idCliente;
-        this.idColaborador = idColaborador;
-        this.idQuarto = idQuarto;
-        this.dataInicio = dataInicio;
-        this.dataFim = dataFim;
-        this.servExtra = servExtra;
-        this.preco = preco;
-    }
-
     public static ObservableList<Reserva> getReservas() {
         ObservableList<Reserva> lista = FXCollections.observableArrayList();
         try {
@@ -106,7 +107,7 @@ public class Reserva {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Reserva obj = new Reserva(rs.getInt("nifCliente"),
+                Reserva obj = new Reserva(rs.getInt("id"),rs.getInt("nifCliente"),
                         rs.getInt("idColaborador"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getString("servExtra"), rs.getDouble("preco"));
