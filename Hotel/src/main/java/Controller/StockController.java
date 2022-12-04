@@ -132,13 +132,23 @@ public class StockController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void clickgestaoProdBtn(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor_GestaoProdutos.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Gestão de Produtos");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
     private void initTable() {
         idProdutoTable.setResizable(false);
         quantidadeTable.setResizable(false);
 
         idProdutoTable.setCellValueFactory(new PropertyValueFactory<Stock, String>("idProduto"));
         quantidadeTable.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("quantidade"));
-        consumivel.setCellValueFactory(new PropertyValueFactory<Stock, Boolean>("consumivel"));
         tblStock.setItems(Stock.getStock());
     }
 
