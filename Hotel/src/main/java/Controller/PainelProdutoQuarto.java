@@ -143,10 +143,8 @@ public class PainelProdutoQuarto implements Initializable {
                         int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
                         quantidadeStock = quantidadeStock- quantidadeProdutoQuarto;
                         //ps3.setString(1, quantidadeStock,cmbProduto.getValue().getIdProduto());
-
                         ps3.executeUpdate();
                     }
-
                 }
             }
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Produto quarto inserido", "Informação produto quarto");
