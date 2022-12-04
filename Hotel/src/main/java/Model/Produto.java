@@ -11,11 +11,13 @@ public class Produto {
 
     private String idProduto;
 
-    private  String descricao;
+    private String descricao;
 
     private Double precoUnidade;
 
     private Double peso;
+
+    private Boolean consumivel;
 
     public String getIdProduto() {
         return idProduto;
@@ -49,11 +51,23 @@ public class Produto {
         this.peso = peso;
     }
 
-    public Produto(String idProduto, String descricao, Double precoUnidade, Double peso) {
-        this.idProduto = idProduto;
+    public Boolean getConsumivel() {
+        return consumivel;
+    }
+
+    public void setConsumivel(Boolean consumivel) {
+        this.consumivel = consumivel;
+    }
+
+    public Produto() {
+    }
+
+    public Produto(String id, String descricao, Double precoUnidade, Double peso, Boolean consumivel) {
+        this.idProduto = id;
         this.descricao = descricao;
         this.precoUnidade = precoUnidade;
         this.peso = peso;
+        this.consumivel = consumivel;
     }
 
     public static ObservableList<Produto> getProduto() {
@@ -63,8 +77,9 @@ public class Produto {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Produto obj = new Produto(rs.getString("id"),rs.getString("descricao"),
-                        rs.getDouble("precoPorUnidade"),rs.getDouble("peso"));
+                Produto obj = new Produto(rs.getString("id"), rs.getString("descricao"),
+                        rs.getDouble("precoPorUnidade"), rs.getDouble("peso"),
+                        rs.getBoolean("consumivel"));
                 lista.add(obj);
             }
             st.close();
@@ -72,16 +87,5 @@ public class Produto {
             System.err.println("Erro: " + ex.getMessage());
         }
         return lista;
-    }
-
-    public Produto(String idProduto) {
-        this.idProduto = idProduto;
-    }
-
-    @Override
-    public String toString() {
-        return
-                ", descricao='" + descricao + '\'' +
-                ", precoUnidade=" + precoUnidade;
     }
 }
