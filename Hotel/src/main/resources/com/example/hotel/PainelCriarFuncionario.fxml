@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.PanelCriarFuncController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -141,29 +141,29 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <TextField fx:id="txt_contacto" layoutX="484.0" layoutY="88.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
-      <Label fx:id="lblHoras13" layoutX="397.0" layoutY="74.0" prefHeight="55.0" prefWidth="90.0" text="Contacto" textFill="WHITE">
+      <TextField fx:id="txt_contacto" layoutX="483.0" layoutY="117.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
+      <Label fx:id="lblHoras13" layoutX="397.0" layoutY="103.0" prefHeight="55.0" prefWidth="90.0" text="Contacto" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblHoras131" layoutX="393.0" layoutY="115.0" prefHeight="55.0" prefWidth="90.0" text="Utilizador" textFill="WHITE">
+      <Label fx:id="lblHoras131" layoutX="397.0" layoutY="145.0" prefHeight="55.0" prefWidth="90.0" text="Utilizador" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txt_utilizador" layoutX="484.0" layoutY="129.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
-      <Label fx:id="lblHoras1311" layoutX="397.0" layoutY="156.0" prefHeight="55.0" prefWidth="90.0" text="Password" textFill="WHITE">
+      <TextField fx:id="txt_utilizador" layoutX="483.0" layoutY="156.0" prefHeight="27.0" prefWidth="223.0" style="-fx-border-color: #ffffff;" />
+      <Label fx:id="lblHoras1311" layoutX="397.0" layoutY="176.0" prefHeight="55.0" prefWidth="90.0" text="Password" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblHoras13111" layoutX="397.0" layoutY="200.0" prefHeight="55.0" prefWidth="156.0" text="Tipo de colaborador" textFill="WHITE">
+      <Label fx:id="lblHoras13111" layoutX="397.0" layoutY="217.0" prefHeight="55.0" prefWidth="156.0" text="Tipo de colaborador" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmb_tipocolaborador" layoutX="397.0" layoutY="245.0" prefHeight="25.0" prefWidth="224.0" promptText="selecione" />
+      <ComboBox fx:id="cmb_tipocolaborador" layoutX="405.0" layoutY="263.0" prefHeight="25.0" prefWidth="224.0" promptText="selecione" />
       <Button fx:id="VoltarBtn" layoutX="594.0" layoutY="502.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="42.0" prefWidth="116.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
@@ -175,6 +175,10 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <PasswordField fx:id="txt_password" layoutX="483.0" layoutY="172.0" prefHeight="27.0" prefWidth="224.0" />
+      <PasswordField fx:id="txt_password" layoutX="482.0" layoutY="190.0" prefHeight="27.0" prefWidth="224.0" />
+      <Label fx:id="VerificarNome" layoutX="175.0" layoutY="81.0" prefHeight="17.0" prefWidth="204.0" textFill="RED" />
+      <Label fx:id="VerificarNIF" layoutX="190.0" layoutY="137.0" prefHeight="17.0" prefWidth="164.0" />
+      <Label fx:id="VerificarContacto" layoutX="513.0" layoutY="95.0" prefHeight="17.0" prefWidth="146.0" textFill="RED" />
+      <Label fx:id="EmptyMessage" layoutX="440.0" layoutY="305.0" prefHeight="17.0" prefWidth="185.0" textFill="RED" />
    </children>
 </AnchorPane>

@@ -10,7 +10,7 @@ import java.sql.Statement;
 
 public class Cliente {
     private String nome;
-    private String contacto;
+    private int contacto;
     private String email;
     private String utilizador;
     private String password;
@@ -20,7 +20,7 @@ public class Cliente {
    public Cliente(){
 
    }
-    public Cliente(String nome, String contacto, String email, String utilizador, String password, int nif) {
+    public Cliente(String nome, int contacto, String email, String utilizador, String password, int nif) {
 
         this.nome = nome;
         this.contacto = contacto;
@@ -36,7 +36,7 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public void setContacto(String contacto) {
+    public void setContacto(int contacto) {
         this.contacto = contacto;
     }
 
@@ -62,7 +62,7 @@ public class Cliente {
         return nome;
     }
 
-    public String getContacto() {
+    public int getContacto() {
         return contacto;
     }
 
@@ -93,7 +93,7 @@ public class Cliente {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Cliente obj = new Cliente(rs.getString("nome"),rs.getString("contacto"),rs.getString("email"),
+                Cliente obj = new Cliente(rs.getString("nome"),rs.getInt("contacto"),rs.getString("email"),
                         rs.getString("utilizador"),rs.getString("palavrapasse"),rs.getInt("nif"));
                 lista.add(obj);
             }
