@@ -105,7 +105,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" onMousePressed="#clickMostrarDescricao" prefHeight="200.0" prefWidth="536.0">
+      <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" onMouseClicked="#clickTable" prefHeight="200.0" prefWidth="536.0">
          <columns>
             <TableColumn fx:id="idProdutoTable" prefWidth="237.6000518798828" text="Id do produto" />
             <TableColumn fx:id="quantidadeTable" prefWidth="298.39996337890625" text="Quantidade" />

@@ -110,8 +110,8 @@ public class Quarto {
                 ", tipoQuarto='" + tipoQuarto + '\'' +
                 ", piso=" + piso +
                 ", preco=" + preco +
-                ", numCartao='" + numCartao + '\'' +
-                ", ativo=" + ativo;
+                ", numCartao='" + numCartao;
+
 
     }
 }

@@ -62,8 +62,8 @@ public class Produto {
     public Produto() {
     }
 
-    public Produto(String id, String descricao, Double precoUnidade, Double peso, Boolean consumivel) {
-        this.idProduto = id;
+    public Produto(String idProduto, String descricao, Double precoUnidade, Double peso, Boolean consumivel) {
+        this.idProduto = idProduto;
         this.descricao = descricao;
         this.precoUnidade = precoUnidade;
         this.peso = peso;
@@ -87,5 +87,14 @@ public class Produto {
             System.err.println("Erro: " + ex.getMessage());
         }
         return lista;
+    }
+
+    @Override
+    public String toString() {
+        return
+                "descricao='" + descricao + '\'' +
+                ", precoUnidade=" + precoUnidade +
+                ", peso=" + peso +
+                ", consumivel=" + consumivel;
     }
 }
