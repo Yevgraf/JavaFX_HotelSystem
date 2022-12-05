@@ -25,8 +25,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import static java.lang.Integer.parseInt;
 
 public class AdicionarReserva implements Initializable {
+
+    @FXML
+    private Label EmptyMessage;
 
     @FXML
     private Label DataFim;
@@ -88,9 +92,12 @@ public class AdicionarReserva implements Initializable {
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
         VerificarDisponibilidade();
-
-        if (VerificarDisponibilidade() == true) {
-            AdicionarReserva();
+        if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false && txtPreco.getText().isEmpty() == false) {
+            if (VerificarDisponibilidade() == true) {
+                AdicionarReserva();
+            }
+        }else {
+            EmptyMessage.setText("Preencha todos os campos");
         }
     }
 
