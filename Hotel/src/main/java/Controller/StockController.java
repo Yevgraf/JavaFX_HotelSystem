@@ -29,60 +29,6 @@ import java.util.ResourceBundle;
 public class StockController implements Initializable {
 
     @FXML
-    private AnchorPane PainelGestorStock;
-
-    @FXML
-    private ImageView btnBack;
-
-    @FXML
-    private ImageView btnCloseApp;
-
-    @FXML
-    private ImageView btnDefGestor;
-
-    @FXML
-    private Button btnGestorEntradaStock;
-
-    @FXML
-    private Button btnGestorProdutosStock;
-
-    @FXML
-    private Button btnGestorSaidaStock;
-
-    @FXML
-    private ImageView btnLogOut;
-
-    @FXML
-    private ImageView btnMinimizateApp;
-
-    @FXML
-    private ImageView imgGestorEntradaStock;
-
-    @FXML
-    private ImageView imgGestorEntradaStock1;
-
-    @FXML
-    private ImageView imgGestorSaidaStock;
-
-    @FXML
-    private ImageView imgGestorStock;
-
-    @FXML
-    private Label lblData;
-
-    @FXML
-    private Label lblData1;
-
-    @FXML
-    private Label lblHoras;
-
-    @FXML
-    private Label lblHotel;
-
-    @FXML
-    private Label lblSamos;
-
-    @FXML
     private TableView<Stock> tblStock;
 
     @FXML
@@ -98,23 +44,25 @@ public class StockController implements Initializable {
     private Text descricaoTxt;
 
     @FXML
-    void clickMostrarDescricao(MouseEvent event) {
-     //  PreparedStatement ps2;
-     //  try {
-     //      DBconn dbConn = new DBconn();
-     //      Connection connection = dbConn.getConn();
-
-     //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
-     //      if (selectedID != null){
-     //          ps2 = connection.prepareStatement("SELECT FROM Produto WHERE id = ?");
-     //          ps2.setString(1, selectedID.getIdProduto());
-     //          ps2.executeUpdate();
-     //
-     //      }
-
-     //  } catch (SQLException ex) {
-     //      throw new RuntimeException(ex);
-     //  }
+    void clickTable(MouseEvent event) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
+                ps2.setString(1, selectedID.getIdProduto());
+                for (int i = 0; i < Produto.getProduto().size(); i++) {
+                    if (selectedID != null && selectedID.getIdProduto().equals(Produto.getProduto().get(i).getIdProduto())){
+                        String descricao = Produto.getProduto().get(i).getDescricao();
+                        descricaoTxt.setText(descricao);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @FXML
@@ -123,6 +71,17 @@ public class StockController implements Initializable {
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
         stage.setTitle("Pagina Gestor");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void clickgestaoProdBtn(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor_GestaoProdutos.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Gestão de Produtos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

@@ -29,12 +29,12 @@ public class Stock {
         this.quantidade = quantidade;
     }
 
+    public Stock() {
+    }
+
     public Stock(String idProduto, Integer quantidade) {
         this.idProduto = idProduto;
         this.quantidade = quantidade;
-    }
-
-    public Stock() {
     }
 
     public static ObservableList<Stock> getStock() {

@@ -31,6 +31,8 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     private Button BtnAddProduto;
+    @FXML
+    private Button ProdutoQuarto;
 
     @FXML
     private AnchorPane CriarQuarto;
@@ -144,30 +146,23 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     void clickAddQuarto(ActionEvent event) {
-        addQuarto();
-        addCartao();
-    }
-
-    @FXML
-    void addQuarto(){
         PreparedStatement ps2;
+        PreparedStatement ps3;
 
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,wifi,preco,numeroCartao, ativo) VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao,ativo) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, cmbTipoQuarto.getValue());
             ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
-            if (checkboxWifi.isSelected()) {
-                checkboxWifi.setSelected(true);
-            } else {
-                checkboxWifi.setSelected(false);
-            }
-            ps2.setBoolean(3, checkboxWifi.isSelected());
-            ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
-            ps2.setDouble(5, Double.parseDouble(txt_numcartao.getText()));
-            ps2.setBoolean(6,false);
+            ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
+            ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
+            ps3.setString(1,(txt_numcartao.getText()));
+            ps3.setBoolean(2,false);
+            ps2.setBoolean(5,false);
 
+            ps3.executeUpdate();
             ps2.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
 
@@ -176,32 +171,7 @@ public class CriarQuartoController implements Initializable {
             throw new RuntimeException(ex);
 
         }
-    }
 
-    @FXML
-    void addCartao(){
-
-        PreparedStatement ps2;
-
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao) VALUES (?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1,(txt_numcartao.getText()));
-            if (checkboxWifi.isSelected()) {
-                checkboxWifi.setSelected(true);
-            } else {
-                checkboxWifi.setSelected(false);
-            }
-            ps2.setString(1,(txt_numcartao.getText()));
-            ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Cartao inserido", "Informação Tipo de quarto");
-
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-
-        }
     }
 
     @FXML
@@ -223,13 +193,11 @@ public class CriarQuartoController implements Initializable {
         tbl_id.setResizable(false);
         tbl_tipQuarto.setResizable(false);
         tbl_piso.setResizable(false);
-        tbl_wifi.setResizable(false);
         tbl_preco.setResizable(false);
 
         tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
         tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("piso"));
-        tbl_wifi.setCellValueFactory(new PropertyValueFactory<Quarto, Boolean>("wifi"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
 
         tv_Quarto.setItems(Quarto.getQuarto());
@@ -264,13 +232,7 @@ public class CriarQuartoController implements Initializable {
                 ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
                 ps2.setString(1, cmbTipoQuarto.getValue());
                 ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
-                if (checkboxWifi.isSelected()) {
-                    checkboxWifi.setSelected(true);
-                } else {
-                    checkboxWifi.setSelected(false);
-                }
-                ps2.setBoolean(3, checkboxWifi.isSelected());
-                ps2.setDouble(4, Double.parseDouble(txt_preco.getText()));
+                ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
 
                 ps2.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
@@ -284,34 +246,7 @@ public class CriarQuartoController implements Initializable {
 
     public void clickRmvQuarto(ActionEvent actionEvent) {
 
-        RmvQuarto();
-        RmvCartao();
-    }
-
-    public void RmvQuarto() {
-
         PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
-                ps2.setInt(1, selectedID.getId());
-                ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
-
-            }
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
-            throw new RuntimeException(ex);
-
-        }
-    }
-
-    public void RmvCartao() {
-
         PreparedStatement ps;
         try {
             DBconn dbConn = new DBconn();
@@ -319,14 +254,19 @@ public class CriarQuartoController implements Initializable {
 
             Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
+                ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
                 ps = connection.prepareStatement("DELETE FROM Cartao WHERE numeroCartao = ?");
+                ps2.setInt(1, selectedID.getId());
 
                 for (int i = 0; i < Cartao.getCartao().size(); i++) {
                     String cartaoN = Cartao.getCartao().get(i).getNumCartao();
                     if (cartaoN.equals(selectedID.getNumCartao())){
+
                         ps.setString(1,cartaoN);
                     }
                 }
+
+                ps2.executeUpdate();
                 ps.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
 
@@ -336,5 +276,15 @@ public class CriarQuartoController implements Initializable {
             throw new RuntimeException(ex);
 
         }
+    }
+
+    public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelProdutoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) ProdutoQuarto.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 }

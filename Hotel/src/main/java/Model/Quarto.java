@@ -11,25 +11,24 @@ public class Quarto {
     private Integer id;
     private String tipoQuarto;
     private Integer piso;
-    private Boolean wifi;
+
     private Double preco;
 
     private String numCartao;
     private Boolean ativo ;
-    private Boolean cofre;
+
 
     public Quarto() {
     }
 
-    public Quarto(Integer id, String tipoQuarto, Integer piso, Boolean wifi, Double preco, String numCartao,Boolean ativo,Boolean cofre){
+    public Quarto(Integer id, String tipoQuarto, Integer piso, Double preco, String numCartao,Boolean ativo){
         this.id = id;
         this.tipoQuarto = tipoQuarto;
         this.piso = piso;
-        this.wifi = wifi;
         this.preco = preco;
         this.numCartao = numCartao;
         this.ativo = ativo;
-        this.cofre = cofre;
+
     }
 
     public Boolean getAtivo() {
@@ -42,14 +41,6 @@ public class Quarto {
 
     public Integer getId() {
         return id;
-    }
-
-    public Boolean getCofre() {
-        return cofre;
-    }
-
-    public void setCofre(Boolean cofre) {
-        this.cofre = cofre;
     }
 
     public void setId(Integer id) {
@@ -72,13 +63,6 @@ public class Quarto {
         this.piso = piso;
     }
 
-    public Boolean getWifi() {
-        return wifi;
-    }
-
-    public void setWifi(Boolean wifi) {
-        this.wifi = wifi;
-    }
 
     public Double getPreco() {
         return preco;
@@ -107,8 +91,8 @@ public class Quarto {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),rs.getBoolean("wifi"),
-                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"),rs.getBoolean("cofre"));
+                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),
+                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"));
                 lista3.add(objQuarto);
             }
 
@@ -125,10 +109,9 @@ public class Quarto {
                 "id=" + id +
                 ", tipoQuarto='" + tipoQuarto + '\'' +
                 ", piso=" + piso +
-                ", wifi=" + wifi +
                 ", preco=" + preco +
-                ", numCartao='" + numCartao + '\'' +
-                ", ativo=" + ativo +
-                ", cofre=" + cofre;
+                ", numCartao='" + numCartao;
+
+
     }
 }
