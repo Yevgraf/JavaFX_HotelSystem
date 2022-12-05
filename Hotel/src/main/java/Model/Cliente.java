@@ -105,5 +105,13 @@ public class Cliente {
         return lista;
     }
 
-
+    @Override
+    public String toString() {
+        return
+                "nome='" + nome + '\'' +
+                ", contacto='" + contacto + '\'' +
+                ", email='" + email + '\'' +
+                ", utilizador='" + utilizador + '\'' +
+                ", nif=" + nif;
+    }
 }

@@ -75,7 +75,7 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="btnGestorSaidaStock" layoutX="219.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
+      <Button fx:id="btnGestorSaidaStock" disable="true" layoutX="219.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Saída de Stock" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -85,7 +85,7 @@
             <Image url="@../../../img/saidaStock.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorProdutosStock" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
+      <Button fx:id="gestaoProdBtn" layoutX="14.0" layoutY="470.0" mnemonicParsing="false" onAction="#clickgestaoProdBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -107,8 +107,8 @@
       </Button>
       <TableView fx:id="tblStock" layoutX="87.0" layoutY="192.0" onMousePressed="#clickMostrarDescricao" prefHeight="200.0" prefWidth="536.0">
          <columns>
-            <TableColumn fx:id="idProdutoTable" prefWidth="274.0" text="Id do produto" />
-            <TableColumn fx:id="quantidadeTable" prefWidth="261.0" text="Quantidade" />
+            <TableColumn fx:id="idProdutoTable" prefWidth="237.6000518798828" text="Id do produto" />
+            <TableColumn fx:id="quantidadeTable" prefWidth="298.39996337890625" text="Quantidade" />
          </columns>
       </TableView>
       <Text fill="WHITE" layoutX="87.0" layoutY="412.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Descrição:">
