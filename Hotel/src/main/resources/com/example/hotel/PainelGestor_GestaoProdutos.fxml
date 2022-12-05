@@ -82,13 +82,13 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
-      <TableView fx:id="produtosTable" layoutX="14.0" layoutY="194.0" prefHeight="214.0" prefWidth="696.0">
+      <TableView fx:id="produtosTable" layoutX="14.0" layoutY="194.0" onMouseClicked="#clickTable" prefHeight="214.0" prefWidth="696.0">
         <columns>
-          <TableColumn prefWidth="75.0" text="Id" />
-          <TableColumn prefWidth="133.0" text="Descrição" />
-            <TableColumn prefWidth="107.0" text="Preço (Uni)" />
-            <TableColumn prefWidth="164.0" text="Peso (Kg)" />
-            <TableColumn prefWidth="216.0" text="Consumível" />
+          <TableColumn fx:id="idTable" prefWidth="75.0" text="Id" />
+          <TableColumn fx:id="descricaoTable" prefWidth="133.0" text="Descrição" />
+            <TableColumn fx:id="precoTable" prefWidth="107.0" text="Preço (Uni)" />
+            <TableColumn fx:id="pesoTable" prefWidth="164.0" text="Peso (Kg)" />
+            <TableColumn fx:id="consumivelTable" prefWidth="216.0" text="Consumível" />
         </columns>
       </TableView>
       <Text fill="WHITE" layoutX="19.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marcar como:">
@@ -103,7 +103,7 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="113.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
+      <Text fx:id="quantidade" fill="WHITE" layoutX="113.0" layoutY="435.0" strokeType="OUTSIDE" strokeWidth="0.0">
          <font>
             <Font name="Bernard MT Condensed" size="24.0" />
          </font>
