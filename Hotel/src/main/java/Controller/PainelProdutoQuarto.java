@@ -115,7 +115,6 @@ public class PainelProdutoQuarto implements Initializable {
         tv_ProdutoQuarto.setItems(ProdutoQuarto.getProdutoQuarto());
     }
     private void initCombos() {
-
         cmbQuarto.getItems().addAll(Quarto.getQuarto());
         cmbProduto.getItems().addAll(Produto.getProduto());
     }
@@ -142,7 +141,8 @@ public class PainelProdutoQuarto implements Initializable {
                         int quantidadeStock = Stock.getStock().get(i).getQuantidade();
                         int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
                         quantidadeStock = quantidadeStock- quantidadeProdutoQuarto;
-                        //ps3.setString(1, quantidadeStock,cmbProduto.getValue().getIdProduto());
+                        ps3.setInt(1, quantidadeStock);
+                        ps3.setString(2,cmbProduto.getValue().getIdProduto());
                         ps3.executeUpdate();
                     }
                 }

@@ -88,4 +88,13 @@ public class Produto {
         }
         return lista;
     }
+
+    @Override
+    public String toString() {
+        return
+                "descricao='" + descricao + '\'' +
+                ", precoUnidade=" + precoUnidade +
+                ", peso=" + peso +
+                ", consumivel=" + consumivel;
+    }
 }
