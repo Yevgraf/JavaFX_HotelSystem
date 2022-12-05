@@ -33,6 +33,15 @@ public class PanelCriarFuncController implements Initializable {
     private AnchorPane PainelGestorProdutoAdicionar;
 
     @FXML
+    private Label VerificarNome;
+
+    @FXML
+    private Label VerificarContacto;
+
+    @FXML
+    private Label VerificarNIF;
+
+    @FXML
     private ImageView btnBack;
     @FXML
     private ImageView btnCloseApp;
@@ -237,6 +246,17 @@ public class PanelCriarFuncController implements Initializable {
 
 
     public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
+        VerifyNIFColaborador();
+        VerifyNIFColaboradorMin();
+        VerifyContacto();
+        VerifyNome();
+
+        if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
+            RegistarFuncionario();
+        }
+    }
+
+    void RegistarFuncionario() {
         PreparedStatement ps2;
         int contador, tamanho, codigoASCII;
         String password;
@@ -273,7 +293,6 @@ public class PanelCriarFuncController implements Initializable {
             throw new RuntimeException(ex);
 
         }
-
     }
 
 
@@ -331,5 +350,66 @@ public class PanelCriarFuncController implements Initializable {
             }
         }
         return passwordCriptografada;
+    }
+
+    public boolean VerifyNIFColaborador() {
+        boolean flag;
+        String verificar = "SELECT count(1) FROM Colaborador WHERE nif ='" + txt_nif.getText() + "'";
+        try {
+            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    VerificarNIF.setText("O nif já existe!");
+                } else {
+                    VerificarNIF.setText("");
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        if (VerificarNIF.getText() == "O nif já existe!") {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyNIFColaboradorMin() {
+        boolean flag;
+        if (txt_nif.getText().length() < 9) {
+            VerificarNIF.setText("Minimo 9 caracteres!");
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyContacto() {
+        boolean flag;
+        if (txt_contacto.getText().length() < 9) {
+            VerificarContacto.setText("Minimo 9 caracteres!");
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyNome() {
+        boolean flag;
+        char[] chars = txt_nome.getText().toCharArray();
+        for (char c : chars) {
+            if (Character.isDigit(c)) {
+                VerificarNome.setText("Nome nao pode conter numeros!");
+            }
+        }
+        if (VerificarNome.getText() == "Nome nao pode conter numeros!") {
+            flag = false;
+        } else flag = true;
+
+        return flag;
     }
 }
