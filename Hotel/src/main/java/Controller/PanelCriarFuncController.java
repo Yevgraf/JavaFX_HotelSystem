@@ -33,6 +33,9 @@ public class PanelCriarFuncController implements Initializable {
     private AnchorPane PainelGestorProdutoAdicionar;
 
     @FXML
+    private Label EmptyMessage;
+
+    @FXML
     private Label VerificarNome;
 
     @FXML
@@ -250,9 +253,14 @@ public class PanelCriarFuncController implements Initializable {
         VerifyNIFColaboradorMin();
         VerifyContacto();
         VerifyNome();
-
-        if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
-            RegistarFuncionario();
+        if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
+                txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
+                && txt_password.getText().isEmpty() == false   && cmb_tipocolaborador.getItems().isEmpty() == false) {
+            if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
+                RegistarFuncionario();
+            }
+        } else {
+            EmptyMessage.setText("Preencha todos os campos");
         }
     }
 
@@ -368,7 +376,7 @@ public class PanelCriarFuncController implements Initializable {
         } catch (SQLException e) {
             e.getCause();
         }
-        if (VerificarNIF.getText() == "O nif já existe!") {
+        if (VerificarNIF.getText().equals("O nif já existe!")) {
             flag = false;
         } else {
             flag = true;
@@ -406,7 +414,7 @@ public class PanelCriarFuncController implements Initializable {
                 VerificarNome.setText("Nome nao pode conter numeros!");
             }
         }
-        if (VerificarNome.getText() == "Nome nao pode conter numeros!") {
+        if (VerificarNome.getText().equals("Nome nao pode conter numeros!")) {
             flag = false;
         } else flag = true;
 

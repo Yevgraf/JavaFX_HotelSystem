@@ -31,6 +31,16 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     private Button BtnAddProduto;
+
+    @FXML
+    private Label ValidarPiso;
+
+    @FXML
+    private Label EmptyMessage;
+
+    @FXML
+    private Label ValidarCartao;
+
     @FXML
     private Button ProdutoQuarto;
 
@@ -47,7 +57,10 @@ public class CriarQuartoController implements Initializable {
     private ImageView btnBack;
 
     @FXML
-    private ComboBox<String > cmbTipoQuarto;
+    private ComboBox<String> cmbPiso;
+
+    @FXML
+    private ComboBox<String> cmbTipoQuarto;
 
 
     @FXML
@@ -96,7 +109,7 @@ public class CriarQuartoController implements Initializable {
     private TableColumn<Quarto, Integer> tbl_id;
 
     @FXML
-    private TableColumn<Quarto, Integer> tbl_piso;
+    private TableColumn<Quarto, String> tbl_piso;
 
     @FXML
     private TableColumn<Quarto, Double> tbl_preco;
@@ -146,23 +159,32 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     void clickAddQuarto(ActionEvent event) {
+        VerifyCartao();
+
+        if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
+            if (VerifyCartao() == true) {
+                ADDCartao();
+                ADDQuarto();
+            }
+        } else {
+            EmptyMessage.setText("Preencha todos os campos");
+        }
+
+    }
+
+    void ADDQuarto(){
         PreparedStatement ps2;
-        PreparedStatement ps3;
 
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
             ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps3 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao,ativo) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             ps2.setString(1, cmbTipoQuarto.getValue());
-            ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
+            ps2.setString(2, cmbPiso.getValue());
             ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
             ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
-            ps3.setString(1,(txt_numcartao.getText()));
-            ps3.setBoolean(2,false);
             ps2.setBoolean(5,false);
 
-            ps3.executeUpdate();
             ps2.executeUpdate();
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
 
@@ -173,6 +195,28 @@ public class CriarQuartoController implements Initializable {
         }
 
     }
+
+
+    void ADDCartao(){
+        PreparedStatement ps2;
+
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao,ativo) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2.setString(1,(txt_numcartao.getText()));
+            ps2.setBoolean(2,false);
+
+            ps2.executeUpdate();
+
+        } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
+            throw new RuntimeException(ex);
+
+        }
+
+    }
+
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
@@ -197,7 +241,7 @@ public class CriarQuartoController implements Initializable {
 
         tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
-        tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("piso"));
+        tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, String>("piso"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
 
         tv_Quarto.setItems(Quarto.getQuarto());
@@ -207,20 +251,18 @@ public class CriarQuartoController implements Initializable {
         cmbTipoQuarto.getItems().add("Singular");
         cmbTipoQuarto.getItems().add("Duplo");
         cmbTipoQuarto.getItems().add("Familiar");
-
+        cmbPiso.getItems().add("1");
+        cmbPiso.getItems().add("2");
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
         initCombos();
-
-
     }
 
 
     public void clickEditar(ActionEvent actionEvent) {
-
 
         PreparedStatement ps2;
         try {
@@ -231,7 +273,7 @@ public class CriarQuartoController implements Initializable {
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
                 ps2.setString(1, cmbTipoQuarto.getValue());
-                ps2.setInt(2, Integer.parseInt(txt_piso.getText()));
+                ps2.setString(2, cmbPiso.getValue());
                 ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
 
                 ps2.executeUpdate();
@@ -287,4 +329,29 @@ public class CriarQuartoController implements Initializable {
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
+
+    public boolean VerifyCartao() {
+        boolean flag;
+        String verificar = "SELECT count(1) FROM Cartao WHERE numeroCartao ='" + txt_numcartao.getText() + "'";
+        try {
+            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    ValidarCartao.setText("O cartao já existe!");
+                } else {
+                    ValidarCartao.setText("");
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        if (ValidarCartao.getText().equals("O cartao já existe!")) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
 }

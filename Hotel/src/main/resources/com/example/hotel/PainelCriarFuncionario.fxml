@@ -179,5 +179,6 @@
       <Label fx:id="VerificarNome" layoutX="175.0" layoutY="81.0" prefHeight="17.0" prefWidth="204.0" textFill="RED" />
       <Label fx:id="VerificarNIF" layoutX="190.0" layoutY="137.0" prefHeight="17.0" prefWidth="164.0" />
       <Label fx:id="VerificarContacto" layoutX="513.0" layoutY="95.0" prefHeight="17.0" prefWidth="146.0" textFill="RED" />
+      <Label fx:id="EmptyMessage" layoutX="440.0" layoutY="305.0" prefHeight="17.0" prefWidth="185.0" textFill="RED" />
    </children>
 </AnchorPane>

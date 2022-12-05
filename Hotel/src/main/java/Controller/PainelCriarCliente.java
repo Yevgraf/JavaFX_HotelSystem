@@ -43,6 +43,10 @@ public class PainelCriarCliente {
 
     @FXML
     private Label VerificarNome;
+
+    @FXML
+    private Label EmptyMessage;
+
     @FXML
     private ImageView btnBack;
 
@@ -158,8 +162,13 @@ public class PainelCriarCliente {
         VerifyContacto();
         VerifyNome();
 
-        if (VerifyNIFCliente() == true && VerifyNIFClienteMin() == true && VerifyContacto() == true && VerifyNome() == true) {
-            RegistarCliente();
+        if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_email.getText().isEmpty() == false
+                && txt_contacto.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false && txt_password.getText().isEmpty() == false) {
+            if (VerifyNIFCliente() == true && VerifyNIFClienteMin() == true && VerifyContacto() == true && VerifyNome() == true) {
+                RegistarCliente();
+            }
+        } else {
+            EmptyMessage.setText("Preencha todos os campos");
         }
     }
 
@@ -276,7 +285,7 @@ public class PainelCriarCliente {
         } catch (SQLException e) {
             e.getCause();
         }
-        if (VerificarNIF.getText() == "O nif já existe!") {
+        if (VerificarNIF.getText().equals("O nif já existe!")) {
             flag = false;
         } else {
             flag = true;
@@ -314,7 +323,7 @@ public class PainelCriarCliente {
                 VerificarNome.setText("Nome nao pode conter numeros!");
             }
         }
-        if (VerificarNome.getText() == "Nome nao pode conter numeros!") {
+        if (VerificarNome.getText().equals("Nome nao pode conter numeros!")) {
             flag = false;
         } else flag = true;
 
