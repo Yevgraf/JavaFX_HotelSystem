@@ -16,10 +16,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ResourceBundle;
 
 public class PainelProdutoQuarto implements Initializable {
@@ -135,17 +132,16 @@ public class PainelProdutoQuarto implements Initializable {
 
             //ps3.executeUpdate();
             ps2.executeUpdate();
-            for (int i = 0; i < Stock.getStock().size(); i++) {
+            String idProduto = cmbProduto.getValue().getIdProduto();
                 for (int j = 0; j < ProdutoQuarto.getProdutoQuarto().size(); j++) {
-                    if (Stock.getStock().get(i).getIdProduto().equals(ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
-                        int quantidadeStock = Stock.getStock().get(i).getQuantidade();
+                    if (idProduto.equals(ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
+                        int quantidadeStock = selectStock(idProduto, connection);
                         int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
-                        quantidadeStock = quantidadeStock- quantidadeProdutoQuarto;
-                        ps3.setInt(1, quantidadeStock);
+                        int novaQuantidade = quantidadeStock- quantidadeProdutoQuarto;
+                        ps3.setInt(1, novaQuantidade);
                         ps3.setString(2,cmbProduto.getValue().getIdProduto());
                         ps3.executeUpdate();
                     }
-                }
             }
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Produto quarto inserido", "Informação produto quarto");
 
@@ -154,6 +150,18 @@ public class PainelProdutoQuarto implements Initializable {
             throw new RuntimeException(ex);
 
         }
+    }
+
+    private Integer selectStock(String idProduto, Connection connection) throws SQLException {
+        Statement statement = connection.createStatement();
+
+        ResultSet rs = statement.executeQuery("SELECT quantidade FROM Stock WHERE idProduto = '" + idProduto + "'");
+        Integer quantidade = 0;
+        while (rs.next()) {
+            quantidade = rs.getInt("quantidade");
+        }
+        statement.close();
+        return quantidade;
     }
 
     @FXML
