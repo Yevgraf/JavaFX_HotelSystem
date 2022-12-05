@@ -29,27 +29,6 @@ import java.util.ResourceBundle;
 public class StockController implements Initializable {
 
     @FXML
-    private AnchorPane PainelGestorStock;
-
-    @FXML
-    private ImageView btnBack;
-
-    @FXML
-    private ImageView btnCloseApp;
-
-    @FXML
-    private ImageView btnDefGestor;
-
-    @FXML
-    private Button btnGestorEntradaStock;
-
-    @FXML
-    private Button btnGestorProdutosStock;
-
-    @FXML
-    private Button btnGestorSaidaStock;
-
-    @FXML
     private TableView<Stock> tblStock;
 
     @FXML
@@ -59,66 +38,31 @@ public class StockController implements Initializable {
     private TableColumn<Stock, Integer> quantidadeTable;
 
     @FXML
-    private TableColumn<Stock, Boolean> consumivel;
-
-    @FXML
     private Button btnVoltar;
 
     @FXML
     private Text descricaoTxt;
 
     @FXML
-    private Button consumivelBtn;
-
-    @FXML
-    private Button naoConsumivelBtn;
-
-    @FXML
-    void clickConsumivelBtn(ActionEvent event) {
-
-      //  PreparedStatement ps2;
-      //  try {
-      //      DBconn dbConn = new DBconn();
-      //      Connection connection = dbConn.getConn();
-//
-      //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
-      //      if (selectedID != null && selectedID.getConsumivel() == false) {
-      //          ps2 = connection.prepareStatement("UPDATE Stock SET consumivel WHERE consumivel = ?");
-      //          ps2.setBoolean(1, selectedID.getConsumivel() = true);
-      //          ps2.executeUpdate();
-      //          MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto passou a consumível", "Informação");
-      //      } else {
-      //          MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Produto já é consumível", "Erro!");
-      //      }
-//
-      //  } catch (SQLException ex) {
-      //      throw new RuntimeException(ex);
-      //  }
-    }
-
-    @FXML
-    void clickNaoConsumivelBtn(ActionEvent event) {
-
-    }
-
-    @FXML
-    void clickMostrarDescricao(MouseEvent event) {
-        //  PreparedStatement ps2;
-        //  try {
-        //      DBconn dbConn = new DBconn();
-        //      Connection connection = dbConn.getConn();
-
-        //      Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
-        //      if (selectedID != null){
-        //          ps2 = connection.prepareStatement("SELECT FROM Produto WHERE id = ?");
-        //          ps2.setString(1, selectedID.getIdProduto());
-        //          ps2.executeUpdate();
-        //
-        //      }
-
-        //  } catch (SQLException ex) {
-        //      throw new RuntimeException(ex);
-        //  }
+    void clickTable(MouseEvent event) {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
+            if (selectedID != null) {
+                ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
+                ps2.setString(1, selectedID.getIdProduto());
+                for (int i = 0; i < Produto.getProduto().size(); i++) {
+                    if (selectedID != null && selectedID.getIdProduto().equals(Produto.getProduto().get(i).getIdProduto())){
+                        String descricao = Produto.getProduto().get(i).getDescricao();
+                        descricaoTxt.setText(descricao);
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 
     @FXML
