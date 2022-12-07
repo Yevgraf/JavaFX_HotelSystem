@@ -141,23 +141,6 @@ public class CriarQuartoController implements Initializable {
     private Button voltarBtn;
 
     @FXML
-    void AddTipoQuartoOnAction(ActionEvent event) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelAddTipoQuarto.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnAddTipoQuarto.getScene().getWindow();
-        stage.setTitle("Adicionar Tipo de quarto");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-    @FXML
-    void addProduto(ActionEvent event) {
-
-    }
-
-    @FXML
     void clickAddQuarto(ActionEvent event) {
         VerifyCartao();
 
@@ -321,7 +304,7 @@ public class CriarQuartoController implements Initializable {
     }
 
     public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelProdutoQuarto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) ProdutoQuarto.getScene().getWindow();
         stage.setTitle("Adicionar Tipo de quarto");

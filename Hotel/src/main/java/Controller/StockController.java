@@ -78,7 +78,7 @@ public class StockController implements Initializable {
 
     @FXML
     void clickgestaoProdBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor_GestaoProdutos.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutos.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
         stage.setTitle("Gestão de Produtos");

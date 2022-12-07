@@ -104,7 +104,7 @@ public class GestaoCliente implements Initializable {
 
     @FXML
     void clickAddClienteBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarCliente.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorAdicionarCliente.getScene().getWindow();
         stage.setTitle("Adicionar Cliente");

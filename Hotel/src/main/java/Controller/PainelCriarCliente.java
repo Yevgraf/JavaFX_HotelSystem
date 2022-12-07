@@ -260,7 +260,7 @@ public class PainelCriarCliente {
 
     @FXML
     void onActionVoltar(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoCliente.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_update_Voltar.getScene().getWindow();
         stage.setTitle("Pagina Gestor");

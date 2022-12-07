@@ -136,7 +136,7 @@ public class TipoColaboradorController {
     @FXML
     void btnVoltarAction(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_voltar.getScene().getWindow();
         stage.setTitle("criar funcionario");

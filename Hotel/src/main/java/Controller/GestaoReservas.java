@@ -64,7 +64,7 @@ public class GestaoReservas implements Initializable {
 
     @FXML
     void clickAdicionarReservaBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario_GestaoReservas_Adicionar.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("AdicionarReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) adicionarReservaBtn.getScene().getWindow();
         stage.setTitle("Adicionar reserva");
