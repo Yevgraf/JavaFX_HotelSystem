@@ -86,7 +86,7 @@
             <Image url="@../../../img/setaSubJanela.png" />
          </image>
       </ImageView>
-      <Label fx:id="lblIdClientes" layoutX="41.0" layoutY="227.0" prefHeight="55.0" prefWidth="100.0" text="NIF Cliente:" textFill="WHITE">
+      <Label fx:id="lblIdClientes" layoutX="43.0" layoutY="215.0" prefHeight="55.0" prefWidth="100.0" text="NIF Cliente:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
@@ -96,12 +96,12 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblDataIniicio" layoutX="18.0" layoutY="307.0" prefHeight="55.0" prefWidth="126.0" text="Data de ínicio:" textFill="WHITE">
+      <Label fx:id="lblDataIniicio" layoutX="19.0" layoutY="325.0" prefHeight="55.0" prefWidth="126.0" text="Data de ínicio:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblDataFim" layoutX="31.0" layoutY="351.0" prefHeight="55.0" prefWidth="107.0" text="Data do Fim:" textFill="WHITE">
+      <Label fx:id="lblDataFim" layoutX="28.0" layoutY="385.0" prefHeight="55.0" prefWidth="107.0" text="Data do Fim:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
@@ -112,12 +112,12 @@
          </font>
       </Label>
       <TextField fx:id="txtPreco" editable="false" layoutX="258.0" layoutY="462.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #ffffff;" />
-      <Label fx:id="lblIdQuarto" layoutX="72.0" layoutY="261.0" prefHeight="55.0" prefWidth="90.0" text="Quarto:" textFill="WHITE">
+      <Label fx:id="lblIdQuarto" layoutX="70.0" layoutY="274.0" prefHeight="55.0" prefWidth="90.0" text="Quarto:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbIDQuarto" layoutX="138.0" layoutY="282.0" onAction="#cmbIdQuartoAction" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
+      <ComboBox fx:id="cmbIDQuarto" layoutX="139.0" layoutY="289.0" onAction="#cmbIdQuartoAction" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <TableView fx:id="servicosTable" layoutX="351.0" layoutY="242.0" prefHeight="147.0" prefWidth="354.0">
         <columns>
           <TableColumn fx:id="idServicoTable" prefWidth="88.800048828125" text="id do Serviço" />
@@ -131,9 +131,13 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <ComboBox fx:id="cmbClientes" layoutX="139.0" layoutY="242.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
-      <DatePicker fx:id="DatePickerInicio" layoutX="137.0" layoutY="323.0" />
-      <DatePicker fx:id="DatePickerFim" layoutX="137.0" layoutY="366.0" />
+      <ComboBox fx:id="cmbClientes" layoutX="139.0" layoutY="230.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
+      <DatePicker fx:id="DatePickerInicio" layoutX="137.0" layoutY="340.0" />
+      <DatePicker fx:id="DatePickerFim" layoutX="137.0" layoutY="400.0" />
       <Button fx:id="btnRedictCriarCliente" layoutX="487.0" layoutY="399.0" mnemonicParsing="false" onAction="#btnRedictCriarCliente" prefHeight="26.0" prefWidth="126.0" text="Criar Cliente" />
+      <Label fx:id="DataInicio" layoutX="162.0" layoutY="321.0" prefHeight="17.0" prefWidth="167.0" textFill="RED" />
+      <Label fx:id="DataFim" layoutX="162.0" layoutY="381.0" prefHeight="17.0" prefWidth="115.0" textFill="RED" />
+      <Label fx:id="ValidarQuarto" layoutX="157.0" layoutY="267.0" prefHeight="17.0" prefWidth="174.0" textFill="RED" />
+      <Label fx:id="EmptyMessage" layoutX="428.0" layoutY="161.0" prefHeight="17.0" prefWidth="238.0" textFill="RED" />
    </children>
 </AnchorPane>

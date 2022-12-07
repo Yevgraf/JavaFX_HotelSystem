@@ -6,26 +6,29 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-import static org.bouncycastle.asn1.x500.style.RFC4519Style.owner;
-
 public class LoginController implements Initializable {
 
     @FXML
     private Button loginBtn;
+
+
+    @FXML
+    private Label ValidarPass;
+
+    @FXML
+    private Label ValidarUser;
+
+    @FXML
+    private Label EmptyMessage;
 
     @FXML
     private PasswordField passwordTxt;
@@ -35,6 +38,18 @@ public class LoginController implements Initializable {
 
     @FXML
     void clickLoginBtn(ActionEvent event) {
+
+        if (userTxt.getText().isEmpty() == false && passwordTxt.getText().isEmpty() == false) {
+            if (/*VerifyPass() == true &&*/ VerifyUser() == true) {
+                Login();
+            }
+        } else {
+            EmptyMessage.setText("Preencha todos os campos");
+        }
+
+    }
+
+    void Login(){
         PreparedStatement ps;
         try {
             DBconn dbConn = new DBconn();
@@ -79,8 +94,6 @@ public class LoginController implements Initializable {
                         }
                     }
                 }
-            } else {
-                loginIncorreto();
             }
         } catch (SQLException ex) {
             System.out.println("ERROR: ..................." + ex);
@@ -89,13 +102,53 @@ public class LoginController implements Initializable {
         }
     }
 
-    public void loginIncorreto() {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Erro!");
-        alert.setHeaderText("User e/ou Password incorreto(s)!");
-        alert.setContentText("Por favor tente novamente.");
-        alert.showAndWait();
-    }
+    public boolean VerifyUser() {
+            boolean flag;
+            String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
+            try {
+                PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    if (rs.getInt(1) == 0) {
+                        ValidarUser.setText("Utilizador não encontrado!");
+                    } else {
+                        ValidarUser.setText("");
+                    }
+                }
+            } catch (SQLException e) {
+                e.getCause();
+            }
+            if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
+                flag = false;
+            } else {
+                flag = true;
+            }
+            return flag;
+        }
+
+    /*public boolean VerifyPass() {
+        boolean flag;
+        String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
+        try {
+            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 0) {
+                    ValidarUser.setText("Utilizador não encontrado!");
+                } else {
+                    ValidarUser.setText("");
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }*/
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

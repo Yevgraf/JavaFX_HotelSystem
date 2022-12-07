@@ -25,22 +25,32 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+import static java.lang.Integer.parseInt;
 
 public class AdicionarReserva implements Initializable {
+
+    @FXML
+    private Label EmptyMessage;
+
+    @FXML
+    private Label DataFim;
+
+    @FXML
+    private Label DataInicio;
+
+    @FXML
+    private Label ValidarQuarto;
     @FXML
     private DatePicker DatePickerFim;
 
     @FXML
     private DatePicker DatePickerInicio;
 
-
     @FXML
     private Button addServicoBtn;
 
     @FXML
     private Button adicionarReservaBtn;
-
-
 
     @FXML
     private Button btnRedictCriarCliente;
@@ -81,6 +91,17 @@ public class AdicionarReserva implements Initializable {
 
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
+        VerificarDisponibilidade();
+        if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
+            if (VerificarDisponibilidade() == true) {
+                AdicionarReserva();
+            }
+        }else {
+            EmptyMessage.setText("Preencha todos os campos");
+        }
+    }
+
+    void AdicionarReserva() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
 
         Integer idColadorador = 3;    //vai ser substituído pelo GET depois do login feito
@@ -88,7 +109,7 @@ public class AdicionarReserva implements Initializable {
         String servExtras = "SemExtras";  //falta criar lista de serviços
         Double preco = 0.0;
 
-       // reservas.add(new Reserva(nif, idColadorador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
+        // reservas.add(new Reserva(nif, idColadorador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
 
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
         PreparedStatement ps2;
@@ -181,7 +202,31 @@ public class AdicionarReserva implements Initializable {
         servicosTable.setItems(Servico.getServicoTable());
     }
 
-
+    public boolean VerificarDisponibilidade() {
+        boolean flag;
+            String verificar = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto ='" + cmbIDQuarto.getValue().getId() +
+                    "' And dataInicio ='" + DatePickerInicio.getValue().toString() + "'";
+            try {
+                PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+                ResultSet rs = stmt.executeQuery();
+                while (rs.next()) {
+                    if (rs.getString("dataInicio").equals(DatePickerInicio.getValue().toString())) {
+                        DataInicio.setText("A data escolhida está ocupada!");
+                        ValidarQuarto.setText("Quarto ocupado na data escolhida!");
+                    } else {
+                        DataInicio.setText("");
+                    }
+                }
+            } catch (SQLException e) {
+                e.getCause();
+            }
+        if (DataInicio.getText().equals("A data escolhida está ocupada!")) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
 }
 
 

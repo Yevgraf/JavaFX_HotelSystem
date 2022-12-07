@@ -10,7 +10,7 @@ import java.sql.Statement;
 public class Quarto {
     private Integer id;
     private String tipoQuarto;
-    private Integer piso;
+    private String piso;
 
     private Double preco;
 
@@ -21,7 +21,7 @@ public class Quarto {
     public Quarto() {
     }
 
-    public Quarto(Integer id, String tipoQuarto, Integer piso, Double preco, String numCartao,Boolean ativo){
+    public Quarto(Integer id, String tipoQuarto, String piso, Double preco, String numCartao,Boolean ativo){
         this.id = id;
         this.tipoQuarto = tipoQuarto;
         this.piso = piso;
@@ -55,11 +55,11 @@ public class Quarto {
         this.tipoQuarto = tipoQuarto;
     }
 
-    public Integer getPiso() {
+    public String getPiso() {
         return piso;
     }
 
-    public void setPiso(Integer piso) {
+    public void setPiso(String piso) {
         this.piso = piso;
     }
 
@@ -91,7 +91,7 @@ public class Quarto {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getInt("piso"),
+                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getString("piso"),
                         rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"));
                 lista3.add(objQuarto);
             }

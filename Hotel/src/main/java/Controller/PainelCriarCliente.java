@@ -36,6 +36,18 @@ public class PainelCriarCliente {
     private AnchorPane PainelCriarCliente;
 
     @FXML
+    private Label VerificarContacto;
+
+    @FXML
+    private Label VerificarNIF;
+
+    @FXML
+    private Label VerificarNome;
+
+    @FXML
+    private Label EmptyMessage;
+
+    @FXML
     private ImageView btnBack;
 
     @FXML
@@ -102,7 +114,7 @@ public class PainelCriarCliente {
     private TableColumn<Cliente, String> tbl_name;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_nif;
+    private TableColumn<Cliente, Integer> tbl_nif;
 
     @FXML
     private TableColumn<Cliente, String> tbl_password;
@@ -145,6 +157,22 @@ public class PainelCriarCliente {
     @FXML
     void onActionAddCliente(ActionEvent event) {
 
+        VerifyNIFCliente();
+        VerifyNIFClienteMin();
+        VerifyContacto();
+        VerifyNome();
+
+        if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_email.getText().isEmpty() == false
+                && txt_contacto.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false && txt_password.getText().isEmpty() == false) {
+            if (VerifyNIFCliente() == true && VerifyNIFClienteMin() == true && VerifyContacto() == true && VerifyNome() == true) {
+                RegistarCliente();
+            }
+        } else {
+            EmptyMessage.setText("Preencha todos os campos");
+        }
+    }
+
+    void RegistarCliente() {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
         PreparedStatement ps2;
@@ -158,7 +186,7 @@ public class PainelCriarCliente {
             ps2.setString(3, txt_email.getText());
             ps2.setString(4, txt_utilizador.getText());
 
-            ps2.setString(6, txt_nif.getText());
+            ps2.setInt(6, Integer.parseInt(txt_nif.getText()));
             password = txt_password.getText();
             tamanho = password.length();
             password = password.toUpperCase();
@@ -181,8 +209,6 @@ public class PainelCriarCliente {
 
         }
     }
-
-
 
 
     @FXML
@@ -209,15 +235,6 @@ public class PainelCriarCliente {
 
     @FXML
     void onActionUpdateCliente(ActionEvent event) throws IOException, SQLException {
-            /*FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCriarCliente.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) btn_update_cliente.getScene().getWindow();
-            stage.setTitle("Criar Cliente");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-             */
-
         try {
             clientlist.clear();
 
@@ -227,7 +244,7 @@ public class PainelCriarCliente {
             while (resultSet.next()) {
                 clientlist.add(new Cliente(
                         resultSet.getString("nome"),
-                        resultSet.getString("contacto"),
+                        resultSet.getInt("contacto"),
                         resultSet.getString("email"),
                         resultSet.getString("utilizador"),
                         resultSet.getString("password"),
@@ -252,5 +269,65 @@ public class PainelCriarCliente {
         stage.show();
     }
 
+    public boolean VerifyNIFCliente() {
+        boolean flag;
+        String verificar = "SELECT count(1) FROM Cliente WHERE nif ='" + txt_nif.getText() + "'";
+        try {
+            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    VerificarNIF.setText("O nif já existe!");
+                } else {
+                    VerificarNIF.setText("");
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        if (VerificarNIF.getText().equals("O nif já existe!")) {
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyNIFClienteMin() {
+        boolean flag;
+        if (txt_nif.getText().length() < 9) {
+            VerificarNIF.setText("Minimo 9 caracteres!");
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyContacto() {
+        boolean flag;
+        if (txt_contacto.getText().length() < 9) {
+            VerificarContacto.setText("Minimo 9 caracteres!");
+            flag = false;
+        } else {
+            flag = true;
+        }
+        return flag;
+    }
+
+    public boolean VerifyNome() {
+        boolean flag;
+        char[] chars = txt_nome.getText().toCharArray();
+        for (char c : chars) {
+            if (Character.isDigit(c)) {
+                VerificarNome.setText("Nome nao pode conter numeros!");
+            }
+        }
+        if (VerificarNome.getText().equals("Nome nao pode conter numeros!")) {
+            flag = false;
+        } else flag = true;
+
+        return flag;
+    }
 }
 
