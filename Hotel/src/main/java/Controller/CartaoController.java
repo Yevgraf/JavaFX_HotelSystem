@@ -1,6 +1,5 @@
 package Controller;
 
-import Model.Cartao;
 import Model.RegistoCartao;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +10,7 @@ import javafx.scene.text.Text;
 
 import java.time.LocalDate;
 
-public class RegistosCartaoController {
+public class CartaoController {
 
     @FXML
     private Text cidadeTxt;

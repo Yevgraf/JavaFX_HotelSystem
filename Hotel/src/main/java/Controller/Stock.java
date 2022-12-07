@@ -1,10 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
-import Model.MessageBoxes;
 import Model.Produto;
-import Model.Stock;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,9 +10,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
@@ -26,16 +21,16 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class StockController implements Initializable {
+public class Stock implements Initializable {
 
     @FXML
-    private TableView<Stock> tblStock;
+    private TableView<Model.Stock> tblStock;
 
     @FXML
-    private TableColumn<Stock, String> idProdutoTable;
+    private TableColumn<Model.Stock, String> idProdutoTable;
 
     @FXML
-    private TableColumn<Stock, Integer> quantidadeTable;
+    private TableColumn<Model.Stock, Integer> quantidadeTable;
 
     @FXML
     private Button btnVoltar;
@@ -49,7 +44,7 @@ public class StockController implements Initializable {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
+            Model.Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
                 ps2.setString(1, selectedID.getIdProduto());
@@ -91,9 +86,9 @@ public class StockController implements Initializable {
         idProdutoTable.setResizable(false);
         quantidadeTable.setResizable(false);
 
-        idProdutoTable.setCellValueFactory(new PropertyValueFactory<Stock, String>("idProduto"));
-        quantidadeTable.setCellValueFactory(new PropertyValueFactory<Stock, Integer>("quantidade"));
-        tblStock.setItems(Stock.getStock());
+        idProdutoTable.setCellValueFactory(new PropertyValueFactory<Model.Stock, String>("idProduto"));
+        quantidadeTable.setCellValueFactory(new PropertyValueFactory<Model.Stock, Integer>("quantidade"));
+        tblStock.setItems(Model.Stock.getStock());
     }
 
     @Override

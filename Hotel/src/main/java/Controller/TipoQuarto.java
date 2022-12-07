@@ -1,9 +1,7 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
 import Model.MessageBoxes;
-import Model.TipoQuarto;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,10 +20,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class TipoQuartoController implements Initializable {
+public class TipoQuarto implements Initializable {
 
     @FXML
     private AnchorPane PainelAddTipoQuarto;
@@ -87,16 +84,16 @@ public class TipoQuartoController implements Initializable {
     private Label lblSamos;
 
     @FXML
-    private TableColumn<TipoQuarto, Integer> tbl_Id;
+    private TableColumn<Model.TipoQuarto, Integer> tbl_Id;
 
     @FXML
-    private TableColumn<TipoQuarto, String > tbl_tipo;
+    private TableColumn<Model.TipoQuarto, String > tbl_tipo;
 
     @FXML
-    private TableColumn<TipoQuarto, Boolean> tbl_vista;
+    private TableColumn<Model.TipoQuarto, Boolean> tbl_vista;
 
     @FXML
-    private TableView<TipoQuarto> tv_TipoQuarto;
+    private TableView<Model.TipoQuarto> tv_TipoQuarto;
 
     @FXML
     private TextField txt_tipo;
@@ -136,7 +133,7 @@ public class TipoQuartoController implements Initializable {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            TipoQuarto selectedID = tv_TipoQuarto.getSelectionModel().getSelectedItem();
+            Model.TipoQuarto selectedID = tv_TipoQuarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM TipoQuarto WHERE id = ?");
                 ps2.setInt(1, selectedID.getIdTipoQuarto());
@@ -157,11 +154,11 @@ public class TipoQuartoController implements Initializable {
         tbl_vista.setResizable(false);
 
 
-        tbl_Id.setCellValueFactory(new PropertyValueFactory<TipoQuarto, Integer>("idTipoQuarto"));
-        tbl_tipo.setCellValueFactory(new PropertyValueFactory<TipoQuarto, String>("tipo"));
-        tbl_vista.setCellValueFactory(new PropertyValueFactory<TipoQuarto, Boolean>("vista"));
+        tbl_Id.setCellValueFactory(new PropertyValueFactory<Model.TipoQuarto, Integer>("idTipoQuarto"));
+        tbl_tipo.setCellValueFactory(new PropertyValueFactory<Model.TipoQuarto, String>("tipo"));
+        tbl_vista.setCellValueFactory(new PropertyValueFactory<Model.TipoQuarto, Boolean>("vista"));
 
-        tv_TipoQuarto.setItems(TipoQuarto.getTipoQuarto());
+        tv_TipoQuarto.setItems(Model.TipoQuarto.getTipoQuarto());
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {

@@ -1,25 +1,12 @@
 package Controller;
 
-import Model.Colaborador;
 import Model.Reserva;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.DatePicker;
 
-import java.net.URL;
-import java.sql.*;
-import java.util.Date;
-import java.util.ResourceBundle;
-import BLL.DBconn;
-
-public class PanelCriarReservaController {
+public class CriarReserva {
     @FXML
     private AnchorPane PainelGestorReservaAdicionar;
 

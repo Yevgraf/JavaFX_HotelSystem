@@ -3,8 +3,6 @@ package Controller;
 import BLL.DBconn;
 import Model.*;
 import com.example.hotel.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +13,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import org.bouncycastle.crypto.agreement.srp.SRP6Client;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,11 +20,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class CriarQuartoController implements Initializable {
+public class CriarQuarto implements Initializable {
 
     @FXML
     private Button BtnAddProduto;

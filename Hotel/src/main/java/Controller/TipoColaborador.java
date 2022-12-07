@@ -2,8 +2,6 @@ package Controller;
 
 import BLL.DBconn;
 import Model.MessageBoxes;
-import Model.TipoColaborador;
-import Model.TipoQuarto;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -21,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TipoColaboradorController {
+public class TipoColaborador {
 
     @FXML
     private AnchorPane PainelAddTipoColaborador;
@@ -78,13 +76,13 @@ public class TipoColaboradorController {
     private Label lblSamos;
 
     @FXML
-    private TableColumn<TipoColaborador, Integer> tbl_Id;
+    private TableColumn<Model.TipoColaborador, Integer> tbl_Id;
 
     @FXML
-    private TableColumn<TipoColaborador, String> tbl_tipo;
+    private TableColumn<Model.TipoColaborador, String> tbl_tipo;
 
     @FXML
-    private TableView<TipoColaborador> tv_TipoColaborador;
+    private TableView<Model.TipoColaborador> tv_TipoColaborador;
 
     @FXML
     private TextField txt_tipo;
@@ -118,7 +116,7 @@ public class TipoColaboradorController {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            TipoColaborador selectedID = tv_TipoColaborador.getSelectionModel().getSelectedItem();
+            Model.TipoColaborador selectedID = tv_TipoColaborador.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM TipoColaborador WHERE id = ?");
                 ps2.setInt(1, selectedID.getId());
@@ -153,10 +151,10 @@ public class TipoColaboradorController {
         tbl_tipo.setResizable(false);
 
 
-        tbl_Id.setCellValueFactory(new PropertyValueFactory<TipoColaborador, Integer>("id"));
-        tbl_tipo.setCellValueFactory(new PropertyValueFactory<TipoColaborador, String>("tipo"));
+        tbl_Id.setCellValueFactory(new PropertyValueFactory<Model.TipoColaborador, Integer>("id"));
+        tbl_tipo.setCellValueFactory(new PropertyValueFactory<Model.TipoColaborador, String>("tipo"));
 
-        tv_TipoColaborador.setItems(TipoColaborador.getTipoColaborador());
+        tv_TipoColaborador.setItems(Model.TipoColaborador.getTipoColaborador());
     }
 
 }

@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class FuncionarioController {
+public class Funcionario {
 
     @FXML
     private ImageView btnCloseApp;

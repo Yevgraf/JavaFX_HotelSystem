@@ -19,7 +19,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class PainelProdutoQuarto implements Initializable {
+public class ProdutoQuarto implements Initializable {
 
     @FXML
     private AnchorPane PainelProdutoQuarto;
@@ -77,18 +77,18 @@ public class PainelProdutoQuarto implements Initializable {
 
 
     @FXML
-    private TableColumn<ProdutoQuarto, Integer> tbl_id;
+    private TableColumn<Model.ProdutoQuarto, Integer> tbl_id;
     @FXML
-    private TableColumn<ProdutoQuarto, String> tbl_idProduto;
+    private TableColumn<Model.ProdutoQuarto, String> tbl_idProduto;
 
     @FXML
-    private TableColumn<ProdutoQuarto, Integer> tbl_idQuarto;
+    private TableColumn<Model.ProdutoQuarto, Integer> tbl_idQuarto;
 
     @FXML
-    private TableColumn<ProdutoQuarto, Integer> tbl_quantidade;
+    private TableColumn<Model.ProdutoQuarto, Integer> tbl_quantidade;
 
     @FXML
-    private TableView<ProdutoQuarto> tv_ProdutoQuarto;
+    private TableView<Model.ProdutoQuarto> tv_ProdutoQuarto;
 
     @FXML
     private TextField txt_quantidade;
@@ -103,13 +103,13 @@ public class PainelProdutoQuarto implements Initializable {
         tbl_idQuarto.setResizable(false);
         tbl_quantidade.setResizable(false);
 
-        tbl_id.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("id"));
-        tbl_idQuarto.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("idQuarto"));
-        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, String>("idProduto"));
-        tbl_quantidade.setCellValueFactory(new PropertyValueFactory<ProdutoQuarto, Integer>("quantidade"));
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("id"));
+        tbl_idQuarto.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("idQuarto"));
+        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, String>("idProduto"));
+        tbl_quantidade.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("quantidade"));
 
 
-        tv_ProdutoQuarto.setItems(ProdutoQuarto.getProdutoQuarto());
+        tv_ProdutoQuarto.setItems(Model.ProdutoQuarto.getProdutoQuarto());
     }
     private void initCombos() {
         cmbQuarto.getItems().addAll(Quarto.getQuarto());
@@ -133,10 +133,10 @@ public class PainelProdutoQuarto implements Initializable {
             //ps3.executeUpdate();
             ps2.executeUpdate();
             String idProduto = cmbProduto.getValue().getIdProduto();
-                for (int j = 0; j < ProdutoQuarto.getProdutoQuarto().size(); j++) {
-                    if (idProduto.equals(ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
+                for (int j = 0; j < Model.ProdutoQuarto.getProdutoQuarto().size(); j++) {
+                    if (idProduto.equals(Model.ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
                         int quantidadeStock = selectStock(idProduto, connection);
-                        int quantidadeProdutoQuarto = ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
+                        int quantidadeProdutoQuarto = Model.ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
                         int novaQuantidade = quantidadeStock- quantidadeProdutoQuarto;
                         ps3.setInt(1, novaQuantidade);
                         ps3.setString(2,cmbProduto.getValue().getIdProduto());
@@ -176,7 +176,7 @@ public class PainelProdutoQuarto implements Initializable {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            ProdutoQuarto selectedID = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
+            Model.ProdutoQuarto selectedID = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("DELETE FROM ProdutoQuarto WHERE id =?");
 

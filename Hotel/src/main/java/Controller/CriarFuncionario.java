@@ -2,11 +2,7 @@ package Controller;
 
 import Model.Colaborador;
 import Model.MessageBoxes;
-import Model.TipoColaborador;
-import Model.TipoQuarto;
 import com.example.hotel.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +24,7 @@ import BLL.DBconn;
 import javafx.stage.Stage;
 
 
-public class PanelCriarFuncController implements Initializable {
+public class CriarFuncionario implements Initializable {
     @FXML
     private AnchorPane PainelGestorProdutoAdicionar;
 

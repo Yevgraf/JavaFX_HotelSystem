@@ -2,11 +2,8 @@ package Controller;
 
 import BLL.DBconn;
 import Model.Cartao;
-import Model.Colaborador;
 import Model.MessageBoxes;
 import com.example.hotel.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,7 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class PanelCriarCartao implements Initializable {
+public class CriarCartao implements Initializable {
 
   @FXML
   private AnchorPane PainelCartao;

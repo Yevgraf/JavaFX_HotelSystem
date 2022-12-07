@@ -1,7 +1,6 @@
 package Controller;
 
 import Model.Cliente;
-import Model.Colaborador;
 import Model.MessageBoxes;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
@@ -9,28 +8,21 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
-import java.net.URL;
 import java.sql.*;
-import java.util.Date;
-import java.util.ResourceBundle;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import BLL.DBconn;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 
-public class PainelCriarCliente {
+public class CriarCliente {
 
     @FXML
     private AnchorPane PainelCriarCliente;
@@ -253,7 +245,7 @@ public class PainelCriarCliente {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(PainelCriarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CriarCliente.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }

@@ -15,7 +15,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class LoginController implements Initializable {
+public class Login implements Initializable {
 
     @FXML
     private Button loginBtn;
