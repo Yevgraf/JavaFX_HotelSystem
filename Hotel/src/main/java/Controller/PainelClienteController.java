@@ -3,6 +3,7 @@ package Controller;
 import Model.Cliente;
 import Model.Colaborador;
 import Model.MessageBoxes;
+import Model.Servico;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -33,10 +34,10 @@ import javafx.util.Callback;
 public class PainelClienteController {
 
     @FXML
-    private AnchorPane PanelCliente;
+    private AnchorPane PainelCliente;
 
     @FXML
-    private ImageView imgGestorColab;
+    private ImageView imgServic;
 
     @FXML
     private ImageView btnDefClinte;
@@ -45,93 +46,37 @@ public class PainelClienteController {
     private ImageView imgLogOut;
 
     @FXML
-    private ImageView imgQuarto;
+    private Button btn_SairServ;
 
     @FXML
-    private ImageView imgGinasio;
-
-    @FXML
-    private ImageView imgCozinha;
-
-    @FXML
-    private Button btn_add_cliente;
-
-    @FXML
-    private Button btn_remove_cliente;
-
-    @FXML
-    private Button btn_update_Voltar;
-
-    @FXML
-    private Button btn_update_cliente;
-
-    @FXML
-    private ImageView imgGestorAdionarProd;
-
-    @FXML
-    private ImageView imgGestorGestaoProduto;
-
-    @FXML
-    private Label lblGestaoProdutos;
-
-    @FXML
-    private Label lblHoras11;
-
-    @FXML
-    private Label lblHoras111;
-
-    @FXML
-    private Label lblHoras1211;
-
-    @FXML
-    private Label lblHoras13;
-
-    @FXML
-    private Label lblHoras131;
-
-    @FXML
-    private Label lblHoras1311;
+    private Label lblHotel;
 
     @FXML
     private Label lblSamos;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_contacto;
+    private Label lblServ;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_email;
+    private Label lblEncontr;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_name;
+    private Label lblData;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_nif;
+    private Label lblHoras;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_password;
+    private TableColumn<Servico, String> tbl_Id;
 
     @FXML
-    private TableColumn<Cliente, String> tbl_utilizador;
+    private TableColumn<Servico, String> tbl_Desc;
 
     @FXML
-    private TableView<Cliente> tv_clientes;
+    private TableColumn<Servico, String> tbl_preco;
 
     @FXML
-    private TextField txt_contacto;
-
-    @FXML
-    private TextField txt_email;
-
-    @FXML
-    private TextField txt_nif;
-
-    @FXML
-    private TextField txt_nome;
-
-    @FXML
-    private TextField txt_password;
-
-    @FXML
-    private TextField txt_utilizador;
+    private TableView<Servico> tv_Servicos;
+    
 
 }
