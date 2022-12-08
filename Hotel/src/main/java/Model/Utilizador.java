@@ -1,5 +1,12 @@
 package Model;
 
+import DAL.DBconn;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
+
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.Date;
 
 public class Utilizador {
@@ -9,7 +16,7 @@ public class Utilizador {
     private String nif;
     private String morada;
     private Date dataNascimento;
-    private  String email;
+    private String email;
     private String contacto;
     private String utilizador;
     private String password;
@@ -116,6 +123,64 @@ public class Utilizador {
 
     public void setTipoUser(TipoUtilizador tipoColaborador) {
         this.tipoUser = tipoColaborador;
+    }
+
+    public static ObservableList<Utilizador> getClientes() {
+        ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT * FROM Utilizador INNER JOIN TipoUtilizador TU on " +
+                    "Utilizador.idTipoUtilizador = TU.id WHERE idTipoUtilizador = '3' ";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
+                        rs.getString("contato"), rs.getString("utilizador"),
+                        new TipoUtilizador(
+                                rs.getInt("tuId"),
+                                rs.getString("tuNome")));
+                clientes.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
+        }
+
+        return clientes;
+    }
+
+    public static ObservableList<Utilizador> getColaboradores() {
+        ObservableList<Utilizador> colaboradores = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT * FROM Utilizador INNER JOIN TipoUtilizador TU on " +
+                    "Utilizador.idTipoUtilizador = TU.id WHERE idTipoUtilizador = '1' AND idTipoUtilizador = '2'";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
+                        rs.getString("contato"), rs.getString("utilizador"),
+                        new TipoUtilizador(
+                                rs.getInt("tuId"),
+                                rs.getString("tuNome")));
+                colaboradores.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
+        }
+
+        return colaboradores;
     }
 
 }

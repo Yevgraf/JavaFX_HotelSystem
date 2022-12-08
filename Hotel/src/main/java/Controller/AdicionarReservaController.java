@@ -1,11 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
-import Model.Cliente;
-import Model.MessageBoxes;
-import Model.Quarto;
-import Model.Reserva;
-import Model.Servico;
+import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -140,15 +136,15 @@ public class AdicionarReservaController implements Initializable {
             throw new RuntimeException(e);
         }
     }
-    private void initCombos() {
-        for (int i = 0; i < Quarto.getQuarto().size(); i++) {
-            if (Quarto.getQuarto().get(i).getAtivo() == false){
-             Quarto quartoFalse = Quarto.getQuarto().get(i);
-                cmbIDQuarto.getItems().addAll(quartoFalse);
-            }
-        }
-        cmbClientes.getItems().addAll(Cliente.getClientes());
-    }
+  // private void initCombos() {
+  //     for (int i = 0; i < Quarto.getQuarto().size(); i++) {
+  //         if (Quarto.getQuarto().get(i).getAtivo() == false){
+  //          Quarto quartoFalse = Quarto.getQuarto().get(i);
+  //             cmbIDQuarto.getItems().addAll(quartoFalse);
+  //         }
+  //     }
+  //     cmbClientes.getItems().addAll(Utilizador.getClientes());
+  // }
 
 
 
@@ -172,7 +168,7 @@ public class AdicionarReservaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initCombos();
+        //initCombos();
         initTable();
     }
 
