@@ -2,6 +2,7 @@ package Controller;
 
 import Model.Colaborador;
 import Model.MessageBoxes;
+import Model.Utilizador;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +26,6 @@ import javafx.stage.Stage;
 
 
 public class CriarFuncionarioController implements Initializable {
-    @FXML
-    private AnchorPane PainelGestorProdutoAdicionar;
-
-    @FXML
-    private Label EmptyMessage;
 
     @FXML
     private Label VerificarNome;
@@ -41,23 +37,9 @@ public class CriarFuncionarioController implements Initializable {
     private Label VerificarNIF;
 
     @FXML
-    private ImageView btnBack;
-    @FXML
-    private ImageView btnCloseApp;
-
-    @FXML
     private ImageView btnDefGestor;
 
-    @FXML
-    private Button btnAddTipoColab;
-    @FXML
     private Button btn_refresh;
-
-    @FXML
-    private ImageView btnLogOut;
-
-    @FXML
-    private ImageView btnMinimizateApp;
 
     @FXML
     private Button btn_update_Voltar;
@@ -75,85 +57,40 @@ public class CriarFuncionarioController implements Initializable {
     private ComboBox<String> cmb_tipocolaborador;
 
     @FXML
-    private ImageView imgGestorAdionarProd;
+    private TableColumn<Utilizador, String> tbl_contacto;
 
     @FXML
-    private ImageView imgGestorGestaoProduto;
+    private TableColumn<Utilizador, Date> tbl_dataNasc;
 
     @FXML
-    private Label lblGestaoProdutos;
+    private TableColumn<Utilizador, String> tbl_email;
 
     @FXML
-    private Label lblHoras1;
+    private TableColumn<Utilizador, Integer> tbl_id;
 
     @FXML
-    private Label lblHoras11;
+    private TableColumn<Utilizador, Integer> tbl_idCartao;
 
     @FXML
-    private Label lblHoras111;
+    private TableColumn<Utilizador, String> tbl_morada;
 
     @FXML
-    private Label lblHoras12;
+    private TableColumn<Utilizador, String> tbl_name;
 
     @FXML
-    private Label lblHoras121;
+    private TableColumn<Utilizador, String> tbl_nif;
 
     @FXML
-    private Label lblHoras1211;
+    private TableColumn<Utilizador, String> tbl_password;
 
     @FXML
-    private Label lblHoras13;
+    private TableColumn<Utilizador, String> tbl_tipoColaborador;
 
     @FXML
-    private Label lblHoras131;
+    private TableColumn<Utilizador, String> tbl_utilizador;
 
     @FXML
-    private Label lblHoras1311;
-
-    @FXML
-    private Label lblHoras13111;
-
-    @FXML
-    private Label lblHoras131111;
-
-    @FXML
-    private Label lblSamos;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_contacto;
-
-    @FXML
-    private TableColumn<Colaborador, Date> tbl_dataNasc;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_email;
-
-    @FXML
-    private TableColumn<Colaborador, Integer> tbl_id;
-
-    @FXML
-    private TableColumn<Colaborador, Integer> tbl_idCartao;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_morada;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_name;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_nif;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_password;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_tipoColaborador;
-
-    @FXML
-    private TableColumn<Colaborador, String> tbl_utilizador;
-
-    @FXML
-    private TableView<Colaborador> tv_funcionarios;
+    private TableView<Utilizador> tv_funcionarios;
 
     @FXML
     private TextField txt_contacto;
@@ -230,73 +167,73 @@ public class CriarFuncionarioController implements Initializable {
         tbl_tipoColaborador.setResizable(false);
         tbl_utilizador.setResizable(false);
 
-        tbl_id.setCellValueFactory(new PropertyValueFactory<Colaborador, Integer>("id"));
-        tbl_name.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nome"));
-        tbl_email.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("email"));
-        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Colaborador, Date>("dataNascimento"));
-        tbl_morada.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("morada"));
-        tbl_contacto.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("contacto"));
-        tbl_nif.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("nif"));
-        tbl_password.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("password"));
-        tbl_tipoColaborador.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("tipoColaborador"));
-        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Colaborador, String>("utilizador"));
-        tv_funcionarios.setItems(Colaborador.getColaborador());
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Utilizador, Integer>("id"));
+        tbl_name.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nome"));
+        tbl_email.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("email"));
+        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Utilizador, Date>("dataNascimento"));
+        tbl_morada.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("morada"));
+        tbl_contacto.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("contacto"));
+        tbl_nif.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nif"));
+        tbl_password.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("password"));
+        tbl_tipoColaborador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("tipoColaborador"));
+        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
+        tv_funcionarios.setItems(Utilizador.getColaboradores());
     }
 
 
     public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
-        VerifyNIFColaborador();
-        VerifyNIFColaboradorMin();
-        VerifyContacto();
-        VerifyNome();
-        if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
-                txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
-                && txt_password.getText().isEmpty() == false   && cmb_tipocolaborador.getItems().isEmpty() == false) {
-            if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
-                RegistarFuncionario();
-            }
-        } else {
-            EmptyMessage.setText("Preencha todos os campos");
-        }
+        // VerifyNIFColaborador();
+        // VerifyNIFColaboradorMin();
+        // VerifyContacto();
+        // VerifyNome();
+        //  if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
+        //          txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
+        //          && txt_password.getText().isEmpty() == false   && cmb_tipocolaborador.getItems().isEmpty() == false) {
+        //      if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
+        //          RegistarFuncionario();
+        //      }
+        //  } else {
+        //      EmptyMessage.setText("Preencha todos os campos");
+        //  }
     }
 
     void RegistarFuncionario() {
-        PreparedStatement ps2;
-        int contador, tamanho, codigoASCII;
-        String password;
-        String passwordCriptografada = "";
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Colaborador( nome, nif, morada,dataNascimento, email, contacto, utilizador, palavrapasse, tipoColaborador) VALUES (?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1, txt_nome.getText());
-            ps2.setString(2, txt_nif.getText());
-            ps2.setString(3, txt_morada.getText());
-            ps2.setString(4, datePickerNasc.getEditor().getText());
-            ps2.setString(5, txt_email.getText());
-            ps2.setString(6, txt_contacto.getText());
-            ps2.setString(7, txt_utilizador.getText());
-            password = txt_password.getText();
-            tamanho = password.length();
-            password = password.toUpperCase();
-            contador = 0;
+             PreparedStatement ps2;
+             int contador, tamanho, codigoASCII;
+             String password;
+             String passwordCriptografada = "";
+             try {
+                 DBconn dbConn = new DBconn();
+                 Connection connection = dbConn.getConn();
+                 ps2 = connection.prepareStatement("INSERT INTO Utilizador( nome, nif, morada,dataNascimento, email, contacto, utilizador, palavrapasse) VALUES (?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                 ps2.setString(1, txt_nome.getText());
+                 ps2.setString(2, txt_nif.getText());
+                 ps2.setString(3, txt_morada.getText());
+                 ps2.setString(4, datePickerNasc.getEditor().getText());
+                 ps2.setString(5, txt_email.getText());
+                 ps2.setString(6, txt_contacto.getText());
+                 ps2.setString(7, txt_utilizador.getText());
+                 password = txt_password.getText();
+                 tamanho = password.length();
+                 password = password.toUpperCase();
+                 contador = 0;
+//
+                 while (contador < tamanho) {
+                     codigoASCII = password.charAt(contador) + 130;
+                     passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                     contador++;
+                 }
+                 ps2.setString(8, passwordCriptografada);
+                 //ps2.setString(9, cmb_tipocolaborador.getValue());
+                 ps2.executeUpdate();
+                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador inserido", "Informação Colaborador");
 
-            while (contador < tamanho) {
-                codigoASCII = password.charAt(contador) + 130;
-                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-                contador++;
-            }
-            ps2.setString(8, passwordCriptografada);
-            ps2.setString(9, cmb_tipocolaborador.getValue());
-            ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador inserido", "Informação Colaborador");
 
+             } catch (SQLException ex) {
+                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
+                 throw new RuntimeException(ex);
 
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-
-        }
+             }
     }
 
 
@@ -322,9 +259,9 @@ public class CriarFuncionarioController implements Initializable {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            Colaborador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
+            Utilizador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Colaborador WHERE id = ?");
+                ps2 = connection.prepareStatement("DELETE FROM Utilizador WHERE id = ?");
                 ps2.setInt(1, selectedID.getId());
                 ps2.executeUpdate();
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador Removido", "Information");
@@ -336,29 +273,9 @@ public class CriarFuncionarioController implements Initializable {
         }
     }
 
-    //Descriptografa a String passada por parâmetro
-    public String Desencriptacao() {
-        int contador, tamanho, codigoASCII;
-        String password;
-        String passwordCriptografada = "";
-        for (int a = 0; a < Colaborador.getColaborador().size(); a++) {
-            password = Colaborador.getColaborador().get(a).getPassword();
-
-            tamanho = password.length();
-            password = password.toUpperCase();
-            contador = 0;
-            while (contador < tamanho) {
-                codigoASCII = password.charAt(contador) - 130;
-                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-                contador++;
-            }
-        }
-        return passwordCriptografada;
-    }
-
     public boolean VerifyNIFColaborador() {
         boolean flag;
-        String verificar = "SELECT count(1) FROM Colaborador WHERE nif ='" + txt_nif.getText() + "'";
+        String verificar = "SELECT count(1) FROM Utilizador WHERE nif ='" + txt_nif.getText() + "'";
         try {
             PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
             ResultSet rs = stmt.executeQuery();
