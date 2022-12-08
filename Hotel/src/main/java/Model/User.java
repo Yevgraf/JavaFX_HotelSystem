@@ -1,13 +1,9 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.*;
 import java.util.Date;
 
-public class Colaborador {
+public class User {
+
     private int id;
     private String nome;
     private String nif;
@@ -17,16 +13,18 @@ public class Colaborador {
     private String contacto;
     private String utilizador;
     private String password;
-    private String tipoColaborador;
+    private TipoUtilizador tipoUser;
 
-
-    public Colaborador(){
-
-    }
-
-
-
-    public Colaborador(int id, String nome, String nif, String morada, java.sql.Date dataNascimento, String email, String contacto, String utilizador, String palavrapasse, String tipoColaborador) {
+    public User(
+            int id,
+            String nome,
+            String nif,
+            String morada,
+            Date dataNascimento,
+            String email,
+            String contacto,
+            String utilizador,
+            TipoUtilizador tipoUser) {
         this.id = id;
         this.nome = nome;
         this.nif = nif;
@@ -35,11 +33,8 @@ public class Colaborador {
         this.email = email;
         this.contacto = contacto;
         this.utilizador = utilizador;
-        this.password = palavrapasse;
-        this.tipoColaborador = tipoColaborador;
-
+        this.tipoUser = tipoUser;
     }
-
 
     public int getId() {
         return id;
@@ -111,38 +106,16 @@ public class Colaborador {
         return contacto;
     }
 
-    public String getTipoColaborador() {
-        return tipoColaborador;
+    public TipoUtilizador getTipoUser() {
+        return tipoUser;
     }
 
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
 
-    public void setTipoColaborador(String tipoColaborador) {
-        this.tipoColaborador = tipoColaborador;
+    public void setTipoUser(TipoUtilizador tipoColaborador) {
+        this.tipoUser = tipoColaborador;
     }
 
-    public static ObservableList<Colaborador> getColaborador() {
-             ObservableList<Colaborador> lista = FXCollections.observableArrayList();
-
-          try {
-              String cmd = "SELECT * FROM Colaborador";
-
-              Statement st = DBconn.getConn().createStatement();
-
-              ResultSet rs = st.executeQuery(cmd);
-
-              while (rs.next()) {
-                  Colaborador obj = new Colaborador(rs.getInt("id"),rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
-                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"));
-                  lista.add(obj);
-              }
-
-              st.close();
-          } catch (Exception ex) {
-              System.err.println("Erro: " + ex.getMessage());
-          }
-          return lista;
-        }
-    }
+}

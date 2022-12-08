@@ -1,6 +1,9 @@
 package Controller;
 
-import BLL.DBconn;
+import BLL.UserBLL;
+import DAL.DBconn;
+import DAL.UserDAL;
+import Model.User;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,13 +23,6 @@ public class LoginController implements Initializable {
     @FXML
     private Button loginBtn;
 
-
-    @FXML
-    private Label ValidarPass;
-
-    @FXML
-    private Label ValidarUser;
-
     @FXML
     private Label EmptyMessage;
 
@@ -40,91 +36,68 @@ public class LoginController implements Initializable {
     void clickLoginBtn(ActionEvent event) {
 
         if (userTxt.getText().isEmpty() == false && passwordTxt.getText().isEmpty() == false) {
-            if (/*VerifyPass() == true &&*/ VerifyUser() == true) {
-                Login();
-            }
+            Login();
         } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
-
     }
 
     void Login(){
-        PreparedStatement ps;
         try {
-            DBconn dbConn = new DBconn();
-            int contador, tamanho, codigoASCII;
-            String password;
-            String passwordCriptografada = "";
-            Connection connection = dbConn.getConn();
-            ps = connection.prepareStatement("SELECT * FROM Colaborador WHERE utilizador = ? AND palavrapasse = ?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps.setString(1, userTxt.getText());
-            password = passwordTxt.getText();
-            tamanho = password.length();
-            password = password.toUpperCase();
-            contador = 0;
+            UserBLL bll = new UserBLL();
+            User user = bll.Login(userTxt.getText(), passwordTxt.getText());
 
-            while (contador < tamanho) {
-                codigoASCII = password.charAt(contador) + 130;
-                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-                contador++;
-            }
-            ps.setString(2, passwordCriptografada);
-            ResultSet result = ps.executeQuery();
-            if (result.next()) {
-                if (result.first()) {
-                    String tipo = result.getString("tipoColaborador");
-                    if (tipo.equals("GestorController")) {
-                        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-                        Stage stage = new Stage();
-                        Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                        stage.setTitle("Página do GestorController");
-                        newStage.hide();
-                        stage.setScene(new Scene(fxmlLoader.load()));
-                        stage.show();
-                    } else {
-                        if (tipo.equals("FuncionarioController")) {
-                            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
-                            Stage stage = new Stage();
-                            Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                            stage.setTitle("Página do Funcionário");
-                            newStage.hide();
-                            stage.setScene(new Scene(fxmlLoader.load()));
-                            stage.show();
-                        }
-                    }
+            if (user != null) {
+                // FEZ LOGIN
+                if (user.getTipoUser().getTipo().equals("Gestor")) {
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+                    Stage stage = new Stage();
+                    Stage newStage = (Stage) loginBtn.getScene().getWindow();
+                    stage.setTitle("Página do GestorController");
+                    newStage.hide();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    stage.show();
+                } else if (user.getTipoUser().getTipo().equals("Funcionario")){
+                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+                    Stage stage = new Stage();
+                    Stage newStage = (Stage) loginBtn.getScene().getWindow();
+                    stage.setTitle("Página do Funcionário");
+                    newStage.hide();
+                    stage.setScene(new Scene(fxmlLoader.load()));
+                    stage.show();
                 }
             }
-        } catch (SQLException ex) {
-            System.out.println("ERROR: ..................." + ex);
-        } catch (IOException e) {
+            else {
+                // LOGIN FALHOU
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
 
-    public boolean VerifyUser() {
-            boolean flag;
-            String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
-            try {
-                PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    if (rs.getInt(1) == 0) {
-                        ValidarUser.setText("Utilizador não encontrado!");
-                    } else {
-                        ValidarUser.setText("");
-                    }
-                }
-            } catch (SQLException e) {
-                e.getCause();
-            }
-            if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
-                flag = false;
-            } else {
-                flag = true;
-            }
-            return flag;
-        }
+   //public boolean VerifyUser() {
+   //        boolean flag;
+   //        String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
+   //        try {
+   //            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
+   //            ResultSet rs = stmt.executeQuery();
+   //            while (rs.next()) {
+   //                if (rs.getInt(1) == 0) {
+   //                    ValidarUser.setText("Utilizador não encontrado!");
+   //                } else {
+   //                    ValidarUser.setText("");
+   //                }
+   //            }
+   //        } catch (SQLException e) {
+   //            e.getCause();
+   //        }
+   //        if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
+   //            flag = false;
+   //        } else {
+   //            flag = true;
+   //        }
+   //        return flag;
+   //    }
 
     /*public boolean VerifyPass() {
         boolean flag;

@@ -20,7 +20,7 @@ import java.sql.*;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import javafx.stage.Stage;
 
 

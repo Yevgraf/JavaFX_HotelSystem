@@ -1,8 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
 import Model.Cartao;
-import Model.MessageBoxes;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -17,10 +15,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CriarCartaoController implements Initializable {
@@ -81,23 +75,6 @@ public class CriarCartaoController implements Initializable {
 
   @FXML
   private TextField txt_numCartao;
-
-  @FXML
-  void onActionAddCartao(ActionEvent event) {
-
-           PreparedStatement ps2;
-           try {
-               DBconn dbConn = new DBconn();
-               Connection connection = dbConn.getConn();
-               ps2 = connection.prepareStatement("INSERT INTO Cartao(numCartao, cartaoMestre) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-               ps2.setString(1, txt_numCartao.getText());
-               ps2.setBoolean(2, Boolean.parseBoolean(cmb_CartaoMestre.getPromptText()));
-               ps2.executeUpdate();
-           } catch (SQLException e) {
-               MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza os dados corretamente", "Erro Inserir");
-               throw new RuntimeException(e);
-           }
-       }
 
            @FXML
        void onActionCmbCartaoMestre(ActionEvent event) {

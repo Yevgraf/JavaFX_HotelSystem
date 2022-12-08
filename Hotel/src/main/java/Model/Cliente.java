@@ -1,7 +1,7 @@
 package Model;
 
 
-import BLL.DBconn;
+import DAL.DBconn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -82,7 +82,7 @@ public class Cliente {
         return nif;
     }
 
-    public static ObservableList<Cliente> getCliente() {
+    public static ObservableList<Cliente> getClientes() {
         ObservableList<Cliente> lista = FXCollections.observableArrayList();
 
         try {

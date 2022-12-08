@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import Model.Cliente;
 import Model.MessageBoxes;
 import com.example.hotel.Main;
@@ -160,7 +160,7 @@ public class GestaoClienteController implements Initializable {
         tblColUtilizador.setCellValueFactory(new PropertyValueFactory<Cliente,String>("utilizador"));
         tblColPassword.setCellValueFactory(new PropertyValueFactory<Cliente,String>("password"));
         //tv_clientes.setItems(Cliente.getCliente());
-        tblClientes.setItems(Cliente.getCliente());
+        tblClientes.setItems(Cliente.getClientes());
 
 
     }

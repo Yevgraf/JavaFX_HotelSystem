@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import Model.Produto;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;

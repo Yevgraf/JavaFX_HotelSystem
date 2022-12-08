@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import Model.Cliente;
 import Model.MessageBoxes;
 import Model.Quarto;
@@ -147,7 +147,7 @@ public class AdicionarReservaController implements Initializable {
                 cmbIDQuarto.getItems().addAll(quartoFalse);
             }
         }
-        cmbClientes.getItems().addAll(Cliente.getCliente());
+        cmbClientes.getItems().addAll(Cliente.getClientes());
     }
 
 

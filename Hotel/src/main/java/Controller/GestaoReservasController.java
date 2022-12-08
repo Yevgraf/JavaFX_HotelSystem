@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;

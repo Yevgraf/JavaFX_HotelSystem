@@ -1,6 +1,6 @@
 package Model;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.DBconn;
+import DAL.DBconn;
 import BLL.XMLReader;
 import Model.EntradaStock;
 
