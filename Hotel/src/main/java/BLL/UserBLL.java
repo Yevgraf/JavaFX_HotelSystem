@@ -1,12 +1,12 @@
 package BLL;
 
-import DAL.UserDAL;
-import Model.User;
+import DAL.UtilizadorDAL;
+import Model.Utilizador;
 
 public class UserBLL {
-    public User Login(String utilizador, String password) {
+    public Utilizador Login(String utilizador, String password) {
         try {
-            UserDAL dal = new UserDAL();
+            UtilizadorDAL dal = new UtilizadorDAL();
             String passwordCifrada = Criptografia.CifraTexto(password);
 
             return dal.Login(utilizador, passwordCifrada);

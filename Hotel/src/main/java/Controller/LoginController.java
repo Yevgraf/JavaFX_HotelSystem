@@ -1,10 +1,8 @@
 package Controller;
 
 import BLL.UserBLL;
-import DAL.DBconn;
-import DAL.UserDAL;
 import Model.MessageBoxes;
-import Model.User;
+import Model.Utilizador;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -46,11 +42,11 @@ public class LoginController implements Initializable {
     void Login() {
         try {
             UserBLL bll = new UserBLL();
-            User user = bll.Login(userTxt.getText(), passwordTxt.getText());
+            Utilizador utilizador = bll.Login(userTxt.getText(), passwordTxt.getText());
 
-            if (user != null) {
+            if (utilizador != null) {
                 // FEZ LOGIN
-                if (user.getTipoUser().getTipo().equals("Gestor")) {
+                if (utilizador.getTipoUser().getTipo().equals("Gestor")) {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
                     Stage stage = new Stage();
                     Stage newStage = (Stage) loginBtn.getScene().getWindow();
@@ -58,7 +54,7 @@ public class LoginController implements Initializable {
                     newStage.hide();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
-                } else if (user.getTipoUser().getTipo().equals("Funcionario")) {
+                } else if (utilizador.getTipoUser().getTipo().equals("Funcionario")) {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                     Stage stage = new Stage();
                     Stage newStage = (Stage) loginBtn.getScene().getWindow();
@@ -67,7 +63,7 @@ public class LoginController implements Initializable {
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
      //Inserir Login pág CLIENTE
-               // } else if (user.getTipoUser().getTipo().equals("Cliente")) {
+               // } else if (utilizador.getTipoUser().getTipo().equals("Cliente")) {
                  //  FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                  //  Stage stage = new Stage();
                  //  Stage newStage = (Stage) loginBtn.getScene().getWindow();

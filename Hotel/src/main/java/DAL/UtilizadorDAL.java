@@ -1,15 +1,15 @@
 package DAL;
 
 import Model.TipoUtilizador;
-import Model.User;
+import Model.Utilizador;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class UserDAL {
-    public User Login(String utilizador, String password) throws SQLException {
+public class UtilizadorDAL {
+    public Utilizador Login(String utilizador, String password) throws SQLException {
         PreparedStatement ps;
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -28,7 +28,7 @@ public class UserDAL {
 
         if (result.next()) {
             if (result.first()) {
-                return new User(
+                return new Utilizador(
                         result.getInt("uId"),
                         result.getString("uNome"),
                         result.getString("nif"),

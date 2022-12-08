@@ -2,7 +2,7 @@ package Model;
 
 import java.util.Date;
 
-public class User {
+public class Utilizador {
 
     private int id;
     private String nome;
@@ -15,7 +15,7 @@ public class User {
     private String password;
     private TipoUtilizador tipoUser;
 
-    public User(
+    public Utilizador(
             int id,
             String nome,
             String nif,
