@@ -141,18 +141,13 @@ public class CriarFuncionarioController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Desencriptacao();
         initTable();
         initCombos();
-
-
     }
 
     private void initCombos() {
-
-        cmb_tipocolaborador.getItems().add("GestorController");
-        cmb_tipocolaborador.getItems().add("FuncionarioController");
-
+        cmb_tipocolaborador.getItems().add("Gestor");
+        cmb_tipocolaborador.getItems().add("Funcionario");
     }
 
     private void initTable() {

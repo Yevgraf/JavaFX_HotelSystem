@@ -1,8 +1,5 @@
 package Controller;
 
-import DAL.DBconn;
-import Model.Cliente;
-import Model.MessageBoxes;
 import Model.Utilizador;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -12,8 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -122,7 +118,6 @@ public class GestaoClienteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //Desencriptacao();
         initTable();
     }
 }

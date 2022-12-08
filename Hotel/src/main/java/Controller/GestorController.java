@@ -107,7 +107,7 @@ public class GestorController {
     @FXML
     void clickGestaoColabBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionarioController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
         stage.setTitle("Criar FuncionarioController");
@@ -119,7 +119,7 @@ public class GestorController {
     @FXML
     void clickGestaoClienteBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoClienteController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoCliente.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
         stage.setTitle("Gerir Clientes");
@@ -131,7 +131,7 @@ public class GestorController {
     @FXML
     void clickEntradaStockBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXMLController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
         stage.setTitle("Entrada StockController");
@@ -155,7 +155,7 @@ public class GestorController {
 
     @FXML
     void clickBtngestorReservas(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservasController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
         stage.setTitle("Gerir Reservas");
@@ -166,7 +166,7 @@ public class GestorController {
 
     @FXML
     void btnGestaoQuartosOnAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuartoController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
         stage.setTitle("Criar Quarto");
