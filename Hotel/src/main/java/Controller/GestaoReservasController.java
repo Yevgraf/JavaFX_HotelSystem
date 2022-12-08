@@ -1,7 +1,6 @@
 package Controller;
 
 import BLL.DBconn;
-import Model.Colaborador;
 import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;
@@ -24,7 +23,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class GestaoReservas implements Initializable {
+public class GestaoReservasController implements Initializable {
 
     @FXML
     private Button adicionarReservaBtn;
@@ -78,7 +77,7 @@ public class GestaoReservas implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

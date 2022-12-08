@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 import BLL.DBconn;
 import javafx.stage.Stage;
 
-public class CriarCliente {
+public class CriarClienteController {
 
     @FXML
     private AnchorPane PainelCriarCliente;
@@ -245,17 +245,17 @@ public class CriarCliente {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(CriarCliente.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CriarClienteController.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
 
     @FXML
     void onActionVoltar(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoClienteController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_update_Voltar.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

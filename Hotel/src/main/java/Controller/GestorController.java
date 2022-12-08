@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class Gestor {
+public class GestorController {
 
     @FXML
     private ImageView btnCloseApp;
@@ -107,10 +107,10 @@ public class Gestor {
     @FXML
     void clickGestaoColabBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionarioController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
+        stage.setTitle("Criar FuncionarioController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -119,7 +119,7 @@ public class Gestor {
     @FXML
     void clickGestaoClienteBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoClienteController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
         stage.setTitle("Gerir Clientes");
@@ -131,10 +131,10 @@ public class Gestor {
     @FXML
     void clickEntradaStockBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXMLController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Entrada Stock");
+        stage.setTitle("Entrada StockController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -146,7 +146,7 @@ public class Gestor {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Entrada Stock");
+        stage.setTitle("Entrada StockController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -155,7 +155,7 @@ public class Gestor {
 
     @FXML
     void clickBtngestorReservas(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservasController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
         stage.setTitle("Gerir Reservas");
@@ -166,7 +166,7 @@ public class Gestor {
 
     @FXML
     void btnGestaoQuartosOnAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuartoController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
         stage.setTitle("Criar Quarto");

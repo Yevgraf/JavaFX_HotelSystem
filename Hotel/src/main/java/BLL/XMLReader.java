@@ -217,7 +217,7 @@ public class XMLReader {
         return produtos;
     }
 
-    //----------------------------------- Cria Stock -----------------------------------
+    //----------------------------------- Cria StockController -----------------------------------
 
     public ObservableList<Stock> lerStock(String path) {
         ObservableList<Stock> stocks = FXCollections.observableArrayList();

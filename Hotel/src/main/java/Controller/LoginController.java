@@ -15,7 +15,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class Login implements Initializable {
+public class LoginController implements Initializable {
 
     @FXML
     private Button loginBtn;
@@ -74,16 +74,16 @@ public class Login implements Initializable {
             if (result.next()) {
                 if (result.first()) {
                     String tipo = result.getString("tipoColaborador");
-                    if (tipo.equals("Gestor")) {
+                    if (tipo.equals("GestorController")) {
                         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
                         Stage stage = new Stage();
                         Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                        stage.setTitle("Página do Gestor");
+                        stage.setTitle("Página do GestorController");
                         newStage.hide();
                         stage.setScene(new Scene(fxmlLoader.load()));
                         stage.show();
                     } else {
-                        if (tipo.equals("Funcionario")) {
+                        if (tipo.equals("FuncionarioController")) {
                             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                             Stage stage = new Stage();
                             Stage newStage = (Stage) loginBtn.getScene().getWindow();

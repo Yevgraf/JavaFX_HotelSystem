@@ -27,7 +27,7 @@ import java.sql.SQLException;
 import java.util.ResourceBundle;
 import static java.lang.Integer.parseInt;
 
-public class AdicionarReserva implements Initializable {
+public class AdicionarReservaController implements Initializable {
 
     @FXML
     private Label EmptyMessage;
@@ -159,10 +159,10 @@ public class AdicionarReserva implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservasController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -182,7 +182,7 @@ public class AdicionarReserva implements Initializable {
 
     public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarClienteController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnRedictCriarCliente.getScene().getWindow();
         stage.setTitle("Pagina Criar Cliente");

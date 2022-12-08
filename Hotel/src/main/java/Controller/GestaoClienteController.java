@@ -22,7 +22,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class GestaoCliente implements Initializable {
+public class GestaoClienteController implements Initializable {
 
     @FXML
     private AnchorPane PainelGestorCliente;
@@ -104,7 +104,7 @@ public class GestaoCliente implements Initializable {
 
     @FXML
     void clickAddClienteBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarClienteController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorAdicionarCliente.getScene().getWindow();
         stage.setTitle("Adicionar Cliente");
@@ -118,7 +118,7 @@ public class GestaoCliente implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

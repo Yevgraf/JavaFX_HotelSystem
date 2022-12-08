@@ -23,7 +23,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CriarCartao implements Initializable {
+public class CriarCartaoController implements Initializable {
 
   @FXML
   private AnchorPane PainelCartao;
@@ -119,7 +119,7 @@ public class CriarCartao implements Initializable {
            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
            Stage stage = new Stage();
            Stage newStage = (Stage) btn_update_Voltar.getScene().getWindow();
-           stage.setTitle("Pagina Gestor");
+           stage.setTitle("Pagina GestorController");
            newStage.hide();
            stage.setScene(new Scene(fxmlLoader.load()));
            stage.show();

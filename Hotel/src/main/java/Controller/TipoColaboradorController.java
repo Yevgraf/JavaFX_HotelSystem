@@ -19,7 +19,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class TipoColaborador {
+public class TipoColaboradorController {
 
     @FXML
     private AnchorPane PainelAddTipoColaborador;
@@ -134,7 +134,7 @@ public class TipoColaborador {
     @FXML
     void btnVoltarAction(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionarioController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_voltar.getScene().getWindow();
         stage.setTitle("criar funcionario");

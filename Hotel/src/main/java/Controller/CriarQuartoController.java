@@ -22,7 +22,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class CriarQuarto implements Initializable {
+public class CriarQuartoController implements Initializable {
 
     @FXML
     private Button BtnAddProduto;

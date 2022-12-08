@@ -6,7 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-public class CriarReserva {
+public class CriarReservaController {
     @FXML
     private AnchorPane PainelGestorReservaAdicionar;
 

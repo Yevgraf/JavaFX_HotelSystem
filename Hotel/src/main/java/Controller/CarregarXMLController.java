@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class CarregarXML implements Initializable {
+public class CarregarXMLController implements Initializable {
 
     private ObservableList<EntradaStock> entradaStocks;
     private ObservableList<EntradaStock> head;
@@ -125,7 +125,7 @@ public class CarregarXML implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -231,7 +231,7 @@ public class CarregarXML implements Initializable {
         }
     }
 
-    //----------------------------------- Conexão BD - Stock -----------------------------------
+    //----------------------------------- Conexão BD - StockController -----------------------------------
 
     void insertStock(Connection connection) {
         try {

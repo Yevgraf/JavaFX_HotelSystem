@@ -7,7 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CarregarXML">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CarregarXMLController">
    <children>
       <Button id="xmlBtn" alignment="CENTER" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" onAction="#clickXmlBtn" prefHeight="40.0" prefWidth="140.0" text="Carregar XML" textAlignment="CENTER" fx:id="xmlBtn">
          <font>

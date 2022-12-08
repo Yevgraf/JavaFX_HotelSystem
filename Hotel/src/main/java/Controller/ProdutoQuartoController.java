@@ -19,7 +19,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class ProdutoQuarto implements Initializable {
+public class ProdutoQuartoController implements Initializable {
 
     @FXML
     private AnchorPane PainelProdutoQuarto;
@@ -196,7 +196,7 @@ public class ProdutoQuarto implements Initializable {
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuartoController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
         stage.setTitle("Adicionar Tipo de quarto");

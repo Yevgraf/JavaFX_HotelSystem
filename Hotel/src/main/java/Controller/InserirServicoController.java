@@ -19,10 +19,9 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.ResourceBundle;
 
-public class InserirServico implements Initializable {
+public class InserirServicoController implements Initializable {
 
     @FXML
     private Button addBtn;
@@ -95,7 +94,7 @@ public class InserirServico implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Painel Gestor");
+        stage.setTitle("Painel GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

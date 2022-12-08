@@ -3,7 +3,6 @@ package Controller;
 import BLL.DBconn;
 import Model.MessageBoxes;
 import Model.Produto;
-import Model.Servico;
 import Model.Stock;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -27,7 +26,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
-public class GestaoProduto implements Initializable {
+public class GestaoProdutoController implements Initializable {
 
     @FXML
     private Button btnVoltar;
@@ -64,7 +63,7 @@ public class GestaoProduto implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Gestão Stock");
+        stage.setTitle("Gestão StockController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

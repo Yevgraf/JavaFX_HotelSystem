@@ -77,7 +77,7 @@ public class ProdutoQuarto {
 
     @Override
     public String toString() {
-        return "ProdutoQuarto{" +
+        return "ProdutoQuartoController{" +
                 "idQuarto=" + idQuarto +
                 ", idProduto=" + idProduto +
                 ", quantidade=" + quantidade +

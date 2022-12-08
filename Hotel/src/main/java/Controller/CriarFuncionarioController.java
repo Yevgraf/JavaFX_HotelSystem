@@ -24,7 +24,7 @@ import BLL.DBconn;
 import javafx.stage.Stage;
 
 
-public class CriarFuncionario implements Initializable {
+public class CriarFuncionarioController implements Initializable {
     @FXML
     private AnchorPane PainelGestorProdutoAdicionar;
 
@@ -195,7 +195,7 @@ public class CriarFuncionario implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
+        stage.setTitle("Pagina GestorController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -213,8 +213,8 @@ public class CriarFuncionario implements Initializable {
 
     private void initCombos() {
 
-        cmb_tipocolaborador.getItems().add("Gestor");
-        cmb_tipocolaborador.getItems().add("Funcionario");
+        cmb_tipocolaborador.getItems().add("GestorController");
+        cmb_tipocolaborador.getItems().add("FuncionarioController");
 
     }
 
@@ -302,10 +302,10 @@ public class CriarFuncionario implements Initializable {
 
     public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionarioController.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_refresh.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
+        stage.setTitle("Criar FuncionarioController");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
