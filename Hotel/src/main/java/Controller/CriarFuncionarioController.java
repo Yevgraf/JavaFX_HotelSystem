@@ -1,9 +1,10 @@
 package Controller;
 
-import Model.Colaborador;
 import Model.MessageBoxes;
+import Model.TipoUtilizador;
 import Model.Utilizador;
 import com.example.hotel.Main;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,14 +12,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.*;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import DAL.DBconn;
@@ -36,9 +36,6 @@ public class CriarFuncionarioController implements Initializable {
     @FXML
     private Label VerificarNIF;
 
-    @FXML
-    private ImageView btnDefGestor;
-
     private Button btn_refresh;
 
     @FXML
@@ -54,7 +51,7 @@ public class CriarFuncionarioController implements Initializable {
     private Button btn_update_funcionario;
 
     @FXML
-    private ComboBox<String> cmb_tipocolaborador;
+    private ComboBox<String> cmb_tipoUtilizador;
 
     @FXML
     private TableColumn<Utilizador, String> tbl_contacto;
@@ -69,9 +66,6 @@ public class CriarFuncionarioController implements Initializable {
     private TableColumn<Utilizador, Integer> tbl_id;
 
     @FXML
-    private TableColumn<Utilizador, Integer> tbl_idCartao;
-
-    @FXML
     private TableColumn<Utilizador, String> tbl_morada;
 
     @FXML
@@ -79,9 +73,6 @@ public class CriarFuncionarioController implements Initializable {
 
     @FXML
     private TableColumn<Utilizador, String> tbl_nif;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_password;
 
     @FXML
     private TableColumn<Utilizador, String> tbl_tipoColaborador;
@@ -95,18 +86,11 @@ public class CriarFuncionarioController implements Initializable {
     @FXML
     private TextField txt_contacto;
 
-
     @FXML
     private DatePicker datePickerNasc;
 
     @FXML
     private TextField txt_email;
-
-    @FXML
-    private TextField txt_id;
-
-    @FXML
-    private TextField txt_idCartao;
 
     @FXML
     private TextField txt_morada;
@@ -132,22 +116,18 @@ public class CriarFuncionarioController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
+        stage.setTitle("Pagina Gestor");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
 
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initTable();
-        initCombos();
-    }
-
     private void initCombos() {
-        cmb_tipocolaborador.getItems().add("Gestor");
-        cmb_tipocolaborador.getItems().add("Funcionario");
+        List<TipoUtilizador> tipos = TipoUtilizador.getTipoUtilizador();
+
+        for (TipoUtilizador tipo : tipos) {
+            cmb_tipoUtilizador.getItems().add(tipo.getTipo());
+        }
     }
 
     private void initTable() {
@@ -158,25 +138,30 @@ public class CriarFuncionarioController implements Initializable {
         tbl_morada.setResizable(false);
         tbl_contacto.setResizable(false);
         tbl_nif.setResizable(false);
-        tbl_password.setResizable(false);
         tbl_tipoColaborador.setResizable(false);
         tbl_utilizador.setResizable(false);
 
-        tbl_id.setCellValueFactory(new PropertyValueFactory<Utilizador, Integer>("id"));
-        tbl_name.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nome"));
-        tbl_email.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("email"));
-        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Utilizador, Date>("dataNascimento"));
-        tbl_morada.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("morada"));
-        tbl_contacto.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("contacto"));
-        tbl_nif.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nif"));
-        tbl_password.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("password"));
-        tbl_tipoColaborador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("tipoColaborador"));
-        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
+        tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tbl_name.setCellValueFactory(new PropertyValueFactory<>("nome"));
+        tbl_email.setCellValueFactory(new PropertyValueFactory<>("email"));
+        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
+        tbl_morada.setCellValueFactory(new PropertyValueFactory<>("morada"));
+        tbl_contacto.setCellValueFactory(new PropertyValueFactory<>("contacto"));
+        tbl_nif.setCellValueFactory(new PropertyValueFactory<>("nif"));
+        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
+        tbl_tipoColaborador.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
         tv_funcionarios.setItems(Utilizador.getColaboradores());
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initTable();
+        initCombos();
     }
 
 
     public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
+        RegistarUtilizador();
         // VerifyNIFColaborador();
         // VerifyNIFColaboradorMin();
         // VerifyContacto();
@@ -192,52 +177,62 @@ public class CriarFuncionarioController implements Initializable {
         //  }
     }
 
-    void RegistarFuncionario() {
-             PreparedStatement ps2;
-             int contador, tamanho, codigoASCII;
-             String password;
-             String passwordCriptografada = "";
-             try {
-                 DBconn dbConn = new DBconn();
-                 Connection connection = dbConn.getConn();
-                 ps2 = connection.prepareStatement("INSERT INTO Utilizador( nome, nif, morada,dataNascimento, email, contacto, utilizador, palavrapasse) VALUES (?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-                 ps2.setString(1, txt_nome.getText());
-                 ps2.setString(2, txt_nif.getText());
-                 ps2.setString(3, txt_morada.getText());
-                 ps2.setString(4, datePickerNasc.getEditor().getText());
-                 ps2.setString(5, txt_email.getText());
-                 ps2.setString(6, txt_contacto.getText());
-                 ps2.setString(7, txt_utilizador.getText());
-                 password = txt_password.getText();
-                 tamanho = password.length();
-                 password = password.toUpperCase();
-                 contador = 0;
+    void RegistarUtilizador() {
+        PreparedStatement ps2;
+        int contador, tamanho, codigoASCII;
+        String password;
+        String passwordCriptografada = "";
+        try {
+            Utilizador utilizadorACriar = new Utilizador(
+                    txt_nome.getText(),
+                    txt_nif.getText(),
+                    txt_morada.getText(),
+                    new Date(datePickerNasc.getValue().toEpochDay()),
+                    txt_email.getText(),
+                    txt_contacto.getText(),
+                    txt_utilizador.getText(),
+                    txt_password.getText(),
+                    "");
+
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps2 = connection.prepareStatement("INSERT INTO Utilizador(nome, nif, morada, dataNascimento, email, contacto, " +
+                    "utilizador, palavrapasse, idTipoUtilizador) VALUES (?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2.setString(1, txt_nome.getText());
+            ps2.setString(2, txt_nif.getText());
+            ps2.setString(3, txt_morada.getText());
+            ps2.setString(4, datePickerNasc.getEditor().getText());
+            ps2.setString(5, txt_email.getText());
+            ps2.setString(6, txt_contacto.getText());
+            ps2.setString(7, txt_utilizador.getText());
+            password = txt_password.getText();
+            tamanho = password.length();
+            password = password.toUpperCase();
+            contador = 0;
 //
-                 while (contador < tamanho) {
-                     codigoASCII = password.charAt(contador) + 130;
-                     passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-                     contador++;
-                 }
-                 ps2.setString(8, passwordCriptografada);
-                 //ps2.setString(9, cmb_tipocolaborador.getValue());
-                 ps2.executeUpdate();
-                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador inserido", "Informação Colaborador");
+            while (contador < tamanho) {
+                codigoASCII = password.charAt(contador) + 130;
+                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
+                contador++;
+            }
+            ps2.setString(8, passwordCriptografada);
+            Integer opcao = verificaTipoUtilizador(cmb_tipoUtilizador.getValue());
+            ps2.setInt(9, opcao);
+            ps2.executeUpdate();
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Colaborador");
 
-
-             } catch (SQLException ex) {
-                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-                 throw new RuntimeException(ex);
-
-             }
+        } catch (SQLException ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
+            throw new RuntimeException(ex);
+        }
     }
-
 
     public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionarioController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_refresh.getScene().getWindow();
-        stage.setTitle("Criar FuncionarioController");
+        stage.setTitle("Criar Funcionario");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -327,5 +322,20 @@ public class CriarFuncionarioController implements Initializable {
         } else flag = true;
 
         return flag;
+    }
+
+    public Integer verificaTipoUtilizador(String comboTxt) {
+        Integer opcao;
+        switch (comboTxt) {
+            case "Gestor":
+                opcao = 1;
+                break;
+            case "Funcionario":
+                opcao = 2;
+                break;
+            default:
+                opcao = 3;
+        }
+        return opcao;
     }
 }

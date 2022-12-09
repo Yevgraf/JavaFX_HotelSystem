@@ -23,6 +23,27 @@ public class Utilizador {
     private TipoUtilizador tipoUser;
 
     public Utilizador(
+            String nome,
+            String nif,
+            String morada,
+            Date dataNascimento,
+            String email,
+            String contacto,
+            String utilizador,
+            String password,
+            String tipoUser) {
+        this.nome = nome;
+        this.nif = nif;
+        this.morada = morada;
+        this.dataNascimento = dataNascimento;
+        this.email = email;
+        this.contacto = contacto;
+        this.utilizador = utilizador;
+        this.password = password;
+        this.tipoUser = new TipoUtilizador(0, tipoUser);
+    }
+
+    public Utilizador(
             int id,
             String nome,
             String nif,
@@ -51,78 +72,76 @@ public class Utilizador {
         this.id = id;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setNif(String nif) {
-        this.nif = nif;
-    }
-
-    public void setMorada(String morada) {
-        this.morada = morada;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public void setUtilizador(String utilizador) {
-        this.utilizador = utilizador;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getNif() {
         return nif;
     }
 
+    public void setNif(String nif) {
+        this.nif = nif;
+    }
+
     public String getMorada() {
         return morada;
+    }
+
+    public void setMorada(String morada) {
+        this.morada = morada;
     }
 
     public Date getDataNascimento() {
         return dataNascimento;
     }
 
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
+    }
+
     public String getEmail() {
         return email;
     }
 
-    public String getUtilizador() {
-        return utilizador;
+    public void setEmail(String email) {
+        this.email = email;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
 
     public String getContacto() {
         return contacto;
-    }
-
-    public TipoUtilizador getTipoUser() {
-        return tipoUser;
     }
 
     public void setContacto(String contacto) {
         this.contacto = contacto;
     }
 
-    public void setTipoUser(TipoUtilizador tipoColaborador) {
-        this.tipoUser = tipoColaborador;
+    public String getUtilizador() {
+        return utilizador;
+    }
+
+    public void setUtilizador(String utilizador) {
+        this.utilizador = utilizador;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public TipoUtilizador getTipoUser() {
+        return tipoUser;
+    }
+
+    public void setTipoUser(TipoUtilizador tipoUser) {
+        this.tipoUser = tipoUser;
     }
 
     public static ObservableList<Utilizador> getClientes() {
@@ -158,8 +177,9 @@ public class Utilizador {
         ObservableList<Utilizador> colaboradores = FXCollections.observableArrayList();
 
         try {
-            String cmd = "SELECT * FROM Utilizador INNER JOIN TipoUtilizador TU on " +
-                    "Utilizador.idTipoUtilizador = TU.id WHERE idTipoUtilizador = '1' AND idTipoUtilizador = '2'";
+            String cmd = "SELECT u.*, tu.id as tuId, tu.nome as tuNome FROM Utilizador u " +
+                        "INNER JOIN TipoUtilizador tu ON tu.Id = u.idTipoUtilizador " +
+                        "WHERE tu.nome IN ('Gestor', 'Funcionario') ";
 
             Statement st = DBconn.getConn().createStatement();
 
@@ -168,7 +188,7 @@ public class Utilizador {
             while (rs.next()) {
                 Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
                         rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
-                        rs.getString("contato"), rs.getString("utilizador"),
+                        rs.getString("contacto"), rs.getString("utilizador"),
                         new TipoUtilizador(
                                 rs.getInt("tuId"),
                                 rs.getString("tuNome")));
