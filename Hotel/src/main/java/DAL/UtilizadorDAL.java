@@ -44,7 +44,10 @@ public class UtilizadorDAL {
                 );
             }
         }
-
         return null;
+    }
+
+    public void CriaUtilizador(Utilizador utilizador) {
+
     }
 }

@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.List;
 
 public class TipoUtilizador {
     int id ;
@@ -35,8 +36,8 @@ public class TipoUtilizador {
         this.tipo = tipo;
     }
 
-    public static ObservableList<TipoUtilizador> getTipoUtilizador() {
-        ObservableList<TipoUtilizador> lista = FXCollections.observableArrayList();
+    public static List<TipoUtilizador> getTipoUtilizador() {
+        List<TipoUtilizador> lista = FXCollections.observableArrayList();
         try {
             String cmd = "SELECT * FROM TipoUtilizador";
 
@@ -45,7 +46,7 @@ public class TipoUtilizador {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                TipoUtilizador obj = new TipoUtilizador(rs.getInt("id"),rs.getString("tipo"));
+                TipoUtilizador obj = new TipoUtilizador(rs.getInt("id"),rs.getString("nome"));
                 lista.add(obj);
             }
 
