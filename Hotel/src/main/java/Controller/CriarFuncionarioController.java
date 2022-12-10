@@ -129,10 +129,10 @@ public class CriarFuncionarioController implements Initializable {
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoClientes.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
+        stage.setTitle("Pagina Gestão Cliente");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -172,7 +172,7 @@ public class CriarFuncionarioController implements Initializable {
         tbl_password.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("password"));
         tbl_tipoColaborador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("tipoColaborador"));
         tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
-        tv_funcionarios.setItems(Utilizador.getColaboradores());
+        tv_funcionarios.setItems(Utilizador.getClientes());
     }
 
 

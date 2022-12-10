@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoClienteController">
+<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoClienteController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -84,19 +84,6 @@
             <Image url="@../../../img/editar.png" />
          </image>
       </ImageView>
-      <TableView fx:id="tblClientes" layoutX="26.0" layoutY="198.0" prefHeight="206.0" prefWidth="665.0" style="-fx-border-color: #000000; -fx-background-color: #c1c8e4;">
-         <columns>
-            <TableColumn fx:id="tblColNomeCliente" prefWidth="108.79998397827148" text="Nome" />
-            <TableColumn fx:id="tblColContacto" prefWidth="112.0" text="Contacto" />
-            <TableColumn fx:id="tblColEmail" prefWidth="75.0" text="E-mail" />
-            <TableColumn fx:id="tblColUtilizador" prefWidth="75.0" text="Utilizador" />
-            <TableColumn fx:id="tblColPassword" prefWidth="75.0" text="Password" />
-            <TableColumn fx:id="tblColNif" prefWidth="75.0" text="NIF" />
-         </columns>
-         <columnResizePolicy>
-            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-         </columnResizePolicy>
-      </TableView>
       <Button fx:id="btnGestorEliminarCliente" layoutX="370.0" layoutY="417.0" mnemonicParsing="false" onAction="#RemoveCliente" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
@@ -137,5 +124,17 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <TableView fx:id="tv_Clientes" layoutX="6.0" layoutY="224.0" prefHeight="148.0" prefWidth="709.0">
+         <columns>
+            <TableColumn fx:id="tbl_id" prefWidth="32.0" text="ID" />
+            <TableColumn fx:id="tbl_name" prefWidth="110.0" text="Nome" />
+            <TableColumn fx:id="tbl_nif" prefWidth="94.0" text="Nif" />
+            <TableColumn fx:id="tbl_morada" prefWidth="118.0" text="Morada" />
+            <TableColumn fx:id="tbl_dataNasc" prefWidth="86.0" text="DataNasc" />
+            <TableColumn fx:id="tbl_email" prefWidth="65.0" text="Email" />
+            <TableColumn fx:id="tbl_contacto" prefWidth="97.0" text="Contacto" />
+            <TableColumn fx:id="tbl_utilizador" prefWidth="106.0" text="Utilizador" />
+         </columns>
+      </TableView>
    </children>
 </AnchorPane>

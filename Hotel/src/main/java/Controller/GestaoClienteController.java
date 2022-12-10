@@ -14,9 +14,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class GestaoClienteController implements Initializable {
@@ -34,29 +32,34 @@ public class GestaoClienteController implements Initializable {
     private Button btnVoltar;
 
     @FXML
-    private TableView<Utilizador> tblClientes;
+    private TableColumn<Utilizador, Integer> tbl_contacto;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColContacto;
+    private TableColumn<Utilizador, Date> tbl_dataNasc;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColEmail;
+    private TableColumn<Utilizador, String> tbl_email;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColNif;
+    private TableColumn<Utilizador, Integer> tbl_id;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColNomeCliente;
+    private TableColumn<Utilizador, String> tbl_morada;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColPassword;
+    private TableColumn<Utilizador, String> tbl_name;
 
     @FXML
-    private TableColumn<Utilizador, String> tblColUtilizador;
+    private TableColumn<Utilizador, String> tbl_nif;
 
+    @FXML
+    private TableColumn<Utilizador, String> tbl_utilizador;
+
+    @FXML
+    private TableView<Utilizador> tv_Clientes;
     @FXML
     void clickAddClienteBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarClienteController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarCliente.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorAdicionarCliente.getScene().getWindow();
         stage.setTitle("Adicionar Cliente");
@@ -98,21 +101,25 @@ public class GestaoClienteController implements Initializable {
 
     private void initTable() {
 
-        tblColNomeCliente.setResizable(false);
-        tblColEmail.setResizable(false);
-        tblColContacto.setResizable(false);
-        tblColNif.setResizable(false);
-        tblColPassword.setResizable(false);
-        tblColUtilizador.setResizable(false);
+        tbl_id.setResizable(false);
+        tbl_name.setResizable(false);
+        tbl_nif.setResizable(false);
+        tbl_morada.setResizable(false);
+        tbl_dataNasc.setResizable(false);
+        tbl_email.setResizable(false);
+        tbl_contacto.setResizable(false);
+        tbl_utilizador.setResizable(false);
 
-        tblColNomeCliente.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nome"));
-        tblColNif.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nif"));
-        tblColEmail.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("email"));
-        tblColContacto.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("contacto"));
-        tblColUtilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
-        tblColUtilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("password"));
-        //tv_clientes.setItems(Cliente.getCliente());
-        tblClientes.setItems(Utilizador.getClientes());
+
+        tbl_id.setCellValueFactory(new PropertyValueFactory<Utilizador, Integer>("id"));
+        tbl_name.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nome"));
+        tbl_nif.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nif"));
+        tbl_morada.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("morada"));
+        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<Utilizador, Date>("dataNascimento"));
+        tbl_email.setCellValueFactory(new PropertyValueFactory<Utilizador, String >("email"));
+        tbl_contacto.setCellValueFactory(new PropertyValueFactory<Utilizador, Integer>("contacto"));
+        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
+        tv_Clientes.setItems(Utilizador.getClientes());
 
     }
 

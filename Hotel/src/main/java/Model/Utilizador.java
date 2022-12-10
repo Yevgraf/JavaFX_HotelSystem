@@ -9,7 +9,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 
-public class Utilizador {
+public class Utilizador{
 
     private int id;
     private String nome;
@@ -129,8 +129,7 @@ public class Utilizador {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
         try {
-            String cmd = "SELECT * FROM Utilizador INNER JOIN TipoUtilizador TU on " +
-                    "Utilizador.idTipoUtilizador = TU.id WHERE idTipoUtilizador = '3' ";
+            String cmd = "SELECT * FROM Utilizador WHERE idTipoUtilizador = '3'";
 
             Statement st = DBconn.getConn().createStatement();
 
@@ -183,4 +182,19 @@ public class Utilizador {
         return colaboradores;
     }
 
+    @Override
+    public String toString() {
+        return "Utilizador{" +
+                "id=" + id +
+                ", nome='" + nome + '\'' +
+                ", nif='" + nif + '\'' +
+                ", morada='" + morada + '\'' +
+                ", dataNascimento=" + dataNascimento +
+                ", email='" + email + '\'' +
+                ", contacto='" + contacto + '\'' +
+                ", utilizador='" + utilizador + '\'' +
+                ", password='" + password + '\'' +
+                ", tipoUser=" + tipoUser +
+                '}';
+    }
 }
