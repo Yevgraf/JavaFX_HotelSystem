@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -11,8 +12,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoClienteController">
+<AnchorPane fx:id="PainelGestorCliente" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestaoUtilizadoresController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -45,12 +47,12 @@
             </ImageView>
          </children>
       </Pane>
-      <Label fx:id="lblHoras" layoutX="661.0" layoutY="477.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
+      <Label fx:id="lblHoras" layoutX="665.0" layoutY="459.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="14.0" />
          </font>
       </Label>
-      <Label fx:id="lblData" layoutX="645.0" layoutY="504.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
+      <Label fx:id="lblData" layoutX="649.0" layoutY="493.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
          <font>
             <Font name="Bernard MT Condensed" size="14.0" />
          </font>
@@ -59,7 +61,7 @@
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
-      <Button fx:id="btnGestorEditarCliente" layoutX="191.0" layoutY="418.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="154.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEditarCliente" disable="true" layoutX="175.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="154.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -74,32 +76,32 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoClientes" layoutX="59.0" layoutY="147.0" prefHeight="45.0" prefWidth="238.0" text="Gestão de Clientes" textFill="WHITE">
+      <Label fx:id="lblGestaoClientes" layoutX="60.0" layoutY="126.0" prefHeight="45.0" prefWidth="303.0" text="Gestão de Utilizadores" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="198.0" layoutY="424.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="182.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/editar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorEliminarCliente" layoutX="370.0" layoutY="417.0" mnemonicParsing="false" onAction="#RemoveCliente" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEliminar" layoutX="346.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnGestorEliminar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="378.0" layoutY="427.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="351.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="26.0" layoutY="418.0" mnemonicParsing="false" onAction="#clickAddClienteBtn" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorAdicionarCliente" layoutX="14.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorGestaoCliente" fitHeight="45.0" fitWidth="68.0" layoutX="6.0" layoutY="148.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorGestaoCliente" fitHeight="45.0" fitWidth="68.0" layoutX="10.0" layoutY="126.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoClientes.jpeg" />
          </image>
@@ -114,27 +116,34 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="31.0" layoutY="426.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="32.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/adicionar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVoltar" layoutX="544.0" layoutY="417.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="501.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <TableView fx:id="tv_Clientes" layoutX="6.0" layoutY="224.0" prefHeight="148.0" prefWidth="709.0">
-         <columns>
-            <TableColumn fx:id="tbl_id" prefWidth="32.0" text="ID" />
-            <TableColumn fx:id="tbl_name" prefWidth="110.0" text="Nome" />
-            <TableColumn fx:id="tbl_nif" prefWidth="94.0" text="Nif" />
-            <TableColumn fx:id="tbl_morada" prefWidth="118.0" text="Morada" />
-            <TableColumn fx:id="tbl_dataNasc" prefWidth="86.0" text="DataNasc" />
-            <TableColumn fx:id="tbl_email" prefWidth="65.0" text="Email" />
-            <TableColumn fx:id="tbl_contacto" prefWidth="97.0" text="Contacto" />
-            <TableColumn fx:id="tbl_utilizador" prefWidth="106.0" text="Utilizador" />
-         </columns>
+      <TableView fx:id="tblUtilizadores" layoutX="14.0" layoutY="167.0" prefHeight="299.0" prefWidth="698.0">
+        <columns>
+          <TableColumn fx:id="tblId" prefWidth="75.0" text="ID" />
+          <TableColumn fx:id="tblNome" prefWidth="75.0" text="Nome" />
+            <TableColumn fx:id="tblEmail" prefWidth="75.0" text="Email" />
+            <TableColumn fx:id="tbtDataNascimento" prefWidth="75.0" text="Data de Nascimento" />
+            <TableColumn fx:id="tblMorada" prefWidth="75.0" text="Morada" />
+            <TableColumn fx:id="tblContato" prefWidth="75.0" text="Contato" />
+            <TableColumn fx:id="tblNif" prefWidth="75.0" text="NIF" />
+            <TableColumn fx:id="tblUtilizador" prefWidth="91.0" text="Utilizador" />
+            <TableColumn fx:id="tblTipo" prefWidth="81.0" text="Tipo" />
+        </columns>
       </TableView>
+      <ComboBox fx:id="cmbUtilizador" layoutX="542.0" layoutY="126.0" onAction="#clickCmbUtilizador" prefWidth="150.0" promptText="Tipo de Utilizador" />
+      <Text fill="WHITE" layoutX="550.0" layoutY="107.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar por:">
+         <font>
+            <Font name="Bernard MT Condensed" size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

@@ -155,7 +155,7 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservasController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
         stage.setTitle("Pagina GestorController");
@@ -178,7 +178,7 @@ public class AdicionarReservaController implements Initializable {
 
     public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarClienteController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnRedictCriarCliente.getScene().getWindow();
         stage.setTitle("Pagina Criar Cliente");

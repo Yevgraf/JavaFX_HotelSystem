@@ -4,14 +4,12 @@ import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import Model.Utilizador;
 import com.example.hotel.Main;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
@@ -25,7 +23,7 @@ import DAL.DBconn;
 import javafx.stage.Stage;
 
 
-public class CriarFuncionarioController implements Initializable {
+public class CriarUtilizadoresController implements Initializable {
 
     @FXML
     private Label VerificarNome;
@@ -53,35 +51,7 @@ public class CriarFuncionarioController implements Initializable {
     @FXML
     private ComboBox<String> cmb_tipoUtilizador;
 
-    @FXML
-    private TableColumn<Utilizador, String> tbl_contacto;
 
-    @FXML
-    private TableColumn<Utilizador, Date> tbl_dataNasc;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_email;
-
-    @FXML
-    private TableColumn<Utilizador, Integer> tbl_id;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_morada;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_name;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_nif;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_tipoColaborador;
-
-    @FXML
-    private TableColumn<Utilizador, String> tbl_utilizador;
-
-    @FXML
-    private TableView<Utilizador> tv_funcionarios;
 
     @FXML
     private TextField txt_contacto;
@@ -130,32 +100,8 @@ public class CriarFuncionarioController implements Initializable {
         }
     }
 
-    private void initTable() {
-
-        tbl_name.setResizable(false);
-        tbl_email.setResizable(false);
-        tbl_dataNasc.setResizable(false);
-        tbl_morada.setResizable(false);
-        tbl_contacto.setResizable(false);
-        tbl_nif.setResizable(false);
-        tbl_tipoColaborador.setResizable(false);
-        tbl_utilizador.setResizable(false);
-
-        tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        tbl_name.setCellValueFactory(new PropertyValueFactory<>("nome"));
-        tbl_email.setCellValueFactory(new PropertyValueFactory<>("email"));
-        tbl_dataNasc.setCellValueFactory(new PropertyValueFactory<>("dataNascimento"));
-        tbl_morada.setCellValueFactory(new PropertyValueFactory<>("morada"));
-        tbl_contacto.setCellValueFactory(new PropertyValueFactory<>("contacto"));
-        tbl_nif.setCellValueFactory(new PropertyValueFactory<>("nif"));
-        tbl_utilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
-        tbl_tipoColaborador.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
-        tv_funcionarios.setItems(Utilizador.getColaboradores());
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initTable();
         initCombos();
     }
 
@@ -229,7 +175,7 @@ public class CriarFuncionarioController implements Initializable {
 
     public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btn_refresh.getScene().getWindow();
         stage.setTitle("Criar Funcionario");
@@ -242,26 +188,6 @@ public class CriarFuncionarioController implements Initializable {
 
     }
 
-    public void OnActionRemoveFuncionario(ActionEvent actionEvent) {
-
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Utilizador selectedID = tv_funcionarios.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Utilizador WHERE id = ?");
-                ps2.setInt(1, selectedID.getId());
-                ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Colaborador Removido", "Information");
-
-            }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 
     public boolean VerifyNIFColaborador() {
         boolean flag;

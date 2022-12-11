@@ -107,7 +107,7 @@ public class GestorController {
     @FXML
     void clickGestaoColabBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarFuncionario.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
         stage.setTitle("Criar FuncionarioController");
@@ -119,7 +119,7 @@ public class GestorController {
     @FXML
     void clickGestaoClienteBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoCliente.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
         stage.setTitle("Gerir Clientes");
