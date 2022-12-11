@@ -56,7 +56,7 @@ public class GestaoClienteController implements Initializable {
 
     @FXML
     void clickAddClienteBtn(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarClienteController.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorAdicionarCliente.getScene().getWindow();
         stage.setTitle("Adicionar Cliente");
@@ -76,48 +76,7 @@ public class GestaoClienteController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void RemoveCliente(ActionEvent event) {
-        //    PreparedStatement ps2;
-        //    try {
-        //        DBconn dbConn = new DBconn();
-        //        Connection connection = dbConn.getConn();
-
-        //        Utilizador selectedID = (Utilizador) tblClientes.getSelectionModel().getSelectedItem();
-        //        if (selectedID != null) {
-        //            ps2 = connection.prepareStatement("DELETE FROM Cliente WHERE nif = ?");
-        //            ps2.setInt(1, selectedID.getNif());
-        //            ps2.executeUpdate();
-        //            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Cliente Removido", "Information");
-        //        }
-
-        //    } catch (SQLException ex) {
-        //        throw new RuntimeException(ex);
-        //    }
-    }
-
-    private void initTable() {
-
-        tblColNomeCliente.setResizable(false);
-        tblColEmail.setResizable(false);
-        tblColContacto.setResizable(false);
-        tblColNif.setResizable(false);
-        tblColPassword.setResizable(false);
-        tblColUtilizador.setResizable(false);
-
-        tblColNomeCliente.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nome"));
-        tblColNif.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("nif"));
-        tblColEmail.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("email"));
-        tblColContacto.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("contacto"));
-        tblColUtilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("utilizador"));
-        tblColUtilizador.setCellValueFactory(new PropertyValueFactory<Utilizador, String>("password"));
-        //tv_clientes.setItems(Cliente.getCliente());
-        tblClientes.setItems(Utilizador.getClientes());
-
-    }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initTable();
     }
 }
