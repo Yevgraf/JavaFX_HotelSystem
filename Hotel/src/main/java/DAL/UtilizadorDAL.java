@@ -7,6 +7,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Date;
 
 public class UtilizadorDAL {
     public Utilizador Login(String utilizador, String password) throws SQLException {
@@ -46,5 +47,27 @@ public class UtilizadorDAL {
         }
 
         return null;
+    }
+
+    public PreparedStatement CriarUtilizador(int id, String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, TipoUtilizador tipoUser) throws SQLException {
+
+        PreparedStatement ps;
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        ps = connection.prepareStatement("INSERT INTO Utilizador (nome,nif,morada,dataNascimento,email,contacto,utilizador,palavrapasse,idTipoUtilizador) values (?,?,?,?,?,?,?,?,?,?)");
+        ps.setString(1,nome);
+        ps.setString(2,nif);
+        ps.setString(3,morada);
+        ps.setDate(4, (java.sql.Date) dataNascimento);
+        ps.setString(5,email);
+        ps.setString(6,contacto);
+        ps.setString(7,utilizador);
+        ps.setString(8,password);
+        ps.setInt(9, tipoUser.getId());
+        ps.executeUpdate();
+
+        return ps;
+
     }
 }
