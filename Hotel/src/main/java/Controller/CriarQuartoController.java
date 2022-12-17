@@ -141,12 +141,11 @@ public class CriarQuartoController implements Initializable {
     private QuartoBLL quartoBLL = new QuartoBLL();
 
     @FXML
-    void clickAddQuarto(ActionEvent event) {
+    void clickAddQuarto(ActionEvent event) throws SQLException {
         VerifyCartao();
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
             if (VerifyCartao() == true) {
-                //ADDCartao();
                 ADDQuarto();
             }
         } else {
@@ -155,7 +154,7 @@ public class CriarQuartoController implements Initializable {
 
     }
 
-    public void ADDQuarto() {
+    public void ADDQuarto() throws SQLException {
         // create a quarto object with the values from the UI controls
         Quarto quarto = new Quarto(
                 null,
@@ -166,11 +165,15 @@ public class CriarQuartoController implements Initializable {
                 false
         );
 
-        // add the quarto to the database using the BLL
-        quartoBLL.addQuarto(quarto);
+        // create a cartao object with the values from the UI controls
+        Cartao cartao = new Cartao(
+                null,
+                txt_numcartao.getText(),
+                true
+        );
 
-        // show a success message
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
+        // add the quarto and cartao to the database using the BLL
+        quartoBLL.addQuarto(quarto, cartao);
     }
 
 
@@ -191,20 +194,7 @@ public class CriarQuartoController implements Initializable {
     }
 
 
-    private void initTable() {
 
-        tbl_id.setResizable(false);
-        tbl_tipQuarto.setResizable(false);
-        tbl_piso.setResizable(false);
-        tbl_preco.setResizable(false);
-
-        tbl_id.setCellValueFactory(new PropertyValueFactory<Quarto, Integer>("id"));
-        tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<Quarto, String>("tipoQuarto"));
-        tbl_piso.setCellValueFactory(new PropertyValueFactory<Quarto, String>("piso"));
-        tbl_preco.setCellValueFactory(new PropertyValueFactory<Quarto, Double>("preco"));
-
-        tv_Quarto.setItems(Quarto.getQuarto());
-    }
 
     private void initCombos() {
         cmbTipoQuarto.getItems().add("Singular");
@@ -216,7 +206,7 @@ public class CriarQuartoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        initTable();
+        tv_Quarto.setItems(QuartoBLL.getQuartos());
         initCombos();
     }
 

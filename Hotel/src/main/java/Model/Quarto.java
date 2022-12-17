@@ -80,28 +80,7 @@ public class Quarto {
         this.numCartao = numCartao;
     }
 
-    public static ObservableList<Quarto> getQuarto() {
-        ObservableList<Quarto> lista3 = FXCollections.observableArrayList();
 
-        try {
-            String cmd = "SELECT * FROM Quarto";
-
-            Statement st = DBconn.getConn().createStatement();
-
-            ResultSet rs = st.executeQuery(cmd);
-
-            while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"),rs.getString("tipoQuarto"),rs.getString("piso"),
-                        rs.getDouble("preco"), rs.getString("numeroCartao"),rs.getBoolean("ativo"));
-                lista3.add(objQuarto);
-            }
-
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista3;
-    }
 
     @Override
     public String toString() {

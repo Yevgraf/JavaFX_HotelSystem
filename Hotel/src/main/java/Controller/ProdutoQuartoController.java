@@ -1,6 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
+import DAL.QuartoDal;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -112,7 +113,7 @@ public class ProdutoQuartoController implements Initializable {
         tv_ProdutoQuarto.setItems(Model.ProdutoQuarto.getProdutoQuarto());
     }
     private void initCombos() {
-        cmbQuarto.getItems().addAll(Quarto.getQuarto());
+        cmbQuarto.getItems().addAll(QuartoDal.QuartoDAL.getAllQuartos());
         cmbProduto.getItems().addAll(Produto.getProduto());
     }
 
