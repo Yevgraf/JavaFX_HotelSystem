@@ -49,13 +49,13 @@ public class UtilizadorDAL {
         return null;
     }
 
-    public PreparedStatement CriarUtilizador(int id, String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, TipoUtilizador tipoUser) throws SQLException {
+    public PreparedStatement CriarUtilizador(String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, TipoUtilizador tipoUser) throws SQLException {
 
         PreparedStatement ps;
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
 
-        ps = connection.prepareStatement("INSERT INTO Utilizador (nome,nif,morada,dataNascimento,email,contacto,utilizador,palavrapasse,idTipoUtilizador) values (?,?,?,?,?,?,?,?,?,?)");
+        ps = connection.prepareStatement("INSERT INTO Utilizador (nome,nif,morada,dataNascimento,email,contacto,utilizador,palavrapasse,idTipoUtilizador) values (?,?,?,?,?,?,?,?,?)");
         ps.setString(1,nome);
         ps.setString(2,nif);
         ps.setString(3,morada);
