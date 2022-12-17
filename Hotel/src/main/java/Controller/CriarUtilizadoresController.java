@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.UserBLL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import Model.Utilizador;
@@ -124,54 +125,24 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
     void RegistarUtilizador() {
-        PreparedStatement ps2;
-        int contador, tamanho, codigoASCII;
-        String password;
-        String passwordCriptografada = "";
-        try {
-            Utilizador utilizadorACriar = new Utilizador(
-                    txt_nome.getText(),
-                    txt_nif.getText(),
-                    txt_morada.getText(),
-                    new Date(datePickerNasc.getValue().toEpochDay()),
-                    txt_email.getText(),
-                    txt_contacto.getText(),
-                    txt_utilizador.getText(),
-                    txt_password.getText(),
-                    "");
+        UserBLL userBLL = new UserBLL();
+        String nome = txt_nome.getText();
+        String nif = txt_nif.getText();
+        String morada = txt_morada.getText();
+        Date dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
+        String email = txt_email.getText();
+        String contacto = txt_contacto.getText();
+        String utilizador = txt_utilizador.getText();
+        String password = txt_password.getText();
+        String tipoUser = cmb_tipoUtilizador.getValue();
 
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Utilizador(nome, nif, morada, dataNascimento, email, contacto, " +
-                    "utilizador, palavrapasse, idTipoUtilizador) VALUES (?,?,?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1, txt_nome.getText());
-            ps2.setString(2, txt_nif.getText());
-            ps2.setString(3, txt_morada.getText());
-            ps2.setString(4, datePickerNasc.getEditor().getText());
-            ps2.setString(5, txt_email.getText());
-            ps2.setString(6, txt_contacto.getText());
-            ps2.setString(7, txt_utilizador.getText());
-            password = txt_password.getText();
-            tamanho = password.length();
-            password = password.toUpperCase();
-            contador = 0;
-//
-            while (contador < tamanho) {
-                codigoASCII = password.charAt(contador) + 130;
-                passwordCriptografada = passwordCriptografada + (char) codigoASCII;
-                contador++;
-            }
-            ps2.setString(8, passwordCriptografada);
-            Integer opcao = verificaTipoUtilizador(cmb_tipoUtilizador.getValue());
-            ps2.setInt(9, opcao);
-            ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Colaborador");
+        dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
+        java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
 
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-        }
+        userBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
     }
+
 
     public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
 

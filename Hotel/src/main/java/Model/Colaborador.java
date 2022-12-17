@@ -13,17 +13,16 @@ public class Colaborador {
     private String nif;
     private String morada;
     private Date dataNascimento;
-    private  String email;
+    private String email;
     private String contacto;
     private String utilizador;
     private String password;
     private String tipoColaborador;
 
 
-    public Colaborador(){
+    public Colaborador() {
 
     }
-
 
 
     public Colaborador(int id, String nome, String nif, String morada, java.sql.Date dataNascimento, String email, String contacto, String utilizador, String palavrapasse, String tipoColaborador) {
@@ -123,26 +122,4 @@ public class Colaborador {
         this.tipoColaborador = tipoColaborador;
     }
 
-    public static ObservableList<Colaborador> getColaborador() {
-             ObservableList<Colaborador> lista = FXCollections.observableArrayList();
-
-          try {
-              String cmd = "SELECT * FROM Colaborador";
-
-              Statement st = DBconn.getConn().createStatement();
-
-              ResultSet rs = st.executeQuery(cmd);
-
-              while (rs.next()) {
-                  Colaborador obj = new Colaborador(rs.getInt("id"),rs.getString("nome"), rs.getString("nif"), rs.getString("morada"),rs.getDate("dataNascimento"),rs.getString("email"),
-                  rs.getString("contacto"),rs.getString("utilizador"),rs.getString("palavrapasse"), rs.getString("tipoColaborador"));
-                  lista.add(obj);
-              }
-
-              st.close();
-          } catch (Exception ex) {
-              System.err.println("Erro: " + ex.getMessage());
-          }
-          return lista;
-        }
-    }
+}

@@ -12,11 +12,12 @@ public class QuartoBLL {
 
     // method to add a quarto to the database using the DAL
     public void addQuarto(Quarto quarto, Cartao cartao) throws SQLException {
-        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
+
         CartaoDal cdal = new CartaoDal();
-        dal.addQuarto(quarto);
         cdal.addCartao(cartao);
 
+        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
+        dal.addQuarto(quarto);
 
     }
 
