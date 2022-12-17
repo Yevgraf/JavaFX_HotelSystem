@@ -1,6 +1,8 @@
 package Controller;
 
+import BLL.QuartoBLL;
 import DAL.DBconn;
+import DAL.QuartoDal;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -135,13 +137,16 @@ public class CriarQuartoController implements Initializable {
     @FXML
     private Button voltarBtn;
 
+    private QuartoDal.QuartoDAL quartoDAL = new QuartoDal.QuartoDAL();
+    private QuartoBLL quartoBLL = new QuartoBLL();
+
     @FXML
     void clickAddQuarto(ActionEvent event) {
         VerifyCartao();
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
             if (VerifyCartao() == true) {
-                ADDCartao();
+                //ADDCartao();
                 ADDQuarto();
             }
         } else {
@@ -150,50 +155,26 @@ public class CriarQuartoController implements Initializable {
 
     }
 
-    void ADDQuarto(){
-        PreparedStatement ps2;
+    public void ADDQuarto() {
+        // create a quarto object with the values from the UI controls
+        Quarto quarto = new Quarto(
+                null,
+                cmbTipoQuarto.getValue(),
+                cmbPiso.getValue(),
+                Double.parseDouble(txt_preco.getText()),
+                txt_numcartao.getText(),
+                false
+        );
 
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1, cmbTipoQuarto.getValue());
-            ps2.setString(2, cmbPiso.getValue());
-            ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
-            ps2.setDouble(4, Double.parseDouble(txt_numcartao.getText()));
-            ps2.setBoolean(5,false);
+        // add the quarto to the database using the BLL
+        quartoBLL.addQuarto(quarto);
 
-            ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
-
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-
-        }
-
+        // show a success message
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Quarto inserido", "Informação Tipo de quarto");
     }
 
 
-    void ADDCartao(){
-        PreparedStatement ps2;
 
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Cartao (numeroCartao,ativo) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1,(txt_numcartao.getText()));
-            ps2.setBoolean(2,false);
-
-            ps2.executeUpdate();
-
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-
-        }
-
-    }
 
 
     @FXML
@@ -241,60 +222,36 @@ public class CriarQuartoController implements Initializable {
 
 
     public void clickEditar(ActionEvent actionEvent) {
+        // get the selected quarto
+        Quarto selectedQuarto = tv_Quarto.getSelectionModel().getSelectedItem();
 
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
+        // check if a quarto is selected
+        if (selectedQuarto != null) {
+            // update the quarto with the values from the UI controls
+            selectedQuarto.setTipoQuarto(cmbTipoQuarto.getValue());
+            selectedQuarto.setPiso(cmbPiso.getValue());
+            selectedQuarto.setPreco(Double.parseDouble(txt_preco.getText()));
 
-            Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("UPDATE FROM Quarto WHERE id = ?");
-                ps2.setString(1, cmbTipoQuarto.getValue());
-                ps2.setString(2, cmbPiso.getValue());
-                ps2.setDouble(3, Double.parseDouble(txt_preco.getText()));
+            // update the quarto in the database using the BLL
+            quartoBLL.updateQuarto(selectedQuarto);
 
-                ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
-
-            }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            // show a success message
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
         }
     }
 
     public void clickRmvQuarto(ActionEvent actionEvent) {
-
-        PreparedStatement ps2;
-        PreparedStatement ps;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Quarto selectedID = tv_Quarto.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
-                ps = connection.prepareStatement("DELETE FROM Cartao WHERE numeroCartao = ?");
-                ps2.setInt(1, selectedID.getId());
-
-                for (int i = 0; i < Cartao.getCartao().size(); i++) {
-                    String cartaoN = Cartao.getCartao().get(i).getNumCartao();
-                    if (cartaoN.equals(selectedID.getNumCartao())){
-
-                        ps.setString(1,cartaoN);
-                    }
-                }
-
-                ps2.executeUpdate();
-                ps.executeUpdate();
+        QuartoBLL bll = new QuartoBLL();
+        Quarto selectedQuarto = tv_Quarto.getSelectionModel().getSelectedItem();
+        if (selectedQuarto != null) {
+            try {
+                bll.removeQuarto(selectedQuarto.getId());
+                tv_Quarto.getItems().remove(selectedQuarto);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
-
+            } catch (SQLException ex) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
+                throw new RuntimeException(ex);
             }
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
-            throw new RuntimeException(ex);
-
         }
     }
 
