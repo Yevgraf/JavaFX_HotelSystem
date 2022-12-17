@@ -104,25 +104,12 @@ public class CriarCartaoController implements Initializable {
 
        @Override
        public void initialize(URL location, ResourceBundle resources) {
-           initTable();
            initCombos();
 
 
 
        }
 
-       private void initTable() {
-           tbl_numCartao.prefWidthProperty().bind(tv_cartao.widthProperty().multiply(0.11));
-           tbl_cartaoMestre.prefWidthProperty().bind(tv_cartao.widthProperty().multiply(0.11));
-
-           tbl_numCartao.setResizable(false);
-           tbl_cartaoMestre.setResizable(false);
-
-
-           tbl_numCartao.setCellValueFactory(new PropertyValueFactory<Cartao, String>("numCartao"));
-           tbl_cartaoMestre.setCellValueFactory(new PropertyValueFactory<Cartao, Boolean>("cartaoMestre"));
-           tv_cartao.setItems(Cartao.getCartao());
-       }
        private void initCombos() {
 
 

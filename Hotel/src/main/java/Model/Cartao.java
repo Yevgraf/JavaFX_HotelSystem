@@ -1,23 +1,15 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 public class Cartao {
 
-    private int id;
+    private Integer id;
     private String numCartao;
 
     private Boolean ativo;
 
-    public Cartao() {
-    }
 
-    public Cartao(int id, String numCartao, Boolean ativo) {
+
+    public Cartao(Integer id, String numCartao, Boolean ativo) {
         this.id = id;
         this.numCartao = numCartao;
         this.ativo = ativo;
@@ -31,11 +23,11 @@ public class Cartao {
         this.ativo = ativo;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -48,26 +40,5 @@ public class Cartao {
     }
 
 
-    public static ObservableList<Cartao> getCartao() {
-       ObservableList<Cartao> lista2 = FXCollections.observableArrayList();
-
-      try {
-          String cmd = "SELECT * FROM Cartao";
-
-          Statement st = DBconn.getConn().createStatement();
-
-          ResultSet rs = st.executeQuery(cmd);
-
-          while (rs.next()) {
-              Cartao objCartao = new Cartao(rs.getInt("id"),rs.getString("numeroCartao"),rs.getBoolean("ativo"));
-              lista2.add(objCartao);
-          }
-
-          st.close();
-      } catch (Exception ex) {
-          System.err.println("Erro: " + ex.getMessage());
-      }
-      return lista2;
-  }
 
 }
