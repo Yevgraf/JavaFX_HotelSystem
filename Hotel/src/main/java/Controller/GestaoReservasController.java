@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.ReservaBLL;
 import DAL.DBconn;
 import Model.MessageBoxes;
 import Model.Reserva;
@@ -121,7 +122,8 @@ public class GestaoReservasController implements Initializable {
         tblColServEx.setCellValueFactory(new PropertyValueFactory<Reserva, String>("servExtra"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
 
-        tblReservas.setItems(Reserva.getReservas());
+        tblReservas.setItems(ReservaBLL.getReservas());
     }
+
 
 }

@@ -2,11 +2,10 @@ package DAL;
 
 import Model.Reserva;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ReservaDAL {
 
@@ -55,5 +54,26 @@ public class ReservaDAL {
             throw new RuntimeException(ex);
         }
         return reserva;
+    }
+
+
+    public static List<Reserva> getReservas() {
+        List<Reserva> reservas = new ArrayList<>();
+        try {
+            String cmd = "SELECT * FROM Reserva";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"),
+                        rs.getInt("idColaborador"), rs.getInt("idQuarto"),
+                        rs.getString("dataInicio"), rs.getString("dataFim"),
+                        rs.getString("servExtra"), rs.getDouble("preco"));
+                reservas.add(reserva);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return reservas;
     }
 }

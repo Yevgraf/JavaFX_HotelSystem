@@ -102,25 +102,6 @@ public class Reserva {
         this.preco = preco;
     }
 
-    public static ObservableList<Reserva> getReservas() {
-        ObservableList<Reserva> lista = FXCollections.observableArrayList();
-        try {
-            String cmd = "SELECT * FROM Reserva";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
-            while (rs.next()) {
-                Reserva obj = new Reserva(rs.getInt("id"),rs.getInt("nifCliente"),
-                        rs.getInt("idColaborador"), rs.getInt("idQuarto"),
-                        rs.getString("dataInicio"), rs.getString("dataFim"),
-                        rs.getString("servExtra"), rs.getDouble("preco"));
-                lista.add(obj);
-            }
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista;
-    }
 
 }
 

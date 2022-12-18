@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.QuartoBLL;
 import BLL.ReservaBLL;
 import DAL.DBconn;
 import DAL.QuartoDal;
@@ -98,17 +99,6 @@ public class AdicionarReservaController implements Initializable {
             EmptyMessage.setText("Preencha todos os campos");
         }
     }
-
-
-  // private void initCombos() {
-  //     for (int i = 0; i < Quarto.getQuarto().size(); i++) {
-  //         if (Quarto.getQuarto().get(i).getAtivo() == false){
-  //          Quarto quartoFalse = Quarto.getQuarto().get(i);
-  //             cmbIDQuarto.getItems().addAll(quartoFalse);
-  //         }
-  //     }
-  //     cmbClientes.getItems().addAll(Utilizador.getClientes());
-  // }
 
 
 
