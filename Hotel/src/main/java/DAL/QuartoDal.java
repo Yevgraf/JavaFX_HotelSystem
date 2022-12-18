@@ -101,5 +101,7 @@ public class QuartoDal {
         return list;
     }
 
+        public void updateQuartoAtivo(Integer id, boolean b) {
+        }
     }
 }

@@ -9,7 +9,7 @@ import java.sql.Statement;
 
 public class Reserva {
 
-    private int id;
+    private Integer id;
     private Integer nifCliente;
     private Integer idColaborador;
     private Integer idQuarto;
@@ -25,7 +25,7 @@ public class Reserva {
 
     }
 
-    public Reserva(int id, Integer nifCliente, Integer idColaborador, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
+    public Reserva(Integer id, Integer nifCliente, Integer idColaborador, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
         this.id = id;
         this.nifCliente = nifCliente;
         this.idColaborador = idColaborador;
@@ -36,11 +36,13 @@ public class Reserva {
         this.preco = preco;
     }
 
-    public int getId() {
+
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
