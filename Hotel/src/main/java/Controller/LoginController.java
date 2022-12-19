@@ -1,6 +1,6 @@
 package Controller;
 
-import BLL.UserBLL;
+import BLL.UtilizadorBLL;
 import Model.MessageBoxes;
 import Model.Utilizador;
 import com.example.hotel.Main;
@@ -38,7 +38,7 @@ public class LoginController implements Initializable {
 
     void Login() {
         try {
-            UserBLL bll = new UserBLL();
+            UtilizadorBLL bll = new UtilizadorBLL();
             Utilizador utilizador = bll.Login(userTxt.getText(), passwordTxt.getText());
 
             if (utilizador != null) {

@@ -2,11 +2,12 @@ package BLL;
 
 import DAL.UtilizadorDAL;
 import Model.Utilizador;
+import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
-public class UserBLL {
+public class UtilizadorBLL {
     public Utilizador Login(String utilizador, String password) {
         try {
             UtilizadorDAL dal = new UtilizadorDAL();
@@ -27,5 +28,21 @@ public class UserBLL {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static ObservableList<Utilizador> getAllUtilizadores() {
+        return UtilizadorDAL.getTodosUtilizadores();
+    }
+
+    public static ObservableList<Utilizador> getAllGestores() {
+        return UtilizadorDAL.getGestores();
+    }
+
+    public static ObservableList<Utilizador> getAllFuncionarios() {
+        return UtilizadorDAL.getFuncionario();
+    }
+
+    public static ObservableList<Utilizador> getAllClientes() {
+        return UtilizadorDAL.getClientes();
     }
 }

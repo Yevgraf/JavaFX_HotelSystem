@@ -111,4 +111,91 @@ public class UtilizadorDAL {
         }
         return utilizadores;
     }
+
+    public static ObservableList<Utilizador> getGestores() {
+        ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT u.*, tu.id as tuId, tu.nome as tuNome FROM Utilizador u " +
+                    "INNER JOIN TipoUtilizador tu ON tu.Id = u.idTipoUtilizador " +
+                    "WHERE tu.nome IN ('Gestor') ";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
+                        rs.getString("contacto"), rs.getString("utilizador"),
+                        new TipoUtilizador(
+                                rs.getInt("tuId"),
+                                rs.getString("tuNome")));
+                clientes.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
+        }
+        return clientes;
+    }
+
+    public static ObservableList<Utilizador> getFuncionario() {
+        ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT u.*, tu.id as tuId, tu.nome as tuNome FROM Utilizador u " +
+                    "INNER JOIN TipoUtilizador tu ON tu.Id = u.idTipoUtilizador " +
+                    "WHERE tu.nome IN ('Funcionario') ";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
+                        rs.getString("contacto"), rs.getString("utilizador"),
+                        new TipoUtilizador(
+                                rs.getInt("tuId"),
+                                rs.getString("tuNome")));
+                clientes.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
+        }
+        return clientes;
+    }
+
+    public static ObservableList<Utilizador> getClientes() {
+        ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT u.*, tu.id as tuId, tu.nome as tuNome FROM Utilizador u " +
+                    "INNER JOIN TipoUtilizador tu ON tu.Id = u.idTipoUtilizador " +
+                    "WHERE tu.nome IN ('Cliente') ";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Utilizador obj = new Utilizador(rs.getInt("id"), rs.getString("nome"), rs.getString("nif"),
+                        rs.getString("morada"), rs.getDate("dataNascimento"), rs.getString("email"),
+                        rs.getString("contacto"), rs.getString("utilizador"),
+                        new TipoUtilizador(
+                                rs.getInt("tuId"),
+                                rs.getString("tuNome")));
+                clientes.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
+        }
+        return clientes;
+    }
 }

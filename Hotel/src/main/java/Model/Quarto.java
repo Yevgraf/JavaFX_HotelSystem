@@ -90,7 +90,5 @@ public class Quarto {
                 ", piso=" + piso +
                 ", preco=" + preco +
                 ", numCartao='" + numCartao;
-
-
     }
 }

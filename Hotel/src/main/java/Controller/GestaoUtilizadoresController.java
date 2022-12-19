@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.UtilizadorBLL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import Model.Utilizador;
@@ -163,10 +164,10 @@ public class GestaoUtilizadoresController implements Initializable {
         if (cmbUtilizador.getValue().equals("Gestor")) {
             initTableGestores();
         } else if (cmbUtilizador.getValue().equals("Funcionario")) {
-            Utilizador.getFuncionario();
+            UtilizadorBLL.getAllFuncionarios();
             initTableFuncionarios();
         } else if (cmbUtilizador.getValue().equals("Cliente")) {
-            Utilizador.getClientes();
+            UtilizadorBLL.getAllClientes();
             initTableClientes();
         }
     }
@@ -264,7 +265,7 @@ public class GestaoUtilizadoresController implements Initializable {
         tblNif.setCellValueFactory(new PropertyValueFactory<>("nif"));
         tblUtilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
         tblTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
-        tblUtilizadores.setItems(Utilizador.getTodosUtilizadores());
+        tblUtilizadores.setItems(UtilizadorBLL.getAllUtilizadores());
     }
 
     @FXML
@@ -296,7 +297,7 @@ public class GestaoUtilizadoresController implements Initializable {
         tblNif.setCellValueFactory(new PropertyValueFactory<>("nif"));
         tblUtilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
         tblTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
-        tblUtilizadores.setItems(Utilizador.getGestores());
+        tblUtilizadores.setItems(UtilizadorBLL.getAllGestores());
     }
 
     private void initTableFuncionarios() {
@@ -310,7 +311,7 @@ public class GestaoUtilizadoresController implements Initializable {
         tblNif.setCellValueFactory(new PropertyValueFactory<>("nif"));
         tblUtilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
         tblTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
-        tblUtilizadores.setItems(Utilizador.getFuncionario());
+        tblUtilizadores.setItems(UtilizadorBLL.getAllFuncionarios());
     }
 
     private void initTableClientes() {
@@ -324,7 +325,7 @@ public class GestaoUtilizadoresController implements Initializable {
         tblNif.setCellValueFactory(new PropertyValueFactory<>("nif"));
         tblUtilizador.setCellValueFactory(new PropertyValueFactory<>("utilizador"));
         tblTipo.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTipoUser().getTipo()));
-        tblUtilizadores.setItems(Utilizador.getClientes());
+        tblUtilizadores.setItems(UtilizadorBLL.getAllClientes());
     }
 
 }

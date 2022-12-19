@@ -1,9 +1,8 @@
 package Controller;
 
-import BLL.UserBLL;
+import BLL.UtilizadorBLL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
-import Model.Utilizador;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -125,7 +124,7 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
     void RegistarUtilizador() {
-        UserBLL userBLL = new UserBLL();
+        UtilizadorBLL utilizadorBLL = new UtilizadorBLL();
         String nome = txt_nome.getText();
         String nif = txt_nif.getText();
         String morada = txt_morada.getText();
@@ -139,7 +138,7 @@ public class CriarUtilizadoresController implements Initializable {
         dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
         java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
 
-        userBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
+        utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
     }
 
