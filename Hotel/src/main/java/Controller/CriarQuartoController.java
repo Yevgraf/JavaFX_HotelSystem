@@ -5,6 +5,7 @@ import DAL.DBconn;
 import DAL.QuartoDal;
 import Model.*;
 import com.example.hotel.Main;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,49 +60,6 @@ public class CriarQuartoController implements Initializable {
     @FXML
     private ComboBox<String> cmbTipoQuarto;
 
-
-    @FXML
-    private CheckBox checkboxWifi;
-
-    @FXML
-    private ImageView imgGestorAdionarProd;
-
-    @FXML
-    private ImageView imgGestorGestaoProduto;
-
-    @FXML
-    private Label lblData;
-
-    @FXML
-    private Label lblDataFim;
-
-    @FXML
-    private Label lblDataIniicio;
-
-    @FXML
-    private Label lblGestaoProdutoAdicionar;
-
-    @FXML
-    private Label lblGestaoReservas;
-
-    @FXML
-    private Label lblHoras;
-
-    @FXML
-    private Label lblHotel;
-
-    @FXML
-    private Label lblIdClientes;
-
-    @FXML
-    private Label lblIdQuarto;
-
-    @FXML
-    private Label lblSamos;
-
-    @FXML
-    private Label lblServExtra;
-
     @FXML
     private TableColumn<Quarto, Integer> tbl_id;
 
@@ -112,10 +70,7 @@ public class CriarQuartoController implements Initializable {
     private TableColumn<Quarto, Double> tbl_preco;
 
     @FXML
-    private TableColumn<Quarto, String > tbl_tipQuarto;
-
-    @FXML
-    private TableColumn<Quarto, Boolean> tbl_wifi;
+    private TableColumn<Quarto, String> tbl_tipQuarto;
 
     @FXML
     private TableView<Quarto> tv_Quarto;
@@ -177,9 +132,6 @@ public class CriarQuartoController implements Initializable {
     }
 
 
-
-
-
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
@@ -194,8 +146,6 @@ public class CriarQuartoController implements Initializable {
     }
 
 
-
-
     private void initCombos() {
         cmbTipoQuarto.getItems().add("Singular");
         cmbTipoQuarto.getItems().add("Duplo");
@@ -206,8 +156,8 @@ public class CriarQuartoController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tv_Quarto.setItems(QuartoBLL.getQuartos());
         initCombos();
+        initTable();
     }
 
 
@@ -239,7 +189,7 @@ public class CriarQuartoController implements Initializable {
                 tv_Quarto.getItems().remove(selectedQuarto);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
             } catch (SQLException ex) {
-                MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Reserva existente com estes dados", "Reserva existente");
                 throw new RuntimeException(ex);
             }
         }
@@ -277,6 +227,14 @@ public class CriarQuartoController implements Initializable {
             flag = true;
         }
         return flag;
+    }
+
+    private void initTable() {
+        tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tbl_piso.setCellValueFactory(new PropertyValueFactory<>("piso"));
+        tbl_preco.setCellValueFactory(new PropertyValueFactory<>("preco"));
+        tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<>("tipoQuarto"));
+        tv_Quarto.setItems(QuartoBLL.getQuartos());
     }
 
 }
