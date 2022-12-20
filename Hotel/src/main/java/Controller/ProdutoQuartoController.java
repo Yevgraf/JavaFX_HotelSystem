@@ -1,6 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
+import DAL.ProdutoQuartoDAL;
 import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
@@ -81,52 +82,18 @@ public class ProdutoQuartoController implements Initializable {
     }
 
     @FXML
-    void clickAddProdutoQuarto(ActionEvent event) {
-        PreparedStatement ps2;
-        PreparedStatement ps3;
-
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO ProdutoQuarto (idQuarto,idProduto,quantidade) VALUES (?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps3 = connection.prepareStatement("UPDATE Stock set quantidade=? WHERE idProduto=?", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setInt(1, cmbQuarto.getValue().getId());
-            ps2.setString(2, cmbProduto.getValue().getIdProduto());
-            ps2.setString(3, txt_quantidade.getText());
-
-            //ps3.executeUpdate();
-            ps2.executeUpdate();
-            String idProduto = cmbProduto.getValue().getIdProduto();
-                for (int j = 0; j < Model.ProdutoQuarto.getProdutoQuarto().size(); j++) {
-                    if (idProduto.equals(Model.ProdutoQuarto.getProdutoQuarto().get(j).getIdProduto())){
-                        int quantidadeStock = selectStock(idProduto, connection);
-                        int quantidadeProdutoQuarto = Model.ProdutoQuarto.getProdutoQuarto().get(j).getQuantidade();
-                        int novaQuantidade = quantidadeStock- quantidadeProdutoQuarto;
-                        ps3.setInt(1, novaQuantidade);
-                        ps3.setString(2,cmbProduto.getValue().getIdProduto());
-                        ps3.executeUpdate();
-                    }
-            }
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Tipo de Produto quarto inserido", "Informação produto quarto");
-
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(ex);
-
+    void clickAddProdutoQuarto(ActionEvent event) throws SQLException {
+        Quarto selectedRoom = cmbQuarto.getValue();
+        Produto selectedProduct = cmbProduto.getValue();
+        int quantity = Integer.parseInt(txt_quantidade.getText());
+        if (selectedRoom == null || selectedProduct == null) {
+            // show error message
+            return;
         }
+        ProdutoQuartoDAL.addProductInRoom(selectedRoom.getId(), selectedProduct.getIdProduto(), quantity);
     }
 
-    private Integer selectStock(String idProduto, Connection connection) throws SQLException {
-        Statement statement = connection.createStatement();
 
-        ResultSet rs = statement.executeQuery("SELECT quantidade FROM Stock WHERE idProduto = '" + idProduto + "'");
-        Integer quantidade = 0;
-        while (rs.next()) {
-            quantidade = rs.getInt("quantidade");
-        }
-        statement.close();
-        return quantidade;
-    }
 
     @FXML
     void clickEditar(ActionEvent event) {
