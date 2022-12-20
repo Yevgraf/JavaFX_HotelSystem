@@ -16,7 +16,7 @@ public class QuartoBLL {
         CartaoDal cdal = new CartaoDal();
         cdal.addCartao(cartao);
 
-        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
+        QuartoDal dal = new QuartoDal();
         dal.addQuarto(quarto);
 
     }
@@ -24,12 +24,12 @@ public class QuartoBLL {
 
     // method to update a quarto in the database using the DAL
     public void updateQuarto(Quarto quarto) {
-        QuartoDal.QuartoDAL quartoDAL = new QuartoDal.QuartoDAL();
+        QuartoDal quartoDAL = new QuartoDal();
         quartoDAL.updateQuarto(quarto);
     }
 
     public void removeQuarto(int id) throws SQLException, SQLException {
-        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
+        QuartoDal dal = new QuartoDal();
         CartaoDal cdal = new CartaoDal();
         Quarto quarto = dal.deleteQuarto(id);
         if (quarto != null) {
@@ -40,7 +40,7 @@ public class QuartoBLL {
     }
 
     public static ObservableList<Quarto> getQuartos() {
-        return QuartoDal.QuartoDAL.getAllQuartos();
+        return QuartoDal.getAllQuartos();
     }
 
 }

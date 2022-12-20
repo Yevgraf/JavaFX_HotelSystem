@@ -9,7 +9,6 @@ import java.sql.*;
 
 public class QuartoDal {
 
-    public static class QuartoDAL {
 
         // method to add a quarto to the database
         public void addQuarto(Quarto quarto) {
@@ -77,7 +76,6 @@ public class QuartoDal {
     }
 
 
-
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
 
@@ -104,4 +102,4 @@ public class QuartoDal {
         public void updateQuartoAtivo(Integer id, boolean b) {
         }
     }
-}
+
