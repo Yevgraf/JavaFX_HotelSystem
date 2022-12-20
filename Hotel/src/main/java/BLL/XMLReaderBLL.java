@@ -15,12 +15,10 @@ import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
 import java.io.File;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
 
-public class XMLReader {
+public class XMLReaderBLL {
     public ObservableList<EntradaStock> lerXMLHeader(String path) {
-        ObservableList<EntradaStock> head = FXCollections.observableArrayList();
+        ObservableList<EntradaStock> fornecedores = FXCollections.observableArrayList();
 
         try {
             File fXmlFile = new File(path);
@@ -81,13 +79,13 @@ public class XMLReader {
                     String paisFornecedor = countryElement.getTextContent();
 
                     Fornecedor fornecedor = new Fornecedor(idFornecedor, nomeFornecedor, moradaFornecedor, codPostalFornecedor, paisFornecedor, cidadeFornecedor);
-                    head.add(new EntradaStock(ordemNum, ordemData, fornecedor));
+                    fornecedores.add(new EntradaStock(ordemNum, ordemData, fornecedor));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return head;
+        return fornecedores;
     }
     //----------------------------------- BODY -----------------------------------
 
@@ -210,7 +208,7 @@ public class XMLReader {
                     Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
                     double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
-                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade, false));
+                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade,  false));
 
                 }
             }
