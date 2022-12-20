@@ -14,17 +14,16 @@ public class ReservaDAL {
             try {
                 DBconn dbConn = new DBconn();
                 Connection connection = dbConn.getConn();
-                ps2 = connection.prepareStatement("INSERT INTO Reserva(nifCliente, idColaborador, idQuarto," +
+                ps2 = connection.prepareStatement("INSERT INTO Reserva(nifCliente, idQuarto," +
                         "dataInicio, dataFim, servExtra, preco)" +
-                        "VALUES (?,?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                        "VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 ps2.setInt(1, reserva.getNifCliente());
-                ps2.setInt(2, reserva.getIdColaborador());
-                ps2.setInt(3, reserva.getIdQuarto());
-                ps2.setString(4, reserva.getDataInicio());
-                ps2.setString(5, reserva.getDataFim());
-                ps2.setString(6, reserva.getServExtra());
-                ps2.setDouble(7, reserva.getPreco());
+                ps2.setInt(2, reserva.getIdQuarto());
+                ps2.setString(3, reserva.getDataInicio());
+                ps2.setString(4, reserva.getDataFim());
+                ps2.setString(5, reserva.getServExtra());
+                ps2.setDouble(6, reserva.getPreco());
                 ps2.executeUpdate();
             } catch (SQLException e) {
                 throw new RuntimeException(e);
@@ -46,7 +45,7 @@ public class ReservaDAL {
                 String dataInicio = dateFormat.format(rs.getDate("dataInicio"));
                 String dataFim = dateFormat.format(rs.getDate("dataFim"));
 
-                reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"), rs.getInt("idColaborador"),
+                reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"),
                         rs.getInt("idQuarto"), dataInicio, dataFim, rs.getString("servExtra"), rs.getDouble("preco"));
 
             }
@@ -64,8 +63,7 @@ public class ReservaDAL {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"),
-                        rs.getInt("idColaborador"), rs.getInt("idQuarto"),
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getString("servExtra"), rs.getDouble("preco"));
                 reservas.add(reserva);

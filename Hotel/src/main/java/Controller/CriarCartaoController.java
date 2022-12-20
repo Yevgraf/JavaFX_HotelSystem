@@ -105,15 +105,9 @@ public class CriarCartaoController implements Initializable {
        @Override
        public void initialize(URL location, ResourceBundle resources) {
            initCombos();
-
-
-
        }
 
        private void initCombos() {
-
-
-
        }
 
   }

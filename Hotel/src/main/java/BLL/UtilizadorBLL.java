@@ -1,6 +1,8 @@
 package BLL;
 
+import DAL.ServicoDAL;
 import DAL.UtilizadorDAL;
+import Model.Servico;
 import Model.Utilizador;
 import javafx.collections.ObservableList;
 
@@ -27,6 +29,14 @@ public class UtilizadorBLL {
             UtilizadorDAL.CriarUtilizador(nome, nif, morada, dataNascimento, email, contacto, utilizador, password, tipoUser);
         } catch (SQLException e) {
             e.printStackTrace();
+        }
+    }
+
+    public void removeUtilizador(int id) throws SQLException {
+        UtilizadorDAL udal = new UtilizadorDAL();
+        Utilizador utilizador = udal.deleteUtilizador(id);
+        if (utilizador != null) {
+            udal.deleteUtilizador(id);
         }
     }
 

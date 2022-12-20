@@ -77,54 +77,6 @@ public class LoginController implements Initializable {
         }
     }
 
-    //public boolean VerifyUser() {
-    //        boolean flag;
-    //        String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
-    //        try {
-    //            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-    //            ResultSet rs = stmt.executeQuery();
-    //            while (rs.next()) {
-    //                if (rs.getInt(1) == 0) {
-    //                    ValidarUser.setText("Utilizador não encontrado!");
-    //                } else {
-    //                    ValidarUser.setText("");
-    //                }
-    //            }
-    //        } catch (SQLException e) {
-    //            e.getCause();
-    //        }
-    //        if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
-    //            flag = false;
-    //        } else {
-    //            flag = true;
-    //        }
-    //        return flag;
-    //    }
-
-    /*public boolean VerifyPass() {
-        boolean flag;
-        String verificar = "SELECT count(1) FROM Colaborador WHERE utilizador ='" + userTxt.getText() + "'";
-        try {
-            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 0) {
-                    ValidarUser.setText("Utilizador não encontrado!");
-                } else {
-                    ValidarUser.setText("");
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        if (ValidarUser.getText().equals("Utilizador não encontrado!")) {
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
-    }*/
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 

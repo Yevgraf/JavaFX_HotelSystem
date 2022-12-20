@@ -143,22 +143,6 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
 
-    public void OnActionRefresh(ActionEvent actionEvent) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btn_refresh.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-    public void OnActionUpdate(ActionEvent actionEvent) {
-
-    }
-
-
     public boolean VerifyNIFColaborador() {
         boolean flag;
         String verificar = "SELECT count(1) FROM Utilizador WHERE nif ='" + txt_nif.getText() + "'";

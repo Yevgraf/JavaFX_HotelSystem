@@ -1,6 +1,7 @@
 package DAL;
 
 import Model.MessageBoxes;
+import Model.Servico;
 import Model.TipoUtilizador;
 import Model.Utilizador;
 import javafx.collections.FXCollections;
@@ -197,5 +198,15 @@ public class UtilizadorDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não encontrado", "Erro");
         }
         return clientes;
+    }
+
+    public Utilizador deleteUtilizador(int id) throws SQLException {
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        PreparedStatement ps = connection.prepareStatement("DELETE FROM Utilizador WHERE id = ?");
+        ps.setInt(1, id);
+        ps.executeUpdate();
+        return null;
     }
 }

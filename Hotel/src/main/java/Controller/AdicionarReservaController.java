@@ -118,15 +118,13 @@ public class AdicionarReservaController implements Initializable {
     void AdicionarReserva() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
 
-        Integer idColaborador = 3;    //vai ser substituído pelo GET depois do login feito
-
         String servExtras = "SemExtras";  //falta criar lista de serviços
         Double preco = 0.0;
 
         // reservas.add(new Reserva(nif, idColaborador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
 
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
-        Reserva reserva = new Reserva(null,Integer.parseInt(cmbUtilizadores.getValue().getNif()), idColaborador, cmbIDQuarto.getValue().getId(),
+        Reserva reserva = new Reserva(null,Integer.parseInt(cmbUtilizadores.getValue().getNif()), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
         ReservaBLL reservaBLL = new ReservaBLL();
         try {

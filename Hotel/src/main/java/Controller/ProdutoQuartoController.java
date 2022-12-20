@@ -23,9 +23,6 @@ import java.util.ResourceBundle;
 public class ProdutoQuartoController implements Initializable {
 
     @FXML
-    private AnchorPane PainelProdutoQuarto;
-
-    @FXML
     private Button btnAddQuarto;
 
     @FXML
@@ -42,40 +39,6 @@ public class ProdutoQuartoController implements Initializable {
 
     @FXML
     private ComboBox<Quarto> cmbQuarto;
-
-    @FXML
-    private ImageView imgGestorAdionarProd;
-
-    @FXML
-    private ImageView imgGestorGestaoProduto;
-
-    @FXML
-    private Label lblData;
-
-    @FXML
-    private Label lblDataFim;
-
-    @FXML
-    private Label lblGestaoProdutoAdicionar;
-
-    @FXML
-    private Label lblGestaoReservas;
-
-    @FXML
-    private Label lblHoras;
-
-    @FXML
-    private Label lblHotel;
-
-    @FXML
-    private Label lblIdClientes;
-
-    @FXML
-    private Label lblIdQuarto;
-
-    @FXML
-    private Label lblSamos;
-
 
     @FXML
     private TableColumn<Model.ProdutoQuarto, Integer> tbl_id;

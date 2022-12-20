@@ -94,13 +94,10 @@ public class CriarQuartoController implements Initializable {
 
     @FXML
     void clickAddQuarto(ActionEvent event) throws SQLException {
-        VerifyCartao();
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-            if (VerifyCartao() == true) {
                 ADDQuarto();
-            }
-        } else {
+            } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
 
@@ -200,30 +197,6 @@ public class CriarQuartoController implements Initializable {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
-    }
-
-    public boolean VerifyCartao() {
-        boolean flag;
-        String verificar = "SELECT count(1) FROM Cartao WHERE numeroCartao ='" + txt_numcartao.getText() + "'";
-        try {
-            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    ValidarCartao.setText("O cartao já existe!");
-                } else {
-                    ValidarCartao.setText("");
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        if (ValidarCartao.getText().equals("O cartao já existe!")) {
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
     }
 
     private void initTable() {
