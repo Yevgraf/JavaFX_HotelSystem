@@ -53,7 +53,7 @@ public class AdicionarReservaController implements Initializable {
     private Button btnRedictCriarCliente;
 
     @FXML
-    private ComboBox<Cliente> cmbClientes;
+    private ComboBox<Utilizador> cmbUtilizadores;
 
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
@@ -89,7 +89,7 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
         VerificarDisponibilidade();
-        if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
+        if (cmbUtilizadores.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
             if (VerificarDisponibilidade() == true) {
                 AdicionarReserva();
             }
@@ -126,7 +126,7 @@ public class AdicionarReservaController implements Initializable {
         // reservas.add(new Reserva(nif, idColaborador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
 
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
-        Reserva reserva = new Reserva(null,cmbClientes.getValue().getNif(), idColaborador, cmbIDQuarto.getValue().getId(),
+        Reserva reserva = new Reserva(null,Integer.parseInt(cmbUtilizadores.getValue().getNif()), idColaborador, cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
         ReservaBLL reservaBLL = new ReservaBLL();
         try {

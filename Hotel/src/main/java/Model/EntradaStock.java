@@ -8,7 +8,6 @@ public class EntradaStock {
 
     private Integer caixas;
 
-
     private String idProduto;
 
     private String local;
@@ -36,7 +35,6 @@ public class EntradaStock {
     private String cidadeFornecedor;
 
     private Double precoTotal;
-
 
     public Double getTaxa() {
         return taxa;
