@@ -1,9 +1,11 @@
 package BLL;
 
 import DAL.ReservaDAL;
+import Model.MessageBoxes;
 import Model.Reserva;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -29,5 +31,14 @@ public class ReservaBLL {
             // handle exception
         }
         return false;
+    }
+
+    public static void deleteReservation(Reserva selectedReservation) {
+        try {
+            ReservaDAL.deleteReservation(selectedReservation.getId());
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "A reserva foi apagada", "Apagar reserva");
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
     }
 }

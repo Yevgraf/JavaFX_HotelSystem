@@ -86,4 +86,18 @@ public class ReservaDAL {
             }
         }
     }
+
+    public static void deleteReservation(int reservationId) throws SQLException {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            ps2 = connection.prepareStatement("DELETE FROM Reserva WHERE id = ?");
+            ps2.setInt(1, reservationId);
+            ps2.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }

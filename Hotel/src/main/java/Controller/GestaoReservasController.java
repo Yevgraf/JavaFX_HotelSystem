@@ -86,20 +86,9 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     void clickEliminarReservaBtn(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Reserva selectedID = tblReservas.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Reserva WHERE id = ?");
-                ps2.setInt(1, selectedID.getId());
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "A reserva foi apagada", "Apagar reserva");
-                ps2.executeUpdate();
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
+        if (selectedReservation != null) {
+            ReservaBLL.deleteReservation(selectedReservation);
         }
     }
 
