@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class ReservaBLL {
@@ -19,5 +20,14 @@ public class ReservaBLL {
         List<Reserva> reservas = ReservaDAL.getReservas();
         ObservableList<Reserva> lista = FXCollections.observableArrayList(reservas);
         return lista;
+    }
+
+    public static boolean checkAvailability(int roomId, LocalDate startDate) {
+        try {
+            return ReservaDAL.isRoomAvailable(roomId, startDate);
+        } catch (SQLException e) {
+            // handle exception
+        }
+        return false;
     }
 }

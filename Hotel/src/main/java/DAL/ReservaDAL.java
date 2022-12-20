@@ -4,6 +4,7 @@ import Model.Reserva;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -73,5 +74,16 @@ public class ReservaDAL {
             System.err.println("Erro: " + ex.getMessage());
         }
         return reservas;
+    }
+
+    public static boolean isRoomAvailable(int roomId, LocalDate startDate) throws SQLException {
+        String query = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto = ? And dataInicio = ?";
+        try (PreparedStatement stmt = DBconn.getConn().prepareStatement(query)) {
+            stmt.setInt(1, roomId);
+            stmt.setString(2, startDate.toString());
+            try (ResultSet rs = stmt.executeQuery()) {
+                return !rs.next();
+            }
+        }
     }
 }

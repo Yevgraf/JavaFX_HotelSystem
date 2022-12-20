@@ -45,27 +45,7 @@ public class    TipoQuarto {
     public boolean isVista() {
         return vista;
     }
-    public static ObservableList<TipoQuarto> getTipoQuarto() {
-        ObservableList<TipoQuarto> lista = FXCollections.observableArrayList();
 
-        try {
-            String cmd = "SELECT * FROM TipoQuarto";
-
-            Statement st = DBconn.getConn().createStatement();
-
-            ResultSet rs = st.executeQuery(cmd);
-
-            while (rs.next()) {
-                TipoQuarto obj = new TipoQuarto(rs.getInt("id"),rs.getString("tipo"), rs.getBoolean("vista"));
-                lista.add(obj);
-            }
-
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista;
-    }
     @Override
     public String toString() {
         return this.tipo;

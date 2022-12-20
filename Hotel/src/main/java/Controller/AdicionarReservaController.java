@@ -2,7 +2,6 @@ package Controller;
 
 import BLL.ReservaBLL;
 import BLL.ServicoBLL;
-import DAL.DBconn;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
@@ -18,9 +17,8 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 import static java.lang.Integer.parseInt;
 
@@ -88,12 +86,23 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
-        VerificarDisponibilidade();
+        Quarto selectedRoom = cmbIDQuarto.getValue();
+        LocalDate startDate = DatePickerInicio.getValue();
+        if (selectedRoom == null || startDate == null) {
+            // show error message
+            return;
+        }
+
+        boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
+        if (!isAvailable) {
+            DataInicio.setText("A data escolhida está ocupada!");
+            ValidarQuarto.setText("Quarto ocupado na data escolhida!");
+            return;
+        }
+
         if (cmbUtilizadores.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
-            if (VerificarDisponibilidade() == true) {
-                AdicionarReserva();
-            }
-        }else {
+            AdicionarReserva();
+        } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
     }
@@ -169,30 +178,21 @@ public class AdicionarReservaController implements Initializable {
         servicosTable.setItems(ServicoBLL.getServicos());
     }
 
-    public boolean VerificarDisponibilidade() {
-        boolean flag;
-            String verificar = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto ='" + cmbIDQuarto.getValue().getId() +
-                    "' And dataInicio ='" + DatePickerInicio.getValue().toString() + "'";
-            try {
-                PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-                ResultSet rs = stmt.executeQuery();
-                while (rs.next()) {
-                    if (rs.getString("dataInicio").equals(DatePickerInicio.getValue().toString())) {
-                        DataInicio.setText("A data escolhida está ocupada!");
-                        ValidarQuarto.setText("Quarto ocupado na data escolhida!");
-                    } else {
-                        DataInicio.setText("");
-                    }
-                }
-            } catch (SQLException e) {
-                e.getCause();
-            }
-        if (DataInicio.getText().equals("A data escolhida está ocupada!")) {
-            flag = false;
-        } else {
-            flag = true;
+    public void VerificarDisponibilidade() {
+        Quarto selectedRoom = cmbIDQuarto.getValue();
+        LocalDate startDate = DatePickerInicio.getValue();
+        if (selectedRoom == null || startDate == null) {
+            // show error message
+            return;
         }
-        return flag;
+
+        boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
+        if (!isAvailable) {
+            DataInicio.setText("A data escolhida está ocupada!");
+            ValidarQuarto.setText("Quarto ocupado na data escolhida!");
+        } else {
+            DataInicio.setText("");
+        }
     }
 }
 
