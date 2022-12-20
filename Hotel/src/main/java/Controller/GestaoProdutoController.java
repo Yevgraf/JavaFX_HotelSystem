@@ -97,24 +97,11 @@ public class GestaoProdutoController implements Initializable {
     }
 
     @FXML
-    void clickTable(MouseEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            Produto selectedID = produtosTable.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("SELECT quantidade FROM Stock WHERE idProduto = ?");
-                ps2.setString(1, selectedID.getIdProduto());
-                for (int i = 0; i < Stock.getStock().size(); i++) {
-                    if (selectedID != null && selectedID.getIdProduto().equals(Stock.getStock().get(i).getIdProduto())){
-                        Integer quant = Stock.getStock().get(i).getQuantidade();
-                        quantidade.setText(String.valueOf(quant));
-                    }
-                }
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+    void clickTable(MouseEvent event) throws SQLException {
+        ProdutoDAL pdal = new ProdutoDAL();
+        Produto selectedID = produtosTable.getSelectionModel().getSelectedItem();
+        if (selectedID != null) {
+            quantidade.setText(String.valueOf(pdal.getQuantidadeProduto(selectedID)));
         }
     }
 

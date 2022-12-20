@@ -4,6 +4,7 @@ import Model.MessageBoxes;
 import Model.Produto;
 
 import Model.Servico;
+import Model.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -80,6 +81,22 @@ public class ProdutoDAL {
         ps2.setBoolean(1, estado);
         ps2.setString(2, selectedID.getIdProduto());
         ps2.executeUpdate();
+    }
+
+    public Integer getQuantidadeProduto (Produto selectedID) throws SQLException {
+        PreparedStatement ps2;
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        ps2 = connection.prepareStatement("SELECT quantidade FROM Stock WHERE idProduto = ?");
+        ps2.setString(1, selectedID.getIdProduto());
+        for (int i = 0; i < Stock.getStock().size(); i++) {
+            if (selectedID != null && selectedID.getIdProduto().equals(Stock.getStock().get(i).getIdProduto())){
+                Integer quantidade = Stock.getStock().get(i).getQuantidade();
+                return quantidade;
+            }
+        }
+        return null;
     }
 
 }
