@@ -1,7 +1,11 @@
 package Controller;
 
+import BLL.QuartoBLL;
+import BLL.ServicoBLL;
 import DAL.DBconn;
+import Model.Cartao;
 import Model.MessageBoxes;
+import Model.Quarto;
 import Model.Servico;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -50,42 +54,39 @@ public class InserirServicoController implements Initializable {
     @FXML
     private Button voltarBtn;
 
+    private ServicoBLL servicoBLL = new ServicoBLL();
+
     @FXML
-    void clickAddBtn(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps2 = connection.prepareStatement("INSERT INTO Servico(servico, preco) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            ps2.setString(1, descricao.getText());
-            ps2.setDouble(2, Double.parseDouble(preco.getText()));
-            ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Serviço inserido", "Informação Serviço");
-        } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
-            throw new RuntimeException(e);
+    void clickAddBtn(ActionEvent event) throws SQLException {
+        if (descricao.getText().isEmpty() == false && preco.getText().isEmpty() == false) {
+            AddServico();
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza todos os campos","Erro");
         }
+    }
+
+    public void AddServico() throws SQLException {
+        Servico servico = new Servico(
+                null,
+                descricao.getText(),
+                Double.parseDouble(preco.getText()));
+
+        servicoBLL.addServico(servico);
+        initTable();
     }
 
     @FXML
     void clickRemoverBtn(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Servico selectedID = servicos.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM Servico WHERE id = ?");
-                ps2.setInt(1, selectedID.getIdServico());
-                ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Serviço Removido", "Informação");
-
+        ServicoBLL bll = new ServicoBLL();
+        Servico selectedServico = servicos.getSelectionModel().getSelectedItem();
+        if (selectedServico != null) {
+            try {
+                bll.removeServico(selectedServico.getIdServico());
+                servicos.getItems().remove(selectedServico);
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Servico Removido", "Information");
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
             }
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-
         }
     }
 
@@ -94,7 +95,7 @@ public class InserirServicoController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Painel GestorController");
+        stage.setTitle("Painel Gestor");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -109,7 +110,7 @@ public class InserirServicoController implements Initializable {
         idTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
         descricaoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
         precoTable.setCellValueFactory(new PropertyValueFactory<Servico, Double>("preco"));
-        servicos.setItems(Servico.getServicoTable());
+        servicos.setItems(ServicoBLL.getServicos());
     }
 
     @Override

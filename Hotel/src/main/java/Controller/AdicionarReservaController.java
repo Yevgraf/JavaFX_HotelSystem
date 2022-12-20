@@ -1,9 +1,8 @@
 package Controller;
 
-import BLL.QuartoBLL;
 import BLL.ReservaBLL;
+import BLL.ServicoBLL;
 import DAL.DBconn;
-import DAL.QuartoDal;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
@@ -19,7 +18,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -170,7 +168,7 @@ public class AdicionarReservaController implements Initializable {
         idServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
         descricaoServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
         precoServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, Double>("preco"));
-        servicosTable.setItems(Servico.getServicoTable());
+        servicosTable.setItems(ServicoBLL.getServicos());
     }
 
     public boolean VerificarDisponibilidade() {

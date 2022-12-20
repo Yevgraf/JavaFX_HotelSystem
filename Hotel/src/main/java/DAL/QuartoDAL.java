@@ -8,32 +8,33 @@ import java.sql.*;
 
 public class QuartoDAL {
 
-    // method to add a quarto to the database
-    public void addQuarto(Quarto quarto) {
-        PreparedStatement ps2;
+        // method to add a quarto to the database
+        public void addQuarto(Quarto quarto) {
+            PreparedStatement ps2;
 
-        try {
-            // create a database connection
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
+            try {
+                // create a database connection
+                DBconn dbConn = new DBconn();
+                Connection connection = dbConn.getConn();
 
-            // prepare the insert statement
-            ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                // prepare the insert statement
+                ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-            // set the values for the prepared statement
-            ps2.setString(1, quarto.getTipoQuarto());
-            ps2.setString(2, quarto.getPiso());
-            ps2.setDouble(3, quarto.getPreco());
-            ps2.setString(4, String.valueOf(quarto.getNumCartao()));
-            ps2.setBoolean(5, quarto.getAtivo());
+                // set the values for the prepared statement
+                ps2.setString(1, quarto.getTipoQuarto());
+                ps2.setString(2, quarto.getPiso());
+                ps2.setDouble(3, quarto.getPreco());
+                ps2.setString(4, String.valueOf(quarto.getNumCartao()));
+                ps2.setBoolean(5, quarto.getAtivo());
 
-            // execute the insert statement
-            ps2.executeUpdate();
+                // execute the insert statement
+                ps2.executeUpdate();
 
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+            } catch (SQLException ex) {
+                throw new RuntimeException(ex);
+            }
         }
-    }
+
 
 
     public void updateQuarto(Quarto quarto) {
@@ -73,6 +74,7 @@ public class QuartoDAL {
     }
 
 
+
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
 
@@ -96,6 +98,6 @@ public class QuartoDAL {
         return list;
     }
 
-    public void updateQuartoAtivo(Integer id, boolean b) {
-    }
+        public void updateQuartoAtivo(Integer id, boolean b) {
+        }
 }

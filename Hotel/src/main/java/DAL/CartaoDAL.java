@@ -6,7 +6,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-public class CartaoDal {
+public class CartaoDAL {
 
     public void addCartao(Cartao cartao) throws SQLException {
         DBconn dbConn = new DBconn();
