@@ -3,6 +3,8 @@ package DAL;
 import Model.MessageBoxes;
 import Model.Produto;
 
+import Model.Servico;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
@@ -49,4 +51,35 @@ public class ProdutoDAL {
         statement.executeUpdate();
         statement.close();
     }
+
+    public static ObservableList<Produto> getAllProdutos() {
+        ObservableList<Produto> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM Produto";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Produto obj = new Produto(rs.getString("id"), rs.getString("descricao"),
+                        rs.getDouble("precoPorUnidade"), rs.getDouble("peso"),
+                        rs.getBoolean("consumivel"));
+                lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
+    }
+
+    public void updateConsumivelProduto(Produto selectedID, boolean estado) throws SQLException {
+        PreparedStatement ps2;
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        ps2 = connection.prepareStatement("UPDATE Produto SET consumivel = ? WHERE id = ?");
+        ps2.setBoolean(1, estado);
+        ps2.setString(2, selectedID.getIdProduto());
+        ps2.executeUpdate();
+    }
+
 }

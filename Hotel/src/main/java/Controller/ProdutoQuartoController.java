@@ -1,6 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
+import DAL.ProdutoDAL;
 import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
@@ -12,7 +13,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -77,7 +77,7 @@ public class ProdutoQuartoController implements Initializable {
     }
     private void initCombos() {
         cmbQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
-        cmbProduto.getItems().addAll(Produto.getProduto());
+        cmbProduto.getItems().addAll(ProdutoDAL.getAllProdutos());
     }
 
     @FXML

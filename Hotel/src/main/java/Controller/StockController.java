@@ -1,7 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
-import Model.Produto;
+import DAL.ProdutoDAL;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,9 +48,9 @@ public class StockController implements Initializable {
             if (selectedID != null) {
                 ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
                 ps2.setString(1, selectedID.getIdProduto());
-                for (int i = 0; i < Produto.getProduto().size(); i++) {
-                    if (selectedID != null && selectedID.getIdProduto().equals(Produto.getProduto().get(i).getIdProduto())){
-                        String descricao = Produto.getProduto().get(i).getDescricao();
+                for (int i = 0; i < ProdutoDAL.getAllProdutos().size(); i++) {
+                    if (selectedID != null && selectedID.getIdProduto().equals(ProdutoDAL.getAllProdutos().get(i).getIdProduto())){
+                        String descricao = ProdutoDAL.getAllProdutos().get(i).getDescricao();
                         descricaoTxt.setText(descricao);
                     }
                 }

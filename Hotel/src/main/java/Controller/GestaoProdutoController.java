@@ -1,6 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
+import DAL.ProdutoDAL;
 import Model.MessageBoxes;
 import Model.Produto;
 import Model.Stock;
@@ -70,47 +71,29 @@ public class GestaoProdutoController implements Initializable {
     }
 
     @FXML
-    void clickConsumivelBtn(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
+    void clickConsumivelBtn(ActionEvent event) throws SQLException {
+        ProdutoDAL pdal = new ProdutoDAL();
             Produto selectedID = produtosTable.getSelectionModel().getSelectedItem();
             if (selectedID != null && selectedID.getConsumivel() == false) {
-                ps2 = connection.prepareStatement("UPDATE Produto SET consumivel = ? WHERE id = ?");
-                ps2.setBoolean(1, true);
-                ps2.setString(2, selectedID.getIdProduto());
-                ps2.executeUpdate();
+                pdal.updateConsumivelProduto(selectedID, true);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto passou a consumível", "Informação");
+                initTable();
             } else {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Produto já é consumível", "Erro");
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     @FXML
-    void clickNConsumivelBtn(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
+    void clickNConsumivelBtn(ActionEvent event) throws SQLException {
+        ProdutoDAL pdal = new ProdutoDAL();
             Produto selectedID = produtosTable.getSelectionModel().getSelectedItem();
             if (selectedID != null && selectedID.getConsumivel() == true) {
-                ps2 = connection.prepareStatement("UPDATE Produto SET consumivel = ? WHERE id = ?");
-                ps2.setBoolean(1, false);
-                ps2.setString(2, selectedID.getIdProduto());
-                ps2.executeUpdate();
+                pdal.updateConsumivelProduto(selectedID, false);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto passou a não consumível", "Informação");
+                initTable();
             } else {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Produto já é não consumível", "Erro");
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     @FXML
@@ -141,7 +124,7 @@ public class GestaoProdutoController implements Initializable {
         precoTable.setCellValueFactory(new PropertyValueFactory<Produto, Double>("precoUnidade"));
         pesoTable.setCellValueFactory(new PropertyValueFactory<Produto, Double>("peso"));
         consumivelTable.setCellValueFactory(new PropertyValueFactory<Produto, Boolean>("consumivel"));
-        produtosTable.setItems(Produto.getProduto());
+        produtosTable.setItems(ProdutoDAL.getAllProdutos());
     }
 
     @Override

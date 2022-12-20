@@ -69,32 +69,4 @@ public class Produto {
         this.peso = peso;
         this.consumivel = consumivel;
     }
-
-    public static ObservableList<Produto> getProduto() {
-        ObservableList<Produto> lista = FXCollections.observableArrayList();
-        try {
-            String cmd = "SELECT * FROM Produto";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
-            while (rs.next()) {
-                Produto obj = new Produto(rs.getString("id"), rs.getString("descricao"),
-                        rs.getDouble("precoPorUnidade"), rs.getDouble("peso"),
-                        rs.getBoolean("consumivel"));
-                lista.add(obj);
-            }
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista;
-    }
-
-    @Override
-    public String toString() {
-        return
-                "descricao='" + descricao + '\'' +
-                ", precoUnidade=" + precoUnidade +
-                ", peso=" + peso +
-                ", consumivel=" + consumivel;
-    }
 }
