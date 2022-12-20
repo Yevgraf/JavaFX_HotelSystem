@@ -1,7 +1,8 @@
 package Controller;
 
 import DAL.DBconn;
-import Model.Produto;
+import DAL.ProdutoDAL;
+import DAL.StockDAL;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -39,25 +40,12 @@ public class StockController implements Initializable {
     private Text descricaoTxt;
 
     @FXML
-    void clickTable(MouseEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
+    void clickTable(MouseEvent event) throws SQLException {
+            StockDAL sdal = new StockDAL();
             Model.Stock selectedID = tblStock.getSelectionModel().getSelectedItem();
             if (selectedID != null) {
-                ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
-                ps2.setString(1, selectedID.getIdProduto());
-                for (int i = 0; i < Produto.getProduto().size(); i++) {
-                    if (selectedID != null && selectedID.getIdProduto().equals(Produto.getProduto().get(i).getIdProduto())){
-                        String descricao = Produto.getProduto().get(i).getDescricao();
-                        descricaoTxt.setText(descricao);
-                    }
-                }
+                descricaoTxt.setText(sdal.getDescricaoStock(selectedID));
             }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
     }
 
     @FXML
@@ -65,7 +53,7 @@ public class StockController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
+        stage.setTitle("Pagina Gestor");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
