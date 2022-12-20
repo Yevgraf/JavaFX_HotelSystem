@@ -19,9 +19,7 @@ public class ServicoDAL {
             ps2.setString(1, servico.getServico());
             ps2.setDouble(2, servico.getPreco());
             ps2.executeUpdate();
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Serviço inserido", "Informação Serviço");
         } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza os dados corretamente", "Erro Inserir");
             throw new RuntimeException(e);
         }
     }
@@ -48,7 +46,6 @@ public class ServicoDAL {
             }
             st.close();
         } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
         }
         return lista;
     }

@@ -11,12 +11,12 @@ public class ServicoBLL {
         return ServicoDAL.getAllServicos();
     }
 
-    public void addServico(Servico servico) throws SQLException {
+    public void addServico(Servico servico) {
         ServicoDAL sdal = new ServicoDAL();
         sdal.addServico(servico);
     }
 
-    public void removeServico(int id) throws SQLException, SQLException {
+    public void removeServico(int id) throws SQLException {
         ServicoDAL dal = new ServicoDAL();
         Servico servico = dal.deleteServico(id);
         if (servico != null) {

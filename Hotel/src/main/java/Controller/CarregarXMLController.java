@@ -151,13 +151,13 @@ public class CarregarXMLController implements Initializable {
             ps2 = connection.prepareStatement("INSERT INTO Fornecedor(id, nome, morada, codigoPostal, pais, cidade)" +
                     "VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             for (int i = 0; i < head.size(); i++) {
-                if (!verificaFornecedorExistente(head.get(i).getIdFornecedor(), connection)) {
-                    ps2.setString(1, head.get(i).getIdFornecedor());
-                    ps2.setString(2, head.get(i).getNomeFornecedor());
-                    ps2.setString(3, head.get(i).getMoradaFornecedor());
-                    ps2.setString(4, head.get(i).getCodPostalFornecedor());
-                    ps2.setString(5, head.get(i).getPaisFornecedor());
-                    ps2.setString(6, head.get(i).getCidadeFornecedor());
+                if (!verificaFornecedorExistente(head.get(i).getFornecedor().getIdFornecedor(), connection)) {
+                    ps2.setString(1, head.get(i).getFornecedor().getIdFornecedor());
+                    ps2.setString(2, head.get(i).getFornecedor().getNome());
+                    ps2.setString(3, head.get(i).getFornecedor().getMorada());
+                    ps2.setString(4, head.get(i).getFornecedor().getCodigoPostal());
+                    ps2.setString(5, head.get(i).getFornecedor().getPais());
+                    ps2.setString(6, head.get(i).getFornecedor().getCidade());
                     ps2.executeUpdate();
                 }
             }
@@ -306,13 +306,13 @@ public class CarregarXMLController implements Initializable {
 
         for (int i = 0; i < head.size(); i++) {
             ordemTxt.setText(head.get(i).getOrdemNum());
-            moradaTxt.setText(head.get(i).getMoradaFornecedor());
-            noneFornecedorTxt.setText(head.get(i).getNomeFornecedor());
-            paisTxt.setText(head.get(i).getPaisFornecedor());
-            idFornecedorTxt.setText(head.get(i).getIdFornecedor());
-            codigoPostalTxt.setText(head.get(i).getCodPostalFornecedor());
+            moradaTxt.setText(head.get(i).getFornecedor().getMorada());
+            noneFornecedorTxt.setText(head.get(i).getFornecedor().getNome());
+            paisTxt.setText(head.get(i).getFornecedor().getPais());
+            idFornecedorTxt.setText(head.get(i).getFornecedor().getIdFornecedor());
+            codigoPostalTxt.setText(head.get(i).getFornecedor().getCodigoPostal());
             dataTxt.setText(head.get(i).getOrdemData());
-            cidadeTxt.setText(head.get(i).getCidadeFornecedor());
+            cidadeTxt.setText(head.get(i).getFornecedor().getCidade());
         }
     }
 
@@ -377,7 +377,7 @@ public class CarregarXMLController implements Initializable {
         for (int i = 0; i < 1; i++) {
             statement.setString(9, head.get(i).getOrdemNum());
             statement.setString(10, head.get(i).getOrdemData());
-            statement.setString(11, head.get(i).getIdFornecedor());
+            statement.setString(11, head.get(i).getFornecedor().getIdFornecedor());
         }
         statement.executeUpdate();
         statement.close();

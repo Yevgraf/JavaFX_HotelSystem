@@ -110,7 +110,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Criar FuncionarioController");
+        stage.setTitle("Criar Funcionario");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -134,7 +134,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Entrada StockController");
+        stage.setTitle("Carregar XML");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -146,7 +146,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Entrada StockController");
+        stage.setTitle("Entrada Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

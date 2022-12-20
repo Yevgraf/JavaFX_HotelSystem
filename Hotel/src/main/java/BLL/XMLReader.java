@@ -1,6 +1,7 @@
 package BLL;
 
 import Model.EntradaStock;
+import Model.Fornecedor;
 import Model.Produto;
 import Model.Stock;
 import javafx.collections.FXCollections;
@@ -79,7 +80,8 @@ public class XMLReader {
                     String codPostalFornecedor = postalCodeElement.getTextContent();
                     String paisFornecedor = countryElement.getTextContent();
 
-                    head.add(new EntradaStock(ordemNum, ordemData, idFornecedor, moradaFornecedor, codPostalFornecedor, paisFornecedor, nomeFornecedor, cidadeFornecedor));
+                    Fornecedor fornecedor = new Fornecedor(idFornecedor, nomeFornecedor, moradaFornecedor, codPostalFornecedor, paisFornecedor, cidadeFornecedor);
+                    head.add(new EntradaStock(ordemNum, ordemData, fornecedor));
                 }
             }
         } catch (Exception e) {
@@ -209,6 +211,7 @@ public class XMLReader {
                     double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
                     produtos.add(new Produto(idProduto, descricao, peso, precoUnidade, false));
+
                 }
             }
         } catch (Exception e) {

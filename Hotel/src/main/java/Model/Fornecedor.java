@@ -1,23 +1,50 @@
 package Model;
 
 public class Fornecedor {
-    private int idFornecedor;
+    private String idFornecedor;
     private String nome;
-    private String email;
     private String morada;
+    private String codigoPostal;
+    private String pais;
+    private String cidade;
+
+    public String getCodigoPostal() {
+        return codigoPostal;
+    }
+
+    public void setCodigoPostal(String codigoPostal) {
+        this.codigoPostal = codigoPostal;
+    }
+
+    public String getPais() {
+        return pais;
+    }
+
+    public void setPais(String pais) {
+        this.pais = pais;
+    }
+
+    public String getCidade() {
+        return cidade;
+    }
+
+    public void setCidade(String cidade) {
+        this.cidade = cidade;
+    }
 
     public Fornecedor(){
-
     }
 
-    public Fornecedor(int idFornecedor, String nome, String email, String morada) {
+    public Fornecedor(String idFornecedor, String nome, String morada, String codigoPostal, String pais, String cidade) {
         this.idFornecedor = idFornecedor;
         this.nome = nome;
-        this.email = email;
         this.morada = morada;
+        this.codigoPostal = codigoPostal;
+        this.pais = pais;
+        this.cidade = cidade;
     }
 
-    public void setIdFornecedor(int idFornecedor) {
+    public void setIdFornecedor(String idFornecedor) {
         this.idFornecedor = idFornecedor;
     }
 
@@ -25,24 +52,16 @@ public class Fornecedor {
         this.nome = nome;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public void setMorada(String morada) {
         this.morada = morada;
     }
 
-    public int getIdFornecedor() {
+    public String getIdFornecedor() {
         return idFornecedor;
     }
 
     public String getNome() {
         return nome;
-    }
-
-    public String getEmail() {
-        return email;
     }
 
     public String getMorada() {
