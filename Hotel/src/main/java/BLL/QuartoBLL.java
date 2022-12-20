@@ -1,7 +1,7 @@
 package BLL;
 
-import DAL.CartaoDal;
-import DAL.QuartoDal;
+import DAL.CartaoDAL;
+import DAL.QuartoDAL;
 import Model.Cartao;
 import Model.Quarto;
 import javafx.collections.ObservableList;
@@ -13,10 +13,10 @@ public class QuartoBLL {
     // method to add a quarto to the database using the DAL
     public void addQuarto(Quarto quarto, Cartao cartao) throws SQLException {
 
-        CartaoDal cdal = new CartaoDal();
+        CartaoDAL cdal = new CartaoDAL();
         cdal.addCartao(cartao);
 
-        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
+        QuartoDAL dal = new QuartoDAL();
         dal.addQuarto(quarto);
 
     }
@@ -24,13 +24,13 @@ public class QuartoBLL {
 
     // method to update a quarto in the database using the DAL
     public void updateQuarto(Quarto quarto) {
-        QuartoDal.QuartoDAL quartoDAL = new QuartoDal.QuartoDAL();
+        QuartoDAL quartoDAL = new QuartoDAL();
         quartoDAL.updateQuarto(quarto);
     }
 
     public void removeQuarto(int id) throws SQLException, SQLException {
-        QuartoDal.QuartoDAL dal = new QuartoDal.QuartoDAL();
-        CartaoDal cdal = new CartaoDal();
+        QuartoDAL dal = new QuartoDAL();
+        CartaoDAL cdal = new CartaoDAL();
         Quarto quarto = dal.deleteQuarto(id);
         if (quarto != null) {
             cdal.deleteCartao(String.valueOf(quarto.getNumCartao()));
@@ -40,7 +40,7 @@ public class QuartoBLL {
     }
 
     public static ObservableList<Quarto> getQuartos() {
-        return QuartoDal.QuartoDAL.getAllQuartos();
+        return QuartoDAL.getAllQuartos();
     }
 
 }
