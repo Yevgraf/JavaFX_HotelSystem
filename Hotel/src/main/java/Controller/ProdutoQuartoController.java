@@ -1,6 +1,7 @@
 package Controller;
 
 import DAL.DBconn;
+import DAL.ProdutoDAL;
 import DAL.ProdutoQuartoDAL;
 import DAL.QuartoDAL;
 import Model.*;
@@ -78,7 +79,7 @@ public class ProdutoQuartoController implements Initializable {
     }
     private void initCombos() {
         cmbQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
-        cmbProduto.getItems().addAll(Produto.getProduto());
+        cmbProduto.getItems().addAll(ProdutoDAL.getAllProdutos());
     }
 
     @FXML
