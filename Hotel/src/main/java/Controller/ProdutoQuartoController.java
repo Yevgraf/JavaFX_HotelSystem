@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.ProdutoQuartoBLL;
 import DAL.DBconn;
 import DAL.ProdutoDAL;
 import DAL.ProdutoQuartoDAL;
@@ -91,7 +92,7 @@ public class ProdutoQuartoController implements Initializable {
             // show error message
             return;
         }
-        ProdutoQuartoDAL.addProductInRoom(selectedRoom.getId(), selectedProduct.getIdProduto(), quantity);
+        ProdutoQuartoBLL.addProductInRoom(selectedRoom.getId(), selectedProduct.getIdProduto(), quantity);
     }
 
 
@@ -103,26 +104,10 @@ public class ProdutoQuartoController implements Initializable {
 
     @FXML
     void clickRmvProdutoQuarto(ActionEvent event) {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            Model.ProdutoQuarto selectedID = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
-            if (selectedID != null) {
-                ps2 = connection.prepareStatement("DELETE FROM ProdutoQuarto WHERE id =?");
-
-                ps2.setInt(1, selectedID.getId());
-                ps2.executeUpdate();
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto removido", "Information");
-
-            }
-        } catch (SQLException ex) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Reserva existente com estes dados","Reserva existente");
-            throw new RuntimeException(ex);
-
+        Model.ProdutoQuarto selectedProduct = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
+        if (selectedProduct != null) {
+            ProdutoQuartoBLL.deleteProductFromRoom(selectedProduct);
         }
-
     }
 
     @FXML

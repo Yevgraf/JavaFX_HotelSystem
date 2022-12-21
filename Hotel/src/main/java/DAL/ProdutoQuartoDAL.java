@@ -35,4 +35,18 @@ public class ProdutoQuartoDAL {
         }
         return 0;
     }
+
+    public static void deleteProductFromRoom(int productId) throws SQLException {
+        PreparedStatement ps2;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            ps2 = connection.prepareStatement("DELETE FROM ProdutoQuarto WHERE id =?");
+            ps2.setInt(1, productId);
+            ps2.executeUpdate();
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 }
