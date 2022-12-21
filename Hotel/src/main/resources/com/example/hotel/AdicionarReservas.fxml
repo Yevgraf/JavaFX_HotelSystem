@@ -131,6 +131,7 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
+      <ComboBox fx:id="cmbUtilizadores" />
       <ComboBox fx:id="cmbClientes" layoutX="139.0" layoutY="230.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <DatePicker fx:id="DatePickerInicio" layoutX="137.0" layoutY="340.0" />
       <DatePicker fx:id="DatePickerFim" layoutX="137.0" layoutY="400.0" />

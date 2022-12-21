@@ -9,9 +9,46 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class UtilizadorDAL {
+    public static List<Utilizador> getUsersByType(int i) {
+        List<Utilizador> users = new ArrayList<>();
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT u.id as uId, u.nome as uNome, nif, morada, dataNascimento, email, contacto, utilizador, palavrapasse, tu.id as tuId, tu.nome as tuNome " +
+                            "FROM Utilizador u " +
+                            "INNER JOIN TipoUtilizador tu ON tu.Id = u.idTipoUtilizador " +
+                            "WHERE tu.id = ?"
+            );
+            ps.setInt(1, i);
+            ResultSet result = ps.executeQuery();
+            while (result.next()) {
+                users.add(new Utilizador(
+                        result.getInt("uId"),
+                        result.getString("uNome"),
+                        result.getString("nif"),
+                        result.getString("morada"),
+                        result.getDate("dataNascimento"),
+                        result.getString("email"),
+                        result.getString("contacto"),
+                        result.getString("utilizador"),
+                        new TipoUtilizador(
+                                result.getInt("tuId"),
+                                result.getString("tuNome")
+                        )
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+    }
+
     public Utilizador Login(String utilizador, String password) throws SQLException {
         PreparedStatement ps;
         DBconn dbConn = new DBconn();

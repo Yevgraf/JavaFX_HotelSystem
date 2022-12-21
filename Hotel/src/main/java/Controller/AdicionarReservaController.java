@@ -2,10 +2,14 @@ package Controller;
 
 import BLL.ReservaBLL;
 import BLL.ServicoBLL;
+import BLL.UtilizadorBLL;
+import DAL.QuartoDAL;
+import DAL.UtilizadorDAL;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +23,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import static java.lang.Integer.parseInt;
 
 public class AdicionarReservaController implements Initializable {
@@ -51,7 +58,9 @@ public class AdicionarReservaController implements Initializable {
     private Button btnRedictCriarCliente;
 
     @FXML
-    private ComboBox<Utilizador> cmbUtilizadores;
+    private ComboBox<Utilizador> cmbClientes;
+
+
 
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
@@ -100,7 +109,7 @@ public class AdicionarReservaController implements Initializable {
             return;
         }
 
-        if (cmbUtilizadores.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
+        if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
             AdicionarReserva();
         } else {
             EmptyMessage.setText("Preencha todos os campos");
@@ -130,13 +139,12 @@ public class AdicionarReservaController implements Initializable {
         String servExtras = "SemExtras";  //falta criar lista de serviços
         Double preco = 0.0;
 
-        // reservas.add(new Reserva(nif, idColaborador, cmbIDQuarto, dataInicioText, dataFimText, servExtras, preco));
-
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
-        Reserva reserva = new Reserva(null,Integer.parseInt(cmbUtilizadores.getValue().getNif()), cmbIDQuarto.getValue().getId(),
+        Reserva reserva = new Reserva(null,Integer.parseInt(cmbClientes.getValue().getNif()), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
         ReservaBLL reservaBLL = new ReservaBLL();
         try {
+
             reservaBLL.addReserva(reserva);
         } catch (SQLException e) {
             // Handle the exception
@@ -148,9 +156,20 @@ public class AdicionarReservaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        //initCombos();
+        initCombos();
         initTable();
     }
+
+    private void initCombos() {
+
+
+        cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos().stream()
+                .filter(quarto -> !quarto.getAtivo())
+                .collect(Collectors.toList()));
+
+        cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
+    }
+
 
     public void cmbIdQuartoAction(ActionEvent actionEvent) {
         //cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();

@@ -13,9 +13,9 @@ import java.util.List;
 
 public class ReservaBLL {
 
-    public void addReserva(Reserva reserva) throws SQLException {
+    public int addReserva(Reserva reserva) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
-        reservaDAL.addReserva(reserva);
+        return reservaDAL.addReserva(reserva);
     }
 
     public static ObservableList<Reserva> getReservas() {
@@ -40,5 +40,16 @@ public class ReservaBLL {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public void updateReserva(Reserva reserva) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        reservaDAL.updateReserva(reserva);
+    }
+
+
+    public double calculateTotalAmount(Integer reservationId) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        return reservaDAL.calculateTotalAmount(reservationId);
     }
 }

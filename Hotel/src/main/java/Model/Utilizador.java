@@ -144,4 +144,11 @@ public class Utilizador {
         this.tipoUser = tipoUser;
     }
 
+    @Override
+    public String toString() {
+        return "Utilizador{" +
+                "nome='" + nome + '\'' +
+                ", nif='" + nif + '\'' +
+                '}';
+    }
 }
