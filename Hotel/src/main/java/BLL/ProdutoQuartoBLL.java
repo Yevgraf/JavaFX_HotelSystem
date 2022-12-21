@@ -13,7 +13,8 @@ public class ProdutoQuartoBLL {
         try {
             ProdutoQuartoDAL.addProductInRoom(roomId, productId, quantity);
         } catch (SQLException e) {
-            // handle exception
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro ao adicionar produto no quarto", "Erro");
         }
     }
 
