@@ -20,7 +20,7 @@ public class ReservaDAL {
             ps = connection.prepareStatement("INSERT INTO Reserva(idCliente, idQuarto," +
                     "dataInicio, dataFim, servExtra, preco)" +
                     "VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, reserva.getId());
+            ps.setInt(1, reserva.getIdCliente());
             ps.setInt(2, reserva.getIdQuarto());
             ps.setString(3, reserva.getDataInicio());
             ps.setString(4, reserva.getDataFim());
@@ -63,7 +63,7 @@ public class ReservaDAL {
                 String dataInicio = dateFormat.format(rs.getDate("dataInicio"));
                 String dataFim = dateFormat.format(rs.getDate("dataFim"));
 
-                reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"),
+                reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
                         rs.getInt("idQuarto"), dataInicio, dataFim, rs.getString("servExtra"), rs.getDouble("preco"));
 
             }
@@ -81,7 +81,7 @@ public class ReservaDAL {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"), rs.getInt("idQuarto"),
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getString("servExtra"), rs.getDouble("preco"));
                 reservas.add(reserva);
@@ -119,11 +119,11 @@ public class ReservaDAL {
     }
 
     public void updateReserva(Reserva reserva) throws SQLException {
-        String sql = "UPDATE Reserva SET nifCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, servExtra = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, servExtra = ?, preco = ? WHERE id = ?";
 
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, reserva.getNifCliente());
+            stmt.setInt(1, reserva.getIdCliente());
             stmt.setInt(2, reserva.getIdQuarto());
             stmt.setString(3, reserva.getDataInicio());
             stmt.setString(4, reserva.getDataFim());
@@ -136,7 +136,9 @@ public class ReservaDAL {
 
 
     public double calculateTotalAmount(Integer reservationId) throws SQLException {
-        String sql = "SELECT p.precoPorUnidade, s.preco, q.preco " +
+        String sql = "SELECT SUM(p.precoPorUnidade * pq.quantidade) AS productAmount, " +
+                "       SUM(s.preco) AS serviceAmount, " +
+                "       q.preco AS roomPrice " +
                 "FROM Reserva r " +
                 "JOIN ProdutoQuarto pq ON r.idQuarto = pq.idQuarto " +
                 "JOIN Servico s ON r.id = s.idReserva " +
@@ -150,17 +152,18 @@ public class ReservaDAL {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, reservationId);
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    double productPrice = rs.getDouble("precoPorUnidade");
-                    double servicePrice = rs.getDouble("preco");
-                    double roomPrice = rs.getDouble("preco");
-                    totalAmount += productPrice + servicePrice + roomPrice;
+                if (rs.next()) {
+                    double productAmount = rs.getDouble("productAmount");
+                    double serviceAmount = rs.getDouble("serviceAmount");
+                    double roomPrice = rs.getDouble("roomPrice");
+                    totalAmount = productAmount + serviceAmount + roomPrice;
                 }
             }
         }
 
         return totalAmount;
     }
+
 
 
 }

@@ -94,7 +94,7 @@ public class AdicionarReservaController implements Initializable {
 
 
     @FXML
-    void clickAddReservaBrn(ActionEvent event) {
+    void clickAddReservaBrn(ActionEvent event) throws SQLException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
         LocalDate startDate = DatePickerInicio.getValue();
         if (selectedRoom == null || startDate == null) {
@@ -133,26 +133,24 @@ public class AdicionarReservaController implements Initializable {
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
-    void AdicionarReserva() {
-        ObservableList<Reserva> reservas = FXCollections.observableArrayList();
 
-        String servExtras = "SemExtras";  //falta criar lista de serviços
-        Double preco = 0.0;
-
+    @FXML
+    void AdicionarReserva() throws SQLException {
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
-        Reserva reserva = new Reserva(null,Integer.parseInt(cmbClientes.getValue().getNif()), cmbIDQuarto.getValue().getId(),
-                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
         ReservaBLL reservaBLL = new ReservaBLL();
-        try {
-
-            reservaBLL.addReserva(reserva);
-        } catch (SQLException e) {
-            // Handle the exception
-            e.printStackTrace();
-        }
+        Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
+                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), "SemExtras", 0.0);
+        int reservationId = reservaBLL.addReserva(reserva);
+        double totalAmount = reservaBLL.calculateTotalAmount(reservationId);
+        reserva.setPreco(totalAmount);
+        reservaBLL.updateReserva(reserva);
     }
 
-   
+
+
+
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

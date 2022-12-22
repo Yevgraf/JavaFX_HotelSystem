@@ -90,6 +90,7 @@ public class GestaoReservasController implements Initializable {
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
         }
+        initTable();
     }
 
     @Override
@@ -100,8 +101,7 @@ public class GestaoReservasController implements Initializable {
     private void initTable() {
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
-        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("nifCliente"));
-        tblCoIDColab.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idColaborador"));
+        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
         tblCoIDQuarto.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idQuarto"));
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
