@@ -141,10 +141,13 @@ public class AdicionarReservaController implements Initializable {
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), "SemExtras", 0.0);
         int reservationId = reservaBLL.addReserva(reserva);
+        reserva.setId(reservationId);
         double totalAmount = reservaBLL.calculateTotalAmount(reservationId);
         reserva.setPreco(totalAmount);
         reservaBLL.updateReserva(reserva);
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Reserva criada", "Reserva");
     }
+
 
 
 

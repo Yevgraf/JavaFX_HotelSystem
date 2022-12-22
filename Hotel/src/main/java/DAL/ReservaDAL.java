@@ -136,15 +136,15 @@ public class ReservaDAL {
 
 
     public double calculateTotalAmount(Integer reservationId) throws SQLException {
-        String sql = "SELECT SUM(p.precoPorUnidade * pq.quantidade) AS productAmount, " +
-                "       SUM(s.preco) AS serviceAmount, " +
-                "       q.preco AS roomPrice " +
+        String sql = "SELECT SUM(p.precoPorUnidade * pq.quantidade) as productAmount, " +
+                "SUM(s.preco) as serviceAmount, SUM(q.preco) as roomPrice " +
                 "FROM Reserva r " +
                 "JOIN ProdutoQuarto pq ON r.idQuarto = pq.idQuarto " +
-                "JOIN Servico s ON r.id = s.idReserva " +
+                "JOIN Servico s ON r.id = s.id " +
                 "JOIN Produto p ON pq.idProduto = p.id " +
                 "JOIN Quarto q ON pq.idQuarto = q.id " +
                 "WHERE r.id = ?";
+
 
         double totalAmount = 0;
 
@@ -163,7 +163,5 @@ public class ReservaDAL {
 
         return totalAmount;
     }
-
-
 
 }
