@@ -1,23 +1,33 @@
 package Controller;
 
-import BLL.CheckInBLL;
-import DAL.CheckInDAL;
-
-import java.text.ParseException;
+import BLL.ReservaBLL;
+import Model.Reserva;
+import javafx.collections.FXCollections;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 
 public class CheckInController {
 
-    private CheckInDAL checkInDAL = new CheckInDAL();
-    private CheckInBLL checkInBLL = new CheckInBLL();
+    @FXML
+    private ComboBox<Reserva> reservationComboBox;
 
-    public void startCheckIn(int quartoId) throws ParseException {
-        checkInBLL.checkInQuarto(quartoId);
+    public void initialize() {
+        ComboBox<Reserva> reservationComboBox = new ComboBox<>();
+        reservationComboBox.setItems(ReservaBLL.getReservas());
+
     }
-    public void endCheckIn(int quartoId) {
-        checkInBLL.checkInQuarto(quartoId);
+
+    @FXML
+    private void handleCheckInButtonAction(ActionEvent event) {
+        // Get the selected reservation from the combo box
+        Reserva selectedReservation = reservationComboBox.getSelectionModel().getSelectedItem();
+        // Perform the check-in using the selected reservation
+        performCheckIn(selectedReservation);
     }
-    public boolean isQuartoAtivo(int quartoId) throws ParseException {
-        return checkInBLL.isQuartoAtivo(quartoId);
+
+    private void performCheckIn(Reserva reservation) {
+        // TODO: implement check-in logic here
     }
 
 }

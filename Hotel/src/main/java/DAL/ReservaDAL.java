@@ -1,6 +1,8 @@
 package DAL;
 
+import Model.MessageBoxes;
 import Model.Reserva;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -27,10 +29,14 @@ public class ReservaDAL {
             ps.setString(5, reserva.getServExtra());
             ps.setDouble(6, reserva.getPreco());
             ps.executeUpdate();
-
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 reservationId = generatedKeys.getInt(1);
+            }
+
+            if (reservationId > 0) {
+                // Add the reservation to the ReservationState table with the initial state "pending"
+                addReservationState(reservationId, "pendente");
             }
 
             return reservationId;
@@ -163,5 +169,73 @@ public class ReservaDAL {
 
         return totalAmount;
     }
+
+    public void addReservationState(int reservationId, String estado) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("INSERT INTO EstadoReserva(reserva, estado) VALUES (?, ?)");
+            ps.setInt(1, reservationId);
+            ps.setString(2, estado);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public void updateReservationState(int reservationId, String estado) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE EstadoReserva SET estado = ? WHERE reserva = ?");
+            ps.setString(1, estado);
+            ps.setInt(2, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public void deleteEstadoReserva(int reservationId) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=? AND state<>'checkin'");
+            ps.setInt(1, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+
 
 }
