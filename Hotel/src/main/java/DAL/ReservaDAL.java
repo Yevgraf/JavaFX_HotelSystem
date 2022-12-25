@@ -113,6 +113,8 @@ public class ReservaDAL {
     public static void deleteReservation(int reservationId) throws SQLException {
         PreparedStatement ps2;
         try {
+            deleteEstadoReserva(reservationId);
+
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
@@ -214,7 +216,7 @@ public class ReservaDAL {
         }
     }
 
-    public void deleteEstadoReserva(int reservationId) throws SQLException {
+    public static void deleteEstadoReserva(int reservationId) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
         try {
