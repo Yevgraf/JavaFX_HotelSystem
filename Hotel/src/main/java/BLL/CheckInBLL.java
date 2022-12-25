@@ -38,6 +38,4 @@ public class CheckInBLL {
         quartoDal.updateAtivo(reservationId, true);
     }
 
-
-
 }

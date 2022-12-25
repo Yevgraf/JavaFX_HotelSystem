@@ -1,5 +1,7 @@
 package Model;
 
+import DAL.UtilizadorDAL;
+
 public class Reserva {
 
     private Integer id;
@@ -83,6 +85,19 @@ public class Reserva {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        String clientName = UtilizadorDAL.getClientName(idCliente);
+        return "Reserva{" +
+                "id=" + id +
+                ", idCliente=" + idCliente +
+                ", idQuarto=" + idQuarto +
+                ", dataInicio='" + dataInicio + '\'' +
+                ", dataFim='" + dataFim + '\'' +
+                ", cliente='" + clientName + '\'' +
+                '}';
     }
 
 
