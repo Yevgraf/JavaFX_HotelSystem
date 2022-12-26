@@ -55,12 +55,11 @@ public class GestorController {
 
 
     @FXML
-    void clickGestaoColabBtn(ActionEvent event) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
+    void clickbtnOpiniao(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(""));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Registo Urilizadores");
+        stage.setTitle("Opiniao Utilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

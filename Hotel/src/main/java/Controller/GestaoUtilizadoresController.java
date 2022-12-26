@@ -118,6 +118,16 @@ public class GestaoUtilizadoresController implements Initializable {
         }
     }
 
+    @FXML
+    void clickAddCliente(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Registo Utilizadores");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
     void clickBtnGestorEliminar(ActionEvent event) {

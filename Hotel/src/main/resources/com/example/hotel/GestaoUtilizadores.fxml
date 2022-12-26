@@ -58,7 +58,7 @@
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="561.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Adicionar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorAdicionarCliente" layoutX="561.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickAddCliente" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
