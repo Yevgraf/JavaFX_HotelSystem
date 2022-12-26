@@ -49,6 +49,27 @@ public class UtilizadorDAL {
         return users;
     }
 
+    public static String getClientName(Integer idCliente) {
+        String clientName = "";
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            PreparedStatement ps = connection.prepareStatement(
+                    "SELECT nome FROM Utilizador WHERE id = ?"
+            );
+            ps.setInt(1, idCliente);
+            ResultSet result = ps.executeQuery();
+
+            if (result.next()) {
+                clientName = result.getString("nome");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return clientName;
+    }
+
+
     public Utilizador Login(String utilizador, String password) throws SQLException {
         PreparedStatement ps;
         DBconn dbConn = new DBconn();

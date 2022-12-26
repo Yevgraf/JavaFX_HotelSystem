@@ -1,23 +1,58 @@
 package Controller;
 
 import BLL.CheckInBLL;
-import DAL.CheckInDAL;
+import BLL.ReservaBLL;
+import Model.MessageBoxes;
+import Model.Reserva;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 
-import java.text.ParseException;
+import java.sql.SQLException;
 
 public class CheckInController {
 
-    private CheckInDAL checkInDAL = new CheckInDAL();
-    private CheckInBLL checkInBLL = new CheckInBLL();
+    @FXML
+    private ComboBox<Reserva> reservationComboBox;
 
-    public void startCheckIn(int quartoId) throws ParseException {
-        checkInBLL.checkInQuarto(quartoId);
+    public void initialize() {
+
+        initCombos();
     }
-    public void endCheckIn(int quartoId) {
-        checkInBLL.checkInQuarto(quartoId);
+
+    private void initCombos() {
+        ObservableList<Reserva> reservations = ReservaBLL.getReservas();
+        reservationComboBox.setItems(reservations);
+
     }
-    public boolean isQuartoAtivo(int quartoId) throws ParseException {
-        return checkInBLL.isQuartoAtivo(quartoId);
+
+    @FXML
+    private void handleCheckInButtonAction(ActionEvent event) {
+        Reserva reservation = reservationComboBox.getSelectionModel().getSelectedItem();
+        if (reservation == null) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor selecione uma reserva");
+        } else {
+            CheckInBLL checkInBLL = new CheckInBLL();
+            performCheckIn(reservation);
+            // show a success message and close the window
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Sucesso", "Check-in realizado com sucesso");
+        }
     }
+
+    private void performCheckIn(Reserva reservation) {
+        CheckInBLL checkInBll = new CheckInBLL();
+        try {
+            checkInBll.checkIn(reservation.getId());
+        } catch (SQLException e) {
+            // show error message to the user
+           MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem performing the check-in. Please try again later.");
+        }
+    }
+
+
 
 }

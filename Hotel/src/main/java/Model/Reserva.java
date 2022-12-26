@@ -1,16 +1,11 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
+import DAL.UtilizadorDAL;
 
 public class Reserva {
 
     private Integer id;
-    private Integer nifCliente;
+    private Integer idCliente;
     private Integer idQuarto;
     private String dataInicio;
     private String dataFim;
@@ -24,9 +19,9 @@ public class Reserva {
 
     }
 
-    public Reserva(Integer id, Integer nifCliente, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
+    public Reserva(Integer id, Integer idCliente, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
         this.id = id;
-        this.nifCliente = nifCliente;
+        this.idCliente = idCliente;
         this.idQuarto = idQuarto;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
@@ -44,12 +39,12 @@ public class Reserva {
         this.id = id;
     }
 
-    public Integer getNifCliente() {
-        return nifCliente;
+    public Integer getIdCliente() {
+        return idCliente;
     }
 
-    public void setNifCliente(Integer nifCliente) {
-        this.nifCliente = nifCliente;
+    public void setIdCliente(Integer idCliente) {
+        this.idCliente = idCliente;
     }
 
     public Integer getIdQuarto() {
@@ -90,6 +85,19 @@ public class Reserva {
 
     public void setPreco(Double preco) {
         this.preco = preco;
+    }
+
+    @Override
+    public String toString() {
+        String clientName = UtilizadorDAL.getClientName(idCliente);
+        return "Reserva{" +
+                "id=" + id +
+                ", idCliente=" + idCliente +
+                ", idQuarto=" + idQuarto +
+                ", dataInicio='" + dataInicio + '\'' +
+                ", dataFim='" + dataFim + '\'' +
+                ", cliente='" + clientName + '\'' +
+                '}';
     }
 
 

@@ -1,6 +1,8 @@
 package DAL;
 
+import Model.MessageBoxes;
 import Model.Reserva;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
@@ -20,17 +22,21 @@ public class ReservaDAL {
             ps = connection.prepareStatement("INSERT INTO Reserva(idCliente, idQuarto," +
                     "dataInicio, dataFim, servExtra, preco)" +
                     "VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
-            ps.setInt(1, reserva.getId());
+            ps.setInt(1, reserva.getIdCliente());
             ps.setInt(2, reserva.getIdQuarto());
             ps.setString(3, reserva.getDataInicio());
             ps.setString(4, reserva.getDataFim());
             ps.setString(5, reserva.getServExtra());
             ps.setDouble(6, reserva.getPreco());
             ps.executeUpdate();
-
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
                 reservationId = generatedKeys.getInt(1);
+            }
+
+            if (reservationId > 0) {
+                // Add the reservation to the ReservationState table with the initial state "pending"
+                addReservationState(reservationId, "pendente");
             }
 
             return reservationId;
@@ -63,7 +69,7 @@ public class ReservaDAL {
                 String dataInicio = dateFormat.format(rs.getDate("dataInicio"));
                 String dataFim = dateFormat.format(rs.getDate("dataFim"));
 
-                reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"),
+                reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
                         rs.getInt("idQuarto"), dataInicio, dataFim, rs.getString("servExtra"), rs.getDouble("preco"));
 
             }
@@ -81,7 +87,7 @@ public class ReservaDAL {
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("nifCliente"), rs.getInt("idQuarto"),
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getString("servExtra"), rs.getDouble("preco"));
                 reservas.add(reserva);
@@ -107,6 +113,8 @@ public class ReservaDAL {
     public static void deleteReservation(int reservationId) throws SQLException {
         PreparedStatement ps2;
         try {
+            deleteEstadoReserva(reservationId);
+
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
@@ -119,11 +127,11 @@ public class ReservaDAL {
     }
 
     public void updateReserva(Reserva reserva) throws SQLException {
-        String sql = "UPDATE Reserva SET nifCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, servExtra = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, servExtra = ?, preco = ? WHERE id = ?";
 
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, reserva.getNifCliente());
+            stmt.setInt(1, reserva.getIdCliente());
             stmt.setInt(2, reserva.getIdQuarto());
             stmt.setString(3, reserva.getDataInicio());
             stmt.setString(4, reserva.getDataFim());
@@ -136,13 +144,15 @@ public class ReservaDAL {
 
 
     public double calculateTotalAmount(Integer reservationId) throws SQLException {
-        String sql = "SELECT p.precoPorUnidade, s.preco, q.preco " +
+        String sql = "SELECT SUM(p.precoPorUnidade * pq.quantidade) as productAmount, " +
+                "SUM(s.preco) as serviceAmount, SUM(q.preco) as roomPrice " +
                 "FROM Reserva r " +
                 "JOIN ProdutoQuarto pq ON r.idQuarto = pq.idQuarto " +
-                "JOIN Servico s ON r.id = s.idReserva " +
+                "JOIN Servico s ON r.id = s.id " +
                 "JOIN Produto p ON pq.idProduto = p.id " +
                 "JOIN Quarto q ON pq.idQuarto = q.id " +
                 "WHERE r.id = ?";
+
 
         double totalAmount = 0;
 
@@ -150,17 +160,84 @@ public class ReservaDAL {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, reservationId);
             try (ResultSet rs = stmt.executeQuery()) {
-                while (rs.next()) {
-                    double productPrice = rs.getDouble("precoPorUnidade");
-                    double servicePrice = rs.getDouble("preco");
-                    double roomPrice = rs.getDouble("preco");
-                    totalAmount += productPrice + servicePrice + roomPrice;
+                if (rs.next()) {
+                    double productAmount = rs.getDouble("productAmount");
+                    double serviceAmount = rs.getDouble("serviceAmount");
+                    double roomPrice = rs.getDouble("roomPrice");
+                    totalAmount = productAmount + serviceAmount + roomPrice;
                 }
             }
         }
 
         return totalAmount;
     }
+
+    public void addReservationState(int reservationId, String estado) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("INSERT INTO EstadoReserva(reserva, estado) VALUES (?, ?)");
+            ps.setInt(1, reservationId);
+            ps.setString(2, estado);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public void updateReservationState(int reservationId, String estado) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE EstadoReserva SET estado = ? WHERE reserva = ?");
+            ps.setString(1, estado);
+            ps.setInt(2, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
+    public static void deleteEstadoReserva(int reservationId) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=? AND state<>'checkin'");
+            ps.setInt(1, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
 
 
 }

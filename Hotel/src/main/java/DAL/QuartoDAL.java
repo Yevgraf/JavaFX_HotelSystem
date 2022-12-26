@@ -8,7 +8,7 @@ import java.sql.*;
 
 public class QuartoDAL {
 
-        // method to add a quarto to the database
+
         public void addQuarto(Quarto quarto) {
             PreparedStatement ps2;
 
@@ -98,6 +98,26 @@ public class QuartoDAL {
         return list;
     }
 
-        public void updateQuartoAtivo(Integer id, boolean b) {
+    public void updateAtivo(int reservationId, boolean ativo) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE Quarto SET ativo = ? WHERE id = (SELECT idQuarto FROM Reserva WHERE id = ?)");
+            ps.setBoolean(1, ativo);
+            ps.setInt(2, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
+    }
+
 }

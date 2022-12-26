@@ -60,6 +60,8 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private ComboBox<Utilizador> cmbClientes;
 
+
+
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
 
@@ -90,8 +92,9 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private Button voltarBtn;
 
+
     @FXML
-    void clickAddReservaBrn(ActionEvent event) {
+    void clickAddReservaBrn(ActionEvent event) throws SQLException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
         LocalDate startDate = DatePickerInicio.getValue();
         if (selectedRoom == null || startDate == null) {
@@ -131,26 +134,23 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-    void AdicionarReserva() {
-        ObservableList<Reserva> reservas = FXCollections.observableArrayList();
 
-        String servExtras = "SemExtras";  //falta criar lista de serviços
-        Double preco = 0.0;
-
-        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Confirmar reserva","Deseja criar esta reserva?");
-        Reserva reserva = new Reserva(null,Integer.parseInt(cmbClientes.getValue().getNif()), cmbIDQuarto.getValue().getId(),
-                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
+    @FXML
+    void AdicionarReserva() throws SQLException {
+        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
         ReservaBLL reservaBLL = new ReservaBLL();
-        try {
-
-            reservaBLL.addReserva(reserva);
-        } catch (SQLException e) {
-            // Handle the exception
-            e.printStackTrace();
-        }
+        Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
+                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), "SemExtras", 0.0);
+        int reservationId = reservaBLL.addReserva(reserva);
+        reserva.setId(reservationId);
+        double totalAmount = reservaBLL.calculateTotalAmount(reservationId);
+        reserva.setPreco(totalAmount);
+        reservaBLL.updateReserva(reserva);
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Reserva criada", "Reserva");
     }
 
-   
+
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

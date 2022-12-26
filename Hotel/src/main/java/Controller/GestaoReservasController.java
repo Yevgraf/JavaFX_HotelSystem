@@ -33,6 +33,13 @@ public class GestaoReservasController implements Initializable {
     @FXML
     private Button btnVoltar;
 
+
+    @FXML
+    private Button CheckInAndCheckOut;
+
+    @FXML
+    private Button adicionarServico;
+
     @FXML
     private Button eliminarReservaBtn;
 
@@ -102,6 +109,29 @@ public class GestaoReservasController implements Initializable {
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
         }
+        initTable();
+    }
+
+    @FXML
+    void CheckInAndCheckOutAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("checkin.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Gestor CheckIn e CheckOut");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void adicionarServicoAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Gestor Serviços da Reserva");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     @Override
@@ -112,8 +142,7 @@ public class GestaoReservasController implements Initializable {
     private void initTable() {
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
-        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("nifCliente"));
-        tblCoIDColab.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idColaborador"));
+        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
         tblCoIDQuarto.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idQuarto"));
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));

@@ -1,37 +1,36 @@
 package DAL;
 
+import BLL.ReservaBLL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class CheckInDAL {
-    // method to mark a quarto as checked-in
-    public void checkInQuarto(int quartoId) {
-        PreparedStatement ps;
+    public void checkIn(int reservationId) throws SQLException {
+
+      ReservaDAL dal = new ReservaDAL();
+      dal.updateReservationState(reservationId, "checkin");
+
+
+        PreparedStatement ps = null;
+        Connection connection = null;
         try {
             DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps = connection.prepareStatement("UPDATE Quarto SET ativo = ? WHERE id = ?");
-            ps.setBoolean(1, true);
-            ps.setInt(2, quartoId);
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE Quarto SET ativo = 1 WHERE id = (SELECT idQuarto FROM Reserva WHERE id = ?)");
+            ps.setInt(1, reservationId);
             ps.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
         }
     }
 
-    // method to mark a quarto as checked-out
-    public void checkOutQuarto(int quartoId) {
-        PreparedStatement ps;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps = connection.prepareStatement("UPDATE Quarto SET ativo = ? WHERE id = ?");
-            ps.setBoolean(1, false);
-            ps.setInt(2, quartoId);
-            ps.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
 }

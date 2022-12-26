@@ -47,7 +47,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regitos Cartao">
+        <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regitos do Cartão">
             <font>
                 <Font size="18.0" />
             </font>
