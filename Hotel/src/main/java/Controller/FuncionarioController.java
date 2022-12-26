@@ -55,7 +55,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) clickBtnServico.getScene().getWindow();
-        stage.setTitle("Gerir Servicos");
+        stage.setTitle("Gestao Servicos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -79,7 +79,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnEntradaStock.getScene().getWindow();
-        stage.setTitle("Carregar XML");
+        stage.setTitle("Entrada de Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -91,7 +91,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) clickGestaoStock.getScene().getWindow();
-        stage.setTitle("Entrada Stock");
+        stage.setTitle("Gestao Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -103,7 +103,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) clickGestaoUtiliBtn.getScene().getWindow();
-        stage.setTitle("Gerir Clientes");
+        stage.setTitle("Gestao Clientes");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -115,7 +115,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) clickRegUtiliBtn.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
+        stage.setTitle("Registo Funcionario");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -126,7 +126,7 @@ public class FuncionarioController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) clickRegUtiliBtn.getScene().getWindow();
-        stage.setTitle("Criar Quarto");
+        stage.setTitle("Login");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

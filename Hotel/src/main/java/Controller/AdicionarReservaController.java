@@ -137,7 +137,7 @@ public class AdicionarReservaController implements Initializable {
         String servExtras = "SemExtras";  //falta criar lista de serviços
         Double preco = 0.0;
 
-        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
+        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Confirmar reserva","Deseja criar esta reserva?");
         Reserva reserva = new Reserva(null,Integer.parseInt(cmbClientes.getValue().getNif()), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), servExtras, preco);
         ReservaBLL reservaBLL = new ReservaBLL();
@@ -178,7 +178,7 @@ public class AdicionarReservaController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnRedictCriarCliente.getScene().getWindow();
-        stage.setTitle("Pagina Criar Cliente");
+        stage.setTitle("Gestao Utilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

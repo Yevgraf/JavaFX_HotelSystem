@@ -68,7 +68,7 @@ public class GestaoReservasController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("AdicionarReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) adicionarReservaBtn.getScene().getWindow();
-        stage.setTitle("Adicionar reserva");
+        stage.setTitle("Adicionar Reserva");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

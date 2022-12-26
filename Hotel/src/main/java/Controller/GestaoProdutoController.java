@@ -62,24 +62,14 @@ public class GestaoProdutoController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setTitle("Pagina Gestor");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setTitle("Pagina Funcionario");
+            stage.setTitle("Gestao Stock Gestor");
             newStage.hide();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
         }
-    }
 
     @FXML
     void clickConsumivelBtn(ActionEvent event) throws SQLException {

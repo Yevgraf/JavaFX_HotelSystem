@@ -16,33 +16,13 @@
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
-            <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Gestor" textFill="#2a1b3d">
+            <Label fx:id="lblGestaoProdutos1" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="16.0" prefHeight="45.0" prefWidth="721.0" text="Gestão de Produtos" textFill="WHITE">
                <font>
-                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
+                  <Font name="Bernard MT Condensed" size="31.0" />
                </font>
             </Label>
-            <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
-               <font>
-                  <Font name="Bernard MT Condensed" size="14.0" />
-               </font>
-            </Label>
-            <ImageView fx:id="btnCloseApp" fitHeight="26.0" fitWidth="19.0" layoutX="704.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/closeApp.png" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
-      <Label fx:id="lblHoras" layoutX="661.0" layoutY="477.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblData" layoutX="645.0" layoutY="504.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
       <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
@@ -57,12 +37,12 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoProdutos" layoutX="71.0" layoutY="149.0" prefHeight="45.0" prefWidth="238.0" text="Gestão de Produtos" textFill="WHITE">
+      <Label fx:id="lblGestaoProdutos" layoutX="71.0" layoutY="149.0" prefHeight="45.0" prefWidth="238.0" text="Produtos" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="btnVoltar" layoutX="497.0" layoutY="417.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="16.0" layoutY="455.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -70,16 +50,6 @@
       <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="17.0" layoutY="149.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoProdutos.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btnMinimizateApp" fitHeight="19.0" fitWidth="26.0" layoutX="673.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/minimzateApp.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
       <TableView fx:id="produtosTable" layoutX="14.0" layoutY="194.0" onMouseClicked="#clickTable" prefHeight="214.0" prefWidth="696.0">
@@ -91,13 +61,13 @@
             <TableColumn fx:id="consumivelTable" prefWidth="216.0" text="Consumível" />
         </columns>
       </TableView>
-      <Text fill="WHITE" layoutX="19.0" layoutY="483.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marcar como:">
+      <Text fill="WHITE" layoutX="393.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Marcar como:">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
-      <Button fx:id="consumivelBtn" layoutX="119.0" layoutY="464.0" mnemonicParsing="false" onAction="#clickConsumivelBtn" text="Consumivel" />
-      <Button fx:id="nConsumivelBtn" layoutX="208.0" layoutY="465.0" mnemonicParsing="false" onAction="#clickNConsumivelBtn" text="Não consumível" />
+      <Button fx:id="consumivelBtn" layoutX="495.0" layoutY="414.0" mnemonicParsing="false" onAction="#clickConsumivelBtn" text="Consumivel" />
+      <Button fx:id="nConsumivelBtn" layoutX="579.0" layoutY="414.0" mnemonicParsing="false" onAction="#clickNConsumivelBtn" text="Não consumível" />
       <Text fx:id="quantidade" fill="WHITE" layoutX="17.0" layoutY="433.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Quantidade:">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />

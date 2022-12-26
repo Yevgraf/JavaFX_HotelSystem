@@ -14,33 +14,18 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelProdutoQuarto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProdutoQuartoController">
+<AnchorPane fx:id="PainelProdutoQuarto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ProdutoQuartoController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="9.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
         <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
             <children>
-                <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Funcionário" textFill="#2a1b3d">
-                    <font>
-                        <Font name="Bodoni MT Poster Compressed" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
-                    <font>
-                        <Font name="Bernard MT Condensed" size="14.0" />
-                    </font>
-                </Label>
+              <Label fx:id="lblGestaoReservas" alignment="CENTER" layoutY="16.0" prefHeight="46.0" prefWidth="727.0" text="Gestão de Produtos do Quarto" textFill="WHITE">
+                  <font>
+                      <Font name="Bernard MT Condensed" size="31.0" />
+                  </font>
+              </Label>
             </children>
         </Pane>
-        <Label fx:id="lblHoras" layoutX="661.0" layoutY="484.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="14.0" />
-            </font>
-        </Label>
-        <Label fx:id="lblData" layoutX="645.0" layoutY="509.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-            <font>
-                <Font name="Bernard MT Condensed" size="14.0" />
-            </font>
-        </Label>
         <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
         <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
         <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
@@ -55,36 +40,21 @@
                 <Font name="Modern No. 20" size="33.0" />
             </font>
         </Label>
-        <Label fx:id="lblGestaoReservas" layoutX="59.0" layoutY="147.0" prefHeight="46.0" prefWidth="431.0" text="Gestão de Produtos do Quarto" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="31.0" />
-            </font>
-        </Label>
-        <Button fx:id="btnAddQuarto" layoutX="263.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddProdutoQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
+        <Button fx:id="btnAddQuarto" layoutX="599.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddProdutoQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
         </Button>
-        <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="7.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="21.0" layoutY="175.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/gestaoReservas.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../img/voltar.jpeg" />
-            </image>
-        </ImageView>
-        <Label fx:id="lblGestaoProdutoAdicionar" layoutX="187.0" layoutY="181.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
+        <Label fx:id="lblGestaoProdutoAdicionar" layoutX="75.0" layoutY="175.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
             <font>
                 <Font name="Bernard MT Condensed" size="25.0" />
             </font>
         </Label>
-        <ImageView fx:id="imgGestorAdionarProd" fitHeight="55.0" fitWidth="107.0" layoutX="70.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../img/setaSubJanela.png" />
-            </image>
-        </ImageView>
         <Label fx:id="lblIdClientes" layoutX="75.0" layoutY="227.0" prefHeight="55.0" prefWidth="58.0" text="Quarto" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
@@ -109,18 +79,18 @@
             <TableColumn fx:id="tbl_id" prefWidth="118.0" text="id" />
             </columns>
         </TableView>
-        <Button fx:id="voltarBtn" layoutX="606.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+        <Button fx:id="voltarBtn" layoutX="261.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
         </Button>
         <TextField fx:id="txt_quantidade" layoutX="138.0" layoutY="321.0" prefHeight="25.0" prefWidth="206.0" />
-        <Button fx:id="btnRmvQuarto" layoutX="378.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickRmvProdutoQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
+        <Button fx:id="btnRmvQuarto" layoutX="372.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickRmvProdutoQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
         </Button>
-        <Button fx:id="btnEditar" layoutX="492.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
+        <Button fx:id="btnEditar" layoutX="487.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>

@@ -14,33 +14,18 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="CriarQuarto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CriarQuartoController">
+<AnchorPane fx:id="CriarQuarto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CriarQuartoController">
     <children>
-        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="10.0" layoutY="223.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
+        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="16.0" layoutY="222.0" stroke="BLACK" strokeType="INSIDE" width="707.0" />
         <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
-            <children>
-                <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Funcionário" textFill="#2a1b3d">
-                    <font>
-                        <Font name="Bodoni MT Poster Compressed" size="24.0" />
-                    </font>
-                </Label>
-                <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
-                    <font>
-                        <Font name="Bernard MT Condensed" size="14.0" />
-                    </font>
-                </Label>
-            </children>
+         <children>
+              <Label fx:id="lblGestaoReservas" alignment="CENTER" layoutX="2.0" layoutY="19.0" prefHeight="45.0" prefWidth="727.0" text="Gestão de Quartos" textFill="WHITE">
+                  <font>
+                      <Font name="Bernard MT Condensed" size="31.0" />
+                  </font>
+              </Label>
+         </children>
         </Pane>
-        <Label fx:id="lblHoras" layoutX="661.0" layoutY="484.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="14.0" />
-            </font>
-        </Label>
-        <Label fx:id="lblData" layoutX="645.0" layoutY="509.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-            <font>
-                <Font name="Bernard MT Condensed" size="14.0" />
-            </font>
-        </Label>
         <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
         <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
         <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
@@ -55,58 +40,38 @@
                 <Font name="Modern No. 20" size="33.0" />
             </font>
         </Label>
-        <Label fx:id="lblGestaoReservas" layoutX="59.0" layoutY="147.0" prefHeight="45.0" prefWidth="313.0" text="Gestão de Quartos" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="31.0" />
-            </font>
-        </Label>
-        <Button fx:id="btnAddQuarto" layoutX="263.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
+        <Button fx:id="btnAddQuarto" layoutX="594.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickAddQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Adicionar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
         </Button>
-        <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="7.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
+        <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="16.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
             <image>
                 <Image url="@../../../img/gestaoReservas.png" />
             </image>
         </ImageView>
-        <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../img/voltar.jpeg" />
-            </image>
-        </ImageView>
-        <Label fx:id="lblGestaoProdutoAdicionar" layoutX="187.0" layoutY="181.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
+        <Label fx:id="lblGestaoProdutoAdicionar" layoutX="74.0" layoutY="178.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
             <font>
                 <Font name="Bernard MT Condensed" size="25.0" />
             </font>
         </Label>
-        <ImageView fx:id="imgGestorAdionarProd" fitHeight="55.0" fitWidth="107.0" layoutX="70.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-                <Image url="@../../../img/setaSubJanela.png" />
-            </image>
-        </ImageView>
-        <Label fx:id="lblIdClientes" layoutX="91.0" layoutY="228.0" prefHeight="55.0" prefWidth="90.0" text="Piso" textFill="WHITE">
+        <Label fx:id="lblIdClientes" layoutX="67.0" layoutY="228.0" prefHeight="55.0" prefWidth="90.0" text="Piso" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblDataFim" layoutX="70.0" layoutY="333.0" prefHeight="55.0" prefWidth="107.0" text="Preço" textFill="WHITE">
+        <Label fx:id="lblDataFim" layoutX="50.0" layoutY="333.0" prefHeight="55.0" prefWidth="107.0" text="Preço" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblServExtra" layoutX="362.0" layoutY="188.0" prefHeight="55.0" prefWidth="146.0" text="Quartos" textFill="WHITE">
+        <Label fx:id="lblIdQuarto" layoutX="20.0" layoutY="280.0" prefHeight="55.0" prefWidth="107.0" text="Tipo Quarto" textFill="WHITE">
             <font>
                 <Font name="Bernard MT Condensed" size="18.0" />
             </font>
         </Label>
-        <Label fx:id="lblIdQuarto" layoutX="38.0" layoutY="280.0" prefHeight="55.0" prefWidth="107.0" text="Tipo Quarto" textFill="WHITE">
-            <font>
-                <Font name="Bernard MT Condensed" size="18.0" />
-            </font>
-        </Label>
-        <ComboBox fx:id="cmbTipoQuarto" layoutX="138.0" layoutY="295.0" prefHeight="25.0" prefWidth="206.0" promptText="Seleciona" />
-        <TableView fx:id="tv_Quarto" layoutX="351.0" layoutY="242.0" prefHeight="147.0" prefWidth="360.0">
+        <ComboBox fx:id="cmbTipoQuarto" layoutX="112.0" layoutY="295.0" prefHeight="25.0" prefWidth="206.0" promptText="Seleciona" />
+        <TableView fx:id="tv_Quarto" layoutX="341.0" layoutY="243.0" prefHeight="147.0" prefWidth="360.0">
             <columns>
                 <TableColumn fx:id="tbl_id" minWidth="9.0" prefWidth="44.0" text="id" />
                 <TableColumn fx:id="tbl_tipQuarto" prefWidth="162.0" text="TipoQuarto" />
@@ -114,32 +79,37 @@
             <TableColumn fx:id="tbl_preco" prefWidth="89.0" text="Preço" />
             </columns>
         </TableView>
-        <Button fx:id="voltarBtn" layoutX="606.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+        <Button fx:id="voltarBtn" layoutX="42.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
             <font>
                 <Font name="Bodoni MT Condensed" size="19.0" />
             </font>
         </Button>
-        <TextField fx:id="txt_preco" layoutX="136.0" layoutY="348.0" prefHeight="25.0" prefWidth="206.0" />
-      <Button fx:id="btnRmvQuarto" layoutX="378.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickRmvQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
+        <TextField fx:id="txt_preco" layoutX="112.0" layoutY="348.0" prefHeight="25.0" prefWidth="206.0" />
+      <Button fx:id="btnRmvQuarto" layoutX="361.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickRmvQuarto" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Remover">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="btnEditar" layoutX="492.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
+      <Button fx:id="btnEditar" layoutX="478.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <TextField fx:id="txt_numcartao" layoutX="138.0" layoutY="396.0" prefHeight="25.0" prefWidth="206.0" />
-      <Label fx:id="lblDataFim1" layoutX="59.0" layoutY="381.0" prefHeight="55.0" prefWidth="107.0" text="NºCartão" textFill="WHITE">
+      <TextField fx:id="txt_numcartao" layoutX="112.0" layoutY="396.0" prefHeight="25.0" prefWidth="206.0" />
+      <Label fx:id="lblDataFim1" layoutX="38.0" layoutY="381.0" prefHeight="55.0" prefWidth="107.0" text="NºCartão" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="ProdutoQuarto" layoutX="351.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
+      <Button fx:id="ProdutoQuarto" layoutX="341.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
       <Label fx:id="ValidarPiso" layoutX="155.0" layoutY="219.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="ValidarCartao" layoutX="155.0" layoutY="375.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="EmptyMessage" layoutX="121.0" layoutY="436.0" prefHeight="17.0" prefWidth="236.0" textFill="RED" />
-      <ComboBox fx:id="cmbPiso" layoutX="139.0" layoutY="243.0" prefHeight="25.0" prefWidth="206.0" promptText="Seleciona" />
+      <ComboBox fx:id="cmbPiso" layoutX="112.0" layoutY="243.0" prefHeight="25.0" prefWidth="206.0" promptText="Seleciona" />
+      <Label fx:id="lblGestaoProdutoAdicionar1" layoutX="351.0" layoutY="178.0" prefHeight="45.0" prefWidth="126.0" text="Quartos" textFill="#ee8d75">
+         <font>
+            <Font name="Bernard MT Condensed" size="25.0" />
+         </font>
+      </Label>
     </children>
 </AnchorPane>

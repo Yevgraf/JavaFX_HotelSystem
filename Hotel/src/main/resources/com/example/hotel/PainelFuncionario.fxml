@@ -26,11 +26,6 @@
                   <Image url="@../../../img/sairSessao.jpeg" />
                </image>
             </ImageView>
-            <ImageView fx:id="btnCloseApp" fitHeight="26.0" fitWidth="19.0" layoutX="704.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/closeApp.png" />
-               </image>
-            </ImageView>
             <Text layoutX="628.0" layoutY="69.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Logout:">
                <font>
                   <Font name="Bernard MT Condensed" size="18.0" />
@@ -43,16 +38,6 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Label fx:id="lblHoras" layoutX="661.0" layoutY="477.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblData" layoutX="645.0" layoutY="504.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
       <ImageView fx:id="imgGestorReservas" fitHeight="42.0" fitWidth="36.0" layoutX="69.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoReservas.png" />
@@ -137,11 +122,6 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <ImageView fx:id="btnCloseApp1" fitHeight="26.0" fitWidth="19.0" layoutX="675.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/minimzateApp.png" />
-         </image>
-      </ImageView>
       <ImageView fx:id="imgGestorStock2" fitHeight="36.0" fitWidth="60.0" layoutX="427.0" layoutY="457.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoStock.png" />

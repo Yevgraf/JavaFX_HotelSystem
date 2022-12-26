@@ -32,7 +32,7 @@
             <TableColumn fx:id="precoTotalTable" prefWidth="199.4000244140625" text="Preço Total (€)" />
         </columns>
       </TableView>
-      <Button fx:id="addItensBtn" disable="true" layoutX="17.0" layoutY="631.0" mnemonicParsing="false" onAction="#clickAddItens" text="Adicionar itens ao Stock">
+      <Button fx:id="addItensBtn" disable="true" layoutX="780.0" layoutY="642.0" mnemonicParsing="false" onAction="#clickAddItens" text="Adicionar itens ao Stock">
          <font>
             <Font size="18.0" />
          </font>
@@ -110,7 +110,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Button fx:id="voltarBtn" layoutX="926.0" layoutY="631.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
+      <Button fx:id="voltarBtn" layoutX="17.0" layoutY="642.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
          <font>
             <Font size="18.0" />
          </font>

@@ -34,7 +34,7 @@
             <TableColumn fx:id="precoTable" prefWidth="136.7999267578125" text="Preço" />
         </columns>
       </TableView>
-      <Button fx:id="addBtn" layoutX="32.0" layoutY="347.0" mnemonicParsing="false" onAction="#clickAddBtn" prefHeight="32.0" prefWidth="94.0" text="Adicionar">
+      <Button fx:id="addBtn" layoutX="472.0" layoutY="347.0" mnemonicParsing="false" onAction="#clickAddBtn" prefHeight="32.0" prefWidth="94.0" text="Adicionar">
          <font>
             <Font size="14.0" />
          </font>
@@ -44,7 +44,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Button fx:id="voltarBtn" layoutX="509.0" layoutY="348.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
+      <Button fx:id="voltarBtn" layoutX="32.0" layoutY="348.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
          <font>
             <Font size="14.0" />
          </font>

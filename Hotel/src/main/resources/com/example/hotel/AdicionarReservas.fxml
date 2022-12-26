@@ -15,33 +15,18 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReservaController">
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReservaController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1f93ff00" height="278.0" layoutX="9.0" layoutY="226.0" stroke="BLACK" strokeType="INSIDE" width="704.0" />
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
-            <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Funcionário" textFill="#2a1b3d">
+            <Label fx:id="lblGestaoReservas" alignment="CENTER" layoutY="17.0" prefHeight="45.0" prefWidth="727.0" text="Gestão de Reservas" textAlignment="CENTER" textFill="WHITE">
                <font>
-                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
-               </font>
-            </Label>
-            <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
-               <font>
-                  <Font name="Bernard MT Condensed" size="14.0" />
+                  <Font name="Bernard MT Condensed" size="31.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Label fx:id="lblHoras" layoutX="661.0" layoutY="484.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblData" layoutX="645.0" layoutY="509.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
       <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
@@ -56,36 +41,16 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoReservas" layoutX="59.0" layoutY="147.0" prefHeight="45.0" prefWidth="238.0" text="Gestão de Reservas" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="31.0" />
-         </font>
-      </Label>
-      <Button fx:id="adicionarReservaBtn" layoutX="478.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddReservaBrn" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Criar">
+      <Button fx:id="adicionarReservaBtn" layoutX="583.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickAddReservaBrn" prefHeight="38.0" prefWidth="115.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Criar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="7.0" layoutY="147.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/gestaoReservas.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/voltar.jpeg" />
-         </image>
-      </ImageView>
-      <Label fx:id="lblGestaoProdutoAdicionar" layoutX="187.0" layoutY="181.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
+      <Label fx:id="lblGestaoProdutoAdicionar" layoutX="76.0" layoutY="170.0" prefHeight="45.0" prefWidth="126.0" text="Adicionar" textFill="#ee8d75">
          <font>
             <Font name="Bernard MT Condensed" size="25.0" />
          </font>
       </Label>
-      <ImageView fx:id="imgGestorAdionarProd" fitHeight="55.0" fitWidth="107.0" layoutX="70.0" layoutY="172.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/setaSubJanela.png" />
-         </image>
-      </ImageView>
       <Label fx:id="lblIdClientes" layoutX="43.0" layoutY="215.0" prefHeight="55.0" prefWidth="100.0" text="NIF Cliente:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
@@ -106,12 +71,12 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblServExtra" layoutX="360.0" layoutY="198.0" prefHeight="55.0" prefWidth="107.0" text="Serviço Extra:" textFill="WHITE">
+      <Label fx:id="lblServExtra" layoutX="360.0" layoutY="198.0" prefHeight="55.0" prefWidth="107.0" text="Serviços Extra:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="txtPreco" editable="false" layoutX="258.0" layoutY="462.0" prefHeight="27.0" prefWidth="206.0" style="-fx-border-color: #ffffff;" />
+      <TextField fx:id="txtPreco" editable="false" layoutX="258.0" layoutY="462.0" prefHeight="27.0" prefWidth="186.0" style="-fx-border-color: #ffffff;" />
       <Label fx:id="lblIdQuarto" layoutX="70.0" layoutY="274.0" prefHeight="55.0" prefWidth="90.0" text="Quarto:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
@@ -126,12 +91,11 @@
         </columns>
       </TableView>
       <Button fx:id="addServicoBtn" layoutX="351.0" layoutY="399.0" mnemonicParsing="false" onAction="#clickAddServicoBtn" prefHeight="26.0" prefWidth="126.0" text="Adicionar Serviço" />
-      <Button fx:id="voltarBtn" layoutX="595.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
+      <Button fx:id="voltarBtn" layoutX="467.0" layoutY="457.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <ComboBox fx:id="cmbUtilizadores" />
       <ComboBox fx:id="cmbClientes" layoutX="139.0" layoutY="230.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <DatePicker fx:id="DatePickerInicio" layoutX="137.0" layoutY="340.0" />
       <DatePicker fx:id="DatePickerFim" layoutX="137.0" layoutY="400.0" />
@@ -140,5 +104,10 @@
       <Label fx:id="DataFim" layoutX="162.0" layoutY="381.0" prefHeight="17.0" prefWidth="115.0" textFill="RED" />
       <Label fx:id="ValidarQuarto" layoutX="157.0" layoutY="267.0" prefHeight="17.0" prefWidth="174.0" textFill="RED" />
       <Label fx:id="EmptyMessage" layoutX="428.0" layoutY="161.0" prefHeight="17.0" prefWidth="238.0" textFill="RED" />
+      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="21.0" layoutY="170.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/gestaoReservas.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

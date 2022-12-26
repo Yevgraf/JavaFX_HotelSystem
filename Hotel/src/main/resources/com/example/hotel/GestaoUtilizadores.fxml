@@ -10,7 +10,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
@@ -18,50 +17,18 @@
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
-            <Label layoutX="14.0" layoutY="-26.0" prefHeight="81.0" prefWidth="333.0" text="Painel Funcionário" textFill="#2a1b3d">
+            <Label fx:id="lblGestaoClientes" alignment="CENTER" layoutX="3.0" layoutY="19.0" prefHeight="45.0" prefWidth="727.0" text="Gestão de Utilizadores" textFill="WHITE">
                <font>
-                  <Font name="Bodoni MT Poster Compressed" size="24.0" />
+                  <Font name="Bernard MT Condensed" size="31.0" />
                </font>
             </Label>
-            <Label layoutX="33.0" prefHeight="81.0" prefWidth="333.0" text="Bem-Vindo Admin" textFill="#934feb">
-               <font>
-                  <Font name="Bernard MT Condensed" size="14.0" />
-               </font>
-            </Label>
-            <Circle fill="#1d1e1e00" layoutX="667.0" layoutY="64.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="btnDefGestor" fitHeight="26.0" fitWidth="26.0" layoutX="654.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/definicoesUser.jpeg" />
-               </image>
-            </ImageView>
-            <Circle fill="#1d1e1e00" layoutX="706.0" layoutY="64.0" radius="18.0" stroke="BLACK" strokeType="INSIDE" />
-            <ImageView fx:id="btnLogOut" fitHeight="27.0" fitWidth="26.0" layoutX="693.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/sairSessao.jpeg" />
-               </image>
-            </ImageView>
-            <ImageView fx:id="btnCloseApp" fitHeight="26.0" fitWidth="19.0" layoutX="704.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../img/closeApp.png" />
-               </image>
-            </ImageView>
          </children>
       </Pane>
-      <Label fx:id="lblHoras" layoutX="665.0" layoutY="459.0" prefHeight="55.0" prefWidth="36.0" text="12:00" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="lblData" layoutX="649.0" layoutY="493.0" prefHeight="42.0" prefWidth="68.0" text="31/11/2022" textFill="#b788f5">
-         <font>
-            <Font name="Bernard MT Condensed" size="14.0" />
-         </font>
-      </Label>
       <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
-      <Button fx:id="btnGestorEditarCliente" disable="true" layoutX="175.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="154.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEditarCliente" disable="true" layoutX="201.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="154.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text=" Editar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -76,27 +43,22 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoClientes" layoutX="60.0" layoutY="126.0" prefHeight="45.0" prefWidth="303.0" text="Gestão de Utilizadores" textFill="WHITE">
-         <font>
-            <Font name="Bernard MT Condensed" size="31.0" />
-         </font>
-      </Label>
-      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="182.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEditarProduto" fitHeight="42.0" fitWidth="49.0" layoutX="201.0" layoutY="483.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/editar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorEliminar" layoutX="346.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnGestorEliminar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Eliminar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorEliminar" layoutX="379.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnGestorEliminar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="351.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="386.0" layoutY="486.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorAdicionarCliente" layoutX="14.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Adicionar" textFill="#dfc6ff">
+      <Button fx:id="btnGestorAdicionarCliente" layoutX="561.0" layoutY="477.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="146.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -106,22 +68,12 @@
             <Image url="@../../../img/gestaoClientes.jpeg" />
          </image>
       </ImageView>
-      <ImageView fx:id="btnMinimizateApp" fitHeight="19.0" fitWidth="26.0" layoutX="673.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/minimzateApp.png" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="btnBack" fitHeight="36.0" fitWidth="52.0" layoutX="7.0" layoutY="81.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@../../../img/voltar.jpeg" />
-         </image>
-      </ImageView>
-      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="32.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="570.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/adicionar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVoltar" layoutX="501.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="14.0" layoutY="477.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="55.0" prefWidth="137.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -145,5 +97,10 @@
             <Font name="Bernard MT Condensed" size="24.0" />
          </font>
       </Text>
+      <Label fx:id="lblGestaoClientes1" layoutX="54.0" layoutY="126.0" prefHeight="45.0" prefWidth="253.0" text="Utilizadores" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="31.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>

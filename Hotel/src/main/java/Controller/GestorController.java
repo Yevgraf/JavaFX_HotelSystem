@@ -7,15 +7,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.prefs.Preferences;
 
 public class GestorController {
 
@@ -51,7 +47,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Gerir Servicos");
+        stage.setTitle("Gestao Servicos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -64,7 +60,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Criar Urilizadores");
+        stage.setTitle("Registo Urilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -76,7 +72,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
-        stage.setTitle("Gerir Utilizadores");
+        stage.setTitle("Gestao Utilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -88,7 +84,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Carregar XML");
+        stage.setTitle("Entrada Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -100,7 +96,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Entrada Stock");
+        stage.setTitle("Gestao Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -111,7 +107,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Gerir Reservas");
+        stage.setTitle("Gestao Reservas");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -134,7 +130,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
-        stage.setTitle("Criar Quarto");
+        stage.setTitle("Login");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

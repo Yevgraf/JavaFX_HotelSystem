@@ -1,8 +1,6 @@
 package Controller;
 
 import BLL.UtilizadorPreferences;
-import DAL.DBconn;
-import DAL.ProdutoDAL;
 import DAL.StockDAL;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -18,8 +16,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
 
@@ -75,7 +71,7 @@ public class StockController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutos.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Gestão de Produtos");
+        stage.setTitle("Gestao Produtos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
