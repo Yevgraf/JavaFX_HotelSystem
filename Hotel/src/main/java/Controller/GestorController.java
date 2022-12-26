@@ -16,49 +16,49 @@ import java.io.IOException;
 public class GestorController {
 
     @FXML
-    private Button btnEntradaStock;
+    private Button GCheck;
 
     @FXML
-    private Button btnGestorCheck;
+    private Button GComentarios;
 
     @FXML
-    private Button btnGestorCliente;
+    private Button GEntradaStock;
 
     @FXML
-    private Button btnGestorColab;
+    private Button GGestaoStock;
+
+    @FXML
+    private Button GQuarto;
+
+    @FXML
+    private Button GReservas;
+
+    @FXML
+    private Button GServico;
+
+    @FXML
+    private Button GUtilizadores;
 
     @FXML
     private ImageView btnLogOut;
 
-    @FXML
-    private Button btngestorQuarto;
 
     @FXML
-    private Button btngestorReservas;
-
-    @FXML
-    private Button btngestorServico;
-
-    @FXML
-    private Button gestaoStockBtn;
-
-    @FXML
-    void clickBtngestorServico(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
+    void GCheckClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Checkin.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Gestao Servicos");
+        Stage newStage = (Stage) GCheck.getScene().getWindow();
+        stage.setTitle("Gestao CheckIn");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
 
-
     @FXML
-    void clickbtnOpiniao(ActionEvent event) throws IOException {
+    void GComentariosClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(""));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        Stage newStage = (Stage) GComentarios.getScene().getWindow();
         stage.setTitle("Opiniao Utilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
@@ -66,23 +66,10 @@ public class GestorController {
     }
 
     @FXML
-    void clickGestaoClienteBtn(ActionEvent event) throws IOException {
-
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
-        stage.setTitle("Gestao Utilizadores");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-    @FXML
-    void clickEntradaStockBtn(ActionEvent event) throws IOException {
-
+    void GEntradaStockClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        Stage newStage = (Stage) GEntradaStock.getScene().getWindow();
         stage.setTitle("Entrada Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
@@ -90,11 +77,10 @@ public class GestorController {
     }
 
     @FXML
-    void clickGestaoStock(ActionEvent event) throws IOException {
-
+    void GGestaoStockClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        Stage newStage = (Stage) GGestaoStock.getScene().getWindow();
         stage.setTitle("Gestao Stock");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
@@ -102,10 +88,21 @@ public class GestorController {
     }
 
     @FXML
-    void clickBtngestorReservas(ActionEvent event) throws IOException {
+    void GQuartoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) GQuarto.getScene().getWindow();
+        stage.setTitle("Criar Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void GReservasClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
+        Stage newStage = (Stage) GReservas.getScene().getWindow();
         stage.setTitle("Gestao Reservas");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
@@ -113,28 +110,37 @@ public class GestorController {
     }
 
     @FXML
-    void btnGestaoQuartosOnAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+    void GServicoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
-        stage.setTitle("Criar Quarto");
+        Stage newStage = (Stage) GServico.getScene().getWindow();
+        stage.setTitle("Gestao Servicos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
 
+    @FXML
+    void GUtilizadoresClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) GUtilizadores.getScene().getWindow();
+        stage.setTitle("Registo Funcionario");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
     void logoutClick(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
+        Stage newStage = (Stage) btnLogOut.getScene().getWindow();
         stage.setTitle("Login");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
         UtilizadorPreferences.apagarTipoLogin();
     }
-
 
 }

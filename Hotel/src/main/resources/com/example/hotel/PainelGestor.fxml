@@ -33,7 +33,7 @@
             </Text>
          </children>
       </Pane>
-      <Button fx:id="btngestorReservas" layoutX="61.0" layoutY="159.0" mnemonicParsing="false" onAction="#clickBtngestorReservas" prefHeight="68.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Reservas" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="GReservas" layoutX="61.0" layoutY="159.0" mnemonicParsing="false" onAction="#GReservasClick" prefHeight="68.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Reservas" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -43,7 +43,7 @@
             <Image url="@../../../img/gestaoReservas.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnOpiniao" alignment="CENTER_RIGHT" disable="true" layoutX="61.0" layoutY="345.0" mnemonicParsing="false" onAction="#clickbtnOpiniao" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Comentários dos Clientes" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="GComentarios" alignment="CENTER_RIGHT" disable="true" layoutX="61.0" layoutY="345.0" mnemonicParsing="false" onAction="#GComentariosClick" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Comentários dos Clientes" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -57,7 +57,7 @@
       <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
       <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
       <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
-      <Button fx:id="btnEntradaStock" layoutX="58.0" layoutY="443.0" mnemonicParsing="false" onAction="#clickEntradaStockBtn" prefHeight="61.0" prefWidth="229.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Entrada de Stock" textFill="#dfc6ff">
+      <Button fx:id="GEntradaStock" layoutX="58.0" layoutY="443.0" mnemonicParsing="false" onAction="#GEntradaStockClick" prefHeight="61.0" prefWidth="229.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Entrada de Stock" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -67,7 +67,7 @@
             <Image url="@../../../img/gestaoStock.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorCheck" disable="true" layoutX="427.0" layoutY="349.0" mnemonicParsing="false" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Check-In/Check-out" textFill="#dfc6ff">
+      <Button fx:id="GCheck" layoutX="427.0" layoutY="349.0" mnemonicParsing="false" onAction="#GCheckClick" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Check-In/Check-out" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -77,7 +77,7 @@
             <Image url="@../../../img/checkin_checkout.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="btngestorQuarto" layoutX="427.0" layoutY="162.0" mnemonicParsing="false" onAction="#btnGestaoQuartosOnAction" prefHeight="68.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Quartos" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="GQuarto" layoutX="427.0" layoutY="162.0" mnemonicParsing="false" onAction="#GQuartoClick" prefHeight="68.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Quartos" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -87,7 +87,7 @@
             <Image url="@../../../img/gestaoQuartos.png" />
          </image>
       </ImageView>
-      <Button fx:id="btngestorServico" layoutX="427.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickBtngestorServico" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Serviços" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="GServico" layoutX="427.0" layoutY="254.0" mnemonicParsing="false" onAction="#GServicoClick" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="      Gestão de Serviços" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -97,7 +97,7 @@
             <Image url="@../../../img/gestaoServicos.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnGestorCliente" layoutX="61.0" layoutY="254.0" mnemonicParsing="false" onAction="#clickGestaoClienteBtn" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Gestão de Utilizadores" textFill="#dfc6ff">
+      <Button fx:id="GUtilizadores" layoutX="61.0" layoutY="254.0" mnemonicParsing="false" onAction="#GUtilizadoresClick" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Gestão de Utilizadores" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -107,7 +107,7 @@
             <Image url="@../../../img/gestaoClientes.jpeg" />
          </image>
       </ImageView>
-      <Button fx:id="gestaoStockBtn" layoutX="427.0" layoutY="444.0" mnemonicParsing="false" onAction="#clickGestaoStock" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Gestão de Stock" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="GGestaoStock" layoutX="427.0" layoutY="444.0" mnemonicParsing="false" onAction="#GGestaoStockClick" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Gestão de Stock" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>

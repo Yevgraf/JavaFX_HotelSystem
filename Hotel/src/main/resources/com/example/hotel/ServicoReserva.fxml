@@ -6,13 +6,13 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ServicoReservaController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ServicoReservaController">
    <children>
       <ComboBox fx:id="cmbReserva" layoutX="14.0" layoutY="44.0" prefWidth="150.0" />
       <Label layoutX="14.0" layoutY="23.0" text="Reserva: " />
       <ListView fx:id="listViewServicos" layoutX="254.0" layoutY="14.0" prefHeight="307.0" prefWidth="285.0" />
-      <Button fx:id="btnAdicionar" layoutX="265.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnAdicionar" text="Adicionar" />
-      <Button fx:id="btnRemover" layoutX="346.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnRemover" text="Remover" />
+      <Button fx:id="btnAdicionar" layoutX="472.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnAdicionar" text="Adicionar" />
+      <Button fx:id="btnRemover" layoutX="397.0" layoutY="329.0" mnemonicParsing="false" onAction="#btnRemover" text="Remover" />
+      <Button fx:id="Voltar" layoutX="27.0" layoutY="329.0" mnemonicParsing="false" onAction="#VoltarClick" text="Voltar" />
    </children>
 </AnchorPane>

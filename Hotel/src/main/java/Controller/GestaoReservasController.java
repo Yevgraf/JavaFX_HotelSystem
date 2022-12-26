@@ -33,10 +33,6 @@ public class GestaoReservasController implements Initializable {
     @FXML
     private Button btnVoltar;
 
-
-    @FXML
-    private Button CheckInAndCheckOut;
-
     @FXML
     private Button adicionarServico;
 
@@ -100,7 +96,6 @@ public class GestaoReservasController implements Initializable {
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
         }
-
     }
 
     @FXML
@@ -113,22 +108,11 @@ public class GestaoReservasController implements Initializable {
     }
 
     @FXML
-    void CheckInAndCheckOutAction(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("checkin.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Gestor CheckIn e CheckOut");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-    @FXML
-    void adicionarServicoAction(ActionEvent event) throws IOException {
+    void ServicoReservaClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Gestor Serviços da Reserva");
+        stage.setTitle("Servicos Reserva");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

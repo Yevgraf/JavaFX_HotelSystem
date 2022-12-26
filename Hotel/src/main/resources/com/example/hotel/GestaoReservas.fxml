@@ -51,17 +51,17 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button fx:id="eliminarReservaBtn" layoutX="254.0" layoutY="419.0" mnemonicParsing="false" onAction="#clickEliminarReservaBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
+      <Button fx:id="eliminarReservaBtn" alignment="CENTER" layoutX="383.0" layoutY="416.0" mnemonicParsing="false" onAction="#clickEliminarReservaBtn" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Eliminar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="36.0" layoutX="279.0" layoutY="435.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEliminarProduto" fitHeight="36.0" fitWidth="30.0" layoutX="390.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/eliminar.png" />
          </image>
       </ImageView>
-      <Button fx:id="adicionarReservaBtn" layoutX="487.0" layoutY="419.0" mnemonicParsing="false" onAction="#clickAdicionarReservaBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
+      <Button fx:id="adicionarReservaBtn" layoutX="552.0" layoutY="416.0" mnemonicParsing="false" onAction="#clickAdicionarReservaBtn" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="    Adicionar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -71,12 +71,12 @@
             <Image url="@../../../img/gestaoReservas.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="39.0" fitWidth="49.0" layoutX="497.0" layoutY="434.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock2" fitHeight="30.0" fitWidth="30.0" layoutX="561.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/adicionar.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVoltar" layoutX="26.0" layoutY="419.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="26.0" layoutY="417.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -86,5 +86,10 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
+      <Button fx:id="ServicoReserva" layoutX="196.0" layoutY="417.0" mnemonicParsing="false" onAction="#ServicoReservaClick" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Serviços-Reserva" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
