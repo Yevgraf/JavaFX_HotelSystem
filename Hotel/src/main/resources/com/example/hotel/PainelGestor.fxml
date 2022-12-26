@@ -43,7 +43,7 @@
             <Image url="@../../../img/gestaoReservas.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnOpiniao" alignment="CENTER_RIGHT" disable="true" layoutX="61.0" layoutY="345.0" mnemonicParsing="false" onAction="#clickbtnOpiniao" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Opinião dos Utilizadores" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="btnOpiniao" alignment="CENTER_RIGHT" disable="true" layoutX="61.0" layoutY="345.0" mnemonicParsing="false" onAction="#clickbtnOpiniao" prefHeight="61.0" prefWidth="223.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Comentários dos Clientes" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
