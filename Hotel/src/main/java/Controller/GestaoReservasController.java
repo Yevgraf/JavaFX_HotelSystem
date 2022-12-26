@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.ReservaBLL;
+import BLL.UtilizadorPreferences;
 import DAL.DBconn;
 import Model.MessageBoxes;
 import Model.Reserva;
@@ -75,13 +76,24 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
+
     }
 
     @FXML

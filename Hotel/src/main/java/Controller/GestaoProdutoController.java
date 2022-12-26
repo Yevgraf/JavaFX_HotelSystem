@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.UtilizadorPreferences;
 import DAL.DBconn;
 import DAL.ProdutoDAL;
 import Model.MessageBoxes;
@@ -61,13 +62,23 @@ public class GestaoProdutoController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Gestão StockController");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
     }
 
     @FXML

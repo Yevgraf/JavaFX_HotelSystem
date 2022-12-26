@@ -1,74 +1,137 @@
 package Controller;
 
+import BLL.UtilizadorPreferences;
+import com.example.hotel.Main;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class FuncionarioController {
 
     @FXML
-    private ImageView btnCloseApp;
+    private Button btnEntradaStock;
 
     @FXML
-    private ImageView btnCloseApp1;
-
-    @FXML
-    private ImageView btnDefGestor;
+    private Button btnGestaoQuartosClick;
 
     @FXML
     private Button btnGestorCheck;
 
     @FXML
-    private Button btnGestorCliente;
-
-    @FXML
-    private Button btnGestorStock;
-
-    @FXML
-    private ImageView btnLogOut;
-
-    @FXML
-    private Button btngestorQuarto;
-
-    @FXML
     private Button btngestorReservas;
 
     @FXML
-    private Button btngestorServico;
+    private Button clickBtnServico;
 
     @FXML
-    private ImageView imgGestorCheck;
+    private Button clickGestaoStock;
 
     @FXML
-    private ImageView imgGestorClientes;
+    private Button clickGestaoUtiliBtn;
 
     @FXML
-    private ImageView imgGestorReservas;
+    private Button clickRegUtiliBtn;
 
     @FXML
-    private ImageView imgGestorReservas1;
+    void clickBtnReservas(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btngestorReservas.getScene().getWindow();
+        stage.setTitle("Gerir Reservas");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private ImageView imgGestorServico;
+    void clickBtnServico(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) clickBtnServico.getScene().getWindow();
+        stage.setTitle("Gerir Servicos");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+
+    }
 
     @FXML
-    private ImageView imgGestorStock;
+    void btnGestaoQuartosClick (ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnGestaoQuartosClick.getScene().getWindow();
+        stage.setTitle("Criar Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private Label lblData;
+    void clickEntradaStockBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnEntradaStock.getScene().getWindow();
+        stage.setTitle("Carregar XML");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private Label lblHoras;
+    void clickGestaoStock(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) clickGestaoStock.getScene().getWindow();
+        stage.setTitle("Entrada Stock");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private Label lblHotel;
+    void clickGestaoUtiliBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) clickGestaoUtiliBtn.getScene().getWindow();
+        stage.setTitle("Gerir Clientes");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private Label lblSamos;
+    void clickRegUtiliBtn(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) clickRegUtiliBtn.getScene().getWindow();
+        stage.setTitle("Criar Funcionario");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
     @FXML
-    private AnchorPane painelFuncionario;
+    void logoutBtn(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) clickRegUtiliBtn.getScene().getWindow();
+        stage.setTitle("Criar Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+        UtilizadorPreferences.apagarTipoLogin();
+    }
+
 
 }

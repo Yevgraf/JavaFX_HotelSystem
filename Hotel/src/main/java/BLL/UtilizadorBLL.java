@@ -13,9 +13,9 @@ public class UtilizadorBLL {
     public Utilizador Login(String utilizador, String password) {
         try {
             UtilizadorDAL dal = new UtilizadorDAL();
-            String passwordCifrada = Criptografia.CifraTexto(password);
+            //String passwordCifrada = Criptografia.CifraTexto(password);
 
-            return dal.Login(utilizador, passwordCifrada);
+            return dal.Login(utilizador, password /*passwordCifrada*/);
         }
         catch (Exception ex) {
 

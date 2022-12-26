@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.UtilizadorPreferences;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,21 +9,15 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 public class GestorController {
-
-    @FXML
-    private ImageView btnCloseApp;
-
-    @FXML
-    private ImageView btnCloseApp1;
-
-    @FXML
-    private ImageView btnDefGestor;
 
     @FXML
     private Button btnEntradaStock;
@@ -52,48 +47,6 @@ public class GestorController {
     private Button gestaoStockBtn;
 
     @FXML
-    private ImageView imgGestorCheck;
-
-    @FXML
-    private ImageView imgGestorClientes;
-
-    @FXML
-    private ImageView imgGestorColab;
-
-    @FXML
-    private ImageView imgGestorReservas;
-
-    @FXML
-    private ImageView imgGestorReservas1;
-
-    @FXML
-    private ImageView imgGestorServico;
-
-    @FXML
-    private ImageView imgGestorStock;
-
-    @FXML
-    private ImageView imgGestorStock2;
-
-    @FXML
-    private Label lblData;
-
-    @FXML
-    private Label lblHoras;
-
-    @FXML
-    private Label lblHotel;
-
-    @FXML
-    private Label lblSamos;
-
-    @FXML
-    private AnchorPane roomservices;
-
-    @FXML
-    private Button getBtngestorServicon;
-
-    @FXML
     void clickBtngestorServico(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));
         Stage stage = new Stage();
@@ -104,13 +57,14 @@ public class GestorController {
         stage.show();
     }
 
+
     @FXML
     void clickGestaoColabBtn(ActionEvent event) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarUtilizador.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorColab.getScene().getWindow();
-        stage.setTitle("Criar Funcionario");
+        stage.setTitle("Criar Urilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -122,7 +76,7 @@ public class GestorController {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnGestorCliente.getScene().getWindow();
-        stage.setTitle("Gerir Clientes");
+        stage.setTitle("Gerir Utilizadores");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
@@ -150,7 +104,6 @@ public class GestorController {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
-
     }
 
     @FXML
@@ -173,6 +126,19 @@ public class GestorController {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
+    }
+
+
+    @FXML
+    void logoutClick(MouseEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btngestorQuarto.getScene().getWindow();
+        stage.setTitle("Criar Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+        UtilizadorPreferences.apagarTipoLogin();
     }
 
 

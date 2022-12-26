@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.UtilizadorBLL;
+import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import com.example.hotel.Main;
@@ -83,13 +84,24 @@ public class CriarUtilizadoresController implements Initializable {
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+
+        }
     }
 
     private void initCombos() {
@@ -140,82 +152,5 @@ public class CriarUtilizadoresController implements Initializable {
 
         utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
-    }
-
-
-    public boolean VerifyNIFColaborador() {
-        boolean flag;
-        String verificar = "SELECT count(1) FROM Utilizador WHERE nif ='" + txt_nif.getText() + "'";
-        try {
-            PreparedStatement stmt = DBconn.getConn().prepareStatement(verificar);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    VerificarNIF.setText("O nif já existe!");
-                } else {
-                    VerificarNIF.setText("");
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        if (VerificarNIF.getText().equals("O nif já existe!")) {
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
-    }
-
-    public boolean VerifyNIFColaboradorMin() {
-        boolean flag;
-        if (txt_nif.getText().length() < 9) {
-            VerificarNIF.setText("Minimo 9 caracteres!");
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
-    }
-
-    public boolean VerifyContacto() {
-        boolean flag;
-        if (txt_contacto.getText().length() < 9) {
-            VerificarContacto.setText("Minimo 9 caracteres!");
-            flag = false;
-        } else {
-            flag = true;
-        }
-        return flag;
-    }
-
-    public boolean VerifyNome() {
-        boolean flag;
-        char[] chars = txt_nome.getText().toCharArray();
-        for (char c : chars) {
-            if (Character.isDigit(c)) {
-                VerificarNome.setText("Nome nao pode conter numeros!");
-            }
-        }
-        if (VerificarNome.getText().equals("Nome nao pode conter numeros!")) {
-            flag = false;
-        } else flag = true;
-
-        return flag;
-    }
-
-    public Integer verificaTipoUtilizador(String comboTxt) {
-        Integer opcao;
-        switch (comboTxt) {
-            case "Gestor":
-                opcao = 1;
-                break;
-            case "Funcionario":
-                opcao = 2;
-                break;
-            default:
-                opcao = 3;
-        }
-        return opcao;
     }
 }

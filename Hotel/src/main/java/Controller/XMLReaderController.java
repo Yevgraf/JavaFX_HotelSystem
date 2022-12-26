@@ -1,9 +1,6 @@
 package Controller;
 
-import BLL.EntradaStockBLL;
-import BLL.FornecedorBLL;
-import BLL.ProdutoBLL;
-import BLL.XMLReaderBLL;
+import BLL.*;
 import Model.EntradaStock;
 
 import Model.MessageBoxes;
@@ -118,13 +115,23 @@ public class XMLReaderController implements Initializable {
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
     }
 
     List<String> lstFile;

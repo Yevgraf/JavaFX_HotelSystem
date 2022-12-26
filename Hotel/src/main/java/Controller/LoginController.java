@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.UtilizadorPreferences;
 import BLL.UtilizadorBLL;
 import Model.MessageBoxes;
 import Model.Utilizador;
@@ -14,6 +15,7 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 
 public class LoginController implements Initializable {
 
@@ -37,6 +39,7 @@ public class LoginController implements Initializable {
     }
 
     void Login() {
+
         try {
             UtilizadorBLL bll = new UtilizadorBLL();
             Utilizador utilizador = bll.Login(userTxt.getText(), passwordTxt.getText());
@@ -47,18 +50,20 @@ public class LoginController implements Initializable {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
                     Stage stage = new Stage();
                     Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                    stage.setTitle("Página do GestorController");
+                    stage.setTitle("Pagina Gestor");
                     newStage.hide();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
+                    UtilizadorPreferences.guardartipoLogin("gestor");
                 } else if (utilizador.getTipoUser().getTipo().equals("Funcionario")) {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                     Stage stage = new Stage();
                     Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                    stage.setTitle("Página do Funcionário");
+                    stage.setTitle("Pagina Funcionário");
                     newStage.hide();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
+                    UtilizadorPreferences.guardartipoLogin("funcionario");
      //Inserir Login pág CLIENTE
                // } else if (utilizador.getTipoUser().getTipo().equals("Cliente")) {
                  //  FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));

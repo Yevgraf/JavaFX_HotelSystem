@@ -60,8 +60,6 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private ComboBox<Utilizador> cmbClientes;
 
-
-
     @FXML
     private ComboBox<Quarto> cmbIDQuarto;
 
@@ -91,7 +89,6 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     private Button voltarBtn;
-
 
     @FXML
     void clickAddReservaBrn(ActionEvent event) {
@@ -128,11 +125,12 @@ public class AdicionarReservaController implements Initializable {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-        stage.setTitle("Pagina GestorController");
+        stage.setTitle("Gerir Reservas");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
+
     void AdicionarReserva() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
 

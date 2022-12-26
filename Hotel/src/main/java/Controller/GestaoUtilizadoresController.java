@@ -2,6 +2,7 @@ package Controller;
 
 import BLL.ServicoBLL;
 import BLL.UtilizadorBLL;
+import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
 import Model.Servico;
 import Model.TipoUtilizador;
@@ -151,13 +152,24 @@ public class GestaoUtilizadoresController implements Initializable {
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina Gestor");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
+
     }
 
     @Override
