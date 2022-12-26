@@ -11,7 +11,7 @@
    <children>
       <TextField fx:id="userTxt" layoutX="75.0" layoutY="98.0" prefHeight="25.0" prefWidth="178.0" promptText="Utilizador" />
       <PasswordField fx:id="passwordTxt" layoutX="75.0" layoutY="153.0" prefHeight="25.0" prefWidth="178.0" promptText="Password" />
-      <Button fx:id="loginBtn" layoutX="137.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickLoginBtn" text="Login">
+      <Button fx:id="loginBtn" defaultButton="true" layoutX="137.0" layoutY="226.0" mnemonicParsing="false" onAction="#clickLoginBtn" text="Login">
          <font>
             <Font size="14.0" />
          </font>
