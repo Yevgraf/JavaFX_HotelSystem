@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.ServicoDAL;
 import Model.Servico;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.SQLException;
@@ -23,4 +24,14 @@ public class ServicoBLL {
             dal.deleteServico(id);
         }
     }
+    public static ObservableList<Servico> getAllServicos() {
+        ObservableList<Servico> servicos = FXCollections.observableArrayList();
+        try {
+            servicos = ServicoDAL.getAllServicos();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return servicos;
+    }
+
 }

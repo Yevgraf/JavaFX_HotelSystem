@@ -48,4 +48,11 @@ public class Servico {
     public Servico() {
     }
 
+    @Override
+    public String toString() {
+        return
+                "idServico=" + idServico +
+                ", servico='" + servico + '\'' +
+                ", preco=" + preco;
+    }
 }
