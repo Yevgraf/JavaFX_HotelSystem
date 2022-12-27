@@ -12,9 +12,8 @@ public class CartaoDAL {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
 
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO Cartao (numeroCartao, ativo) VALUES (?, ?)");
-        ps.setString(1, cartao.getNumCartao());
-        ps.setBoolean(2, !cartao.getAtivo());
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO Cartao VALUES (?)");
+        ps.setInt(1, cartao.getId());
         ps.executeUpdate();
     }
 
@@ -29,7 +28,7 @@ public class CartaoDAL {
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Cartao objCartao = new Cartao(rs.getInt("id"), rs.getString("numeroCartao"), rs.getBoolean("ativo"));
+                Cartao objCartao = new Cartao(rs.getInt("id"));
                 list.add(objCartao);
             }
 
@@ -40,12 +39,12 @@ public class CartaoDAL {
         return list;
     }
 
-    public void deleteCartao(String numeroCartao) throws SQLException {
+    public void deleteCartao(int idCartao) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
 
-        PreparedStatement ps = connection.prepareStatement("DELETE FROM Cartao WHERE numeroCartao = ?");
-        ps.setString(1, numeroCartao);
+        PreparedStatement ps = connection.prepareStatement("DELETE FROM Cartao WHERE id = ?");
+        ps.setInt(1, idCartao);
         ps.executeUpdate();
     }
 }

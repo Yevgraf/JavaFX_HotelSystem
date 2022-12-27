@@ -43,9 +43,6 @@ public class GestaoReservasController implements Initializable {
     private TableView<Reserva> tblReservas;
 
     @FXML
-    private TableColumn<Reserva, Integer> tblCoIDColab;
-
-    @FXML
     private TableColumn<Reserva, Integer> tblCoIDQuarto;
 
     @FXML
@@ -61,7 +58,7 @@ public class GestaoReservasController implements Initializable {
     private TableColumn<Reserva, String> tblColDataIni;
 
     @FXML
-    private TableColumn<Reserva, Integer> tblColIDCliente;
+    private TableColumn<Reserva, Integer> tblCoIDCliente;
 
     @FXML
     private TableColumn<Reserva, String> tblColServEx;
@@ -126,11 +123,10 @@ public class GestaoReservasController implements Initializable {
     private void initTable() {
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
-        tblColIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
+        tblCoIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
         tblCoIDQuarto.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idQuarto"));
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
-        tblColServEx.setCellValueFactory(new PropertyValueFactory<Reserva, String>("servExtra"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
 
         tblReservas.setItems(ReservaBLL.getReservas());

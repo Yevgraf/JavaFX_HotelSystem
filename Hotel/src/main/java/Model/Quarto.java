@@ -11,33 +11,9 @@ public class Quarto {
     private Integer id;
     private String tipoQuarto;
     private String piso;
-
     private Double preco;
-
-    private String numCartao;
-    private Boolean ativo ;
-
-
-    public Quarto() {
-    }
-
-    public Quarto(Integer id, String tipoQuarto, String piso, Double preco, String numCartao,Boolean ativo){
-        this.id = id;
-        this.tipoQuarto = tipoQuarto;
-        this.piso = piso;
-        this.preco = preco;
-        this.numCartao = numCartao;
-        this.ativo = ativo;
-
-    }
-
-    public Boolean getAtivo() {
-        return ativo;
-    }
-
-    public void setAtivo(Boolean ativo) {
-        this.ativo = ativo;
-    }
+    private Boolean ativo;
+    private Cartao cartao;
 
     public Integer getId() {
         return id;
@@ -63,7 +39,6 @@ public class Quarto {
         this.piso = piso;
     }
 
-
     public Double getPreco() {
         return preco;
     }
@@ -72,15 +47,33 @@ public class Quarto {
         this.preco = preco;
     }
 
-    public String getNumCartao() {
-        return numCartao;
+    public Boolean getAtivo() {
+        return ativo;
     }
 
-    public void setNumCartao(String numCartao) {
-        this.numCartao = numCartao;
+    public void setAtivo(Boolean ativo) {
+        this.ativo = ativo;
     }
 
+    public Cartao getCartao() {
+        return cartao;
+    }
 
+    public void setCartao(Cartao cartao) {
+        this.cartao = cartao;
+    }
+
+    public Quarto(Integer id, String tipoQuarto, String piso, Double preco, Boolean ativo, Cartao cartao) {
+        this.id = id;
+        this.tipoQuarto = tipoQuarto;
+        this.piso = piso;
+        this.preco = preco;
+        this.ativo = ativo;
+        this.cartao = cartao;
+    }
+
+    public Quarto() {
+    }
 
     @Override
     public String toString() {
@@ -89,6 +82,6 @@ public class Quarto {
                 ", tipoQuarto='" + tipoQuarto + '\'' +
                 ", piso=" + piso +
                 ", preco=" + preco +
-                ", numCartao='" + numCartao;
+                ", numCartao='" + cartao.getId();
     }
 }

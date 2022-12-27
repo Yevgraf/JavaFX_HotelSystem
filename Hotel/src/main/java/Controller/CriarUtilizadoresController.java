@@ -2,6 +2,7 @@ package Controller;
 
 import BLL.UtilizadorBLL;
 import BLL.UtilizadorPreferences;
+import DAL.TipoUtilizadorDAL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import com.example.hotel.Main;
@@ -94,7 +95,7 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
     private void initCombos() {
-        List<TipoUtilizador> tipos = TipoUtilizador.getTipoUtilizador();
+        List<TipoUtilizador> tipos = TipoUtilizadorDAL.getTipoUtilizador();
 
         for (TipoUtilizador tipo : tipos) {
             cmb_tipoUtilizador.getItems().add(tipo.getTipo());

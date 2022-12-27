@@ -1,11 +1,10 @@
 package DAL;
 
 import Model.TipoUtilizador;
+import javafx.collections.FXCollections;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
 
 public class TipoUtilizadorDAL {
     public static TipoUtilizador getByNome(String nome) throws SQLException {
@@ -40,5 +39,26 @@ public class TipoUtilizadorDAL {
             }
         }
         return null;
+    }
+
+    public static List<TipoUtilizador> getTipoUtilizador() {
+        List<TipoUtilizador> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM TipoUtilizador";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                TipoUtilizador obj = new TipoUtilizador(rs.getInt("id"),rs.getString("nome"));
+                lista.add(obj);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
     }
 }

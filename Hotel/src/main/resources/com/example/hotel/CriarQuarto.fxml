@@ -71,12 +71,13 @@
             </font>
         </Label>
         <ComboBox fx:id="cmbTipoQuarto" layoutX="112.0" layoutY="295.0" prefHeight="25.0" prefWidth="206.0" promptText="Seleciona" />
-        <TableView fx:id="tv_Quarto" layoutX="341.0" layoutY="243.0" prefHeight="147.0" prefWidth="360.0">
+        <TableView fx:id="tv_Quarto" layoutX="324.0" layoutY="243.0" prefHeight="147.0" prefWidth="391.0">
             <columns>
-                <TableColumn fx:id="tbl_id" minWidth="9.0" prefWidth="44.0" text="id" />
-                <TableColumn fx:id="tbl_tipQuarto" prefWidth="162.0" text="TipoQuarto" />
-                <TableColumn fx:id="tbl_piso" prefWidth="64.0" text="Piso" />
-            <TableColumn fx:id="tbl_preco" prefWidth="89.0" text="Preço" />
+                <TableColumn fx:id="tbl_id" minWidth="9.0" prefWidth="59.0" text="ID" />
+                <TableColumn fx:id="tbl_tipQuarto" prefWidth="92.0" text="Tipo Quarto" />
+                <TableColumn fx:id="tbl_piso" prefWidth="51.0" text="Piso" />
+            <TableColumn fx:id="tbl_preco" prefWidth="78.0" text="Preço" />
+            <TableColumn fx:id="tbl_idCartao" prefWidth="110.0" text="ID Cartão" />
             </columns>
         </TableView>
         <Button fx:id="voltarBtn" layoutX="42.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
@@ -101,7 +102,7 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="ProdutoQuarto" layoutX="341.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
+      <Button fx:id="ProdutoQuarto" layoutX="324.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
       <Label fx:id="ValidarPiso" layoutX="155.0" layoutY="219.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="ValidarCartao" layoutX="155.0" layoutY="375.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="EmptyMessage" layoutX="121.0" layoutY="436.0" prefHeight="17.0" prefWidth="236.0" textFill="RED" />

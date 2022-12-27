@@ -20,14 +20,13 @@ public class ReservaDAL {
             DBconn dbConn = new DBconn();
             connection = dbConn.getConn();
             ps = connection.prepareStatement("INSERT INTO Reserva(idCliente, idQuarto," +
-                    "dataInicio, dataFim, servExtra, preco)" +
-                    "VALUES (?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+                    "dataInicio, dataFim, preco)" +
+                    "VALUES (?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
             ps.setInt(1, reserva.getIdCliente());
             ps.setInt(2, reserva.getIdQuarto());
             ps.setString(3, reserva.getDataInicio());
             ps.setString(4, reserva.getDataFim());
-            ps.setString(5, reserva.getServExtra());
-            ps.setDouble(6, reserva.getPreco());
+            ps.setDouble(5, reserva.getPreco());
             ps.executeUpdate();
             ResultSet generatedKeys = ps.getGeneratedKeys();
             if (generatedKeys.next()) {
@@ -53,7 +52,6 @@ public class ReservaDAL {
     }
 
 
-
     public Reserva getReservaByQuartoId(int quartoId) {
         Reserva reserva = null;
         PreparedStatement ps;
@@ -70,7 +68,7 @@ public class ReservaDAL {
                 String dataFim = dateFormat.format(rs.getDate("dataFim"));
 
                 reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
-                        rs.getInt("idQuarto"), dataInicio, dataFim, rs.getString("servExtra"), rs.getDouble("preco"));
+                        rs.getInt("idQuarto"), dataInicio, dataFim, rs.getDouble("preco"));
 
             }
         } catch (SQLException ex) {
@@ -89,7 +87,7 @@ public class ReservaDAL {
             while (rs.next()) {
                 Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
-                        rs.getString("servExtra"), rs.getDouble("preco"));
+                        rs.getDouble("preco"));
                 reservas.add(reserva);
             }
             st.close();
@@ -127,7 +125,7 @@ public class ReservaDAL {
     }
 
     public void updateReserva(Reserva reserva) throws SQLException {
-        String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, servExtra = ?, preco = ? WHERE id = ?";
+        String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -135,9 +133,8 @@ public class ReservaDAL {
             stmt.setInt(2, reserva.getIdQuarto());
             stmt.setString(3, reserva.getDataInicio());
             stmt.setString(4, reserva.getDataFim());
-            stmt.setString(5, reserva.getServExtra());
-            stmt.setDouble(6, reserva.getPreco());
-            stmt.setInt(7, reserva.getId());
+            stmt.setDouble(5, reserva.getPreco());
+            stmt.setInt(6, reserva.getId());
             stmt.executeUpdate();
         }
     }
@@ -222,7 +219,7 @@ public class ReservaDAL {
         try {
             DBconn dbConn = new DBconn();
             connection = dbConn.getConn();
-            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=? AND state<>'checkin'");
+            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=? AND estado <> 'checkin'");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
         } catch (SQLException e) {

@@ -3,6 +3,7 @@ package Controller;
 import BLL.ServicoBLL;
 import BLL.UtilizadorBLL;
 import BLL.UtilizadorPreferences;
+import DAL.TipoUtilizadorDAL;
 import Model.MessageBoxes;
 import Model.Servico;
 import Model.TipoUtilizador;
@@ -98,7 +99,7 @@ public class GestaoUtilizadoresController implements Initializable {
     private ComboBox<String> cmbUtilizador;
 
     private void initCombos() {
-        List<TipoUtilizador> tipos = TipoUtilizador.getTipoUtilizador();
+        List<TipoUtilizador> tipos = TipoUtilizadorDAL.getTipoUtilizador();
 
         for (TipoUtilizador tipo : tipos) {
             cmbUtilizador.getItems().add(tipo.getTipo());

@@ -36,26 +36,6 @@ public class TipoUtilizador {
         this.tipo = tipo;
     }
 
-    public static List<TipoUtilizador> getTipoUtilizador() {
-        List<TipoUtilizador> lista = FXCollections.observableArrayList();
-        try {
-            String cmd = "SELECT * FROM TipoUtilizador";
-
-            Statement st = DBconn.getConn().createStatement();
-
-            ResultSet rs = st.executeQuery(cmd);
-
-            while (rs.next()) {
-                TipoUtilizador obj = new TipoUtilizador(rs.getInt("id"),rs.getString("nome"));
-                lista.add(obj);
-            }
-
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista;
-    }
     @Override
     public String toString() {
         return this.tipo;

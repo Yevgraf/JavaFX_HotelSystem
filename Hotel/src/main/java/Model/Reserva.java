@@ -9,27 +9,21 @@ public class Reserva {
     private Integer idQuarto;
     private String dataInicio;
     private String dataFim;
-    private String servExtra;
     private Double preco;
-
-
 
 
     public Reserva() {
 
     }
 
-    public Reserva(Integer id, Integer idCliente, Integer idQuarto, String dataInicio, String dataFim, String servExtra, Double preco) {
+    public Reserva(Integer id, Integer idCliente, Integer idQuarto, String dataInicio, String dataFim, Double preco) {
         this.id = id;
         this.idCliente = idCliente;
         this.idQuarto = idQuarto;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
-        this.servExtra = servExtra;
         this.preco = preco;
     }
-
-
 
     public Integer getId() {
         return id;
@@ -69,14 +63,6 @@ public class Reserva {
 
     public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
-    }
-
-    public String getServExtra() {
-        return servExtra;
-    }
-
-    public void setServExtra(String servExtra) {
-        this.servExtra = servExtra;
     }
 
     public Double getPreco() {

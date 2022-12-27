@@ -1,13 +1,14 @@
 package DAL;
 
+import Model.Cartao;
 import Model.Quarto;
+import Model.TipoUtilizador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
 public class QuartoDAL {
-
 
         public void addQuarto(Quarto quarto) {
             PreparedStatement ps2;
@@ -18,14 +19,13 @@ public class QuartoDAL {
                 Connection connection = dbConn.getConn();
 
                 // prepare the insert statement
-                ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,numeroCartao, ativo) VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,idCartao) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                 // set the values for the prepared statement
                 ps2.setString(1, quarto.getTipoQuarto());
                 ps2.setString(2, quarto.getPiso());
                 ps2.setDouble(3, quarto.getPreco());
-                ps2.setString(4, String.valueOf(quarto.getNumCartao()));
-                ps2.setBoolean(5, quarto.getAtivo());
+                ps2.setInt(4, quarto.getCartao().getId());
 
                 // execute the insert statement
                 ps2.executeUpdate();
@@ -73,21 +73,21 @@ public class QuartoDAL {
         return null;
     }
 
-
-
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
 
         try {
-            String cmd = "SELECT * FROM Quarto";
+            String cmd = "SELECT q.*, c.id as cId FROM Quarto q " +
+                    "INNER JOIN Cartao c ON c.Id = q.idCartao";
 
             Statement st = DBconn.getConn().createStatement();
 
             ResultSet rs = st.executeQuery(cmd);
 
             while (rs.next()) {
-                Quarto objQuarto = new Quarto(rs.getInt("id"), rs.getString("tipoQuarto"), rs.getString("piso"),
-                        rs.getDouble("preco"), rs.getString("numeroCartao"), rs.getBoolean("ativo"));
+                Quarto objQuarto = new Quarto(rs.getInt("id"), rs.getString("tipoQuarto"),
+                        rs.getString("piso"), rs.getDouble("preco"), rs.getBoolean("ativo"),
+                new Cartao(rs.getInt("cId")));
                 list.add(objQuarto);
             }
 

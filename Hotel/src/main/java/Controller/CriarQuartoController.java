@@ -6,6 +6,8 @@ import DAL.DBconn;
 import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -72,6 +74,9 @@ public class CriarQuartoController implements Initializable {
     private TableColumn<Quarto, String> tbl_tipQuarto;
 
     @FXML
+    private TableColumn<Quarto, String> tbl_idCartao;
+
+    @FXML
     private TableView<Quarto> tv_Quarto;
 
     @FXML
@@ -105,25 +110,29 @@ public class CriarQuartoController implements Initializable {
     }
 
     public void ADDQuarto() throws SQLException {
-        // create a quarto object with the values from the UI controls
-        Quarto quarto = new Quarto(
-                null,
-                cmbTipoQuarto.getValue(),
-                cmbPiso.getValue(),
-                Double.parseDouble(txt_preco.getText()),
-                txt_numcartao.getText(),
-                false
-        );
+        try {
+            // create a quarto object with the values from the UI controls
+            Quarto quarto = new Quarto(
+                    null,
+                    cmbTipoQuarto.getValue(),
+                    cmbPiso.getValue(),
+                    Double.parseDouble(txt_preco.getText()),
+                    false,
+                    // create a cartao object with the values from the UI controls
+                    new Cartao(Integer.parseInt(txt_numcartao.getText())));
 
-        // create a cartao object with the values from the UI controls
-        Cartao cartao = new Cartao(
-                null,
-                txt_numcartao.getText(),
-                true
-        );
+            // add the quarto and cartao to the database using the BLL
+            quartoBLL.addQuarto(quarto);
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Quarto e cartão criados com sucesso", "Aviso!");
+            initTable();
+        } catch (NumberFormatException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Apenas números para o ID Cartão", "Erro!");
+            throw new RuntimeException(e);
+        } catch (SQLException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não foi possível adicionar o quarto.", "Erro!");
+            throw new RuntimeException(e);
+        }
 
-        // add the quarto and cartao to the database using the BLL
-        quartoBLL.addQuarto(quarto, cartao);
     }
 
 
@@ -215,6 +224,7 @@ public class CriarQuartoController implements Initializable {
         tbl_piso.setCellValueFactory(new PropertyValueFactory<>("piso"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<>("preco"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<>("tipoQuarto"));
+        tbl_idCartao.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCartao().getId().toString()));
         tv_Quarto.setItems(QuartoBLL.getQuartos());
     }
 
