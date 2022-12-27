@@ -16,12 +16,10 @@ import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.*;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import DAL.DBconn;
 import javafx.stage.Stage;
 
 
@@ -54,7 +52,6 @@ public class CriarUtilizadoresController implements Initializable {
     private ComboBox<String> cmb_tipoUtilizador;
 
 
-
     @FXML
     private TextField txt_contacto;
 
@@ -85,21 +82,35 @@ public class CriarUtilizadoresController implements Initializable {
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
-            stage.setTitle("Gestao Utilizadores");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) VoltarBtn.getScene().getWindow();
+        stage.setTitle("Gestao Utilizadores");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     private void initCombos() {
-        List<TipoUtilizador> tipos = TipoUtilizadorDAL.getTipoUtilizador();
-
-        for (TipoUtilizador tipo : tipos) {
-            cmb_tipoUtilizador.getItems().add(tipo.getTipo());
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            combosGestor();
+        } else {
+            combosFuncionario();
         }
+    }
+
+    private void combosGestor() {
+        if (UtilizadorPreferences.comparaTipoLogin()) {
+            List<TipoUtilizador> tipos = TipoUtilizadorDAL.getTipoUtilizador();
+
+            for (TipoUtilizador tipo : tipos) {
+                cmb_tipoUtilizador.getItems().add(tipo.getTipo());
+            }
+        }
+    }
+
+    private void combosFuncionario() {
+        cmb_tipoUtilizador.getItems().add("Cliente");
     }
 
     @Override

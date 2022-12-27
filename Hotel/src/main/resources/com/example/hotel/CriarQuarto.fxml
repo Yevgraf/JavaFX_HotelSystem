@@ -91,7 +91,7 @@
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
-      <Button fx:id="btnEditar" layoutX="478.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
+      <Button fx:id="btnEditar" disable="true" layoutX="478.0" layoutY="453.0" mnemonicParsing="false" onAction="#clickEditar" prefHeight="36.0" prefWidth="107.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Editar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>

@@ -95,6 +95,10 @@ public class GestaoUtilizadoresController implements Initializable {
     @FXML
     private Button btnVoltar;
 
+
+    @FXML
+    private Button btnGestorEliminar;
+
     @FXML
     private ComboBox<String> cmbUtilizador;
 
@@ -183,10 +187,17 @@ public class GestaoUtilizadoresController implements Initializable {
 
     }
 
+    private void disableEliminarParaFuncionario(){
+        if (!UtilizadorPreferences.comparaTipoLogin()){
+            btnGestorEliminar.setDisable(true);
+        }
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
         initTable();
+        disableEliminarParaFuncionario();
     }
 
     private void initTableGestores() {

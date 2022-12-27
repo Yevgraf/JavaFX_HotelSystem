@@ -104,6 +104,12 @@ public class GestaoReservasController implements Initializable {
         initTable();
     }
 
+    private void disableEliminarParaFuncionario(){
+        if (!UtilizadorPreferences.comparaTipoLogin()){
+            eliminarReservaBtn.setDisable(true);
+        }
+    }
+
     @FXML
     void ServicoReservaClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
@@ -118,6 +124,7 @@ public class GestaoReservasController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+        disableEliminarParaFuncionario();
     }
 
     private void initTable() {
