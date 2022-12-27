@@ -132,7 +132,7 @@ public class GestorController {
     }
 
     @FXML
-    void logoutClick(MouseEvent event) throws IOException {
+    void clickLogout(MouseEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Login.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnLogOut.getScene().getWindow();
@@ -142,5 +142,6 @@ public class GestorController {
         stage.show();
         UtilizadorPreferences.apagarTipoLogin();
     }
+
 
 }
