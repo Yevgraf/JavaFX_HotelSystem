@@ -90,9 +90,9 @@ public class ProdutoDAL {
 
         ps2 = connection.prepareStatement("SELECT quantidade FROM Stock WHERE idProduto = ?");
         ps2.setString(1, selectedID.getIdProduto());
-        for (int i = 0; i < Stock.getStock().size(); i++) {
-            if (selectedID != null && selectedID.getIdProduto().equals(Stock.getStock().get(i).getIdProduto())){
-                Integer quantidade = Stock.getStock().get(i).getQuantidade();
+        for (int i = 0; i < StockDAL.getStock().size(); i++) {
+            if (selectedID != null && selectedID.getIdProduto().equals(StockDAL.getStock().get(i).getIdProduto())){
+                Integer quantidade = StockDAL.getStock().get(i).getQuantidade();
                 return quantidade;
             }
         }

@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="PainelGestorProduto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestorComentarioController">
+<AnchorPane fx:id="PainelGestorProduto" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.GestorComentariosController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -38,17 +38,17 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoProdutos" layoutX="94.0" layoutY="157.0" prefHeight="45.0" prefWidth="146.0" text="Comentários:" textFill="WHITE">
+      <Label fx:id="lblGestaoProdutos" layoutX="71.0" layoutY="156.0" prefHeight="45.0" prefWidth="146.0" text="Comentários:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="Voltar" alignment="CENTER" layoutX="40.0" layoutY="455.0" mnemonicParsing="false" onAction="#VoltarClick" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
+      <Button fx:id="Voltar" alignment="CENTER" layoutX="18.0" layoutY="455.0" mnemonicParsing="false" onAction="#VoltarClick" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="  Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="37.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="18.0" layoutY="150.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/message.png" />
          </image>
@@ -58,21 +58,16 @@
             <Font name="Bernard MT Condensed" size="24.0" />
          </font>
       </Text>
-      <Button fx:id="Submeter" alignment="CENTER" layoutX="483.0" layoutY="455.0" mnemonicParsing="false" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Submeter" textFill="#dfc6ff">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <TableView fx:id="comentarioTable" layoutX="37.0" layoutY="202.0" onMouseClicked="#comentarioTableClick" prefHeight="230.0" prefWidth="251.0">
+      <TableView fx:id="comentarioTable" layoutX="18.0" layoutY="201.0" onMouseClicked="#comentarioTableClick" prefHeight="230.0" prefWidth="251.0">
         <columns>
           <TableColumn fx:id="idTable" prefWidth="75.0" text="ID" />
           <TableColumn fx:id="idCliente" prefWidth="75.0" text="ID Cliente" />
-            <TableColumn fx:id="comentario" prefWidth="100.0" text="Comentários" />
+            <TableColumn fx:id="comentario" prefWidth="100.0" text="Comentário" />
         </columns>
       </TableView>
-      <TextArea fx:id="comentarioArea" editable="false" layoutX="302.0" layoutY="205.0" prefHeight="230.0" prefWidth="405.0" wrapText="true">
+      <TextArea fx:id="comentarioArea" editable="false" layoutX="279.0" layoutY="199.0" prefHeight="230.0" prefWidth="428.0" wrapText="true">
          <font>
-            <Font name="Bernard MT Condensed" size="18.0" />
+            <Font size="18.0" />
          </font>
       </TextArea>
    </children>

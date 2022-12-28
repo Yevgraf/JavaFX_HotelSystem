@@ -1,10 +1,10 @@
 package DAL;
 ;
 import Model.Stock;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class StockDAL {
     public String getDescricaoStock (Stock selectedID) throws SQLException {
@@ -21,5 +21,22 @@ public class StockDAL {
         }
     }
         return null;
+    }
+
+    public static ObservableList<Stock> getStock() {
+        ObservableList<Stock> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM Stock";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Stock obj = new Stock(rs.getString("idProduto"), rs.getInt("quantidade"));
+                lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
     }
 }

@@ -83,7 +83,7 @@ public class StockController implements Initializable {
 
         idProdutoTable.setCellValueFactory(new PropertyValueFactory<Model.Stock, String>("idProduto"));
         quantidadeTable.setCellValueFactory(new PropertyValueFactory<Model.Stock, Integer>("quantidade"));
-        tblStock.setItems(Model.Stock.getStock());
+        tblStock.setItems(StockDAL.getStock());
     }
 
     @Override
