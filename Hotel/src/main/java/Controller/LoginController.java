@@ -64,15 +64,14 @@ public class LoginController implements Initializable {
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
                     UtilizadorPreferences.guardartipoLogin("funcionario");
-     //Inserir Login pág CLIENTE
-               // } else if (utilizador.getTipoUser().getTipo().equals("Cliente")) {
-                 //  FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
-                 //  Stage stage = new Stage();
-                 //  Stage newStage = (Stage) loginBtn.getScene().getWindow();
-                 //  stage.setTitle("Página do Cliente");
-                 //  newStage.hide();
-                 //  stage.setScene(new Scene(fxmlLoader.load()));
-                 //  stage.show();
+               } else if (utilizador.getTipoUser().getTipo().equals("Cliente")) {
+                   FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
+                   Stage stage = new Stage();
+                   Stage newStage = (Stage) loginBtn.getScene().getWindow();
+                   stage.setTitle("Pagina Cliente");
+                   newStage.hide();
+                   stage.setScene(new Scene(fxmlLoader.load()));
+                   stage.show();
                 }
             } else {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Login incorreto!","Erro");
