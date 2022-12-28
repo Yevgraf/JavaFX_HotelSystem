@@ -70,5 +70,10 @@
             <Font size="18.0" />
          </font>
       </TextArea>
+      <ImageView fx:id="imgGestorGestaoProduto1" fitHeight="45.0" fitWidth="68.0" layoutX="34.0" layoutY="467.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/voltar.jpeg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

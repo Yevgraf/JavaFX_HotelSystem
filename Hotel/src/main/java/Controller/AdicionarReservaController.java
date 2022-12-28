@@ -14,9 +14,11 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -59,7 +61,6 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     private ComboBox<Utilizador> cmbClientes;
-
 
 
     @FXML
@@ -116,13 +117,6 @@ public class AdicionarReservaController implements Initializable {
         }
     }
 
-
-
-    @FXML
-    void clickAddServicoBtn(ActionEvent event) {
-
-    }
-
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
@@ -134,10 +128,13 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-
     @FXML
     void AdicionarReserva() throws SQLException {
-        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION,"Comfirmar reserva","Deseja criar esta reserva?");
+        if(DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())){
+            MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser superior à data inicial.", "Aviso");
+            return;
+        }
+        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION, "Confirmar reserva", "Deseja criar esta reserva?");
         ReservaBLL reservaBLL = new ReservaBLL();
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
@@ -146,20 +143,15 @@ public class AdicionarReservaController implements Initializable {
 
         txtPreco.setText(reserva.getPreco().toString());
 
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Reserva criada", "Reserva");
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
     }
-
-
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
-        initTable();
     }
 
     private void initCombos() {
-
 
         cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos().stream()
                 .filter(quarto -> !quarto.getAtivo())
@@ -167,7 +159,6 @@ public class AdicionarReservaController implements Initializable {
 
         cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
     }
-
 
     public void cmbIdQuartoAction(ActionEvent actionEvent) {
         //cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
@@ -182,17 +173,6 @@ public class AdicionarReservaController implements Initializable {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
-    }
-    private void initTable() {
-
-        idServicoTable.setResizable(false);
-        descricaoServicoTable.setResizable(false);
-        precoServicoTable.setResizable(false);
-
-        idServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
-        descricaoServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
-        precoServicoTable.setCellValueFactory(new PropertyValueFactory<Servico, Double>("preco"));
-        servicosTable.setItems(ServicoBLL.getServicos());
     }
 
     public void VerificarDisponibilidade() {

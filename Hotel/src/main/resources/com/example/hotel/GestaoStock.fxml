@@ -52,7 +52,7 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="458.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="456.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoProdutos.png" />
          </image>
@@ -78,5 +78,10 @@
             <Font size="18.0" />
          </font>
       </Text>
+      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="100.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/voltar.jpeg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

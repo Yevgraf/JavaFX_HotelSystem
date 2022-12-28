@@ -84,10 +84,20 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="ServicoReserva" layoutX="196.0" layoutY="417.0" mnemonicParsing="false" onAction="#ServicoReservaClick" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Serviços-Reserva" textFill="#dfc6ff">
+      <Button fx:id="ServicoReserva" alignment="CENTER_RIGHT" layoutX="193.0" layoutY="417.0" mnemonicParsing="false" onAction="#ServicoReservaClick" prefHeight="45.0" prefWidth="166.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Adicionar Serviços" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
+      <ImageView fx:id="imgGestorEntradaStock21" fitHeight="30.0" fitWidth="30.0" layoutX="34.0" layoutY="422.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/voltar.jpeg" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="imgGestorEntradaStock22" fitHeight="30.0" fitWidth="45.0" layoutX="193.0" layoutY="423.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/gestaoServicos.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

@@ -102,5 +102,10 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
+      <ImageView fx:id="imgGestorEntradaStock21" fitHeight="39.0" fitWidth="49.0" layoutX="22.0" layoutY="485.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/voltar.jpeg" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
