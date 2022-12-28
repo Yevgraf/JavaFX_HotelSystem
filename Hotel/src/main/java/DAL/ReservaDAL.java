@@ -219,11 +219,20 @@ public class ReservaDAL {
         try {
             DBconn dbConn = new DBconn();
             connection = dbConn.getConn();
-            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=? AND estado <> 'checkin'");
+            ps = connection.prepareStatement("SELECT estado FROM EstadoReserva WHERE reserva=?");
+            ps.setInt(1, reservationId);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                String estado = rs.getString("estado");
+                if (estado.equals("checkin")) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+                    return;
+                }
+            }
+            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
         } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {
@@ -234,6 +243,7 @@ public class ReservaDAL {
             }
         }
     }
+
 
 
 

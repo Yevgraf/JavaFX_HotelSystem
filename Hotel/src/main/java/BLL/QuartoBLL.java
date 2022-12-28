@@ -27,16 +27,11 @@ public class QuartoBLL {
         quartoDAL.updateQuarto(quarto);
     }
 
-    public void removeQuarto(int id) throws SQLException {
+    public void removeQuarto(int idCartao) throws SQLException {
         QuartoDAL dal = new QuartoDAL();
-        CartaoDAL cdal = new CartaoDAL();
-        Quarto quarto = dal.deleteQuarto(id);
-        if (quarto != null) {
-            cdal.deleteCartao(quarto.getCartao().getId());
-            dal.deleteQuarto(id);
-
-        }
+        dal.deleteQuarto(idCartao);
     }
+
 
     public static ObservableList<Quarto> getQuartos() {
         return QuartoDAL.getAllQuartos();

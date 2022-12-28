@@ -1,22 +1,25 @@
 package Controller;
 
-import Model.RegistoCartao;
+import BLL.RegistoBLL;
+import Model.Registo;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 
-import java.time.LocalDate;
+import java.net.URL;
+import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class CartaoController {
+public class CartaoController implements Initializable {
 
     @FXML
     private Text cidadeTxt;
-
-    @FXML
-    private Text codigoPostalTxt;
 
     @FXML
     private Text dataTxt;
@@ -34,16 +37,22 @@ public class CartaoController {
     private Text ordemTxt;
 
     @FXML
-    private TableColumn<RegistoCartao, LocalDate> tbl_data;
+    private TableColumn<Registo, java.sql.Date> tbl_data;
 
     @FXML
-    private TableColumn<RegistoCartao, String> tbl_local;
+    private TableColumn<Registo, Integer> tbl_id;
 
     @FXML
-    private TableColumn<RegistoCartao, String> tbl_numCartao;
+    private TableColumn<Registo, Integer> tbl_idCartao;
 
     @FXML
-    private TableView<?> tv_registosCartao;
+    private TableColumn<Registo, Integer> tbl_idCliente;
+
+    @FXML
+    private TableColumn<Registo, String> tbl_local;
+
+    @FXML
+    private TableView<Registo> tv_registosCartao;
 
     @FXML
     private Text urlText;
@@ -56,4 +65,25 @@ public class CartaoController {
 
     }
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initTable();
+    }
+
+    private void initTable() {
+
+        RegistoBLL registoBLL = new RegistoBLL();
+        try {
+            ObservableList<Registo> registos = registoBLL.getAllRegistos();
+
+            tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
+            tbl_idCartao.setCellValueFactory(new PropertyValueFactory<>("idCartao"));
+            tbl_idCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+            tbl_local.setCellValueFactory(new PropertyValueFactory<>("Local"));
+            tbl_data.setCellValueFactory(new PropertyValueFactory<>("Data"));
+            tv_registosCartao.setItems(registos);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

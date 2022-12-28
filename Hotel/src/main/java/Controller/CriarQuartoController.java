@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.CartaoBLL;
 import BLL.QuartoBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
@@ -195,11 +196,17 @@ public class CriarQuartoController implements Initializable {
     }
 
     public void clickRmvQuarto(ActionEvent actionEvent) {
-        QuartoBLL bll = new QuartoBLL();
+        QuartoBLL quartoBLL = new QuartoBLL();
+        CartaoBLL cartaoBLL = new CartaoBLL();
         Quarto selectedQuarto = tv_Quarto.getSelectionModel().getSelectedItem();
         if (selectedQuarto != null) {
             try {
-                bll.removeQuarto(selectedQuarto.getId());
+                // delete the entry in the Quarto table
+                quartoBLL.removeQuarto(selectedQuarto.getId());
+
+                // delete the entry in the Cartao table
+                cartaoBLL.deleteCartao(selectedQuarto.getCartao().getId());
+
                 tv_Quarto.getItems().remove(selectedQuarto);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto Removido", "Information");
             } catch (SQLException ex) {
@@ -208,6 +215,8 @@ public class CriarQuartoController implements Initializable {
             }
         }
     }
+
+
 
     public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
