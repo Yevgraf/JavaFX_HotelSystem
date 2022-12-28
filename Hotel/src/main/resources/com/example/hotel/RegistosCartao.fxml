@@ -12,9 +12,11 @@
         <Text fx:id="urlText" layoutX="14.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="236.0" />
         <TableView fx:id="tv_registosCartao" layoutX="14.0" layoutY="124.0" prefHeight="483.0" prefWidth="981.0">
             <columns>
-                <TableColumn fx:id="tbl_numCartao" prefWidth="116.0" text="Nº Cartao" />
-                <TableColumn fx:id="tbl_local" prefWidth="199.4000244140625" text="Local" />
-            <TableColumn fx:id="tbl_data" prefWidth="203.0" text="Data" />
+                <TableColumn fx:id="tbl_id" prefWidth="100.0" text="id" />
+                <TableColumn fx:id="tbl_idCartao" prefWidth="160.0" text="idCartao" />
+            <TableColumn fx:id="tbl_idCliente" prefWidth="201.0" text="idCliente" />
+            <TableColumn fx:id="tbl_local" prefWidth="311.0" text="Local" />
+            <TableColumn fx:id="tbl_data" prefWidth="208.0" text="Data" />
             </columns>
         </TableView>
         <Text fx:id="ordemTxt" fill="RED" layoutX="373.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="174.1640625">
@@ -47,7 +49,7 @@
                 <Font size="18.0" />
             </font>
         </Button>
-        <Text layoutX="14.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regitos do Cartão">
+        <Text layoutX="14.0" layoutY="103.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Regitos do Cartão:">
             <font>
                 <Font size="18.0" />
             </font>
