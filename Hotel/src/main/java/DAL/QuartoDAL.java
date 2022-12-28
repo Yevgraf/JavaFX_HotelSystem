@@ -63,15 +63,16 @@ public class QuartoDAL {
     }
 
 
-    public Quarto deleteQuarto(int id) throws SQLException {
+    public void deleteQuarto(int idCartao) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
 
         PreparedStatement ps = connection.prepareStatement("DELETE FROM Quarto WHERE id = ?");
-        ps.setInt(1, id);
+        ps.setInt(1, idCartao);
         ps.executeUpdate();
-        return null;
     }
+
+
 
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
