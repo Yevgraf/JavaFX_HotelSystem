@@ -56,10 +56,10 @@ public class GestorController {
 
     @FXML
     void GComentariosClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource(""));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestorComentarios.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) GComentarios.getScene().getWindow();
-        stage.setTitle("Opiniao Utilizadores");
+        stage.setTitle("Comentarios");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

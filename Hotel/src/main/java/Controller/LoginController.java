@@ -54,7 +54,6 @@ public class LoginController implements Initializable {
                     newStage.hide();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
-                    UtilizadorPreferences.guardartipoLogin("gestor");
                 } else if (utilizador.getTipoUser().getTipo().equals("Funcionario")) {
                     FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
                     Stage stage = new Stage();
@@ -63,7 +62,6 @@ public class LoginController implements Initializable {
                     newStage.hide();
                     stage.setScene(new Scene(fxmlLoader.load()));
                     stage.show();
-                    UtilizadorPreferences.guardartipoLogin("funcionario");
                } else if (utilizador.getTipoUser().getTipo().equals("Cliente")) {
                    FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
                    Stage stage = new Stage();

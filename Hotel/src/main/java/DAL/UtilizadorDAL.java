@@ -1,5 +1,6 @@
 package DAL;
 
+import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
 import Model.Servico;
 import Model.TipoUtilizador;
@@ -12,6 +13,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.prefs.Preferences;
 
 public class UtilizadorDAL {
     public static List<Utilizador> getUsersByType(int i) {
@@ -89,6 +91,8 @@ public class UtilizadorDAL {
 
         if (result.next()) {
             if (result.first()) {
+                UtilizadorPreferences.guardaridCliente(result.getInt("uID"));
+                UtilizadorPreferences.guardartipoLogin(result.getString("tuNome"));
                 return new Utilizador(
                         result.getInt("uId"),
                         result.getString("uNome"),
@@ -105,7 +109,6 @@ public class UtilizadorDAL {
                 );
             }
         }
-
         return null;
     }
 

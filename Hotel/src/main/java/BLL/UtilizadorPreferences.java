@@ -4,14 +4,11 @@ public class UtilizadorPreferences {
 
     private static String tipoUtilizador = "";
 
+    private static Integer utilizadorId;
+
     public static void guardartipoLogin(String tipo) {
         // Set the login type
         tipoUtilizador = tipo;
-    }
-
-    public static String getTipoLogin() {
-        // Get the login type
-        return tipoUtilizador;
     }
 
     public static void apagarTipoLogin() {
@@ -20,12 +17,27 @@ public class UtilizadorPreferences {
     }
 
     public static boolean comparaTipoLogin(){
-        if (tipoUtilizador.equals("gestor")){
+        if (tipoUtilizador.equals("Gestor")){
             return true;
         } else {
             return false;
         }
     }
+    public static void guardaridCliente(Integer id) {
+        // Set the client id
+        utilizadorId = id;
+    }
+
+    public static Integer utilizadorId() {
+        // Get the login type
+        return utilizadorId;
+    }
+
+    public static String getTipoLogin() {
+        // Get the login type
+        return tipoUtilizador;
+    }
+
 }
 
 
