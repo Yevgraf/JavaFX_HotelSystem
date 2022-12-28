@@ -109,7 +109,7 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="lblHoras13111" layoutX="397.0" layoutY="217.0" prefHeight="55.0" prefWidth="156.0" text="Tipo de colaborador" textFill="WHITE">
+      <Label fx:id="lblHoras13111" layoutX="397.0" layoutY="217.0" prefHeight="55.0" prefWidth="156.0" text="Tipo de Utilizador" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
