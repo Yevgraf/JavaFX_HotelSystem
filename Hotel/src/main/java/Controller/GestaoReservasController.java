@@ -129,6 +129,8 @@ public class GestaoReservasController implements Initializable {
 
     private void initTable() {
 
+        ReservaBLL reservaBLL = new ReservaBLL();
+
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
         tblCoIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
         tblCoIDQuarto.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idQuarto"));
@@ -136,7 +138,7 @@ public class GestaoReservasController implements Initializable {
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
 
-        tblReservas.setItems(ReservaBLL.getReservas());
+        tblReservas.setItems(reservaBLL.getReservas());
     }
 
 

@@ -35,7 +35,8 @@ public class CheckInController {
     }
 
     private void initCombos() {
-        ObservableList<Reserva> reservations = ReservaBLL.getReservas();
+        ReservaBLL reservaBLL = new ReservaBLL();
+        ObservableList<Reserva> reservations = reservaBLL.getReservas();
         reservationComboBox.setItems(reservations);
 
     }

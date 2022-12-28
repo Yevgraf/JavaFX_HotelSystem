@@ -45,6 +45,11 @@ public class ClienteComentariosController implements Initializable {
     @FXML
     void SubmeterClick(ActionEvent event) {
         try {
+            if (campoComentario.getText() == null || campoComentario.getText().trim().isEmpty()) {
+                MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "O campo de mensagem não pode ser vazio.", "Erro no formulário.");
+                return;
+            }
+
             Comentario comentario = new Comentario(
                     null,
                     UtilizadorPreferences.utilizadorId(),
@@ -52,6 +57,7 @@ public class ClienteComentariosController implements Initializable {
 
             comentarioBLL.addComentario(comentario);
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Comentário inserido com sucesso", "Informação!");
+            campoComentario.setText("");
         } catch (SQLException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não foi possível inserir o comentátrio.", "Erro!");
             throw new RuntimeException(e);
@@ -59,7 +65,7 @@ public class ClienteComentariosController implements Initializable {
     }
 
     private void contaLetras() {
-        int tamanhoTexto = 200;
+        int tamanhoTexto = 300;
         campoComentario.textProperty().addListener(
                 (observable, oldValue, newValue) -> {
                     if (newValue.length() > tamanhoTexto) campoComentario.setText(oldValue);

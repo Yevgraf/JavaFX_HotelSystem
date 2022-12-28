@@ -12,7 +12,7 @@ import java.util.List;
 
 public class ReservaDAL {
 
-    public int addReserva(Reserva reserva) throws SQLException {
+    public Reserva addReserva(Reserva reserva) throws SQLException {
         PreparedStatement ps = null;
         int reservationId = -1; // Initialize the reservation ID to -1
         Connection connection = null;
@@ -38,7 +38,9 @@ public class ReservaDAL {
                 addReservationState(reservationId, "pendente");
             }
 
-            return reservationId;
+            reserva.setId(reservationId);
+
+            return reserva;
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
@@ -145,7 +147,8 @@ public class ReservaDAL {
                 "SUM(s.preco) as serviceAmount, SUM(q.preco) as roomPrice " +
                 "FROM Reserva r " +
                 "JOIN ProdutoQuarto pq ON r.idQuarto = pq.idQuarto " +
-                "JOIN Servico s ON r.id = s.id " +
+                "JOIN ServicoReserva sr ON r.id = sr.idReserva " +
+                "JOIN Servico s ON s.id = sr.idServico " +
                 "JOIN Produto p ON pq.idProduto = p.id " +
                 "JOIN Quarto q ON pq.idQuarto = q.id " +
                 "WHERE r.id = ?";
@@ -167,6 +170,30 @@ public class ReservaDAL {
         }
 
         return totalAmount;
+    }
+
+    public double getTotalServicosReserva(int reservationId) throws SQLException {
+        String sql = "SELECT SUM(s.preco) as preco " +
+                "FROM Reserva r " +
+                "JOIN ServicoReserva sr ON r.id = sr.idReserva " +
+                "JOIN Servico s ON s.id = sr.idServico " +
+                "WHERE r.id = ?";
+
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, reservationId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("preco");
+                }
+            }
+        }
+
+        return 0;
+    }
+
+    public double getTotalProdutosReserva(int reservationId) throws SQLException {
+        return 0;
     }
 
     public void addReservationState(int reservationId, String estado) throws SQLException {

@@ -91,8 +91,6 @@ public class UtilizadorDAL {
 
         if (result.next()) {
             if (result.first()) {
-                UtilizadorPreferences.guardaridCliente(result.getInt("uID"));
-                UtilizadorPreferences.guardartipoLogin(result.getString("tuNome"));
                 return new Utilizador(
                         result.getInt("uId"),
                         result.getString("uNome"),

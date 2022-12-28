@@ -94,7 +94,9 @@ public class ServicoReservaController implements Initializable {
     }
 
     private void initCombos() {
-        ObservableList<Reserva> reservations = ReservaBLL.getReservas();
+        ReservaBLL reservaBLL = new ReservaBLL();
+
+        ObservableList<Reserva> reservations = reservaBLL.getReservas();
         cmbReserva.setItems(reservations);
     }
 }

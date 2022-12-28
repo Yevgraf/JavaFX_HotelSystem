@@ -121,4 +121,22 @@ public class QuartoDAL {
         }
     }
 
+    public double getPreco(int quartoId) throws SQLException {
+        String sql = "SELECT preco " +
+                "FROM Quarto q " +
+                "WHERE q.id = ?";
+
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, quartoId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getDouble("preco");
+                }
+            }
+        }
+
+        return 0;
+    }
+
 }

@@ -55,7 +55,7 @@ public class ComentarioDAL {
         return list;
     }
 
-    public String getComentario (Comentario selectedID) throws SQLException {
+    public String getComentario(Comentario selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -63,7 +63,7 @@ public class ComentarioDAL {
         ps2 = connection.prepareStatement("SELECT comentario FROM Comentario WHERE id = ?");
         ps2.setInt(1, selectedID.getId());
         for (int i = 0; i < getAllComentarios().size(); i++) {
-            if (selectedID != null && selectedID.getId() == getAllComentarios().get(i).getId()){
+            if (selectedID != null && selectedID.getId() == getAllComentarios().get(i).getId()) {
                 String comentario = getAllComentarios().get(i).getComentario();
                 return comentario;
             }

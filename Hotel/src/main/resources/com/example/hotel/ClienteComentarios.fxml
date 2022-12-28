@@ -75,7 +75,7 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="615.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ 200">
+      <Text fill="WHITE" layoutX="615.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ 300">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
