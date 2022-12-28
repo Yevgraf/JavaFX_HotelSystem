@@ -57,24 +57,6 @@ public class ProdutoQuarto {
         this.quantidade = quantidade;
     }
 
-    public static ObservableList<ProdutoQuarto> getProdutoQuarto() {
-        ObservableList<ProdutoQuarto> lista = FXCollections.observableArrayList();
-        try {
-            String cmd = "SELECT * FROM ProdutoQuarto";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
-            while (rs.next()) {
-                ProdutoQuarto obj = new ProdutoQuarto(rs.getInt("id"),rs.getInt("idQuarto"),rs.getString("idProduto"),
-                        rs.getInt("quantidade"));
-                lista.add(obj);
-            }
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
-        }
-        return lista;
-    }
-
     @Override
     public String toString() {
         return "ProdutoQuartoController{" +

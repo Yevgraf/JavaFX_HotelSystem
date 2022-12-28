@@ -1,9 +1,10 @@
 package DAL;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Model.ProdutoQuarto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.*;
 
 public class ProdutoQuartoDAL {
     public static void addProductInRoom(int roomId, String productId, int quantity) throws SQLException {
@@ -49,4 +50,23 @@ public class ProdutoQuartoDAL {
             throw new RuntimeException(ex);
         }
     }
+
+    public static ObservableList<ProdutoQuarto> getProdutoQuarto() {
+        ObservableList<ProdutoQuarto> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM ProdutoQuarto";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                ProdutoQuarto obj = new ProdutoQuarto(rs.getInt("id"),rs.getInt("idQuarto"),rs.getString("idProduto"),
+                        rs.getInt("quantidade"));
+                lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
+    }
+
 }

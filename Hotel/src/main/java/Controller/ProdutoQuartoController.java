@@ -2,6 +2,7 @@ package Controller;
 
 import BLL.ProdutoQuartoBLL;
 import DAL.ProdutoDAL;
+import DAL.ProdutoQuartoDAL;
 import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
@@ -73,7 +74,7 @@ public class ProdutoQuartoController implements Initializable {
         tbl_quantidade.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("quantidade"));
 
 
-        tv_ProdutoQuarto.setItems(Model.ProdutoQuarto.getProdutoQuarto());
+        tv_ProdutoQuarto.setItems(ProdutoQuartoDAL.getProdutoQuarto());
     }
     private void initCombos() {
         cmbQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
