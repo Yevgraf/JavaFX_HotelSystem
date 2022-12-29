@@ -92,6 +92,8 @@ public class ProdutoQuartoController implements Initializable {
             return;
         }
         ProdutoQuartoBLL.addProductInRoom(selectedRoom.getId(), selectedProduct.getIdProduto(), quantity);
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado ao quarto.", "Informação");
+        initTable();
     }
 
 
@@ -106,6 +108,7 @@ public class ProdutoQuartoController implements Initializable {
         Model.ProdutoQuarto selectedProduct = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
             ProdutoQuartoBLL.deleteProductFromRoom(selectedProduct);
+            initTable();
         }
     }
 

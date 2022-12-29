@@ -131,7 +131,7 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     void AdicionarReserva() throws SQLException {
         if(DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())){
-            MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser superior à data inicial.", "Aviso");
+            MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
         MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION, "Confirmar reserva", "Deseja criar esta reserva?");
