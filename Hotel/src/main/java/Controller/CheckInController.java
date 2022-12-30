@@ -1,57 +1,91 @@
 package Controller;
 
 import BLL.CheckInBLL;
-import BLL.ReservaBLL;
-import BLL.UtilizadorPreferences;
+import BLL.CheckoutBLL;
 import Model.MessageBoxes;
+import Model.Pagamento;
 import Model.Reserva;
-import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
-import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class CheckInController {
+public class CheckInController implements Initializable {
+
+    @FXML
+    private AnchorPane PainelGestorStock;
 
     @FXML
     private Button Voltar;
 
     @FXML
-    private ComboBox<Reserva> reservationComboBox;
+    private Button btnCheckOut;
 
-    public void initialize() {
+    @FXML
+    private Button btnCheckin;
 
-        initCombos();
+    @FXML
+    private ImageView imgGestorGestaoProduto;
+
+    @FXML
+    private ImageView imgGestorStock;
+
+    @FXML
+    private ImageView imgGestorStock1;
+
+    @FXML
+    private ImageView imgGestorStock11;
+
+    @FXML
+    private Label lblData1;
+
+    @FXML
+    private Label lblData11;
+
+    @FXML
+    private Label lblHotel;
+
+    @FXML
+    private Label lblSamos;
+
+    @FXML
+    private ListView<Reserva> listViewReservaComcheckin;
+
+    @FXML
+    private ListView<Reserva> listViewReservaSemCheckin;
+
+    @FXML
+    private ComboBox<Pagamento> metodoPagamento;
+
+    private void initCombos() throws SQLException {
+        CheckoutBLL checkoutBLL = new CheckoutBLL();
+        ObservableList<Pagamento> pagamentos = checkoutBLL.getPagamentos();
+        metodoPagamento.setItems(pagamentos);
+
     }
 
-    private void initCombos() {
-        ReservaBLL reservaBLL = new ReservaBLL();
-        ObservableList<Reserva> reservations = reservaBLL.getReservas();
-        reservationComboBox.setItems(reservations);
+
+    @FXML
+    void VoltarClick(ActionEvent event) {
 
     }
 
     @FXML
-    private void handleCheckInButtonAction(ActionEvent event) {
-        Reserva reservation = reservationComboBox.getSelectionModel().getSelectedItem();
-        if (reservation == null) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor selecione uma reserva");
-        } else {
-            CheckInBLL checkInBLL = new CheckInBLL();
-            performCheckIn(reservation);
-            // show a success message and close the window
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Sucesso", "Check-in realizado com sucesso");
-        }
+    void checkoutBtnAction(ActionEvent event) {
+
+    }
+
+    @FXML
+    void handleCheckInButtonAction(ActionEvent event) {
+
     }
 
     private void performCheckIn(Reserva reservation) {
@@ -60,31 +94,35 @@ public class CheckInController {
             checkInBll.checkIn(reservation.getId());
         } catch (SQLException e) {
             // show error message to the user
-           MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem performing the check-in. Please try again later.");
-        }
-    }
-
-    @FXML
-    void VoltarClick(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) Voltar.getScene().getWindow();
-            stage.setTitle("Pagina Gestor");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) Voltar.getScene().getWindow();
-            stage.setTitle("Pagina Funcionario");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem performing the check-in. Please try again later.");
         }
     }
 
 
+    private void initListViews() {
+        CheckoutBLL bll = new CheckoutBLL();
+        try {
+            listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
+        } catch (SQLException e) {
+            // show error message to the user
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem retrieving the pending reservations. Please try again later.");
+        }
 
+        try {
+            listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
+        } catch (SQLException e) {
+            // show error message to the user
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem retrieving the pending reservations. Please try again later.");
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            initCombos();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        initListViews();
+    }
 }

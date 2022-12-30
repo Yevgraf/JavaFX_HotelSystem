@@ -28,4 +28,12 @@ public class Pagamento {
     public String getMetodoPagamento() {
         return metodoPagamento;
     }
+
+
+    @Override
+    public String toString() {
+        return
+                metodoPagamento;
+
+    }
 }
