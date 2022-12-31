@@ -104,12 +104,12 @@ public class CheckInController implements Initializable {
     void checkoutBtnAction(ActionEvent event) {
         Reserva selectedReservation = listViewReservaComcheckin.getSelectionModel().getSelectedItem();
         if (selectedReservation == null) {
-            // show error message if no reservation is selected
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
             return;
         }
 
-        // get the selected payment method
+
         Pagamento selectedPaymentMethod = metodoPagamento.getSelectionModel().getSelectedItem();
         if (selectedPaymentMethod == null) {
             // show error message if no payment method is selected
@@ -117,7 +117,7 @@ public class CheckInController implements Initializable {
             return;
         }
 
-        // update the reservation state to checkout
+
         CheckoutBLL checkoutBll = new CheckoutBLL();
         try {
             checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
