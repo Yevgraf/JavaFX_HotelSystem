@@ -122,20 +122,20 @@ public class CheckInController implements Initializable {
         try {
             checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
 
-            // get the total cost of the reservation
+
             ReservaBLL reservaBLL = new ReservaBLL();
             double totalCost = reservaBLL.getTotalReserva(selectedReservation);
 
-            // create the receipt text
+
             String receiptText = "Reserva: " + selectedReservation.getId() + "\n";
             receiptText += "Preço Final: " + totalCost + "\n";
             receiptText += "Método de Pagamento: " + selectedPaymentMethod.getMetodoPagamento() + "\n";
 
-            // display the receipt to the user
+
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Recibo", receiptText);
             initListViews();
         } catch (SQLException e) {
-            // show error message if there is a problem updating the reservation state
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao realizar o checkout. Por favor, tente novamente mais tarde.");
         }
     }
@@ -143,18 +143,18 @@ public class CheckInController implements Initializable {
 
             @FXML
     void handleCheckInButtonAction(ActionEvent event) {
-        // get the selected reservation from the list view
+
         Reserva selectedReservation = listViewReservaSemCheckin.getSelectionModel().getSelectedItem();
 
-        // check if a reservation was selected
+
         if (selectedReservation != null) {
             // perform the check-in
             performCheckIn(selectedReservation);
 
-            // update the list views
+
             initListViews();
         } else {
-            // show error message to the user
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Por favor, selecione uma reserva da lista.");
         }
     }
@@ -164,7 +164,7 @@ public class CheckInController implements Initializable {
         try {
             checkInBll.checkIn(reservation.getId());
         } catch (SQLException e) {
-            // show error message to the user
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.");
         }
     }
@@ -175,14 +175,14 @@ public class CheckInController implements Initializable {
         try {
             listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
         } catch (SQLException e) {
-            // show error message to the user
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
 
         try {
             listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
         } catch (SQLException e) {
-            // show error message to the user
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
     }
