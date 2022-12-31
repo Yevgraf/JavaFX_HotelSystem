@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.CheckInDAL;
 import DAL.CheckoutDAL;
+import DAL.QuartoDAL;
 import DAL.ReservaDAL;
 import Model.CheckIn;
 import Model.Checkout;
@@ -33,5 +34,13 @@ public class CheckoutBLL {
     public List<Reserva> getCheckedInReservations() throws SQLException {
         CheckoutDAL dal = new CheckoutDAL();
         return dal.getCheckedInReservations();
+    }
+
+    public void updateReservationStateCheckout(int reservationId) throws SQLException {
+        ReservaDAL dal = new ReservaDAL();
+        dal.updateReservationState(reservationId, "checkout");
+
+        QuartoDAL quartoDal = new QuartoDAL();
+        quartoDal.updateAtivo(reservationId, false);
     }
 }

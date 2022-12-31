@@ -2,18 +2,25 @@ package Controller;
 
 import BLL.CheckInBLL;
 import BLL.CheckoutBLL;
+import BLL.ReservaBLL;
+import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
 import Model.Pagamento;
 import Model.Reserva;
+import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -74,18 +81,82 @@ public class CheckInController implements Initializable {
 
 
     @FXML
-    void VoltarClick(ActionEvent event) {
-
+    void VoltarClick(ActionEvent event) throws IOException {
+        if (UtilizadorPreferences.comparaTipoLogin()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) Voltar.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) Voltar.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
     }
-
     @FXML
     void checkoutBtnAction(ActionEvent event) {
+        Reserva selectedReservation = listViewReservaComcheckin.getSelectionModel().getSelectedItem();
+        if (selectedReservation == null) {
+            // show error message if no reservation is selected
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
+            return;
+        }
 
+        // get the selected payment method
+        Pagamento selectedPaymentMethod = metodoPagamento.getSelectionModel().getSelectedItem();
+        if (selectedPaymentMethod == null) {
+            // show error message if no payment method is selected
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione um método de pagamento.");
+            return;
+        }
+
+        // update the reservation state to checkout
+        CheckoutBLL checkoutBll = new CheckoutBLL();
+        try {
+            checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
+
+            // get the total cost of the reservation
+            ReservaBLL reservaBLL = new ReservaBLL();
+            double totalCost = reservaBLL.getTotalReserva(selectedReservation);
+
+            // create the receipt text
+            String receiptText = "Reserva: " + selectedReservation.getId() + "\n";
+            receiptText += "Preço Final: " + totalCost + "\n";
+            receiptText += "Método de Pagamento: " + selectedPaymentMethod.getMetodoPagamento() + "\n";
+
+            // display the receipt to the user
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Recibo", receiptText);
+            initListViews();
+        } catch (SQLException e) {
+            // show error message if there is a problem updating the reservation state
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao realizar o checkout. Por favor, tente novamente mais tarde.");
+        }
     }
 
-    @FXML
-    void handleCheckInButtonAction(ActionEvent event) {
 
+            @FXML
+    void handleCheckInButtonAction(ActionEvent event) {
+        // get the selected reservation from the list view
+        Reserva selectedReservation = listViewReservaSemCheckin.getSelectionModel().getSelectedItem();
+
+        // check if a reservation was selected
+        if (selectedReservation != null) {
+            // perform the check-in
+            performCheckIn(selectedReservation);
+
+            // update the list views
+            initListViews();
+        } else {
+            // show error message to the user
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Por favor, selecione uma reserva da lista.");
+        }
     }
 
     private void performCheckIn(Reserva reservation) {
@@ -94,7 +165,7 @@ public class CheckInController implements Initializable {
             checkInBll.checkIn(reservation.getId());
         } catch (SQLException e) {
             // show error message to the user
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem performing the check-in. Please try again later.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.");
         }
     }
 
@@ -105,14 +176,14 @@ public class CheckInController implements Initializable {
             listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
         } catch (SQLException e) {
             // show error message to the user
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem retrieving the pending reservations. Please try again later.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
 
         try {
             listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
         } catch (SQLException e) {
             // show error message to the user
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem retrieving the pending reservations. Please try again later.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
     }
 

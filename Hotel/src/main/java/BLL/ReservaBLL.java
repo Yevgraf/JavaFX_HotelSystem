@@ -63,17 +63,17 @@ public class ReservaBLL {
         reservaDAL.updateReserva(reserva);
     }
 
-    private double getTotalServicosReserva(Integer reservationId) throws SQLException {
+    private static double getTotalServicosReserva(Integer reservationId) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         return reservaDAL.getTotalServicosReserva(reservationId);
     }
 
-    private double getTotalProdutosReserva(Integer reservationId) throws SQLException {
+    private static double getTotalProdutosReserva(Integer reservationId) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         return reservaDAL.getTotalProdutosReserva(reservationId);
     }
 
-    private double getTotalReserva(Reserva reserva) throws SQLException {
+    public static double getTotalReserva(Reserva reserva) throws SQLException {
         QuartoDAL quartoDAL = new QuartoDAL();
         double precoQuarto = quartoDAL.getPreco(reserva.getIdQuarto());
 
