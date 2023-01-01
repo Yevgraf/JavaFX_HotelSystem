@@ -54,32 +54,6 @@ public class ReservaDAL {
     }
 
 
-    public Reserva getReservaByQuartoId(int quartoId) {
-        Reserva reserva = null;
-        PreparedStatement ps;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-            ps = connection.prepareStatement("SELECT * FROM Reserva WHERE idQuarto = ?");
-            ps.setInt(1, quartoId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-
-                SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-                String dataInicio = dateFormat.format(rs.getDate("dataInicio"));
-                String dataFim = dateFormat.format(rs.getDate("dataFim"));
-
-                reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
-                        rs.getInt("idQuarto"), dataInicio, dataFim, rs.getDouble("preco"));
-
-            }
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        return reserva;
-    }
-
-
     public static List<Reserva> getReservas() {
         List<Reserva> reservas = new ArrayList<>();
         try {
@@ -261,8 +235,6 @@ public class ReservaDAL {
             }
         }
     }
-
-
 
 
 }

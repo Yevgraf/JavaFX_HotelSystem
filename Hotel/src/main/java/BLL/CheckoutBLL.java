@@ -16,11 +16,6 @@ import java.util.List;
 
 public class CheckoutBLL {
 
-    public void addCheckoutBLL(Checkout checkout) throws SQLException {
-        CheckoutDAL dal = new CheckoutDAL();
-        dal.addCheckout(checkout);
-    }
-
 
     public ObservableList<Pagamento> getPagamentos() throws SQLException {
         CheckoutDAL dal = new CheckoutDAL();

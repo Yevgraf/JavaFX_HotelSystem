@@ -67,26 +67,4 @@ public class CheckoutDAL {
         return pendingReservations;
     }
 
-    public void updateReservationStateCheckout(int reservationId, String estado) throws SQLException {
-        PreparedStatement ps = null;
-        Connection connection = null;
-        try {
-            DBconn dbConn = new DBconn();
-            connection = dbConn.getConn();
-            ps = connection.prepareStatement("UPDATE EstadoReserva SET estado = ? WHERE reserva = ?");
-            ps.setString(1, estado);
-            ps.setInt(2, reservationId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
 }
