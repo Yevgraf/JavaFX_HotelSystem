@@ -22,6 +22,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -103,11 +104,22 @@ public class CriarQuartoController implements Initializable {
     void clickAddQuarto(ActionEvent event) throws SQLException {
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-                ADDQuarto();
-            } else {
+            ADDQuarto();
+        } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
+        if(cmbPiso.getValue().equals("1")){
+            VerificarQuartoPiso1();
+        }else
+            VerificarQuartoPiso2();
 
+        if (cmbTipoQuarto.getValue().equals("Singular")) {
+            VerificarQuartoSingular();
+        }
+        if (cmbTipoQuarto.getValue().equals("Duplo")) {
+            VerificarQuartoDuplo();
+        } else
+            VerificarQuartoFamiliar();
     }
 
     public void ADDQuarto() throws SQLException {
@@ -235,6 +247,111 @@ public class CriarQuartoController implements Initializable {
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<>("tipoQuarto"));
         tbl_idCartao.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCartao().getId().toString()));
         tv_Quarto.setItems(QuartoBLL.getQuartos());
+    }
+
+    public boolean VerificarQuartoPiso1(){
+        boolean vQ1 = false;
+        String verificarquarto1 = "select count(id) from Quarto where piso = '" + txt_piso.getText() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 10 ) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vQ1 = false;
+                }else{
+                    vQ1 = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vQ1;
+    }
+
+    public boolean VerificarQuartoPiso2(){
+        boolean vQ1 = false;
+        String verificarquarto1 = "select count(id) from Quarto where piso = '" + txt_piso.getText() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 10 ) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vQ1 = false;
+                }else{
+                    vQ1 = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vQ1;
+    }
+
+    public boolean VerificarQuartoSingular(){
+        boolean vQ1 = false;
+        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 7 ) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vQ1 = false;
+                }else{
+                    vQ1 = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vQ1;
+    }
+
+    public boolean VerificarQuartoDuplo(){
+        boolean vQ1 = false;
+        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 10 ) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vQ1 = false;
+                }else{
+                    vQ1 = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vQ1;
+    }
+
+    public boolean VerificarQuartoFamiliar(){
+        boolean vQ1 = false;
+        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 3 ) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vQ1 = false;
+                }else{
+                    vQ1 = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vQ1;
     }
 
 }
