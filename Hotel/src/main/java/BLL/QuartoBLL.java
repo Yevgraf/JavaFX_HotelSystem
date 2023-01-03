@@ -37,5 +37,7 @@ public class QuartoBLL {
         return QuartoDAL.getAllQuartos();
     }
 
+
+
 }
 

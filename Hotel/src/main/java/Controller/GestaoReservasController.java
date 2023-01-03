@@ -22,8 +22,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class GestaoReservasController implements Initializable {
 
@@ -140,6 +141,5 @@ public class GestaoReservasController implements Initializable {
 
         tblReservas.setItems(reservaBLL.getReservas());
     }
-
 
 }

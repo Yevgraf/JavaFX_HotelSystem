@@ -138,5 +138,4 @@ public class QuartoDAL {
 
         return 0;
     }
-
 }
