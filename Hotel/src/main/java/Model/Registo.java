@@ -9,6 +9,7 @@ private Integer idCliente;
 private String Local;
 private java.sql.Date Data;
 
+
     public Registo() {
     }
 

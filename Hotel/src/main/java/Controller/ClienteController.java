@@ -20,6 +20,9 @@ public class ClienteController {
     @FXML
     private ImageView LogOut;
 
+    @FXML
+    private Button cartao;
+
 
     @FXML
     void ComentariosClick(ActionEvent event) throws IOException {
@@ -38,6 +41,17 @@ public class ClienteController {
         Stage stage = new Stage();
         Stage newStage = (Stage) LogOut.getScene().getWindow();
         stage.setTitle("Login");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void cartaoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartaoCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) Comentarios.getScene().getWindow();
+        stage.setTitle("Passar Cartão");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

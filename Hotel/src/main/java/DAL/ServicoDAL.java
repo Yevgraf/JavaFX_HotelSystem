@@ -50,4 +50,23 @@ public class ServicoDAL {
         return lista;
     }
 
+    public static ObservableList<Servico> getServicosByClientId() {
+        ObservableList<Servico> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM Servico s" +
+                    "JOIN  ServicoReserva sr ON s.id = sr.id" +
+                    "JOIN Reserva r ON sr.id = r.id" +
+                    "WHERE r.idCliente = ?";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Servico obj = new Servico(rs.getInt("id"), rs.getString("servico"), rs.getDouble("preco"));
+                lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+        }
+        return lista;
+    }
+
 }
