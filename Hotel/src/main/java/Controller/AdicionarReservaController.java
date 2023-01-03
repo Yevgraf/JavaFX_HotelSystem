@@ -111,9 +111,9 @@ public class AdicionarReservaController implements Initializable {
         }
 
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
-            if (VerificarDisponibilidade() == true){
+            //if (VerificarDisponibilidade() == true){
                 AdicionarReserva();
-            }
+            //}
         } else {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
         }
