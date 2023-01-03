@@ -1,5 +1,8 @@
 package Controller;
+import DAL.ServicoDAL;
+import DAL.StockDAL;
 import Model.Servico;
+import Model.Stock;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -9,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -48,8 +52,17 @@ public class ClienteCartaoController implements Initializable {
 
     }
 
+    private void initTable() {
+        idTable.setResizable(false);
+        descricaoTable.setResizable(false);
+
+        idTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
+        descricaoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
+        servicos.setItems(ServicoDAL.getServicosByClientId());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        initTable();
     }
 }

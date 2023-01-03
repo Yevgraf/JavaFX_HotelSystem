@@ -1,5 +1,6 @@
 package DAL;
 
+import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
 import Model.Servico;
 import javafx.collections.FXCollections;
@@ -51,19 +52,23 @@ public class ServicoDAL {
     }
 
     public static ObservableList<Servico> getServicosByClientId() {
+        Integer id = UtilizadorPreferences.utilizadorId();
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
-            String cmd = "SELECT * FROM Servico s" +
-                    "JOIN  ServicoReserva sr ON s.id = sr.id" +
-                    "JOIN Reserva r ON sr.id = r.id" +
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT s.id as sId, s.servico as servico " +
+                    "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " +
+                    "JOIN Reserva r ON r.id = SR.idReserva " +
                     "WHERE r.idCliente = ?";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                Servico obj = new Servico(rs.getInt("id"), rs.getString("servico"), rs.getDouble("preco"));
+                Servico obj = new Servico(rs.getInt("sId"), rs.getString("servico"));
                 lista.add(obj);
             }
-            st.close();
+            ps.close();
         } catch (Exception ex) {
         }
         return lista;

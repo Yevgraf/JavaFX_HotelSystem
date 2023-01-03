@@ -50,7 +50,7 @@ public class ClienteController {
     void cartaoClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartaoCliente.fxml"));
         Stage stage = new Stage();
-        Stage newStage = (Stage) Comentarios.getScene().getWindow();
+        Stage newStage = (Stage) cartao.getScene().getWindow();
         stage.setTitle("Passar Cartão");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
