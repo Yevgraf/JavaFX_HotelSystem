@@ -133,6 +133,7 @@ public class CheckInController implements Initializable {
 
 
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Recibo", receiptText);
+            // Add Chekcout À BD
             initListViews();
         } catch (SQLException e) {
 
