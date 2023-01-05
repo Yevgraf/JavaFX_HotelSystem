@@ -44,5 +44,21 @@ public class RegistoDAL {
         ps.executeUpdate();
     }
 
+    public static int getCardIdByClientId(int clientId) throws SQLException {
+        String sql = "SELECT q.idCartao FROM Reserva r JOIN Quarto q ON r.idQuarto = q.id WHERE r.idCliente = ?";
+
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setInt(1, clientId);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("idCartao");
+        }
+        return -1;
+    }
+
+
 
 }
