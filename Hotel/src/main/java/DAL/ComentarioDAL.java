@@ -56,6 +56,55 @@ public class ComentarioDAL {
         return list;
     }
 
+    public static ObservableList<Comentario> getAllSugestoes() {
+        ObservableList<Comentario> list = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT * FROM Comentario " +
+                    "WHERE comentario.tipoComentario IN ('sugestao')";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Comentario objComentario = new Comentario(rs.getInt("id"), rs.getInt("idCliente"),
+                        rs.getString("comentario"), rs.getString("tipoComentario"));
+                list.add(objComentario);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return list;
+    }
+
+    public static ObservableList<Comentario> getAllQueixas() {
+        ObservableList<Comentario> list = FXCollections.observableArrayList();
+
+        try {
+            String cmd = "SELECT * FROM Comentario " +
+                    "WHERE comentario.tipoComentario IN ('queixa')";
+
+            Statement st = DBconn.getConn().createStatement();
+
+            ResultSet rs = st.executeQuery(cmd);
+
+            while (rs.next()) {
+                Comentario objComentario = new Comentario(rs.getInt("id"), rs.getInt("idCliente"),
+                        rs.getString("comentario"), rs.getString("tipoComentario"));
+                list.add(objComentario);
+            }
+
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return list;
+    }
+
+
     public String getComentario(Comentario selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();

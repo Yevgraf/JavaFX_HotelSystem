@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TableColumn?>
@@ -75,5 +76,11 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
+      <ComboBox fx:id="cmbComentario" layoutX="540.0" layoutY="159.0" onAction="#clickCmbComentario" prefWidth="150.0" promptText="Tipo de Comentário" />
+      <Text fill="WHITE" layoutX="548.0" layoutY="140.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Pesquisar por:">
+         <font>
+            <Font name="Bernard MT Condensed" size="24.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
