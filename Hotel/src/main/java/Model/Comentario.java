@@ -8,14 +8,14 @@ public class Comentario {
 
     private String comentario;
 
-    private String tipoCOmentario;
+    private String tipoComentario;
 
-    public String getTipoCOmentario() {
-        return tipoCOmentario;
+    public String getTipoComentario() {
+        return tipoComentario;
     }
 
-    public void setTipoCOmentario(String tipoCOmentario) {
-        this.tipoCOmentario = tipoCOmentario;
+    public void setTipoComentario(String tipoComentario) {
+        this.tipoComentario = tipoComentario;
     }
 
     public Integer getId() {
@@ -42,11 +42,11 @@ public class Comentario {
         this.comentario = comentario;
     }
 
-    public Comentario(Integer id, Integer idCliente, String comentario, String tipoCOmentario) {
+    public Comentario(Integer id, Integer idCliente, String comentario, String tipoComentario) {
         this.id = id;
         this.idCliente = idCliente;
         this.comentario = comentario;
-        this.tipoCOmentario = tipoCOmentario;
+        this.tipoComentario = tipoComentario;
     }
 
     public Comentario() {

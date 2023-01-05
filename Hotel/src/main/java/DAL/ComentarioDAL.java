@@ -18,11 +18,12 @@ public class ComentarioDAL {
             Connection connection = dbConn.getConn();
 
             // prepare the insert statement
-            ps2 = connection.prepareStatement("INSERT INTO Comentario (idCliente,comentario) VALUES (?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            ps2 = connection.prepareStatement("INSERT INTO Comentario (idCliente,comentario, tipoComentario) VALUES (?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
             // set the values for the prepared statement
             ps2.setInt(1, comentario.getIdCliente());
             ps2.setString(2, comentario.getComentario());
+            ps2.setString(3, comentario.getTipoComentario());
 
             // execute the insert statement
             ps2.executeUpdate();
