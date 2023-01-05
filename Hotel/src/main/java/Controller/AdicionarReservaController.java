@@ -1,25 +1,17 @@
 package Controller;
 
 import BLL.ReservaBLL;
-import BLL.ServicoBLL;
 import BLL.UtilizadorBLL;
 import DAL.DBconn;
 import DAL.QuartoDAL;
-import DAL.UtilizadorDAL;
 import Model.*;
 import com.example.hotel.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -31,8 +23,6 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.lang.Integer.parseInt;
 
 public class AdicionarReservaController implements Initializable {
 
@@ -111,9 +101,9 @@ public class AdicionarReservaController implements Initializable {
         }
 
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
-            if (VerificarDisponibilidade() == true){
+           // if (VerificarDisponibilidade() == true){
                 AdicionarReserva();
-            }
+         //   }
         } else {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
         }
