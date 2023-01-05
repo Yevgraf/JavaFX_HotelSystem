@@ -45,21 +45,21 @@ public class ServicoReservaController implements Initializable {
 
     @FXML
     void btnAdicionar(ActionEvent event) {
+        Reserva selectedReservation = cmbReserva.getValue();
+        Servico selectedServico = listViewServicos.getSelectionModel().getSelectedItem();
+        ServicoReserva servicoReserva = new ServicoReserva();
+        servicoReserva.setIdReserva(selectedReservation.getId());
+        servicoReserva.setIdServico(selectedServico.getIdServico());
 
-            Reserva selectedReservation = cmbReserva.getValue();
-            Servico selectedServico = listViewServicos.getSelectionModel().getSelectedItem();
-            ServicoReserva servicoReserva = new ServicoReserva();
-            servicoReserva.setIdReserva(selectedReservation.getId());
-            servicoReserva.setIdServico(selectedServico.getIdServico());
-
-            ServicoReservaBLL servicoReservaBLL = new ServicoReservaBLL();
-            try {
-                servicoReservaBLL.addServicosToReserva(List.of(servicoReserva), selectedReservation.getId());
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Inserido", "Servico inserido à reserva");
-            } catch (SQLException e) {
-                MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro", "Erro ao inserir Serviço");
-            }
+        ServicoReservaBLL servicoReservaBLL = new ServicoReservaBLL();
+        try {
+            servicoReservaBLL.addServicosToReserva(List.of(servicoReserva), selectedReservation.getId());
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Serviço inserido à reserva", "Inserido");
+        } catch (SQLException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro ao inserir Serviço", "Erro");
         }
+    }
+
 
 
     @FXML
