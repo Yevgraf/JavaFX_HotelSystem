@@ -1,12 +1,8 @@
 package Controller;
 
 import BLL.*;
-import Model.EntradaStock;
-
-import Model.MessageBoxes;
-import Model.Produto;
-import Model.Stock;
-import com.example.hotel.Main;
+import Model.*;
+import com.example.hotel.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
