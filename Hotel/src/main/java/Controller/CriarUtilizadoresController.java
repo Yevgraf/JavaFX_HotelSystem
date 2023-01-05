@@ -130,7 +130,7 @@ public class CriarUtilizadoresController implements Initializable {
 
 
     public void onActionAddFuncionario(ActionEvent actionEvent) {
-
+        if (cmb_tipoUtilizador.getValue() != null) {
             String email = txt_email.getText();
           if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
                   txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
@@ -142,6 +142,9 @@ public class CriarUtilizadoresController implements Initializable {
           } else {
               MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
           }
+    } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de utilizador.", "Aviso:");
+        }
     }
 
     void RegistarUtilizador() {
