@@ -57,7 +57,7 @@ public class ServicoDAL {
     public static ObservableList<Servico> getAllServicos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
-            String cmd = "SELECT * FROM Servico";
+            String cmd = "SELECT * FROM Servico WHERE servico != 'Quarto'";
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
