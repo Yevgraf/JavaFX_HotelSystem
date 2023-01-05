@@ -66,17 +66,6 @@ public class GestorController {
     }
 
     @FXML
-    void GEntradaStockClick(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CarregarXML.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) GEntradaStock.getScene().getWindow();
-        stage.setTitle("Entrada Stock");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
-    }
-
-    @FXML
     void GGestaoStockClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
         Stage stage = new Stage();

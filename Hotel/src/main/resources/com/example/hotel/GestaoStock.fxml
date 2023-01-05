@@ -47,17 +47,17 @@
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
       </Label>
-      <Button fx:id="gestaoProdBtn" layoutX="450.0" layoutY="451.0" mnemonicParsing="false" onAction="#clickgestaoProdBtn" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
+      <Button fx:id="gestaoProdBtn" layoutX="496.0" layoutY="451.0" mnemonicParsing="false" onAction="#clickgestaoProdBtn" prefHeight="69.0" prefWidth="185.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="       Gestão de Produtos" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="456.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock1" fitHeight="42.0" fitWidth="68.0" layoutX="496.0" layoutY="465.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/gestaoProdutos.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnVoltar" layoutX="87.0" layoutY="451.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
+      <Button fx:id="btnVoltar" layoutX="39.0" layoutY="452.0" mnemonicParsing="false" onAction="#clickBtnVoltar" prefHeight="69.0" prefWidth="194.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Voltar" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>
@@ -78,9 +78,19 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="100.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorGestaoProduto" fitHeight="45.0" fitWidth="68.0" layoutX="60.0" layoutY="464.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../img/voltar.jpeg" />
+         </image>
+      </ImageView>
+      <Button fx:id="GEntradaStock" layoutX="251.0" layoutY="451.0" mnemonicParsing="false" onAction="#GEntradaStockClick" prefHeight="69.0" prefWidth="229.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Entrada de Stock" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="imgGestorStock1" fitHeight="36.0" fitWidth="60.0" layoutX="255.0" layoutY="468.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/gestaoStock.png" />
          </image>
       </ImageView>
    </children>
