@@ -44,7 +44,7 @@ public class ComentarioDAL {
 
             while (rs.next()) {
                 Comentario objComentario = new Comentario(rs.getInt("id"), rs.getInt("idCliente"),
-                        rs.getString("comentario"));
+                        rs.getString("comentario"), rs.getString("tipoComentario"));
                 list.add(objComentario);
             }
 

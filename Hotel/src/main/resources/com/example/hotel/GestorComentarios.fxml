@@ -60,9 +60,9 @@
       </Text>
       <TableView fx:id="comentarioTable" layoutX="18.0" layoutY="201.0" onMouseClicked="#comentarioTableClick" prefHeight="230.0" prefWidth="251.0">
         <columns>
-          <TableColumn fx:id="idTable" prefWidth="75.0" text="ID" />
-          <TableColumn fx:id="idCliente" prefWidth="75.0" text="ID Cliente" />
-            <TableColumn fx:id="comentario" prefWidth="100.0" text="Comentário" />
+          <TableColumn fx:id="idTable" prefWidth="54.0" text="ID" />
+          <TableColumn fx:id="idCliente" prefWidth="73.0" text="ID Cliente" />
+            <TableColumn fx:id="comentario" prefWidth="123.0" text="Tipo de comentário" />
         </columns>
       </TableView>
       <TextArea fx:id="comentarioArea" editable="false" layoutX="279.0" layoutY="199.0" prefHeight="230.0" prefWidth="428.0" wrapText="true">

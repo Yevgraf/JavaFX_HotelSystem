@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
@@ -65,20 +66,31 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <Text fill="WHITE" layoutX="504.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caracteres:">
+      <Text fill="WHITE" layoutX="526.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Caracteres:">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
-      <Text fx:id="numLetras" fill="WHITE" layoutX="589.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="200">
+      <Text fx:id="numLetras" fill="WHITE" layoutX="610.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="615.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ 300">
+      <Text fill="WHITE" layoutX="637.0" layoutY="432.0" strokeType="OUTSIDE" strokeWidth="0.0" text="/ 300">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Text>
+      <Text fill="WHITE" layoutX="490.0" layoutY="173.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tipo de comentário:">
+         <font>
+            <Font name="Bernard MT Condensed" size="24.0" />
+         </font>
+      </Text>
+      <ComboBox fx:id="tipoComentario" layoutX="490.0" layoutY="180.0" prefWidth="150.0" promptText="Selecione" />
+      <ImageView fx:id="imgGestorGestaoProduto1" fitHeight="36.0" fitWidth="32.0" layoutX="504.0" layoutY="474.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/checked.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

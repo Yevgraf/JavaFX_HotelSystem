@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,6 +41,9 @@ public class ClienteComentariosController implements Initializable {
     @FXML
     private TextArea campoComentario;
 
+    @FXML
+    private ComboBox<String> tipoComentario;
+
     private ComentarioBLL comentarioBLL = new ComentarioBLL();
 
     @FXML
@@ -53,7 +57,8 @@ public class ClienteComentariosController implements Initializable {
             Comentario comentario = new Comentario(
                     null,
                     UtilizadorPreferences.utilizadorId(),
-                    campoComentario.getText());
+                    campoComentario.getText(),
+                    verificaTipoComentario());
 
             comentarioBLL.addComentario(comentario);
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Comentário inserido com sucesso", "Informação!");
@@ -87,9 +92,31 @@ public class ClienteComentariosController implements Initializable {
         stage.show();
     }
 
+    private String verificaTipoComentario() {
+        String comentario;
+        switch (tipoComentario.getItems().toString()) {
+            case "Sugestão" -> {
+                comentario = "sugestao";
+                return comentario;
+            }
+            case "Queixa" -> {
+                comentario = "queixa";
+                return comentario;
+            }
+            default -> MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de comentário", "Aviso:");
+        }
+        return null;
+    }
+
+    private void initCombos() {
+        tipoComentario.getItems().add("Sugestão");
+        tipoComentario.getItems().add("Queixa");
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         contaLetras();
+        initCombos();
     }
 }

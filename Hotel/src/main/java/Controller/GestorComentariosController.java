@@ -72,7 +72,7 @@ public class GestorComentariosController implements Initializable {
     private void initTable() {
         idTable.setCellValueFactory(new PropertyValueFactory<>("id"));
         idCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
-        comentario.setCellValueFactory(new PropertyValueFactory<>("comentario"));
+        comentario.setCellValueFactory(new PropertyValueFactory<>("tipoComentario"));
         comentarioTable.setItems(ComentarioBLL.getAllComentarios());
     }
 
