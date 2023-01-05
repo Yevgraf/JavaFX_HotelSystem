@@ -92,7 +92,7 @@ public class AdicionarReservaController implements Initializable {
 
 
     @FXML
-    void clickAddReservaBrn(ActionEvent event) throws SQLException {
+    void clickAddReservaBrn(ActionEvent event) throws SQLException, IOException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
         LocalDate startDate = DatePickerInicio.getValue();
         if (selectedRoom == null || startDate == null) {
@@ -121,7 +121,7 @@ public class AdicionarReservaController implements Initializable {
     }
 
     @FXML
-    void AdicionarReserva() throws SQLException {
+    void AdicionarReserva() throws SQLException, IOException {
         if(DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())){
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
@@ -136,6 +136,17 @@ public class AdicionarReservaController implements Initializable {
         txtPreco.setText(reserva.getPreco().toString());
 
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
+        addServicoReserva();
+    }
+
+    private void addServicoReserva() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) adicionarReservaBtn.getScene().getWindow();
+        stage.setTitle("Servicos Reserva");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     @Override
