@@ -118,20 +118,35 @@ public class ReservaDAL {
     }
 
     public static void deleteReservation(int reservationId) throws SQLException {
-        PreparedStatement ps2;
+        PreparedStatement ps1 = null;
+        PreparedStatement ps2 = null;
         try {
             deleteEstadoReserva(reservationId);
 
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
+
+            ps1 = connection.prepareStatement("DELETE FROM ServicoReserva WHERE idReserva = ?");
+            ps1.setInt(1, reservationId);
+            ps1.executeUpdate();
+
+
             ps2 = connection.prepareStatement("DELETE FROM Reserva WHERE id = ?");
             ps2.setInt(1, reservationId);
             ps2.executeUpdate();
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        } finally {
+            if (ps1 != null) {
+                ps1.close();
+            }
+            if (ps2 != null) {
+                ps2.close();
+            }
         }
     }
+
 
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
