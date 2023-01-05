@@ -1,35 +1,28 @@
 package Controller;
 
 import BLL.ReservaBLL;
-import BLL.ServicoBLL;
 import BLL.UtilizadorBLL;
+import DAL.DBconn;
 import DAL.QuartoDAL;
-import DAL.UtilizadorDAL;
 import Model.*;
 import com.example.hotel.Main;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.css.converter.StringConverter;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 import java.util.stream.Collectors;
-
-import static java.lang.Integer.parseInt;
 
 public class AdicionarReservaController implements Initializable {
 
@@ -93,6 +86,10 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private Button voltarBtn;
 
+    static List dates = new ArrayList<>();
+
+    static boolean vD;
+
 
     @FXML
     void clickAddReservaBrn(ActionEvent event) throws SQLException {
@@ -103,17 +100,12 @@ public class AdicionarReservaController implements Initializable {
             return;
         }
 
-        boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
-        if (!isAvailable) {
-            DataInicio.setText("A data escolhida está ocupada!");
-            ValidarQuarto.setText("Quarto ocupado na data escolhida!");
-            return;
-        }
-
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
-            AdicionarReserva();
+           // if (VerificarDisponibilidade() == true){
+                AdicionarReserva();
+         //   }
         } else {
-            EmptyMessage.setText("Preencha todos os campos");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
         }
     }
 
@@ -175,22 +167,61 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-    public void VerificarDisponibilidade() {
-        Quarto selectedRoom = cmbIDQuarto.getValue();
-        LocalDate startDate = DatePickerInicio.getValue();
-        if (selectedRoom == null || startDate == null) {
-            // show error message
-            return;
+    public boolean VerificarDisponibilidade(){
+        String verificar = "SELECT dataInicio FROM Reserva WHERE idQuarto ='" + cmbIDQuarto.getValue().getId() +
+                "' And dataInicio like '" + DatePickerInicio.getValue().toString() + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificar)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                dates = getDatesBetweenUsingJava7(rs.getDate("dataInicio"),rs.getDate("dataFim"));
+                if (rs.getString("dataInicio").equals(dates)) {
+                    EmptyMessage.setText("Limite de Quartos Alcancado!");
+                    vD = false;
+                }else{
+                    vD = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return vD;
+    }
+
+    public static List getDatesBetweenUsingJava7(Date startDate, Date endDate) {
+        List datesInRange = new ArrayList<>();
+        Calendar calendar = getCalendarWithoutTime(startDate);
+        Calendar endCalendar = getCalendarWithoutTime(endDate);
+
+        while (calendar.before(endCalendar)) {
+            Date result = calendar.getTime();
+            datesInRange.add(result);
+            calendar.add(Calendar.DATE, 1);
         }
 
-        boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
+        return datesInRange;
+    }
+
+    private static Calendar getCalendarWithoutTime(Date date) {
+        Calendar calendar = new GregorianCalendar();
+        calendar.setTime(date);
+        calendar.set(Calendar.HOUR, 0);
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+        return calendar;
+    }
+
+        /*boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
         if (!isAvailable) {
             DataInicio.setText("A data escolhida está ocupada!");
             ValidarQuarto.setText("Quarto ocupado na data escolhida!");
         } else {
             DataInicio.setText("");
         }
-    }
+    }*/
 }
 
 

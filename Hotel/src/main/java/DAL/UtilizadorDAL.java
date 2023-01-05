@@ -1,8 +1,7 @@
 package DAL;
 
-import BLL.UtilizadorPreferences;
+import BLL.Encriptacao;
 import Model.MessageBoxes;
-import Model.Servico;
 import Model.TipoUtilizador;
 import Model.Utilizador;
 import javafx.collections.FXCollections;
@@ -13,7 +12,8 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.prefs.Preferences;
+
+import static BLL.Encriptacao.encrypt;
 
 public class UtilizadorDAL {
     public static List<Utilizador> getUsersByType(int i) {
@@ -119,6 +119,7 @@ public class UtilizadorDAL {
 
         // Get user type object
         TipoUtilizador userType = TipoUtilizadorDAL.getByNome(tipoUser);
+        String encryptpass =  Encriptacao.encrypt(password);
         if (userType == null) {
             throw new IllegalArgumentException("Invalid user type: " + tipoUser);
         }
@@ -134,7 +135,7 @@ public class UtilizadorDAL {
         ps.setString(5,email);
         ps.setString(6,contacto);
         ps.setString(7,utilizador);
-        ps.setString(8,password);
+        ps.setString(8, encryptpass);
         ps.setInt(9, userType.getId());
         ps.executeUpdate();
 

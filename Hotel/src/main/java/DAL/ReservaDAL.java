@@ -169,7 +169,7 @@ public class ReservaDAL {
         return 0;
     }
 
-    public double getTotalProdutosReserva(int reservationId) throws SQLException {
+    /*public double getTotalProdutosReserva(int reservationId) throws SQLException {
         double total = 0;
 
         String sql = "SELECT SUM(pq.quantidade * p.precoPorUnidade) AS total FROM Reserva r INNER JOIN Quarto q ON r.idQuarto = q.id INNER JOIN ProdutoQuarto pq ON q.id = pq.idQuarto INNER JOIN Produto p ON pq.idProduto = p.id WHERE r.id = ?";
@@ -191,7 +191,7 @@ public class ReservaDAL {
         conn.close();
 
         return total;
-    }
+    }*/
 
 
         public void addReservationState(int reservationId, String estado) throws SQLException {

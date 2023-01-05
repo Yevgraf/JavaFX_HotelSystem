@@ -1,12 +1,8 @@
 package Controller;
 
 import BLL.*;
-import Model.EntradaStock;
-
-import Model.MessageBoxes;
-import Model.Produto;
-import Model.Stock;
-import com.example.hotel.Main;
+import Model.*;
+import com.example.hotel.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -114,24 +110,13 @@ public class XMLReaderController implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-
-        if (UtilizadorPreferences.comparaTipoLogin()){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-            stage.setTitle("Pagina Gestor");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-            stage.setTitle("Pagina Funcionario");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+        stage.setTitle("Gestao Stock");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     List<String> lstFile;

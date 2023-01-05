@@ -2,6 +2,7 @@ package Controller;
 
 import BLL.UtilizadorBLL;
 import BLL.UtilizadorPreferences;
+import DAL.DBconn;
 import DAL.TipoUtilizadorDAL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
@@ -16,9 +17,15 @@ import javafx.scene.control.DatePicker;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
 
 import javafx.stage.Stage;
 
@@ -79,6 +86,9 @@ public class CriarUtilizadoresController implements Initializable {
     @FXML
     private Button VoltarBtn;
 
+    static boolean flag;
+    static boolean flagnome;
+
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
@@ -119,21 +129,22 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
 
-    public void onActionAddFuncionario(javafx.event.ActionEvent actionEvent) {
-        RegistarUtilizador();
-        // VerifyNIFColaborador();
-        // VerifyNIFColaboradorMin();
-        // VerifyContacto();
-        // VerifyNome();
-        //  if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
-        //          txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
-        //          && txt_password.getText().isEmpty() == false   && cmb_tipocolaborador.getItems().isEmpty() == false) {
-        //      if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true) {
-        //          RegistarFuncionario();
-        //      }
-        //  } else {
-        //      EmptyMessage.setText("Preencha todos os campos");
-        //  }
+    public void onActionAddFuncionario(ActionEvent actionEvent) {
+        if (cmb_tipoUtilizador.getValue() != null) {
+            String email = txt_email.getText();
+          if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
+                  txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
+                  && txt_password.getText().isEmpty() == false   && cmb_tipoUtilizador.getItems().isEmpty() == false) {
+              if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true && isValidEmail(email) == true) {
+                  RegistarUtilizador();
+              } else {
+                  MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Dados incorretos!","Erro");}
+          } else {
+              MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
+          }
+    } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de utilizador.", "Aviso:");
+        }
     }
 
     void RegistarUtilizador() {
@@ -153,5 +164,74 @@ public class CriarUtilizadoresController implements Initializable {
 
         utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
+    }
+
+    public boolean VerifyNIFColaborador() {
+        int nif = Integer.parseInt(txt_nif.getText());
+        String verificar = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificar)){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    VerificarNIF.setText("O nif já existe!");
+                    flag = false;
+                } else {
+                    VerificarNIF.setText("");
+                    flag = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return flag;
+    }
+
+    public boolean VerifyNIFColaboradorMin() {
+        boolean flagnif;
+        if (txt_nif.getText().length() < 9) {
+            VerificarNIF.setText("Minimo 9 caracteres!");
+            flagnif = false;
+        } else {
+            flagnif = true;
+        }
+        return flagnif;
+    }
+
+    public boolean VerifyContacto() {
+        boolean flagcontacto;
+        if (txt_contacto.getText().length() < 9) {
+            VerificarContacto.setText("Minimo 9 caracteres!");
+            flagcontacto = false;
+        } else {
+            flagcontacto = true;
+        }
+        return flagcontacto;
+    }
+
+    public boolean VerifyNome() {
+        char[] chars = txt_nome.getText().toCharArray();
+        for (char c : chars) {
+            if (Character.isDigit(c)) {
+                VerificarNome.setText("Nome nao pode conter numeros!");
+                flagnome = false;
+                break;
+            }else{
+                flagnome = true;
+            }
+        }
+        return flagnome;
+    }
+
+    public static boolean isValidEmail(String email) {
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\."+
+                "[a-zA-Z0-9_+&*-]+)*@" +
+                "(?:[a-zA-Z0-9-]+\\.)+[a-z" +
+                "A-Z]{2,7}$";
+
+        Pattern pat = Pattern.compile(emailRegex);
+        if (email == null)
+            return false;
+        return pat.matcher(email).matches();
     }
 }

@@ -1,21 +1,21 @@
 package BLL;
 
-import DAL.ServicoDAL;
 import DAL.UtilizadorDAL;
-import Model.Servico;
 import Model.Utilizador;
 import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.SQLException;
 
+import static BLL.Encriptacao.encrypt;
+
 public class UtilizadorBLL {
     public Utilizador Login(String utilizador, String password) {
         try {
             UtilizadorDAL dal = new UtilizadorDAL();
-            //String passwordCifrada = Criptografia.CifraTexto(password);
+            String passwordCifrada = encrypt(password);
 
-            Utilizador loggedIn = dal.Login(utilizador, password /*passwordCifrada*/);
+            Utilizador loggedIn = dal.Login(utilizador, passwordCifrada);
 
             UtilizadorPreferences.guardaridCliente(loggedIn.getId());
             UtilizadorPreferences.guardartipoLogin(loggedIn.getTipoUser().getTipo());
@@ -60,4 +60,5 @@ public class UtilizadorBLL {
     public static ObservableList<Utilizador> getAllClientes() {
         return UtilizadorDAL.getClientes();
     }
+
 }
