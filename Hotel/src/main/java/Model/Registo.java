@@ -1,24 +1,32 @@
 package Model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Registo {
 private Integer id;
 private Integer idCartao;
 private Integer idCliente;
 private String Local;
-private java.sql.Date Data;
+private Timestamp Data;
 
 
     public Registo() {
     }
 
-    public Registo(Integer id, Integer idCartao, Integer idCliente, String Local, Date Data) {
+    public Registo(Integer idCartao, Integer idCliente, String local, Timestamp data) {
+        this.idCartao = idCartao;
+        this.idCliente = idCliente;
+        Local = local;
+        Data = data;
+    }
+
+    public Registo(Integer id, Integer idCartao, Integer idCliente, String local, Timestamp data) {
         this.id = id;
         this.idCartao = idCartao;
         this.idCliente = idCliente;
-        this.Local = Local;
-        this.Data = Data;
+        Local = local;
+        Data = data;
     }
 
     public Integer getId() {
@@ -49,16 +57,16 @@ private java.sql.Date Data;
         return Local;
     }
 
-    public void setLocal(String Local) {
-        this.Local = Local;
+    public void setLocal(String local) {
+        Local = local;
     }
 
-    public Date getData() {
+    public Timestamp getData() {
         return Data;
     }
 
-    public void setData(Date Data) {
-        this.Data = Data;
+    public void setData(Timestamp data) {
+        Data = data;
     }
 
     @Override

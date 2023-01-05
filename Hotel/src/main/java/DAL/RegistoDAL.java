@@ -22,7 +22,7 @@ public class RegistoDAL {
             int idCartao = resultSet.getInt("idCartao");
             int idCliente = resultSet.getInt("idCliente");
             String Local = resultSet.getString("Local");
-            Date Data = resultSet.getDate("Data");
+            Timestamp Data = resultSet.getTimestamp("Data");
 
             Registo registo = new Registo(id, idCartao, idCliente, Local, Data);
             registos.add(registo);
@@ -39,10 +39,11 @@ public class RegistoDAL {
         ps.setInt(1, registo.getIdCartao());
         ps.setInt(2, registo.getIdCliente());
         ps.setString(3, registo.getLocal());
-        ps.setDate(4, registo.getData());
+        ps.setTimestamp(4, registo.getData());
 
         ps.executeUpdate();
     }
+
 
     public static int getCardIdByClientId(int clientId) throws SQLException {
         String sql = "SELECT q.idCartao FROM Reserva r JOIN Quarto q ON r.idQuarto = q.id WHERE r.idCliente = ?";
