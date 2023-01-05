@@ -14,7 +14,7 @@ public class ReservaDAL {
 
     public Reserva addReserva(Reserva reserva) throws SQLException {
         PreparedStatement ps = null;
-        int reservationId = -1; // Initialize the reservation ID to -1
+        int reservationId = -1;
         Connection connection = null;
         try {
             DBconn dbConn = new DBconn();
@@ -34,7 +34,7 @@ public class ReservaDAL {
             }
 
             if (reservationId > 0) {
-                // Add the reservation to the ReservationState table with the initial state "pending"
+
                 addReservationState(reservationId, "pendente");
 
                 // Add the "room" service to the reservation
@@ -48,10 +48,10 @@ public class ReservaDAL {
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {
-                ps.close(); // Close the Prepared Statement to avoid any leaks
+                ps.close();
             }
             if (connection != null) {
-                connection.close(); // Close the connection to the database
+                connection.close();
             }
         }
     }
@@ -61,9 +61,21 @@ public class ReservaDAL {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
+
+
+            ps = connection.prepareStatement("SELECT id FROM Servico WHERE servico = ?");
+            ps.setString(1, service);
+            ResultSet rs = ps.executeQuery();
+            int serviceId = -1;
+            if (rs.next()) {
+                serviceId = rs.getInt(1);
+            }
+            ps.close();
+
+
             ps = connection.prepareStatement("INSERT INTO ServicoReserva(idReserva, idServico) VALUES (?, ?)");
             ps.setInt(1, reservationId);
-            ps.setString(2, service);
+            ps.setInt(2, serviceId);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -73,6 +85,7 @@ public class ReservaDAL {
             }
         }
     }
+
 
     public static List<Reserva> getReservas() {
         List<Reserva> reservas = new ArrayList<>();
