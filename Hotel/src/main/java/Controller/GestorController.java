@@ -16,6 +16,8 @@ import java.io.IOException;
 public class GestorController {
 
     @FXML
+    private Button regCartao;
+    @FXML
     private Button GCheck;
 
     @FXML
@@ -132,5 +134,16 @@ public class GestorController {
         UtilizadorPreferences.apagarTipoLogin();
     }
 
+    @FXML
+    void registoCartaoAction(ActionEvent event) throws IOException {
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("RegistosCartao.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) regCartao.getScene().getWindow();
+        stage.setTitle("Registos Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
 }
