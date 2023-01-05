@@ -38,4 +38,10 @@ public class CheckoutBLL {
         QuartoDAL quartoDal = new QuartoDAL();
         quartoDal.updateAtivo(reservationId, false);
     }
+
+    public void addCheckout(Checkout checkout) throws SQLException {
+        CheckoutDAL checkoutDAL = new CheckoutDAL();
+        checkoutDAL.addCheckout(checkout);
+    }
+
 }

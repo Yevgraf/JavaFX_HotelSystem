@@ -8,6 +8,7 @@ import javafx.collections.ObservableList;
 
 import java.math.BigDecimal;
 import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +19,15 @@ public class CheckoutDAL {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
 
-        PreparedStatement ps = connection.prepareStatement("INSERT INTO Checkout (reservaId, preco, metodoPagamento) VALUES (?, ?, ?)");
+        PreparedStatement ps = connection.prepareStatement("INSERT INTO Checkout (reservaId, preco, metodoPagamento, checkout_date_time) VALUES (?, ?, ?, ?)");
         ps.setInt(1, checkout.getIdReserva());
         ps.setBigDecimal(2, BigDecimal.valueOf(checkout.getPreco()));
         ps.setString(3, checkout.getMetodoPagamento());
+        ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
         ps.executeUpdate();
     }
+
     public ObservableList<Pagamento> getPagamentos() throws SQLException {
         ObservableList<Pagamento> pagamentos = FXCollections.observableArrayList();
 

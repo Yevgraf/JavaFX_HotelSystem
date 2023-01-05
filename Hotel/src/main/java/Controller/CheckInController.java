@@ -4,6 +4,7 @@ import BLL.CheckInBLL;
 import BLL.CheckoutBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
+import Model.Checkout;
 import Model.MessageBoxes;
 import Model.Pagamento;
 import Model.Reserva;
@@ -127,6 +128,13 @@ public class CheckInController implements Initializable {
             double totalCost = reservaBLL.getTotalReserva(selectedReservation);
 
 
+            // create a new Checkout object with the selected reservation, total cost, and payment method
+            Checkout checkout = new Checkout(selectedReservation.getId(), totalCost, selectedPaymentMethod.getMetodoPagamento());
+
+            // add the checkout to the database
+            CheckoutBLL bll = new CheckoutBLL();
+            bll.addCheckout(checkout);
+
             String receiptText = "Reserva: " + selectedReservation.getId() + "\n";
             receiptText += "Preço Final: " + totalCost + "\n";
             receiptText += "Método de Pagamento: " + selectedPaymentMethod.getMetodoPagamento() + "\n";
@@ -141,7 +149,8 @@ public class CheckInController implements Initializable {
     }
 
 
-            @FXML
+
+    @FXML
     void handleCheckInButtonAction(ActionEvent event) {
 
         Reserva selectedReservation = listViewReservaSemCheckin.getSelectionModel().getSelectedItem();
