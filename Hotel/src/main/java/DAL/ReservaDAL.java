@@ -36,6 +36,9 @@ public class ReservaDAL {
             if (reservationId > 0) {
                 // Add the reservation to the ReservationState table with the initial state "pending"
                 addReservationState(reservationId, "pendente");
+
+                // Add the "room" service to the reservation
+                addServiceToReservation(reservationId, "Quarto");
             }
 
             reserva.setId(reservationId);
@@ -53,6 +56,23 @@ public class ReservaDAL {
         }
     }
 
+    private void addServiceToReservation(int reservationId, String service) throws SQLException {
+        PreparedStatement ps = null;
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            ps = connection.prepareStatement("INSERT INTO ServicoReserva(idReserva, idServico) VALUES (?, ?)");
+            ps.setInt(1, reservationId);
+            ps.setString(2, service);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+        }
+    }
 
     public static List<Reserva> getReservas() {
         List<Reserva> reservas = new ArrayList<>();
