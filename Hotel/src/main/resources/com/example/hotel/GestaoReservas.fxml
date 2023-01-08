@@ -99,5 +99,6 @@
             <Image url="@../../../img/gestaoServicos.png" />
          </image>
       </ImageView>
+      <Button fx:id="ProdutoQuarto" layoutX="193.0" layoutY="473.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Reserva" />
    </children>
 </AnchorPane>

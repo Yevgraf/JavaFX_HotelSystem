@@ -114,23 +114,13 @@ public class ProdutoQuartoController implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-            stage.setTitle("Pagina Gestor");
+            stage.setTitle("Gestao Reservas");
             newStage.hide();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
-        } else {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-            stage.setTitle("Pagina Funcionario");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        }
     }
 
     @Override

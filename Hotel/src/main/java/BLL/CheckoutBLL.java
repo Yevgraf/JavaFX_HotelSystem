@@ -44,4 +44,9 @@ public class CheckoutBLL {
         checkoutDAL.addCheckout(checkout);
     }
 
+    public void voltaNaoConsumiveisAoStock(int idReserva) throws SQLException {
+        CheckoutDAL checkoutDAL = new CheckoutDAL();
+        checkoutDAL.voltaNaoConsumiveisAoStock(idReserva);
+    }
+
 }

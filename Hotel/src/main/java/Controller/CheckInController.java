@@ -123,6 +123,7 @@ public class CheckInController implements Initializable {
         try {
             checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
 
+            checkoutBll.voltaNaoConsumiveisAoStock(selectedReservation.getId());
 
             ReservaBLL reservaBLL = new ReservaBLL();
             double totalCost = reservaBLL.getTotalReserva(selectedReservation);
@@ -147,7 +148,6 @@ public class CheckInController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao realizar o checkout. Por favor, tente novamente mais tarde.");
         }
     }
-
 
 
     @FXML
