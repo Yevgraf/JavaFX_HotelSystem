@@ -69,18 +69,17 @@ public class CheckoutDAL {
         return pendingReservations;
     }
 
-    //Funcao inacabada para cancelamento ou checkout Reserva
+
     public void voltaNaoConsumiveisAoStock(int idReserva) throws SQLException {
         EntradaStockDAL entradaStockDAL = new EntradaStockDAL();
         ObservableList<Stock> lista = FXCollections.observableArrayList();
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            String cmd = "SELECT p.id AS idProduto, pq.quantidade as quantidade FROM ProdutoQuarto " +
-                    "INNER JOIN Quarto q on q.id = ProdutoQuarto.idQuarto " +
-                    "INNER JOIN Reserva r on q.id = r.idQuarto " +
-                    "INNER JOIN ProdutoQuarto pq on q.id = pq.idQuarto " +
-                    "INNER JOIN Produto P on P.id = pq.idProduto " +
+            String cmd = "SELECT p.id AS idProduto, pr.quantidade as quantidade " +
+                    "FROM ProdutoReserva pr " +
+                    "INNER JOIN Reserva r ON pr.idReserva = r.id " +
+                    "INNER JOIN Produto p ON pr.idProduto = p.id " +
                     "WHERE r.id = ? AND p.consumivel = 0;";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, idReserva);
@@ -88,8 +87,8 @@ public class CheckoutDAL {
             while (rs.next()) {
                 Stock obj = new Stock(rs.getString("idProduto"), rs.getInt("quantidade"));
                 lista.add(obj);
-                entradaStockDAL.insertStock(lista, connection);
             }
+            entradaStockDAL.updateStock(lista, connection);
             ps.close();
         } catch (Exception ex) {
         }

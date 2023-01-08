@@ -78,10 +78,9 @@ public class Quarto {
     @Override
     public String toString() {
         return
-                "id=" + id +
-                ", tipoQuarto='" + tipoQuarto + '\'' +
-                ", piso=" + piso +
-                ", preco=" + preco +
-                ", numCartao='" + cartao.getId();
+                ", tipoQuarto:'" + tipoQuarto + '\'' +
+                ", piso:" + piso +
+                ", preco:" + preco;
+
     }
 }

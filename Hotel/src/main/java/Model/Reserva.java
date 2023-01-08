@@ -77,12 +77,10 @@ public class Reserva {
     public String toString() {
         String clientName = UtilizadorDAL.getClientName(idCliente);
         return
-                "id=" + id +
-                ", idCliente=" + idCliente +
-                ", idQuarto=" + idQuarto +
-                ", dataInicio='" + dataInicio + '\'' +
-                ", dataFim='" + dataFim + '\'' +
-                ", cliente='" + clientName;
+                 clientName+
+                " id=" + id +
+                ", Quarto:" + idQuarto;
+
     }
 
 

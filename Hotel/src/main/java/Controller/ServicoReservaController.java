@@ -3,6 +3,7 @@ package Controller;
 import BLL.ReservaBLL;
 import BLL.ServicoBLL;
 import BLL.ServicoReservaBLL;
+import DAL.ReservaDAL;
 import Model.MessageBoxes;
 import Model.Reserva;
 import Model.Servico;
@@ -94,9 +95,7 @@ public class ServicoReservaController implements Initializable {
     }
 
     private void initCombos() {
-        ReservaBLL reservaBLL = new ReservaBLL();
+        cmbReserva.getItems().addAll(ReservaDAL.getReservasPendentes());
 
-        ObservableList<Reserva> reservations = reservaBLL.getReservas();
-        cmbReserva.setItems(reservations);
     }
 }

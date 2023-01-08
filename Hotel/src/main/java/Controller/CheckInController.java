@@ -110,14 +110,12 @@ public class CheckInController implements Initializable {
             return;
         }
 
-
         Pagamento selectedPaymentMethod = metodoPagamento.getSelectionModel().getSelectedItem();
         if (selectedPaymentMethod == null) {
-            // show error message if no payment method is selected
+
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione um método de pagamento.");
             return;
         }
-
 
         CheckoutBLL checkoutBll = new CheckoutBLL();
         try {
@@ -128,18 +126,14 @@ public class CheckInController implements Initializable {
             ReservaBLL reservaBLL = new ReservaBLL();
             double totalCost = reservaBLL.getTotalReserva(selectedReservation);
 
-
-            // create a new Checkout object with the selected reservation, total cost, and payment method
             Checkout checkout = new Checkout(selectedReservation.getId(), totalCost, selectedPaymentMethod.getMetodoPagamento());
 
-            // add the checkout to the database
             CheckoutBLL bll = new CheckoutBLL();
             bll.addCheckout(checkout);
 
             String receiptText = "Reserva: " + selectedReservation.getId() + "\n";
             receiptText += "Preço Final: " + totalCost + "\n";
             receiptText += "Método de Pagamento: " + selectedPaymentMethod.getMetodoPagamento() + "\n";
-
 
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Recibo", receiptText);
             initListViews();
@@ -157,7 +151,7 @@ public class CheckInController implements Initializable {
 
 
         if (selectedReservation != null) {
-            // perform the check-in
+
             performCheckIn(selectedReservation);
 
 

@@ -147,8 +147,8 @@ public class Utilizador {
     @Override
     public String toString() {
         return "Utilizador{" +
-                "nome='" + nome + '\'' +
-                ", nif='" + nif + '\'' +
+                "nome:'" + nome + '\'' +
+                ", nif:'" + nif + '\'' +
                 '}';
     }
 }
