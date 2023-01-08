@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.ProdutoReservaBLL;
+import BLL.StockBLL;
 import DAL.ProdutoDAL;
 import DAL.ProdutoReservaDAL;
 import DAL.ReservaDAL;
@@ -76,6 +77,7 @@ public class ProdutoReservaController implements Initializable {
 
         tv_ProdutoQuarto.setItems(ProdutoReservaDAL.getProdutoReserva());
     }
+
     private void initCombos() {
         cmbQuarto.getItems().addAll(ReservaDAL.getReservasPendentes());
         cmbProduto.getItems().addAll(ProdutoDAL.getAllProdutos());
@@ -83,18 +85,22 @@ public class ProdutoReservaController implements Initializable {
 
     @FXML
     void clickAddProdutoQuarto(ActionEvent event) throws SQLException {
+        StockBLL sBLL = new StockBLL();
         Reserva selectedReservation = cmbQuarto.getValue();
         Produto selectedProduct = cmbProduto.getValue();
         int quantity = Integer.parseInt(txt_quantidade.getText());
-        if (selectedReservation == null || selectedProduct == null) {
-            // show error message
-            return;
+        if (selectedReservation != null && selectedProduct != null){
+            if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
+                ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity);
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso");
+                initTable();
+            } else {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A quantidade desejada é superior à existente em stock!", "Erro:");
+            }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Preencha todos os campos!", "Aviso:");
         }
-        ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso");
-        initTable();
     }
-
 
 
     @FXML
@@ -113,13 +119,13 @@ public class ProdutoReservaController implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) voltarBtn.getScene().getWindow();
-            stage.setTitle("Gestao Reservas");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) voltarBtn.getScene().getWindow();
+        stage.setTitle("Gestao Reservas");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
     @Override

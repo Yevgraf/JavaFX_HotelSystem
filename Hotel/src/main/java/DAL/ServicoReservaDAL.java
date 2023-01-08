@@ -38,7 +38,6 @@ public class ServicoReservaDAL {
         return count > 0;
     }
 
-
     public void removeServicoFromReservation(Reserva selectedReservation, Servico selectedServico) throws SQLException {
 
         DBconn dbConn = new DBconn();

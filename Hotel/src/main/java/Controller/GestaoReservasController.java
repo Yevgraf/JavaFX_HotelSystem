@@ -69,7 +69,8 @@ public class GestaoReservasController implements Initializable {
     @FXML
     private ComboBox<String> cbEstadoReserva;
 
-
+    @FXML
+    private Button cancelarReservaBtn;
 
     @FXML
     void clickAdicionarReservaBtn(ActionEvent event) throws IOException {
@@ -84,7 +85,7 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
@@ -112,8 +113,8 @@ public class GestaoReservasController implements Initializable {
         initTable();
     }
 
-    private void disableEliminarParaFuncionario(){
-        if (!UtilizadorPreferences.comparaTipoLogin()){
+    private void disableEliminarParaFuncionario() {
+        if (!UtilizadorPreferences.comparaTipoLogin()) {
             eliminarReservaBtn.setDisable(true);
         }
     }
@@ -139,6 +140,11 @@ public class GestaoReservasController implements Initializable {
         stage.show();
     }
 
+    @FXML
+    void clickCancelar(ActionEvent event) {
+
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
@@ -154,14 +160,14 @@ public class GestaoReservasController implements Initializable {
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
-        cbEstadoReserva.getItems().addAll("All", "pendente", "checkin", "checkout");
-        cbEstadoReserva.setValue("All");
+        cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout");
+        cbEstadoReserva.setValue("Todos");
 
         tblReservas.setItems(reservaDAL.getReservas());
 
         cbEstadoReserva.setOnAction(event -> {
             String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
-            if (estadoReserva.equals("All")) {
+            if (estadoReserva.equals("Todos")) {
                 tblReservas.setItems(reservaDAL.getReservas());
             } else {
                 tblReservas.setItems(reservaDAL.getReservasByEstadoReserva(estadoReserva));
