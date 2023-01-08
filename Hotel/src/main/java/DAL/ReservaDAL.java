@@ -141,37 +141,39 @@ public class ReservaDAL {
     }
 
     public static void deleteReservation(int reservationId) throws SQLException {
-        PreparedStatement ps1 = null;
-        PreparedStatement ps2 = null;
-        try {
-            deleteEstadoReserva(reservationId);
+        deleteServicoReservaForReservation(reservationId);
+        deleteEstadoReserva(reservationId);
+        deleteEstadoReservaForReservation(reservationId);
+        deleteReservationById(reservationId);
+    }
+    private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
+        String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
+        executeDelete(cmd, reservationId);
+    }
+    private static void deleteServicoReservaForReservation(int reservationId) throws SQLException {
+        String cmd = "DELETE FROM ServicoReserva WHERE idReserva = ?";
+        executeDelete(cmd, reservationId);
+    }
 
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-
-            ps1 = connection.prepareStatement("DELETE FROM ServicoReserva WHERE idReserva = ?");
-            ps1.setInt(1, reservationId);
-            ps1.executeUpdate();
-
-
-            ps2 = connection.prepareStatement("DELETE FROM Reserva WHERE id = ?");
-            ps2.setInt(1, reservationId);
-            ps2.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        } finally {
-            if (ps1 != null) {
-                ps1.close();
-            }
-            if (ps2 != null) {
-                ps2.close();
-            }
-        }
+    private static void deleteCheckoutForReservation(int reservationId) throws SQLException {
+        String cmd = "DELETE FROM Checkout WHERE reservaId = ?";
+        executeDelete(cmd, reservationId);
     }
 
 
+    private static void deleteReservationById(int reservationId) throws SQLException {
+        String cmd = "DELETE FROM Reserva WHERE id = ?";
+        executeDelete(cmd, reservationId);
+    }
 
+    private static void executeDelete(String cmd, int reservationId) throws SQLException {
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ps.executeUpdate();
+        ps.close();
+    }
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 
@@ -300,7 +302,7 @@ public class ReservaDAL {
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
-            // Delete the row from the Reserva table
+
             ps = connection.prepareStatement("DELETE FROM Reserva WHERE id=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();

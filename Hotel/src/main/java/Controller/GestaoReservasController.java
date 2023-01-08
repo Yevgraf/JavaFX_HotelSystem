@@ -109,7 +109,6 @@ public class GestaoReservasController implements Initializable {
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva cancelada", "Cancelada");
         }
     }
 
@@ -151,7 +150,6 @@ public class GestaoReservasController implements Initializable {
         }
         reservabll.cancelReservation(selectedReservation.getId());
 
-        initTable();
     }
 
 
