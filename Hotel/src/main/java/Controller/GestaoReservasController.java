@@ -146,8 +146,7 @@ public class GestaoReservasController implements Initializable {
     }
 
     private void initTable() {
-
-        ReservaDAL reservaBLL = new ReservaDAL();
+        ReservaDAL reservaDAL = new ReservaDAL();
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
         tblCoIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
@@ -155,13 +154,19 @@ public class GestaoReservasController implements Initializable {
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
+        cbEstadoReserva.getItems().addAll("All", "pendente", "checkin", "checkout");
+        cbEstadoReserva.setValue("All");
 
-        cbEstadoReserva.getItems().addAll("pendente", "checkin", "checkout");
+        tblReservas.setItems(reservaDAL.getReservas());
+
         cbEstadoReserva.setOnAction(event -> {
-        String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
-        tblReservas.setItems(reservaBLL.getReservasByEstadoReserva(estadoReserva));
-        initTable();
-    });
+            String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
+            if (estadoReserva.equals("All")) {
+                tblReservas.setItems(reservaDAL.getReservas());
+            } else {
+                tblReservas.setItems(reservaDAL.getReservasByEstadoReserva(estadoReserva));
+            }
+        });
     }
 
 }

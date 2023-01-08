@@ -88,24 +88,25 @@ public class ReservaDAL {
     }
 
 
-    public static List<Reserva> getReservas() {
-        List<Reserva> reservas = new ArrayList<>();
+    public static ObservableList<Reserva> getReservas() {
+        ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         try {
             String cmd = "SELECT * FROM Reserva";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
+            PreparedStatement ps = DBconn.getConn().prepareStatement(cmd);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getDouble("preco"));
                 reservas.add(reserva);
             }
-            st.close();
+            ps.close();
         } catch (Exception ex) {
             System.err.println("Erro: " + ex.getMessage());
         }
         return reservas;
     }
+
 
     public static List<Reserva> getReservasPendentes() {
         List<Reserva> reservas = new ArrayList<>();
@@ -168,6 +169,7 @@ public class ReservaDAL {
             }
         }
     }
+
 
 
     public void updateReserva(Reserva reserva) throws SQLException {
@@ -290,8 +292,16 @@ public class ReservaDAL {
                     MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
                     return;
                 }
-            }
+            } ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+            ps.setInt(1, reservationId);
+            ps.executeUpdate();
+
             ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=?");
+            ps.setInt(1, reservationId);
+            ps.executeUpdate();
+
+            // Delete the row from the Reserva table
+            ps = connection.prepareStatement("DELETE FROM Reserva WHERE id=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
         } catch (SQLException e) {
@@ -306,25 +316,24 @@ public class ReservaDAL {
         }
     }
 
-    public ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
+    public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         try {
-            String cmd = "SELECT r.* FROM Reserva r INNER JOIN EstadoReserva e ON r.id = e.idReserva WHERE e.estado = ?";
-            PreparedStatement st = DBconn.getConn().prepareStatement(cmd);
-            st.setString(1, estadoReserva);
-            ResultSet rs = st.executeQuery();
+            String cmd = "SELECT r.* FROM Reserva r INNER JOIN EstadoReserva e ON r.id = e.reserva WHERE e.estado = ?";
+            PreparedStatement ps = DBconn.getConn().prepareStatement(cmd);
+            ps.setString(1, estadoReserva);
+            ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
                         rs.getDouble("preco"));
                 reservas.add(reserva);
             }
-            st.close();
+            ps.close();
         } catch (Exception ex) {
             System.err.println("Erro: " + ex.getMessage());
         }
         return reservas;
     }
-
 
 }
