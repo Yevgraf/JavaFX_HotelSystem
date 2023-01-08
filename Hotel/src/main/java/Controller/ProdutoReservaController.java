@@ -1,10 +1,9 @@
 package Controller;
 
-import BLL.ProdutoQuartoBLL;
-import BLL.UtilizadorPreferences;
+import BLL.ProdutoReservaBLL;
 import DAL.ProdutoDAL;
-import DAL.ProdutoQuartoDAL;
-import DAL.QuartoDAL;
+import DAL.ProdutoReservaDAL;
+import DAL.ReservaDAL;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -22,7 +21,7 @@ import java.net.URL;
 import java.sql.*;
 import java.util.ResourceBundle;
 
-public class ProdutoQuartoController implements Initializable {
+public class ProdutoReservaController implements Initializable {
 
     @FXML
     private Button btnAddQuarto;
@@ -40,21 +39,21 @@ public class ProdutoQuartoController implements Initializable {
     private ComboBox<Produto> cmbProduto;
 
     @FXML
-    private ComboBox<Quarto> cmbQuarto;
+    private ComboBox<Reserva> cmbQuarto;
 
     @FXML
-    private TableColumn<Model.ProdutoQuarto, Integer> tbl_id;
+    private TableColumn<ProdutoReserva, Integer> tbl_id;
     @FXML
-    private TableColumn<Model.ProdutoQuarto, String> tbl_idProduto;
+    private TableColumn<ProdutoReserva, String> tbl_idProduto;
 
     @FXML
-    private TableColumn<Model.ProdutoQuarto, Integer> tbl_idQuarto;
+    private TableColumn<ProdutoReserva, Integer> tbl_idReserva;
 
     @FXML
-    private TableColumn<Model.ProdutoQuarto, Integer> tbl_quantidade;
+    private TableColumn<ProdutoReserva, Integer> tbl_quantidade;
 
     @FXML
-    private TableView<Model.ProdutoQuarto> tv_ProdutoQuarto;
+    private TableView<ProdutoReserva> tv_ProdutoQuarto;
 
     @FXML
     private TextField txt_quantidade;
@@ -66,33 +65,33 @@ public class ProdutoQuartoController implements Initializable {
 
         tbl_id.setResizable(false);
         tbl_idProduto.setResizable(false);
-        tbl_idQuarto.setResizable(false);
+        tbl_idReserva.setResizable(false);
         tbl_quantidade.setResizable(false);
 
-        tbl_id.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("id"));
-        tbl_idQuarto.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("idQuarto"));
-        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, String>("idProduto"));
-        tbl_quantidade.setCellValueFactory(new PropertyValueFactory<Model.ProdutoQuarto, Integer>("quantidade"));
+        tbl_id.setCellValueFactory(new PropertyValueFactory<ProdutoReserva, Integer>("id"));
+        tbl_idReserva.setCellValueFactory(new PropertyValueFactory<ProdutoReserva, Integer>("idReserva"));
+        tbl_idProduto.setCellValueFactory(new PropertyValueFactory<ProdutoReserva, String>("idProduto"));
+        tbl_quantidade.setCellValueFactory(new PropertyValueFactory<ProdutoReserva, Integer>("quantidade"));
 
 
-        tv_ProdutoQuarto.setItems(ProdutoQuartoDAL.getProdutoQuarto());
+        tv_ProdutoQuarto.setItems(ProdutoReservaDAL.getProdutoReserva());
     }
     private void initCombos() {
-        cmbQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
+        cmbQuarto.getItems().addAll(ReservaDAL.getReservasPendentes());
         cmbProduto.getItems().addAll(ProdutoDAL.getAllProdutos());
     }
 
     @FXML
     void clickAddProdutoQuarto(ActionEvent event) throws SQLException {
-        Quarto selectedRoom = cmbQuarto.getValue();
+        Reserva selectedReservation = cmbQuarto.getValue();
         Produto selectedProduct = cmbProduto.getValue();
         int quantity = Integer.parseInt(txt_quantidade.getText());
-        if (selectedRoom == null || selectedProduct == null) {
+        if (selectedReservation == null || selectedProduct == null) {
             // show error message
             return;
         }
-        ProdutoQuartoBLL.addProductInRoom(selectedRoom.getId(), selectedProduct.getIdProduto(), quantity);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado ao quarto.", "Informação");
+        ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity);
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso");
         initTable();
     }
 
@@ -105,9 +104,9 @@ public class ProdutoQuartoController implements Initializable {
 
     @FXML
     void clickRmvProdutoQuarto(ActionEvent event) {
-        Model.ProdutoQuarto selectedProduct = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
+        ProdutoReserva selectedProduct = tv_ProdutoQuarto.getSelectionModel().getSelectedItem();
         if (selectedProduct != null) {
-            ProdutoQuartoBLL.deleteProductFromRoom(selectedProduct);
+            ProdutoReservaBLL.deleteProductFromRoom(selectedProduct);
             initTable();
         }
     }

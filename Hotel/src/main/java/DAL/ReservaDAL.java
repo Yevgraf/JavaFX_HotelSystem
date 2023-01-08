@@ -106,6 +106,27 @@ public class ReservaDAL {
         return reservas;
     }
 
+    public static List<Reserva> getReservasPendentes() {
+        List<Reserva> reservas = new ArrayList<>();
+        try {
+            String cmd = "SELECT r.* FROM Reserva r INNER JOIN EstadoReserva e ON r.id = e.reserva WHERE e.estado = 'pendente' OR e.estado = 'checkin'";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
+                        rs.getString("dataInicio"), rs.getString("dataFim"),
+                        rs.getDouble("preco"));
+                reservas.add(reserva);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return reservas;
+    }
+
+
+
     public static boolean isRoomAvailable(int roomId, LocalDate startDate) throws SQLException {
         String query = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto = ? And dataInicio = ?";
         try (PreparedStatement stmt = DBconn.getConn().prepareStatement(query)) {
@@ -187,7 +208,7 @@ public class ReservaDAL {
     /*public double getTotalProdutosReserva(int reservationId) throws SQLException {
         double total = 0;
 
-        String sql = "SELECT SUM(pq.quantidade * p.precoPorUnidade) AS total FROM Reserva r INNER JOIN Quarto q ON r.idQuarto = q.id INNER JOIN ProdutoQuarto pq ON q.id = pq.idQuarto INNER JOIN Produto p ON pq.idProduto = p.id WHERE r.id = ?";
+        String sql = "SELECT SUM(pq.quantidade * p.precoPorUnidade) AS total FROM Reserva r INNER JOIN Quarto q ON r.idQuarto = q.id INNER JOIN ProdutoReserva pq ON q.id = pq.idQuarto INNER JOIN Produto p ON pq.idProduto = p.id WHERE r.id = ?";
 
         Connection conn = DBconn.getConn();
 
