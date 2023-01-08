@@ -59,10 +59,6 @@ public class ProdutoReserva {
 
     @Override
     public String toString() {
-        return "ProdutoReservaController{" +
-                "idQuarto=" + idReserva +
-                ", idProduto=" + idProduto +
-                ", quantidade=" + quantidade +
-                '}';
+        return "Reserva: " + idReserva + ", Produto: " + idProduto + ", Quantidade: " + quantidade;
     }
 }
