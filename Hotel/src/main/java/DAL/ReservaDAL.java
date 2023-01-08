@@ -2,6 +2,8 @@ package DAL;
 
 import Model.MessageBoxes;
 import Model.Reserva;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
@@ -37,7 +39,6 @@ public class ReservaDAL {
 
                 addReservationState(reservationId, "pendente");
 
-                // Add the "room" service to the reservation
                 addServiceToReservation(reservationId, "Quarto");
             }
 
@@ -303,6 +304,26 @@ public class ReservaDAL {
                 connection.close();
             }
         }
+    }
+
+    public ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
+        ObservableList<Reserva> reservas = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT r.* FROM Reserva r INNER JOIN EstadoReserva e ON r.id = e.idReserva WHERE e.estado = ?";
+            PreparedStatement st = DBconn.getConn().prepareStatement(cmd);
+            st.setString(1, estadoReserva);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
+                        rs.getString("dataInicio"), rs.getString("dataFim"),
+                        rs.getDouble("preco"));
+                reservas.add(reserva);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return reservas;
     }
 
 

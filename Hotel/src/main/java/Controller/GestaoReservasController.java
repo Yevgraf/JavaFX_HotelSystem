@@ -3,6 +3,7 @@ package Controller;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
+import DAL.ReservaDAL;
 import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;
@@ -11,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -67,6 +65,9 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     private Button ProdutoQuarto;
+
+    @FXML
+    private ComboBox<String> cbEstadoReserva;
 
 
 
@@ -146,7 +147,7 @@ public class GestaoReservasController implements Initializable {
 
     private void initTable() {
 
-        ReservaBLL reservaBLL = new ReservaBLL();
+        ReservaDAL reservaBLL = new ReservaDAL();
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
         tblCoIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
@@ -155,7 +156,12 @@ public class GestaoReservasController implements Initializable {
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
 
-        tblReservas.setItems(reservaBLL.getReservas());
+        cbEstadoReserva.getItems().addAll("pendente", "checkin", "checkout");
+        cbEstadoReserva.setOnAction(event -> {
+        String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
+        tblReservas.setItems(reservaBLL.getReservasByEstadoReserva(estadoReserva));
+        initTable();
+    });
     }
 
 }
