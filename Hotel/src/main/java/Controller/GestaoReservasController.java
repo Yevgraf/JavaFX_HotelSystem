@@ -109,8 +109,8 @@ public class GestaoReservasController implements Initializable {
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva cancelada", "Cancelada");
         }
-        initTable();
     }
 
     private void disableEliminarParaFuncionario() {
@@ -141,9 +141,19 @@ public class GestaoReservasController implements Initializable {
     }
 
     @FXML
-    void clickCancelar(ActionEvent event) {
+    void clickCancelar(ActionEvent event) throws SQLException {
+        ReservaBLL reservabll = new ReservaBLL();
+        Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
+        if (selectedReservation == null) {
 
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
+            return;
+        }
+        reservabll.cancelReservation(selectedReservation.getId());
+
+        initTable();
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -160,7 +170,7 @@ public class GestaoReservasController implements Initializable {
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
-        cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout");
+        cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout", "cancelada");
         cbEstadoReserva.setValue("Todos");
 
         tblReservas.setItems(reservaDAL.getReservas());

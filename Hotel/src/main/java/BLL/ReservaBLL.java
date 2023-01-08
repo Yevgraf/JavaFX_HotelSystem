@@ -96,4 +96,10 @@ public class ReservaBLL {
 
         return precoFinal;
     }
+
+    public void cancelReservation(int reservationId) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        reservaDAL.cancelReservation(reservationId);
+    }
+
 }

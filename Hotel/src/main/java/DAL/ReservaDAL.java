@@ -336,4 +336,31 @@ public class ReservaDAL {
         return reservas;
     }
 
-}
+
+    public void cancelReservation(int reservationId) throws SQLException {
+        String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ResultSet rs = ps.executeQuery();
+        String estado = null;
+        if (rs.next()) {
+            estado = rs.getString("estado");
+        }
+        ps.close();
+        if (estado == null || estado.equals("checkout")) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível cancelar esta reserva.", "Erro");
+        } else {
+            cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
+            ps = connection.prepareStatement(cmd);
+            ps.setInt(1, reservationId);
+            ps.executeUpdate();
+            ps.close();
+        }
+    }
+
+
+
+    }
