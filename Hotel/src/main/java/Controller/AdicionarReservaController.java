@@ -86,7 +86,7 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private Button voltarBtn;
 
-    static List dates = new ArrayList<>();
+    List<LocalDate> dates = new ArrayList<>();
 
     static boolean vD;
 
