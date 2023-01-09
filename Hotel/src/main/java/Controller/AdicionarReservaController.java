@@ -176,14 +176,17 @@ public class AdicionarReservaController implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                for (LocalDate dataInicial : listaDatasIniciais) {
-                    for (LocalDate dataFinal : listaDatasFinais) {
-                        LocalDate inicio = dataInicial;
-                        LocalDate fim = dataFinal;
-                        if (date.isEqual(inicio) || date.isEqual(fim) || (date.isAfter(inicio) && date.isBefore(fim))) {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #FFB6C1;");
-                        }
+                ArrayList<LocalDate> diasDesativados = new ArrayList<>();
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    LocalDate inicio = listaDatasIniciais.get(i);
+                    LocalDate fim = listaDatasFinais.get(i);
+                    while (!inicio.isAfter(fim)) {
+                        diasDesativados.add(inicio);
+                        inicio = inicio.plusDays(1);
+                    }
+                    if (diasDesativados.contains(date)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #FFB6C1;");
                     }
                 }
             }
@@ -192,14 +195,17 @@ public class AdicionarReservaController implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                for (LocalDate dataInicial : listaDatasIniciais) {
-                    for (LocalDate dataFinal : listaDatasFinais) {
-                        LocalDate inicio = dataInicial;
-                        LocalDate fim = dataFinal;
-                        if (date.isEqual(inicio) || date.isEqual(fim) || (date.isAfter(inicio) && date.isBefore(fim))) {
-                            setDisable(true);
-                            setStyle("-fx-background-color: #FFB6C1;");
-                        }
+                ArrayList<LocalDate> diasDesativados = new ArrayList<>();
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    LocalDate inicio = listaDatasIniciais.get(i);
+                    LocalDate fim = listaDatasFinais.get(i);
+                    while (!inicio.isAfter(fim)) {
+                        diasDesativados.add(inicio);
+                        inicio = inicio.plusDays(1);
+                    }
+                    if (diasDesativados.contains(date)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #FFB6C1;");
                     }
                 }
             }
