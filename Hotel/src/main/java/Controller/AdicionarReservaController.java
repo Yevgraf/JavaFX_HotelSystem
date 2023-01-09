@@ -170,18 +170,32 @@ public class AdicionarReservaController implements Initializable {
 
     private void desativarDiasOcupadosDasReservas(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
-        List<LocalDate> startDate = rBLL.getDataInicial(idQuarto);
-        List<LocalDate> endDate = rBLL.getDataFinal(idQuarto);
+        List<LocalDate> listaDatasIniciais = rBLL.getDataInicial(idQuarto);
+        List<LocalDate> listaDatasFinais = rBLL.getDataFinal(idQuarto);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
+            @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    for (int j = 0; j < listaDatasFinais.size(); j++) {
+                        LocalDate inicio = listaDatasFinais.get(i);
+                        LocalDate fim = listaDatasFinais.get(j);
+                        setDisable(empty || (date.isAfter(inicio) && date.isBefore(fim)) || date.equals(inicio) || date.equals(fim));
+                    }
+                }
             }
         });
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
+            @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    for (int j = 0; j < listaDatasFinais.size(); j++) {
+                        LocalDate start = listaDatasFinais.get(i);
+                        LocalDate end = listaDatasFinais.get(j);
+                        setDisable(empty || (date.isAfter(start) && date.isBefore(end)) || date.equals(start) || date.equals(end));
+                    }
+                }
             }
         });
     }
@@ -196,7 +210,7 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
-    private void resetDatePickers(){
+    private void resetDatePickers() {
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
