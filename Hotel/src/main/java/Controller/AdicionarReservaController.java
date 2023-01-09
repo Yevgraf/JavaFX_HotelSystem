@@ -170,8 +170,8 @@ public class AdicionarReservaController implements Initializable {
 
     private void desativarDiasOcupadosDasReservas(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
-        LocalDate startDate = rBLL.getDataInicial(idQuarto);
-        LocalDate endDate = rBLL.getDataFinal(idQuarto);
+        List<LocalDate> startDate = rBLL.getDataInicial(idQuarto);
+        List<LocalDate> endDate = rBLL.getDataFinal(idQuarto);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

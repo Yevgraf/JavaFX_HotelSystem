@@ -101,15 +101,15 @@ public class ReservaBLL {
         reservaDAL.cancelReservation(reservationId);
     }
 
-    public LocalDate getDataInicial(int idQuarto) {
+    public List<LocalDate> getDataInicial(int idQuarto) {
         ReservaDAL reservaDAL = new ReservaDAL();
-        LocalDate dataInicial = reservaDAL.getDataInicial(idQuarto).toLocalDate();
+        List<LocalDate> dataInicial = reservaDAL.getDataInicial(idQuarto);
         return dataInicial;
     }
 
-    public LocalDate getDataFinal(int idQuarto) {
+    public List<LocalDate> getDataFinal(int idQuarto) {
         ReservaDAL reservaDAL = new ReservaDAL();
-        LocalDate dataFinal = reservaDAL.getDataFinal(idQuarto).toLocalDate();
+        List<LocalDate> dataFinal = reservaDAL.getDataFinal(idQuarto);
         return dataFinal;
     }
 

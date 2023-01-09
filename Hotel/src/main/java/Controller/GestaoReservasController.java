@@ -109,6 +109,7 @@ public class GestaoReservasController implements Initializable {
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
+            initTable();
         }
     }
 
