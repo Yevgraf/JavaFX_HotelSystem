@@ -170,18 +170,24 @@ public class AdicionarReservaController implements Initializable {
 
     private void desativarDiasOcupadosDasReservas(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
-        LocalDate startDate = rBLL.getDataInicial(idQuarto);
-        LocalDate endDate = rBLL.getDataFinal(idQuarto);
+        LocalDate dataInicial = rBLL.getDataInicial(idQuarto);
+        LocalDate dataFinal = rBLL.getDataFinal(idQuarto);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
+                setDisable(empty || (date.isAfter(dataInicial) && date.isBefore(dataFinal)) || date.equals(dataInicial) || date.equals(dataFinal));
+                if (date.isAfter(dataInicial) && date.isBefore(dataFinal) || date.equals(dataInicial) || date.equals(dataFinal)) {
+                    setStyle("-fx-background-color: #FFB6C1;");
+                }
             }
         });
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
+                setDisable(empty || (date.isAfter(dataInicial) && date.isBefore(dataFinal)) || date.equals(dataInicial) || date.equals(dataFinal));
+                if (date.isAfter(dataInicial) && date.isBefore(dataFinal) || date.equals(dataInicial) || date.equals(dataFinal)) {
+                    setStyle("-fx-background-color: #FFB6C1;");
+                }
             }
         });
     }
@@ -196,7 +202,7 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
-    private void resetDatePickers(){
+    private void resetDatePickers() {
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
