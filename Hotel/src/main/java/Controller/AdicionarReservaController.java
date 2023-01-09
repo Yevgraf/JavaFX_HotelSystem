@@ -176,11 +176,14 @@ public class AdicionarReservaController implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                for (int i = 0; i < listaDatasIniciais.size(); i++) {
-                    for (int j = 0; j < listaDatasFinais.size(); j++) {
-                        LocalDate inicio = listaDatasFinais.get(i);
-                        LocalDate fim = listaDatasFinais.get(j);
-                        setDisable(empty || (date.isAfter(inicio) && date.isBefore(fim)) || date.equals(inicio) || date.equals(fim));
+                for (LocalDate dataInicial : listaDatasIniciais) {
+                    for (LocalDate dataFinal : listaDatasFinais) {
+                        LocalDate inicio = dataInicial;
+                        LocalDate fim = dataFinal;
+                        if (date.isEqual(inicio) || date.isEqual(fim) || (date.isAfter(inicio) && date.isBefore(fim))) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #FFB6C1;");
+                        }
                     }
                 }
             }
@@ -189,11 +192,14 @@ public class AdicionarReservaController implements Initializable {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                for (int i = 0; i < listaDatasIniciais.size(); i++) {
-                    for (int j = 0; j < listaDatasFinais.size(); j++) {
-                        LocalDate start = listaDatasFinais.get(i);
-                        LocalDate end = listaDatasFinais.get(j);
-                        setDisable(empty || (date.isAfter(start) && date.isBefore(end)) || date.equals(start) || date.equals(end));
+                for (LocalDate dataInicial : listaDatasIniciais) {
+                    for (LocalDate dataFinal : listaDatasFinais) {
+                        LocalDate inicio = dataInicial;
+                        LocalDate fim = dataFinal;
+                        if (date.isEqual(inicio) || date.isEqual(fim) || (date.isAfter(inicio) && date.isBefore(fim))) {
+                            setDisable(true);
+                            setStyle("-fx-background-color: #FFB6C1;");
+                        }
                     }
                 }
             }
