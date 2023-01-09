@@ -17,7 +17,7 @@ public class UtilizadorBLL {
             UtilizadorDAL dal = new UtilizadorDAL();
             String passwordCifrada = encrypt(password);
 
-            Utilizador loggedIn = dal.Login(utilizador, password/*passwordCifrada*/);
+            Utilizador loggedIn = dal.Login(utilizador, passwordCifrada);
 
             UtilizadorPreferences.guardaridCliente(loggedIn.getId());
             UtilizadorPreferences.guardartipoLogin(loggedIn.getTipoUser().getTipo());

@@ -4,10 +4,10 @@ import BLL.CartaoBLL;
 import BLL.QuartoBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
-import DAL.QuartoDAL;
-import Model.*;
+import Model.Cartao;
+import Model.MessageBoxes;
+import Model.Quarto;
 import com.example.hotel.Main;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -27,6 +27,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+
+import static DAL.QuartoDAL.*;
 
 public class CriarQuartoController implements Initializable {
 
@@ -251,7 +253,8 @@ public class CriarQuartoController implements Initializable {
 
     public boolean VerificarQuartoPiso1(){
         boolean vQ1 = false;
-        String verificarquarto1 = "select count(id) from Quarto where piso = '" + txt_piso.getText() + "'";
+        int piso = Integer.parseInt(txt_piso.getText());
+        String verificarquarto1 = quartoPiso(piso);
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
             ResultSet rs = stmt.executeQuery();
@@ -272,7 +275,8 @@ public class CriarQuartoController implements Initializable {
 
     public boolean VerificarQuartoPiso2(){
         boolean vQ1 = false;
-        String verificarquarto1 = "select count(id) from Quarto where piso = '" + txt_piso.getText() + "'";
+        int piso = Integer.parseInt(txt_piso.getText());
+        String verificarquarto1 = quartoPiso(piso);
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
             ResultSet rs = stmt.executeQuery();
@@ -293,7 +297,8 @@ public class CriarQuartoController implements Initializable {
 
     public boolean VerificarQuartoSingular(){
         boolean vQ1 = false;
-        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        String tipoquarto = cmbTipoQuarto.getValue();
+        String verificarquarto1 = quartoTipo(tipoquarto);
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
             ResultSet rs = stmt.executeQuery();
@@ -314,7 +319,8 @@ public class CriarQuartoController implements Initializable {
 
     public boolean VerificarQuartoDuplo(){
         boolean vQ1 = false;
-        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        String tipoquarto = cmbTipoQuarto.getValue();
+        String verificarquarto1 = quartoTipo(tipoquarto);
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
             ResultSet rs = stmt.executeQuery();
@@ -335,7 +341,8 @@ public class CriarQuartoController implements Initializable {
 
     public boolean VerificarQuartoFamiliar(){
         boolean vQ1 = false;
-        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + cmbTipoQuarto.getValue() + "'";
+        String tipoquarto = cmbTipoQuarto.getValue();
+        String verificarquarto1 = quartoTipo(tipoquarto);
         try (Connection conn = DBconn.getConn();
              PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
             ResultSet rs = stmt.executeQuery();
