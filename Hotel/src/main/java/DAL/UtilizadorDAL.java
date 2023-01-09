@@ -269,4 +269,9 @@ public class UtilizadorDAL {
         ps.executeUpdate();
         return null;
     }
+
+    public static String nifUtilizador(int nif){
+        String query = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
+        return query;
+    }
 }

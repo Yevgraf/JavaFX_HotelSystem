@@ -138,4 +138,15 @@ public class QuartoDAL {
 
         return 0;
     }
+
+    public static String quartoPiso(int piso){
+        String query = "select count(id) from Quarto where piso = '" + piso + "'";
+        return query;
+    }
+
+    public static String quartoTipo(String tipoquarto){
+        String query = "select count(id) from Quarto where tipoQuarto = '" + tipoquarto + "'";
+        return query;
+    }
+
 }
