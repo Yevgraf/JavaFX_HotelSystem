@@ -190,7 +190,7 @@ public class AdicionarReservaController implements Initializable {
                     }
                 }
             }
-        });
+        }); 
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
