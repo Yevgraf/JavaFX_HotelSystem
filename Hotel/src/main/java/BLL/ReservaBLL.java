@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -100,6 +99,27 @@ public class ReservaBLL {
     public void cancelReservation(int reservationId) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         reservaDAL.cancelReservation(reservationId);
+    }
+
+    public LocalDate getDataInicial(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        LocalDate dataInicial = reservaDAL.getDataInicial(idQuarto).toLocalDate();
+        return dataInicial;
+    }
+
+    public LocalDate getDataFinal(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        LocalDate dataFinal = reservaDAL.getDataFinal(idQuarto).toLocalDate();
+        return dataFinal;
+    }
+
+    public Boolean verificaSeReservaExiste(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        if (reservaDAL.verificaSeExisteReserva(idQuarto)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

@@ -2,7 +2,6 @@ package Controller;
 
 import BLL.ReservaBLL;
 import BLL.UtilizadorBLL;
-import DAL.DBconn;
 import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
@@ -12,13 +11,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.*;
@@ -88,9 +85,6 @@ public class AdicionarReservaController implements Initializable {
 
     List<LocalDate> dates = new ArrayList<>();
 
-    static boolean vD;
-
-
     @FXML
     void clickAddReservaBrn(ActionEvent event) throws SQLException, IOException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
@@ -101,11 +95,11 @@ public class AdicionarReservaController implements Initializable {
         }
 
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
-           // if (VerificarDisponibilidade() == true){
-                AdicionarReserva();
-         //   }
+            // if (VerificarDisponibilidade() == true){
+            AdicionarReserva();
+            //   }
         } else {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!", "Erro");
         }
     }
 
@@ -122,7 +116,7 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     void AdicionarReserva() throws SQLException, IOException {
-        if(DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())){
+        if (DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())) {
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
@@ -152,6 +146,7 @@ public class AdicionarReservaController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
+        listenComboboxReserva();
     }
 
     private void initCombos() {
@@ -163,12 +158,7 @@ public class AdicionarReservaController implements Initializable {
         cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
     }
 
-    public void cmbIdQuartoAction(ActionEvent actionEvent) {
-        //cmbIDQuarto.getSelectionModel().getSelectedItem().getId().toString();
-    }
-
     public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
-
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) btnRedictCriarCliente.getScene().getWindow();
@@ -178,61 +168,53 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-    public boolean VerificarDisponibilidade(){
-        String verificar = "SELECT dataInicio FROM Reserva WHERE idQuarto ='" + cmbIDQuarto.getValue().getId() +
-                "' And dataInicio like '" + DatePickerInicio.getValue().toString() + "'";
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificar)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                dates = getDatesBetweenUsingJava7(rs.getDate("dataInicio"),rs.getDate("dataFim"));
-                if (rs.getString("dataInicio").equals(dates)) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vD = false;
-                }else{
-                    vD = true;
-                }
+    private void desativarDiasOcupadosDasReservas(int idQuarto) {
+        ReservaBLL rBLL = new ReservaBLL();
+        LocalDate startDate = rBLL.getDataInicial(idQuarto);
+        LocalDate endDate = rBLL.getDataFinal(idQuarto);
+        DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
             }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vD;
+        });
+        DatePickerFim.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || (date.isAfter(startDate) && date.isBefore(endDate)) || date.equals(startDate) || date.equals(endDate));
+            }
+        });
     }
 
-    public static List getDatesBetweenUsingJava7(Date startDate, Date endDate) {
-        List datesInRange = new ArrayList<>();
-        Calendar calendar = getCalendarWithoutTime(startDate);
-        Calendar endCalendar = getCalendarWithoutTime(endDate);
-
-        while (calendar.before(endCalendar)) {
-            Date result = calendar.getTime();
-            datesInRange.add(result);
-            calendar.add(Calendar.DATE, 1);
-        }
-
-        return datesInRange;
+    private void listenComboboxReserva() {
+        ReservaBLL rBLL = new ReservaBLL();
+        cmbIDQuarto.setOnAction(event -> {
+            int idQuarto = cmbIDQuarto.getValue().getId();
+            if (rBLL.verificaSeReservaExiste(idQuarto)) {
+                desativarDiasOcupadosDasReservas(idQuarto);
+            }
+        });
     }
 
-    private static Calendar getCalendarWithoutTime(Date date) {
-        Calendar calendar = new GregorianCalendar();
-        calendar.setTime(date);
-        calendar.set(Calendar.HOUR, 0);
-        calendar.set(Calendar.HOUR_OF_DAY, 0);
-        calendar.set(Calendar.MINUTE, 0);
-        calendar.set(Calendar.SECOND, 0);
-        calendar.set(Calendar.MILLISECOND, 0);
-        return calendar;
+    private void resetDatePickers(){
+        DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(false);
+            }
+        });
+        DatePickerFim.setDayCellFactory(picker -> new DateCell() {
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(false);
+            }
+        });
     }
 
-        /*boolean isAvailable = ReservaBLL.checkAvailability(selectedRoom.getId(), startDate);
-        if (!isAvailable) {
-            DataInicio.setText("A data escolhida está ocupada!");
-            ValidarQuarto.setText("Quarto ocupado na data escolhida!");
-        } else {
-            DataInicio.setText("");
-        }
-    }*/
+    @FXML
+    void cmbQuartoClick(MouseEvent event) {
+        resetDatePickers();
+    }
 }
 
 

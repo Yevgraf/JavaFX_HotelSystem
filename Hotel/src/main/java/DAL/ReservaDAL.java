@@ -128,7 +128,6 @@ public class ReservaDAL {
     }
 
 
-
     public static boolean isRoomAvailable(int roomId, LocalDate startDate) throws SQLException {
         String query = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto = ? And dataInicio = ?";
         try (PreparedStatement stmt = DBconn.getConn().prepareStatement(query)) {
@@ -146,10 +145,12 @@ public class ReservaDAL {
         deleteEstadoReservaForReservation(reservationId);
         deleteReservationById(reservationId);
     }
+
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
         executeDelete(cmd, reservationId);
     }
+
     private static void deleteServicoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM ServicoReserva WHERE idReserva = ?";
         executeDelete(cmd, reservationId);
@@ -174,6 +175,7 @@ public class ReservaDAL {
         ps.executeUpdate();
         ps.close();
     }
+
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 
@@ -235,7 +237,7 @@ public class ReservaDAL {
     }*/
 
 
-        public void addReservationState(int reservationId, String estado) throws SQLException {
+    public void addReservationState(int reservationId, String estado) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
         try {
@@ -291,10 +293,11 @@ public class ReservaDAL {
             if (rs.next()) {
                 String estado = rs.getString("estado");
                 if (estado.equals("checkin")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
                     return;
                 }
-            } ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+            }
+            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
@@ -362,4 +365,64 @@ public class ReservaDAL {
             ps.close();
         }
     }
+
+    public Date getDataInicial(int idQuarto) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.dataInicio FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getDate("dataInicio");
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return null;
     }
+
+    public Date getDataFinal(int idQuarto) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.dataFim FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getDate("dataFim");
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
+    public Boolean verificaSeExisteReserva(int idQuarto) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.id FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ps.close();
+                return true;
+            } else {
+                ps.close();
+                return false;
+            }
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+}

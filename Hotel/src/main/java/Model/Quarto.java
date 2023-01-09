@@ -77,7 +77,7 @@ public class Quarto {
 
     @Override
     public String toString() {
-        return "Tipo de quarto: " + tipoQuarto + ", Piso: " + piso + ", Preço: " + preco;
+        return "ID: " + id + ", Tipo de quarto: " + tipoQuarto + ", Piso: " + piso + ", Preço: " + preco;
     }
 
 }
