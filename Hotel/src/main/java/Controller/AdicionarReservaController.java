@@ -170,23 +170,43 @@ public class AdicionarReservaController implements Initializable {
 
     private void desativarDiasOcupadosDasReservas(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
-        LocalDate dataInicial = rBLL.getDataInicial(idQuarto);
-        LocalDate dataFinal = rBLL.getDataFinal(idQuarto);
+        List<LocalDate> listaDatasIniciais = rBLL.getDataInicial(idQuarto);
+        List<LocalDate> listaDatasFinais = rBLL.getDataFinal(idQuarto);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
+            @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(dataInicial) && date.isBefore(dataFinal)) || date.equals(dataInicial) || date.equals(dataFinal));
-                if (date.isAfter(dataInicial) && date.isBefore(dataFinal) || date.equals(dataInicial) || date.equals(dataFinal)) {
-                    setStyle("-fx-background-color: #FFB6C1;");
+                ArrayList<LocalDate> diasDesativados = new ArrayList<>();
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    LocalDate inicio = listaDatasIniciais.get(i);
+                    LocalDate fim = listaDatasFinais.get(i);
+                    while (!inicio.isAfter(fim)) {
+                        diasDesativados.add(inicio);
+                        inicio = inicio.plusDays(1);
+                    }
+                    if (diasDesativados.contains(date)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #FFB6C1;");
+                    }
                 }
             }
         });
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
+            @Override
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
-                setDisable(empty || (date.isAfter(dataInicial) && date.isBefore(dataFinal)) || date.equals(dataInicial) || date.equals(dataFinal));
-                if (date.isAfter(dataInicial) && date.isBefore(dataFinal) || date.equals(dataInicial) || date.equals(dataFinal)) {
-                    setStyle("-fx-background-color: #FFB6C1;");
+                ArrayList<LocalDate> diasDesativados = new ArrayList<>();
+                for (int i = 0; i < listaDatasIniciais.size(); i++) {
+                    LocalDate inicio = listaDatasIniciais.get(i);
+                    LocalDate fim = listaDatasFinais.get(i);
+                    while (!inicio.isAfter(fim)) {
+                        diasDesativados.add(inicio);
+                        inicio = inicio.plusDays(1);
+                    }
+                    if (diasDesativados.contains(date)) {
+                        setDisable(true);
+                        setStyle("-fx-background-color: #FFB6C1;");
+                    }
                 }
             }
         });

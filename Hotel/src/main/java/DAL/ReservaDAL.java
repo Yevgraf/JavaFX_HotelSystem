@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -366,7 +365,8 @@ public class ReservaDAL {
         }
     }
 
-    public Date getDataInicial(int idQuarto) {
+    public List<LocalDate> getDataInicial(int idQuarto) {
+        List<LocalDate> datasIniciais = new ArrayList<>();
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -377,15 +377,18 @@ public class ReservaDAL {
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return rs.getDate("dataInicio");
+                java.sql.Date data = rs.getDate("dataInicio");
+                datasIniciais.add(data.toLocalDate());
             }
             ps.close();
+            return datasIniciais;
         } catch (Exception ex) {
         }
         return null;
     }
 
-    public Date getDataFinal(int idQuarto) {
+    public List<LocalDate> getDataFinal(int idQuarto) {
+        List<LocalDate> datasFinais = new ArrayList<>();
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
@@ -396,9 +399,11 @@ public class ReservaDAL {
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                return rs.getDate("dataFim");
+                java.sql.Date data = rs.getDate("dataFim");
+                datasFinais.add(data.toLocalDate());
             }
             ps.close();
+            return datasFinais;
         } catch (Exception ex) {
         }
         return null;
