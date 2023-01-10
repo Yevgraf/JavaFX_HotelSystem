@@ -239,6 +239,8 @@ public class AdicionarReservaController implements Initializable {
             if (rBLL.verificaSeReservaExiste(idQuarto)) {
                 desativarDiasOcupadosDatePickerInicio(idQuarto);
                 listenDatePickerInicio(idQuarto);
+            } else {
+                listenDatePickerInicio(idQuarto);
             }
         });
     }
