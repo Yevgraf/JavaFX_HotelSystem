@@ -220,6 +220,18 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    private void desativarDiasOcupadosDatePickerFimCasoNull(LocalDate dataInicio) {
+        DatePickerFim.setDayCellFactory(picker -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                if (date.isBefore(dataInicio.plusDays(1))) {
+                    setDisable(empty || date.isBefore(dataInicio.plusDays(1)));
+                    setStyle("-fx-background-color: #FFB6C1;");
+                }
+            }
+        });
+    }
+
     private void listenComboboxReserva() {
         ReservaBLL rBLL = new ReservaBLL();
         cmbIDQuarto.setOnAction(event -> {
@@ -238,7 +250,7 @@ public class AdicionarReservaController implements Initializable {
             if (rBLL.getProxData(idQuarto, dataInicio) != null) {
                 desativarDiasOcupadosDatePickerFim(dataInicio);
             } else {
-                desativarDiasOcupadosDatePickerInicio(idQuarto);
+                desativarDiasOcupadosDatePickerFimCasoNull(dataInicio);
             }
         });
     }
