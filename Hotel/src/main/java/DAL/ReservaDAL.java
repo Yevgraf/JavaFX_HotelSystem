@@ -7,7 +7,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -128,7 +127,6 @@ public class ReservaDAL {
     }
 
 
-
     public static boolean isRoomAvailable(int roomId, LocalDate startDate) throws SQLException {
         String query = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto = ? And dataInicio = ?";
         try (PreparedStatement stmt = DBconn.getConn().prepareStatement(query)) {
@@ -146,10 +144,12 @@ public class ReservaDAL {
         deleteEstadoReservaForReservation(reservationId);
         deleteReservationById(reservationId);
     }
+
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
         executeDelete(cmd, reservationId);
     }
+
     private static void deleteServicoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM ServicoReserva WHERE idReserva = ?";
         executeDelete(cmd, reservationId);
@@ -174,6 +174,7 @@ public class ReservaDAL {
         ps.executeUpdate();
         ps.close();
     }
+
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 
@@ -235,7 +236,7 @@ public class ReservaDAL {
     }*/
 
 
-        public void addReservationState(int reservationId, String estado) throws SQLException {
+    public void addReservationState(int reservationId, String estado) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
         try {
@@ -291,10 +292,11 @@ public class ReservaDAL {
             if (rs.next()) {
                 String estado = rs.getString("estado");
                 if (estado.equals("checkin")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING,"Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
                     return;
                 }
-            } ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+            }
+            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
@@ -362,4 +364,91 @@ public class ReservaDAL {
             ps.close();
         }
     }
+
+    public List<LocalDate> getDataInicial(int idQuarto) {
+        List<LocalDate> datasIniciais = new ArrayList<>();
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.dataInicio FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                java.sql.Date data = rs.getDate("dataInicio");
+                datasIniciais.add(data.toLocalDate());
+            }
+            ps.close();
+            return datasIniciais;
+        } catch (Exception ex) {
+        }
+        return null;
     }
+
+    public List<LocalDate> getDataFinal(int idQuarto) {
+        List<LocalDate> datasFinais = new ArrayList<>();
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.dataFim FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                java.sql.Date data = rs.getDate("dataFim");
+                datasFinais.add(data.toLocalDate());
+            }
+            ps.close();
+            return datasFinais;
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
+    public LocalDate getProximaData(int idQuarto, LocalDate ultData) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT TOP 1 r.dataInicio FROM Reserva r " +
+                    "WHERE r.dataInicio > ? " +
+                    "AND r.idQuarto = ? ORDER BY r.dataInicio ASC";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setDate(1, Date.valueOf((ultData)));
+            ps.setInt(2, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                java.sql.Date proxData = rs.getDate("dataInicio");
+                return proxData.toLocalDate();
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
+    public Boolean verificaSeExisteReserva(int idQuarto) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT r.id FROM Reserva r " +
+                    "INNER JOIN Quarto q on q.id = r.idQuarto " +
+                    "WHERE q.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setInt(1, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ps.close();
+                return true;
+            } else {
+                ps.close();
+                return false;
+            }
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+}
