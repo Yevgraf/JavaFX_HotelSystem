@@ -1,5 +1,6 @@
 package Controller;
 
+import BLL.CheckoutBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
@@ -143,14 +144,14 @@ public class GestaoReservasController implements Initializable {
     @FXML
     void clickCancelar(ActionEvent event) throws SQLException {
         ReservaBLL reservabll = new ReservaBLL();
+        CheckoutBLL checkoutBLL = new CheckoutBLL();
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation == null) {
-
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
             return;
         }
         reservabll.cancelReservation(selectedReservation.getId());
-
+        checkoutBLL.voltaNaoConsumiveisAoStock(selectedReservation.getId());
     }
 
 

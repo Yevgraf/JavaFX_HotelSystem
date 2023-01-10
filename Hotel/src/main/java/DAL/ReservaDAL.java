@@ -354,14 +354,18 @@ public class ReservaDAL {
         }
         ps.close();
         if (estado == null || estado.equals("checkout")) {
-
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível cancelar esta reserva.", "Erro");
         } else {
-            cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
-            ps = connection.prepareStatement(cmd);
-            ps.setInt(1, reservationId);
-            ps.executeUpdate();
-            ps.close();
+            if (estado == null || estado.equals("cancelada")) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A reserva já se encontra cancelada.", "Erro");
+            } else {
+                cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
+                ps = connection.prepareStatement(cmd);
+                ps.setInt(1, reservationId);
+                ps.executeUpdate();
+                ps.close();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva cancelada!", "Sucesso:");
+            }
         }
     }
 
