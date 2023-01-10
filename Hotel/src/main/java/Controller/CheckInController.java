@@ -1,9 +1,12 @@
 package Controller;
 
 import BLL.CheckInBLL;
+import BLL.CheckoutBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
+import Model.Checkout;
 import Model.MessageBoxes;
+import Model.Pagamento;
 import Model.Reserva;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
@@ -11,58 +14,72 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
+import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
+import javafx.scene.control.*;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URL;
 import java.sql.SQLException;
+import java.util.ResourceBundle;
 
-public class CheckInController {
+public class CheckInController implements Initializable {
+
+    @FXML
+    private AnchorPane PainelGestorStock;
 
     @FXML
     private Button Voltar;
 
     @FXML
-    private ComboBox<Reserva> reservationComboBox;
-
-    public void initialize() {
-
-        initCombos();
-    }
-
-    private void initCombos() {
-        ReservaBLL reservaBLL = new ReservaBLL();
-        ObservableList<Reserva> reservations = reservaBLL.getReservas();
-        reservationComboBox.setItems(reservations);
-
-    }
+    private Button btnCheckOut;
 
     @FXML
-    private void handleCheckInButtonAction(ActionEvent event) {
-        Reserva reservation = reservationComboBox.getSelectionModel().getSelectedItem();
-        if (reservation == null) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor selecione uma reserva");
-        } else {
-            CheckInBLL checkInBLL = new CheckInBLL();
-            performCheckIn(reservation);
-            // show a success message and close the window
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Sucesso", "Check-in realizado com sucesso");
-        }
+    private Button btnCheckin;
+
+    @FXML
+    private ImageView imgGestorGestaoProduto;
+
+    @FXML
+    private ImageView imgGestorStock;
+
+    @FXML
+    private ImageView imgGestorStock1;
+
+    @FXML
+    private ImageView imgGestorStock11;
+
+    @FXML
+    private Label lblData1;
+
+    @FXML
+    private Label lblData11;
+
+    @FXML
+    private Label lblHotel;
+
+    @FXML
+    private Label lblSamos;
+
+    @FXML
+    private ListView<Reserva> listViewReservaComcheckin;
+
+    @FXML
+    private ListView<Reserva> listViewReservaSemCheckin;
+
+    @FXML
+    private ComboBox<Pagamento> metodoPagamento;
+
+    private void initCombos() throws SQLException {
+        CheckoutBLL checkoutBLL = new CheckoutBLL();
+        ObservableList<Pagamento> pagamentos = checkoutBLL.getPagamentos();
+        metodoPagamento.setItems(pagamentos);
+
     }
 
-    private void performCheckIn(Reserva reservation) {
-        CheckInBLL checkInBll = new CheckInBLL();
-        try {
-            checkInBll.checkIn(reservation.getId());
-        } catch (SQLException e) {
-            // show error message to the user
-           MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","There was a problem performing the check-in. Please try again later.");
-        }
-    }
 
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
@@ -84,7 +101,102 @@ public class CheckInController {
             stage.show();
         }
     }
+    @FXML
+    void checkoutBtnAction(ActionEvent event) {
+        Reserva selectedReservation = listViewReservaComcheckin.getSelectionModel().getSelectedItem();
+        if (selectedReservation == null) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
+            return;
+        }
+
+        Pagamento selectedPaymentMethod = metodoPagamento.getSelectionModel().getSelectedItem();
+        if (selectedPaymentMethod == null) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione um método de pagamento.");
+            return;
+        }
+
+        CheckoutBLL checkoutBll = new CheckoutBLL();
+        try {
+            checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
+
+            checkoutBll.voltaNaoConsumiveisAoStock(selectedReservation.getId());
+
+            ReservaBLL reservaBLL = new ReservaBLL();
+            double totalCost = reservaBLL.getTotalReserva(selectedReservation);
+
+            Checkout checkout = new Checkout(selectedReservation.getId(), totalCost, selectedPaymentMethod.getMetodoPagamento());
+
+            CheckoutBLL bll = new CheckoutBLL();
+            bll.addCheckout(checkout);
+
+            String receiptText = "Reserva: " + selectedReservation.getId() + "\n";
+            receiptText += "Preço Final: " + totalCost + "\n";
+            receiptText += "Método de Pagamento: " + selectedPaymentMethod.getMetodoPagamento() + "\n";
+
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Recibo", receiptText);
+            initListViews();
+        } catch (SQLException e) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao realizar o checkout. Por favor, tente novamente mais tarde.");
+        }
+    }
 
 
+    @FXML
+    void handleCheckInButtonAction(ActionEvent event) {
 
+        Reserva selectedReservation = listViewReservaSemCheckin.getSelectionModel().getSelectedItem();
+
+
+        if (selectedReservation != null) {
+
+            performCheckIn(selectedReservation);
+
+
+            initListViews();
+        } else {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Por favor, selecione uma reserva da lista.");
+        }
+    }
+
+    private void performCheckIn(Reserva reservation) {
+        CheckInBLL checkInBll = new CheckInBLL();
+        try {
+            checkInBll.checkIn(reservation.getId());
+        } catch (SQLException e) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.");
+        }
+    }
+
+
+    private void initListViews() {
+        CheckoutBLL bll = new CheckoutBLL();
+        try {
+            listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
+        } catch (SQLException e) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+        }
+
+        try {
+            listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
+        } catch (SQLException e) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            initCombos();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        initListViews();
+    }
 }

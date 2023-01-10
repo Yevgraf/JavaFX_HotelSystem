@@ -9,7 +9,6 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
@@ -63,17 +62,17 @@ public class ReservaBLL {
         reservaDAL.updateReserva(reserva);
     }
 
-    private double getTotalServicosReserva(Integer reservationId) throws SQLException {
+    private static double getTotalServicosReserva(Integer reservationId) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         return reservaDAL.getTotalServicosReserva(reservationId);
     }
 
-    private double getTotalProdutosReserva(Integer reservationId) throws SQLException {
-        ReservaDAL reservaDAL = new ReservaDAL();
-        return reservaDAL.getTotalProdutosReserva(reservationId);
-    }
+    //private static double getTotalProdutosReserva(Integer reservationId) throws SQLException {
+    //    ReservaDAL reservaDAL = new ReservaDAL();
+    //    return reservaDAL.getTotalProdutosReserva(reservationId);
+    //}
 
-    private double getTotalReserva(Reserva reserva) throws SQLException {
+    public static double getTotalReserva(Reserva reserva) throws SQLException {
         QuartoDAL quartoDAL = new QuartoDAL();
         double precoQuarto = quartoDAL.getPreco(reserva.getIdQuarto());
 
@@ -87,7 +86,7 @@ public class ReservaBLL {
         precoFinal += diasReserva * precoQuarto;
 
         // Calculo do valor dos produtos
-        precoFinal += getTotalProdutosReserva(reserva.getId());
+        //precoFinal += getTotalProdutosReserva(reserva.getId());
 
         // Calculo do valor dos servicos
         precoFinal += getTotalServicosReserva(reserva.getId());
@@ -96,4 +95,37 @@ public class ReservaBLL {
 
         return precoFinal;
     }
+
+    public void cancelReservation(int reservationId) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        reservaDAL.cancelReservation(reservationId);
+    }
+
+    public List<LocalDate> getDataInicial(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        List<LocalDate> dataInicial = reservaDAL.getDataInicial(idQuarto);
+        return dataInicial;
+    }
+
+    public List<LocalDate> getDataFinal(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        List<LocalDate> dataFinal = reservaDAL.getDataFinal(idQuarto);
+        return dataFinal;
+    }
+
+    public Boolean verificaSeReservaExiste(int idQuarto) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        if (reservaDAL.verificaSeExisteReserva(idQuarto)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public LocalDate getProxData(int idQuarto, LocalDate ultData) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        LocalDate proxData = reservaDAL.getProximaData(idQuarto, ultData);
+        return proxData;
+    }
+
 }

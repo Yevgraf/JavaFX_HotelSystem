@@ -21,9 +21,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,8 +28,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import javafx.stage.Stage;
-
-import static BLL.UtilizadorBLL.verificarNifUtilizador;
 
 
 public class CriarUtilizadoresController implements Initializable {
@@ -94,8 +89,6 @@ public class CriarUtilizadoresController implements Initializable {
     static boolean flag;
     static boolean flagnome;
 
-    static boolean adulto;
-
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
@@ -136,21 +129,22 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
 
-    public void onActionAddFuncionario(ActionEvent actionEvent) throws SQLException {
-            UtilizadorBLL ubll = new UtilizadorBLL();
+    public void onActionAddFuncionario(ActionEvent actionEvent) {
+        if (cmb_tipoUtilizador.getValue() != null) {
             String email = txt_email.getText();
-            int nif = Integer.parseInt(txt_nif.getText());
           if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
                   txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
                   && txt_password.getText().isEmpty() == false   && cmb_tipoUtilizador.getItems().isEmpty() == false) {
-              if (VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true && isValidEmail(email) == true
-                      && ageAdult() == true && verificarNifUtilizador(nif)== null) {
-                        RegistarUtilizador();
+              if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true && isValidEmail(email) == true) {
+                  RegistarUtilizador();
               } else {
                   MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Dados incorretos!","Erro");}
           } else {
               MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
           }
+    } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de utilizador.", "Aviso:");
+        }
     }
 
     void RegistarUtilizador() {
@@ -172,6 +166,26 @@ public class CriarUtilizadoresController implements Initializable {
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
     }
 
+    public boolean VerifyNIFColaborador() {
+        int nif = Integer.parseInt(txt_nif.getText());
+        String verificar = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificar)){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    VerificarNIF.setText("O nif já existe!");
+                    flag = false;
+                } else {
+                    VerificarNIF.setText("");
+                    flag = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return flag;
+    }
 
     public boolean VerifyNIFColaboradorMin() {
         boolean flagnif;
@@ -219,20 +233,5 @@ public class CriarUtilizadoresController implements Initializable {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
-    }
-
-    public boolean ageAdult() {
-            LocalDate currentDate = LocalDate.now();
-
-            LocalDate dateOfBirth = datePickerNasc.getValue();
-
-            Period age = Period.between(dateOfBirth, currentDate);
-
-            if (age.getYears() >= 18) {
-                adulto = true;
-            } else {
-                adulto = false;
-            }
-            return adulto;
     }
 }

@@ -1,20 +1,13 @@
 package BLL;
 
-import DAL.ReservaDAL;
-import DAL.ServicoDAL;
 import DAL.UtilizadorDAL;
-import Model.MessageBoxes;
-import Model.Servico;
 import Model.Utilizador;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 import java.sql.Date;
 import java.sql.SQLException;
-import java.time.LocalDate;
 
-import static Controller.Encriptacao.encrypt;
-import static DAL.UtilizadorDAL.nifUtilizador;
+import static BLL.Encriptacao.encrypt;
 
 public class UtilizadorBLL {
     public Utilizador Login(String utilizador, String password) {
@@ -49,15 +42,6 @@ public class UtilizadorBLL {
         Utilizador utilizador = udal.deleteUtilizador(id);
         if (utilizador != null) {
             udal.deleteUtilizador(id);
-        }
-    }
-
-
-    public static Boolean verificarNifUtilizador(int nif) throws SQLException {
-        if  (nifUtilizador(nif)){
-            return true;
-        } else {
-            return false;
         }
     }
 

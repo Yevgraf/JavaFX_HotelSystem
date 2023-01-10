@@ -1,5 +1,6 @@
 package DAL;
 
+import BLL.Encriptacao;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import Model.Utilizador;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static Controller.Encriptacao.encrypt;
+import static BLL.Encriptacao.encrypt;
 
 public class UtilizadorDAL {
     public static List<Utilizador> getUsersByType(int i) {
@@ -118,7 +119,7 @@ public class UtilizadorDAL {
 
         // Get user type object
         TipoUtilizador userType = TipoUtilizadorDAL.getByNome(tipoUser);
-        String encryptpass =  encrypt(password);
+        String encryptpass =  Encriptacao.encrypt(password);
         if (userType == null) {
             throw new IllegalArgumentException("Invalid user type: " + tipoUser);
         }
@@ -268,16 +269,4 @@ public class UtilizadorDAL {
         ps.executeUpdate();
         return null;
     }
-
-    public static Boolean nifUtilizador(int nif) throws SQLException {
-        DBconn dbConn = new DBconn();
-        Connection connection = dbConn.getConn();
-
-        PreparedStatement ps = connection.prepareStatement("SELECT nif FROM Utilizador WHERE nif = ?");
-        ps.setInt(1,nif);
-        ps.executeUpdate();
-
-    }
-
-
 }

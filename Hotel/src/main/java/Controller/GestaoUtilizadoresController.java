@@ -108,6 +108,7 @@ public class GestaoUtilizadoresController implements Initializable {
         for (TipoUtilizador tipo : tipos) {
             cmbUtilizador.getItems().add(tipo.getTipo());
         }
+        cmbUtilizador.getItems().add("Todos");
     }
 
     @FXML
@@ -120,6 +121,9 @@ public class GestaoUtilizadoresController implements Initializable {
         } else if (cmbUtilizador.getValue().equals("Cliente")) {
             UtilizadorBLL.getAllClientes();
             initTableClientes();
+        } else if (cmbUtilizador.getValue().equals("Todos")) {
+            UtilizadorBLL.getAllClientes();
+            initTable();
         }
     }
 
@@ -167,7 +171,7 @@ public class GestaoUtilizadoresController implements Initializable {
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
 
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
@@ -187,8 +191,8 @@ public class GestaoUtilizadoresController implements Initializable {
 
     }
 
-    private void disableEliminarParaFuncionario(){
-        if (!UtilizadorPreferences.comparaTipoLogin()){
+    private void disableEliminarParaFuncionario() {
+        if (!UtilizadorPreferences.comparaTipoLogin()) {
             btnGestorEliminar.setDisable(true);
         }
     }

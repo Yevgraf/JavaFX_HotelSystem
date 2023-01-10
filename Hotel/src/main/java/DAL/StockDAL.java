@@ -1,5 +1,7 @@
 package DAL;
+
 ;
+import Model.Reserva;
 import Model.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -7,19 +9,19 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class StockDAL {
-    public String getDescricaoStock (Stock selectedID) throws SQLException {
-    PreparedStatement ps2;
-    DBconn dbConn = new DBconn();
-    Connection connection = dbConn.getConn();
+    public String getDescricaoStock(Stock selectedID) throws SQLException {
+        PreparedStatement ps2;
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
 
-    ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
-    ps2.setString(1, selectedID.getIdProduto());
-    for (int i = 0; i < ProdutoDAL.getAllProdutos().size(); i++) {
-        if (selectedID != null && selectedID.getIdProduto().equals(ProdutoDAL.getAllProdutos().get(i).getIdProduto())) {
-            String descricao = ProdutoDAL.getAllProdutos().get(i).getDescricao();
-            return descricao;
+        ps2 = connection.prepareStatement("SELECT descricao FROM Produto WHERE id = ?");
+        ps2.setString(1, selectedID.getIdProduto());
+        for (int i = 0; i < ProdutoDAL.getAllProdutos().size(); i++) {
+            if (selectedID != null && selectedID.getIdProduto().equals(ProdutoDAL.getAllProdutos().get(i).getIdProduto())) {
+                String descricao = ProdutoDAL.getAllProdutos().get(i).getDescricao();
+                return descricao;
+            }
         }
-    }
         return null;
     }
 
@@ -38,5 +40,29 @@ public class StockDAL {
             System.err.println("Erro: " + ex.getMessage());
         }
         return lista;
+    }
+
+    public Boolean verificaSeProdutoTemQuantidadeSuficiente(String idProduto, int quantDesejada) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT s.quantidade as quantidade FROM Stock s " +
+                    "INNER JOIN Produto p on p.id = s.idProduto " +
+                    "WHERE p.id = ?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setString(1, idProduto);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int quantExistente = rs.getInt("quantidade");
+                if (quantExistente > quantDesejada) {
+                    return true;
+                } else {
+                    return null;
+                }
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return null;
     }
 }

@@ -16,6 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
@@ -40,27 +41,35 @@ public class ClienteComentariosController implements Initializable {
     @FXML
     private TextArea campoComentario;
 
+    @FXML
+    private ComboBox<String> tipoComentario;
+
     private ComentarioBLL comentarioBLL = new ComentarioBLL();
 
     @FXML
     void SubmeterClick(ActionEvent event) {
-        try {
-            if (campoComentario.getText() == null || campoComentario.getText().trim().isEmpty()) {
-                MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "O campo de mensagem não pode ser vazio.", "Erro no formulário.");
-                return;
+        if (tipoComentario.getValue() != null) {
+            try {
+                if (campoComentario.getText() == null || campoComentario.getText().trim().isEmpty()) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "O campo de mensagem não pode ser vazio.", "Erro no formulário.");
+                    return;
+                }
+
+                Comentario comentario = new Comentario(
+                        null,
+                        UtilizadorPreferences.utilizadorId(),
+                        campoComentario.getText(),
+                        verificaTipoComentario());
+
+                comentarioBLL.addComentario(comentario);
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Comentário inserido com sucesso", "Informação!");
+                campoComentario.setText("");
+            } catch (SQLException e) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não foi possível inserir o comentátrio.", "Erro!");
+                throw new RuntimeException(e);
             }
-
-            Comentario comentario = new Comentario(
-                    null,
-                    UtilizadorPreferences.utilizadorId(),
-                    campoComentario.getText());
-
-            comentarioBLL.addComentario(comentario);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Comentário inserido com sucesso", "Informação!");
-            campoComentario.setText("");
-        } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não foi possível inserir o comentátrio.", "Erro!");
-            throw new RuntimeException(e);
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de comentário.", "Aviso:");
         }
     }
 
@@ -87,9 +96,26 @@ public class ClienteComentariosController implements Initializable {
         stage.show();
     }
 
+    private String verificaTipoComentario() {
+        String comentario;
+        if (tipoComentario.getValue().equals("Sugestão")) {
+            comentario = "sugestao";
+            return comentario;
+        } else {
+            comentario = "queixa";
+            return comentario;
+        }
+    }
+
+    private void initCombos() {
+        tipoComentario.getItems().add("Sugestão");
+        tipoComentario.getItems().add("Queixa");
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         contaLetras();
+        initCombos();
     }
 }

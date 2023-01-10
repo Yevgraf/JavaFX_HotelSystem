@@ -1,26 +1,26 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-
-public class ProdutoQuarto {
+public class ProdutoReserva {
     private int id;
-    private int idQuarto;
+    private int idReserva;
     private String idProduto;
 
     private int quantidade;
 
-    public ProdutoQuarto(){
+    public ProdutoReserva(){
 
     }
 
-    public ProdutoQuarto(int id,int idQuarto, String idProduto, int quantidade) {
+    public ProdutoReserva(int id, int idReserva, String idProduto, int quantidade) {
         this.id = id;
-        this.idQuarto = idQuarto;
+        this.idReserva = idReserva;
+        this.idProduto = idProduto;
+        this.quantidade = quantidade;
+    }
+
+
+    public ProdutoReserva(int idReserva, String idProduto, int quantidade) {
+        this.idReserva = idReserva;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
     }
@@ -33,12 +33,12 @@ public class ProdutoQuarto {
         this.id = id;
     }
 
-    public int getIdQuarto() {
-        return idQuarto;
+    public int getIdReserva() {
+        return idReserva;
     }
 
-    public void setIdQuarto(int idQuarto) {
-        this.idQuarto = idQuarto;
+    public void setIdReserva(int idReserva) {
+        this.idReserva = idReserva;
     }
 
     public String getIdProduto() {
@@ -59,10 +59,6 @@ public class ProdutoQuarto {
 
     @Override
     public String toString() {
-        return "ProdutoQuartoController{" +
-                "idQuarto=" + idQuarto +
-                ", idProduto=" + idProduto +
-                ", quantidade=" + quantidade +
-                '}';
+        return "Reserva: " + idReserva + ", Produto: " + idProduto + ", Quantidade: " + quantidade;
     }
 }

@@ -3,6 +3,7 @@ package Controller;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
+import DAL.ReservaDAL;
 import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;
@@ -11,10 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -64,6 +62,16 @@ public class GestaoReservasController implements Initializable {
     @FXML
     private TableColumn<Reserva, String> tblColServEx;
 
+
+    @FXML
+    private Button ProdutoQuarto;
+
+    @FXML
+    private ComboBox<String> cbEstadoReserva;
+
+    @FXML
+    private Button cancelarReservaBtn;
+
     @FXML
     void clickAdicionarReservaBtn(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("AdicionarReservas.fxml"));
@@ -77,7 +85,7 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
@@ -101,12 +109,12 @@ public class GestaoReservasController implements Initializable {
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
             ReservaBLL.deleteReservation(selectedReservation);
+            initTable();
         }
-        initTable();
     }
 
-    private void disableEliminarParaFuncionario(){
-        if (!UtilizadorPreferences.comparaTipoLogin()){
+    private void disableEliminarParaFuncionario() {
+        if (!UtilizadorPreferences.comparaTipoLogin()) {
             eliminarReservaBtn.setDisable(true);
         }
     }
@@ -122,6 +130,30 @@ public class GestaoReservasController implements Initializable {
         stage.show();
     }
 
+    public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) ProdutoQuarto.getScene().getWindow();
+        stage.setTitle("Adicionar Tipo de quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void clickCancelar(ActionEvent event) throws SQLException {
+        ReservaBLL reservabll = new ReservaBLL();
+        Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
+        if (selectedReservation == null) {
+
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
+            return;
+        }
+        reservabll.cancelReservation(selectedReservation.getId());
+
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
@@ -129,8 +161,7 @@ public class GestaoReservasController implements Initializable {
     }
 
     private void initTable() {
-
-        ReservaBLL reservaBLL = new ReservaBLL();
+        ReservaDAL reservaDAL = new ReservaDAL();
 
         tblColDReserva.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("id"));
         tblCoIDCliente.setCellValueFactory(new PropertyValueFactory<Reserva, Integer>("idCliente"));
@@ -138,8 +169,19 @@ public class GestaoReservasController implements Initializable {
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
+        cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout", "cancelada");
+        cbEstadoReserva.setValue("Todos");
 
-        tblReservas.setItems(reservaBLL.getReservas());
+        tblReservas.setItems(reservaDAL.getReservas());
+
+        cbEstadoReserva.setOnAction(event -> {
+            String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
+            if (estadoReserva.equals("Todos")) {
+                tblReservas.setItems(reservaDAL.getReservas());
+            } else {
+                tblReservas.setItems(reservaDAL.getReservasByEstadoReserva(estadoReserva));
+            }
+        });
     }
 
 }

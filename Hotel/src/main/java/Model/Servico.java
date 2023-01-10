@@ -45,14 +45,16 @@ public class Servico {
         this.preco = preco;
     }
 
+    public Servico(Integer idServico, String servico) {
+        this.idServico = idServico;
+        this.servico = servico;
+    }
+
     public Servico() {
     }
 
     @Override
     public String toString() {
-        return
-                "idServico=" + idServico +
-                ", servico='" + servico + '\'' +
-                ", preco=" + preco;
+        return "Serviço: " + servico + ", Preço: " + preco;
     }
 }

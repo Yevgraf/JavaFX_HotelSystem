@@ -69,4 +69,11 @@ public class Produto {
         this.peso = peso;
         this.consumivel = consumivel;
     }
+
+    @Override
+    public String toString() {
+        return
+                descricao ;
+
+    }
 }
