@@ -21,6 +21,10 @@ import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
 
+import javafx.scene.control.DateCell;
+import javafx.scene.control.DatePicker;
+import javafx.util.Callback;
+
 public class AdicionarReservaController implements Initializable {
 
     @FXML
@@ -168,7 +172,13 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-    private void desativarDiasOcupadosDasReservas(int idQuarto) {
+
+    @FXML
+    void quartoAction(ActionEvent event) {
+        resetDatePickers();
+    }
+
+    private void desativarDiasOcupadosDatePickerInicio(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
         List<LocalDate> listaDatasIniciais = rBLL.getDataInicial(idQuarto);
         List<LocalDate> listaDatasFinais = rBLL.getDataFinal(idQuarto);
@@ -190,20 +200,18 @@ public class AdicionarReservaController implements Initializable {
                     }
                 }
             }
-        }); 
+        });
+    }
+
+    private void desativarDiasOcupadosDatePickerFim(LocalDate dataInicio) {
+        int idQuarto = cmbIDQuarto.getValue().getId();
+        ReservaBLL rBLL = new ReservaBLL();
+        LocalDate dataFim = rBLL.getProxData(idQuarto, dataInicio);
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
             @Override
             public void updateItem(LocalDate date, boolean empty) {
-                super.updateItem(date, empty);
-                ArrayList<LocalDate> diasDesativados = new ArrayList<>();
-                for (int i = 0; i < listaDatasIniciais.size(); i++) {
-                    LocalDate inicio = listaDatasIniciais.get(i);
-                    LocalDate fim = listaDatasFinais.get(i);
-                    while (!inicio.isAfter(fim)) {
-                        diasDesativados.add(inicio);
-                        inicio = inicio.plusDays(1);
-                    }
-                    if (diasDesativados.contains(date)) {
+                if (dataFim != null) {
+                    if (date.isBefore(dataInicio.plusDays(1)) || date.isAfter(dataFim.minusDays(1))) {
                         setDisable(true);
                         setStyle("-fx-background-color: #FFB6C1;");
                     }
@@ -217,18 +225,33 @@ public class AdicionarReservaController implements Initializable {
         cmbIDQuarto.setOnAction(event -> {
             int idQuarto = cmbIDQuarto.getValue().getId();
             if (rBLL.verificaSeReservaExiste(idQuarto)) {
-                desativarDiasOcupadosDasReservas(idQuarto);
+                desativarDiasOcupadosDatePickerInicio(idQuarto);
+                listenDatePickerInicio(idQuarto);
+            }
+        });
+    }
+
+    private void listenDatePickerInicio(int idQuarto) {
+        ReservaBLL rBLL = new ReservaBLL();
+        DatePickerInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
+            LocalDate dataInicio = DatePickerInicio.getValue();
+            if (rBLL.getProxData(idQuarto, dataInicio) != null) {
+                desativarDiasOcupadosDatePickerFim(dataInicio);
+            } else {
+                desativarDiasOcupadosDatePickerInicio(idQuarto);
             }
         });
     }
 
     private void resetDatePickers() {
+        DatePickerInicio.setValue(null);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);
                 setDisable(false);
             }
         });
+        DatePickerFim.setValue(null);
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
             public void updateItem(LocalDate date, boolean empty) {
                 super.updateItem(date, empty);

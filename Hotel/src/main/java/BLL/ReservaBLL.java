@@ -122,4 +122,10 @@ public class ReservaBLL {
         }
     }
 
+    public LocalDate getProxData(int idQuarto, LocalDate ultData) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        LocalDate proxData = reservaDAL.getProximaData(idQuarto, ultData);
+        return proxData;
+    }
+
 }

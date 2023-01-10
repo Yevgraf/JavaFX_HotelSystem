@@ -409,6 +409,27 @@ public class ReservaDAL {
         return null;
     }
 
+    public LocalDate getProximaData(int idQuarto, LocalDate ultData) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT TOP 1 r.dataInicio FROM Reserva r " +
+                    "WHERE r.dataInicio > ? " +
+                    "AND r.idQuarto = ? ORDER BY r.dataInicio ASC";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setDate(1, Date.valueOf((ultData)));
+            ps.setInt(2, idQuarto);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                java.sql.Date proxData = rs.getDate("dataInicio");
+                return proxData.toLocalDate();
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
     public Boolean verificaSeExisteReserva(int idQuarto) {
         try {
             DBconn dbConn = new DBconn();
