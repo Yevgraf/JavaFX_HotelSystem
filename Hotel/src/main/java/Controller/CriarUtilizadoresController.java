@@ -32,7 +32,7 @@ import java.util.regex.Matcher;
 
 import javafx.stage.Stage;
 
-import static DAL.UtilizadorDAL.nifUtilizador;
+import static BLL.UtilizadorBLL.verificarNifUtilizador;
 
 
 public class CriarUtilizadoresController implements Initializable {
@@ -136,15 +136,16 @@ public class CriarUtilizadoresController implements Initializable {
     }
 
 
-    public void onActionAddFuncionario(ActionEvent actionEvent) {
-
+    public void onActionAddFuncionario(ActionEvent actionEvent) throws SQLException {
+            UtilizadorBLL ubll = new UtilizadorBLL();
             String email = txt_email.getText();
+            int nif = Integer.parseInt(txt_nif.getText());
           if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
                   txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
                   && txt_password.getText().isEmpty() == false   && cmb_tipoUtilizador.getItems().isEmpty() == false) {
-              if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true
-                      && VerifyNome() == true && isValidEmail(email) == true && ageAdult() == true) {
-                  RegistarUtilizador();
+              if (VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true && isValidEmail(email) == true
+                      && ageAdult() == true && verificarNifUtilizador(nif)== null) {
+                        RegistarUtilizador();
               } else {
                   MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Dados incorretos!","Erro");}
           } else {
@@ -171,26 +172,6 @@ public class CriarUtilizadoresController implements Initializable {
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
     }
 
-    public boolean VerifyNIFColaborador() {
-        int nif = Integer.parseInt(txt_nif.getText());
-        String verificar = nifUtilizador(nif);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificar)){
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    VerificarNIF.setText("O nif já existe!");
-                    flag = false;
-                } else {
-                    VerificarNIF.setText("");
-                    flag = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return flag;
-    }
 
     public boolean VerifyNIFColaboradorMin() {
         boolean flagnif;

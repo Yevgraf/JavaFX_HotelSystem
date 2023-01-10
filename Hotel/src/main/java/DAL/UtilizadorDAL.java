@@ -1,9 +1,6 @@
 package DAL;
 
-import BLL.UtilizadorPreferences;
-import Controller.Encriptacao;
 import Model.MessageBoxes;
-import Model.Servico;
 import Model.TipoUtilizador;
 import Model.Utilizador;
 import javafx.collections.FXCollections;
@@ -14,7 +11,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.prefs.Preferences;
 
 import static Controller.Encriptacao.encrypt;
 
@@ -273,8 +269,15 @@ public class UtilizadorDAL {
         return null;
     }
 
-    public static String nifUtilizador(int nif){
-        String query = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
-        return query;
+    public static Boolean nifUtilizador(int nif) throws SQLException {
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        PreparedStatement ps = connection.prepareStatement("SELECT nif FROM Utilizador WHERE nif = ?");
+        ps.setInt(1,nif);
+        ps.executeUpdate();
+
     }
+
+
 }

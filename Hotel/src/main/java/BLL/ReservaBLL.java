@@ -44,7 +44,7 @@ public class ReservaBLL {
         try {
             return ReservaDAL.isRoomAvailable(roomId, startDate);
         } catch (SQLException e) {
-            // handle exception
+
         }
         return false;
     }
