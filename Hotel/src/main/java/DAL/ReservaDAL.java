@@ -33,16 +33,11 @@ public class ReservaDAL {
             if (generatedKeys.next()) {
                 reservationId = generatedKeys.getInt(1);
             }
-
             if (reservationId > 0) {
-
                 addReservationState(reservationId, "pendente");
-
                 addServiceToReservation(reservationId, "Quarto");
             }
-
             reserva.setId(reservationId);
-
             return reserva;
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -101,7 +96,6 @@ public class ReservaDAL {
             }
             ps.close();
         } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
         }
         return reservas;
     }
@@ -121,7 +115,6 @@ public class ReservaDAL {
             }
             st.close();
         } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
         }
         return reservas;
     }
