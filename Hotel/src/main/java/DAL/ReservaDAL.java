@@ -354,14 +354,18 @@ public class ReservaDAL {
         }
         ps.close();
         if (estado == null || estado.equals("checkout")) {
-
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível cancelar esta reserva.", "Erro");
         } else {
-            cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
-            ps = connection.prepareStatement(cmd);
-            ps.setInt(1, reservationId);
-            ps.executeUpdate();
-            ps.close();
+            if (estado == null || estado.equals("cancelada")) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A reserva já se encontra cancelada.", "Erro");
+            } else {
+                cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
+                ps = connection.prepareStatement(cmd);
+                ps.setInt(1, reservationId);
+                ps.executeUpdate();
+                ps.close();
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva cancelada!", "Sucesso:");
+            }
         }
     }
 
@@ -372,7 +376,8 @@ public class ReservaDAL {
             Connection connection = dbConn.getConn();
             String cmd = "SELECT r.dataInicio FROM Reserva r " +
                     "INNER JOIN Quarto q on q.id = r.idQuarto " +
-                    "WHERE q.id = ?";
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                    "WHERE q.id = ? AND (er.estado = 'checkin' OR er.estado = 'pendente')";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
@@ -394,7 +399,8 @@ public class ReservaDAL {
             Connection connection = dbConn.getConn();
             String cmd = "SELECT r.dataFim FROM Reserva r " +
                     "INNER JOIN Quarto q on q.id = r.idQuarto " +
-                    "WHERE q.id = ?";
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                    "WHERE q.id = ? AND (er.estado = 'checkin' OR er.estado = 'pendente')";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
@@ -414,8 +420,10 @@ public class ReservaDAL {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
             String cmd = "SELECT TOP 1 r.dataInicio FROM Reserva r " +
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
                     "WHERE r.dataInicio > ? " +
-                    "AND r.idQuarto = ? ORDER BY r.dataInicio ASC";
+                    "AND r.idQuarto = ? AND (er.estado = 'checkin' OR er.estado = 'pendente') " +
+                    "ORDER BY r.dataInicio ASC";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setDate(1, Date.valueOf((ultData)));
             ps.setInt(2, idQuarto);

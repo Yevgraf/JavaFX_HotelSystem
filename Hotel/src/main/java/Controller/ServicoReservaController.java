@@ -45,7 +45,7 @@ public class ServicoReservaController implements Initializable {
     private ListView<Servico> listViewServicos;
 
     @FXML
-    void btnAdicionar(ActionEvent event) {
+    void btnAdicionar(ActionEvent event) throws IOException {
         Reserva selectedReservation = cmbReserva.getValue();
         Servico selectedServico = listViewServicos.getSelectionModel().getSelectedItem();
         ServicoReserva servicoReserva = new ServicoReserva();
@@ -59,6 +59,20 @@ public class ServicoReservaController implements Initializable {
         } catch (SQLException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro ao inserir Serviço", "Erro");
         }
+        if (AdicionarReservaController.verifica == true) {
+            addProdutoReserva();
+        }
+    }
+
+    private void addProdutoReserva() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) Voltar.getScene().getWindow();
+        stage.setTitle("Produtos Reserva");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+        AdicionarReservaController.verifica = false;
     }
 
 

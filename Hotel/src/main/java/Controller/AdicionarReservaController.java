@@ -89,6 +89,8 @@ public class AdicionarReservaController implements Initializable {
 
     List<LocalDate> dates = new ArrayList<>();
 
+    public static Boolean verifica = false;
+
     @FXML
     void clickAddReservaBrn(ActionEvent event) throws SQLException, IOException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
@@ -145,6 +147,7 @@ public class AdicionarReservaController implements Initializable {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
+        verifica = true;
     }
 
     @Override
@@ -234,6 +237,8 @@ public class AdicionarReservaController implements Initializable {
             int idQuarto = cmbIDQuarto.getValue().getId();
             if (rBLL.verificaSeReservaExiste(idQuarto)) {
                 desativarDiasOcupadosDatePickerInicio(idQuarto);
+                listenDatePickerInicio(idQuarto);
+            } else {
                 listenDatePickerInicio(idQuarto);
             }
         });
