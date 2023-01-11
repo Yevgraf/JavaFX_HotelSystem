@@ -1,20 +1,28 @@
 package Controller;
 
 import BLL.RegistoBLL;
+import DAL.CartaoDAL;
+import DAL.RegistoDAL;
+import DAL.ServicoDAL;
 import Model.Cartao;
 import Model.Registo;
 import Model.Servico;
+import com.example.hotel.Main;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -68,12 +76,21 @@ public class CartaoController implements Initializable {
     private Text urlText;
 
     @FXML
-    private Button voltarBtn;
+    private Button btnVoltar;
+
 
     @FXML
-    void clickVoltarBtn(ActionEvent event) {
+    void clickVoltarBtn(ActionEvent event) throws IOException {
 
-    }
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina cliente");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -82,7 +99,8 @@ public class CartaoController implements Initializable {
     }
 
     private void initCombos() {
-
+        cmbIdCartao.getItems().addAll(CartaoDAL.getAllCartoes());
+        cmbLocal.getItems().addAll(ServicoDAL.getAllServicos());
     }
 
     private void initTable() {
@@ -105,11 +123,30 @@ public class CartaoController implements Initializable {
 
     @FXML
     void filterIdCartao(ActionEvent event) {
-
+        Cartao selectedCartao = cmbIdCartao.getSelectionModel().getSelectedItem();
+        if (selectedCartao != null) {
+            try {
+                ObservableList<Registo> filteredRegistos = RegistoDAL.getRegistosByCartaoId(selectedCartao.getId());
+                tv_registosCartao.setItems(filteredRegistos);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
 
     @FXML
     void filterLocal(ActionEvent event) {
-
+        Servico selectedServico = cmbLocal.getSelectionModel().getSelectedItem();
+        if (selectedServico != null) {
+            try {
+                ObservableList<Registo> filteredRegistos = RegistoDAL.getRegistosByLocal(selectedServico.getServico());
+                tv_registosCartao.setItems(filteredRegistos);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
+
+
 }

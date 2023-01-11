@@ -1,12 +1,25 @@
 package DAL;
 
 import Model.Registo;
+import com.example.hotel.Main;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegistoDAL {
+
+
+
 
     public List<Registo> getAllRegistos() throws SQLException {
         List<Registo> registos = new ArrayList<>();
@@ -60,6 +73,36 @@ public class RegistoDAL {
         return -1;
     }
 
+    public static ObservableList<Registo> getRegistosByCartaoId(int idCartao) throws SQLException {
+        String cmd = "SELECT * FROM Registo WHERE idCartao = ?";
+        DBconn dbconn = new DBconn();
+        Connection connection = dbconn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, idCartao);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Registo> registos = FXCollections.observableArrayList();
+        while(rs.next()){
+            Registo registo = new Registo(rs.getInt("id"), rs.getInt("idCartao"),
+                    rs.getInt("idCliente"), rs.getString("local"), rs.getTimestamp("data"));
+            registos.add(registo);
+        }
+        return registos;
+    }
 
+    public static ObservableList<Registo> getRegistosByLocal(String local) throws SQLException {
+        String cmd = "SELECT * FROM Registo WHERE local = ?";
+        DBconn dbconn = new DBconn();
+        Connection connection = dbconn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setString(1, local);
+        ResultSet rs = ps.executeQuery();
+        ObservableList<Registo> registos = FXCollections.observableArrayList();
+        while(rs.next()){
+            Registo registo = new Registo(rs.getInt("id"), rs.getInt("idCartao"),
+                    rs.getInt("idCliente"), rs.getString("local"), rs.getTimestamp("data"));
+            registos.add(registo);
+        }
+        return registos;
+    }
 
 }

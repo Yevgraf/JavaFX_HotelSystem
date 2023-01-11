@@ -45,7 +45,7 @@
                 <Font size="18.0" />
             </font>
         </Text>
-        <Button fx:id="voltarBtn" layoutX="926.0" layoutY="631.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
+        <Button fx:id="btnVoltar" layoutX="926.0" layoutY="631.0" mnemonicParsing="false" onAction="#clickVoltarBtn" text="Voltar">
             <font>
                 <Font size="18.0" />
             </font>
