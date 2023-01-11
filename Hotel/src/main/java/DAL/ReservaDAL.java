@@ -291,8 +291,8 @@ public class ReservaDAL {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String estado = rs.getString("estado");
-                if (estado.equals("checkin")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+                if (estado.equals("checkin") || estado.equals("canceladas") || estado.equals("checkout")) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin ou cancelada", "Reserva iniciada");
                     return;
                 }
             }
