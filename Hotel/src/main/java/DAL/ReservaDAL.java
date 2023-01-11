@@ -376,7 +376,8 @@ public class ReservaDAL {
             Connection connection = dbConn.getConn();
             String cmd = "SELECT r.dataInicio FROM Reserva r " +
                     "INNER JOIN Quarto q on q.id = r.idQuarto " +
-                    "WHERE q.id = ?";
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                    "WHERE q.id = ? AND (er.estado = 'checkin' OR er.estado = 'pendente')";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
@@ -398,7 +399,8 @@ public class ReservaDAL {
             Connection connection = dbConn.getConn();
             String cmd = "SELECT r.dataFim FROM Reserva r " +
                     "INNER JOIN Quarto q on q.id = r.idQuarto " +
-                    "WHERE q.id = ?";
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                    "WHERE q.id = ? AND (er.estado = 'checkin' OR er.estado = 'pendente')";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, idQuarto);
             ResultSet rs = ps.executeQuery();
@@ -418,8 +420,10 @@ public class ReservaDAL {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
             String cmd = "SELECT TOP 1 r.dataInicio FROM Reserva r " +
+                    "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
                     "WHERE r.dataInicio > ? " +
-                    "AND r.idQuarto = ? ORDER BY r.dataInicio ASC";
+                    "AND r.idQuarto = ? AND (er.estado = 'checkin' OR er.estado = 'pendente') " +
+                    "ORDER BY r.dataInicio ASC";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setDate(1, Date.valueOf((ultData)));
             ps.setInt(2, idQuarto);
