@@ -51,7 +51,6 @@ public class ReservaBLL {
     public static void deleteReservation(Reserva selectedReservation) {
         try {
             ReservaDAL.deleteReservation(selectedReservation.getId());
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "A reserva foi apagada", "Apagar reserva");
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
