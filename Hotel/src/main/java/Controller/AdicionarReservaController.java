@@ -157,9 +157,7 @@ public class AdicionarReservaController implements Initializable {
     }
 
     private void initCombos() {
-
         cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
-
         cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
     }
 

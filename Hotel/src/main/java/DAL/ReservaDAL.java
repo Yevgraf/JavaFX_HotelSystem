@@ -132,11 +132,27 @@ public class ReservaDAL {
     }
 
     public static void deleteReservation(int reservationId) throws SQLException {
-        deleteServicoReservaForReservation(reservationId);
-        deleteEstadoReserva(reservationId);
-        deleteEstadoReservaForReservation(reservationId);
-        deleteReservationById(reservationId);
+        String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ResultSet rs = ps.executeQuery();
+        String estado = null;
+        if (rs.next()) {
+            estado = rs.getString("estado");
+        }
+        ps.close();
+        if (estado == null || estado.equals("checkout") || estado.equals("checkin") || estado.equals("cancelada")) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível apagar esta reserva.", "Erro");
+        } else {
+            deleteServicoReservaForReservation(reservationId);
+            deleteEstadoReserva(reservationId);
+            deleteEstadoReservaForReservation(reservationId);
+            deleteReservationById(reservationId);
+        }
     }
+
 
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
@@ -284,19 +300,28 @@ public class ReservaDAL {
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
                 String estado = rs.getString("estado");
-                if (estado.equals("checkin")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin!", "Reserva iniciada");
+                if (estado.equals("checkin") || estado.equals("cancelada") || estado.equals("checkout")) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin ou cancelada", "Reserva iniciada");
                     return;
                 }
             }
-            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+
+            ps = connection.prepareStatement("SELECT estado FROM Reserva WHERE id = ?");
+            ps.setInt(1, reservationId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                String estado = rs.getString("estado");
+                if (estado.equals("cancelada")) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva já se encontra cancelada, não pode ser apagada.", "Reserva cancelada");
+                    return;
+                }
+            }            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
             ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
-
 
             ps = connection.prepareStatement("DELETE FROM Reserva WHERE id=?");
             ps.setInt(1, reservationId);
@@ -312,6 +337,8 @@ public class ReservaDAL {
             }
         }
     }
+
+
 
     public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
