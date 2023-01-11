@@ -60,10 +60,11 @@ public class InserirServicoController implements Initializable {
     @FXML
     void clickAddBtn(ActionEvent event) throws SQLException {
         if (descricao.getText().isEmpty() == false && preco.getText().isEmpty() == false) {
-            AddServico();
-        } else {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Introduza todos os campos","Erro");
+            if (MessageBoxes.ConfirmationBox("Confirma a criação do serviço?")) {
+                AddServico();
+            }
         }
+        MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza todos os campos", "Erro");
     }
 
     public void AddServico() throws SQLException {
@@ -81,19 +82,23 @@ public class InserirServicoController implements Initializable {
         ServicoBLL bll = new ServicoBLL();
         Servico selectedServico = servicos.getSelectionModel().getSelectedItem();
         if (selectedServico != null) {
-            try {
-                bll.removeServico(selectedServico.getIdServico());
-                servicos.getItems().remove(selectedServico);
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Servico Removido", "Information");
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            if (MessageBoxes.ConfirmationBox("Confirma a eliminação do serviço?")) {
+                try {
+                    bll.removeServico(selectedServico.getIdServico());
+                    servicos.getItems().remove(selectedServico);
+                    MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Servico Removido", "Information");
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione um serviço para eliminar!", "Erro:");
         }
     }
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) voltarBtn.getScene().getWindow();

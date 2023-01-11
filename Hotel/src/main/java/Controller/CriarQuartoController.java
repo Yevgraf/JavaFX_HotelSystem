@@ -104,7 +104,9 @@ public class CriarQuartoController implements Initializable {
     void clickAddQuarto(ActionEvent event) throws SQLException {
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-            ADDQuarto();
+            if (MessageBoxes.ConfirmationBox("Confirma a criação do quarto?")) {
+                ADDQuarto();
+            }
         } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
@@ -225,6 +227,8 @@ public class CriarQuartoController implements Initializable {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Reserva existente com estes dados", "Reserva existente");
                 throw new RuntimeException(ex);
             }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione um quarto para eliminar!", "Erro:");
         }
     }
 

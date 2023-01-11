@@ -126,7 +126,7 @@ public class AdicionarReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
-        if (MessageBoxes.ConfirmationBox("Confirma a criação da reserva?","Confirmação:")){
+        if (MessageBoxes.ConfirmationBox("Confirma a criação da reserva?")){
             ReservaBLL reservaBLL = new ReservaBLL();
             Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                     DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);

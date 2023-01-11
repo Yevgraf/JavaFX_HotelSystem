@@ -13,10 +13,10 @@ public class MessageBoxes {
         alert.showAndWait();
     }
 
-    public static Boolean ConfirmationBox(String msg, String header) {
+    public static Boolean ConfirmationBox(String msg) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         //alert.setTitle("Aplicação");
-        alert.setHeaderText(header);
+        alert.setHeaderText("Confirmação:");
         alert.setContentText(msg);
         Optional<ButtonType> result = alert.showAndWait();
         if (result.get() == ButtonType.OK) {

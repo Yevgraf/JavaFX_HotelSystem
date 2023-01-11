@@ -143,14 +143,18 @@ public class GestaoUtilizadoresController implements Initializable {
         UtilizadorBLL ubll = new UtilizadorBLL();
         Utilizador selectedUtilizador = tblUtilizadores.getSelectionModel().getSelectedItem();
         if (selectedUtilizador != null) {
-            try {
-                ubll.removeUtilizador(selectedUtilizador.getId());
-                tblUtilizadores.getItems().remove(selectedUtilizador);
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Servico Removido", "Information");
-                initTable();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            if (MessageBoxes.ConfirmationBox("Confirma a eliminação do utilizador?")) {
+                try {
+                    ubll.removeUtilizador(selectedUtilizador.getId());
+                    tblUtilizadores.getItems().remove(selectedUtilizador);
+                    MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador Removido!", "Informação:");
+                    initTable();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione um utilizador para eliminar!", "Erro:");
         }
     }
 
