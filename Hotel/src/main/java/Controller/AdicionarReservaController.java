@@ -126,17 +126,18 @@ public class AdicionarReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
-        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION, "Confirmar reserva", "Deseja criar esta reserva?");
-        ReservaBLL reservaBLL = new ReservaBLL();
-        Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
-                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
+        if (MessageBoxes.ConfirmationBox("Confirma a criação da reserva?","Confirmação:")){
+            ReservaBLL reservaBLL = new ReservaBLL();
+            Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
+                    DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
 
-        reserva = reservaBLL.addReserva(reserva);
+            reserva = reservaBLL.addReserva(reserva);
 
-        txtPreco.setText(reserva.getPreco().toString());
+            txtPreco.setText(reserva.getPreco().toString());
 
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
-        addServicoReserva();
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
+            addServicoReserva();
+        }
     }
 
     private void addServicoReserva() throws IOException {

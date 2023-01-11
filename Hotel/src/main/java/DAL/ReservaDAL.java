@@ -40,6 +40,7 @@ public class ReservaDAL {
             reserva.setId(reservationId);
             return reserva;
         } catch (SQLException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencher todos os campos!.", "Erro:");
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {

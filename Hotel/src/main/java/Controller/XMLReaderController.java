@@ -17,9 +17,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -141,12 +143,13 @@ public class XMLReaderController implements Initializable {
     //----------------------------------- Upload Ficheiro XML -----------------------------------
 
     @FXML
-    void clickXmlBtn(ActionEvent event) {
+    void clickXmlBtn(ActionEvent event) throws URISyntaxException, SAXException {
+        //ValidaXML valida = new ValidaXML();
 
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML File", lstFile));
         File f = fc.showOpenDialog(null);
-        if (f != null) {
+        if (f != null && ValidaXML.validarXML(f)) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
             entradaStocks = xmlreader.lerXMLBody(path);
