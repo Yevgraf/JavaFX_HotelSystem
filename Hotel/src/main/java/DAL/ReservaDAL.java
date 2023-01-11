@@ -35,7 +35,7 @@ public class ReservaDAL {
             }
             if (reservationId > 0) {
                 addReservationState(reservationId, "pendente");
-                addServiceToReservation(reservationId, "Quarto");
+
             }
             reserva.setId(reservationId);
             return reserva;
@@ -52,7 +52,7 @@ public class ReservaDAL {
         }
     }
 
-    private void addServiceToReservation(int reservationId, String service) throws SQLException {
+    public void addServiceToReservation(int reservationId, String service) throws SQLException {
         PreparedStatement ps = null;
         try {
             DBconn dbConn = new DBconn();
@@ -147,16 +147,19 @@ public class ReservaDAL {
         if (estado == null || estado.equals("checkout") || estado.equals("checkin") || estado.equals("cancelada")) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível apagar esta reserva.", "Erro");
         } else {
-            deleteServicoReservaForReservation(reservationId);
-            deleteEstadoReserva(reservationId);
             deleteEstadoReservaForReservation(reservationId);
+            deleteServicoReservaForReservation(reservationId);
+            deleteCheckoutForReservation(reservationId);
             deleteReservationById(reservationId);
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Reserva pendente apagada","Apagada");
         }
     }
 
 
+
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
+
         executeDelete(cmd, reservationId);
     }
 

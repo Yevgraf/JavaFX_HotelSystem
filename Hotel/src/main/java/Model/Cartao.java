@@ -18,4 +18,11 @@ public class Cartao {
     public Cartao(Integer id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return
+                "id:" + id ;
+
+    }
 }
