@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
@@ -54,5 +55,7 @@
                 <Font size="18.0" />
             </font>
         </Text>
+      <ComboBox fx:id="cmbIdCartao" layoutX="186.0" layoutY="83.0" onAction="#filterIdCartao" prefWidth="150.0" />
+      <ComboBox fx:id="cmbLocal" layoutX="347.0" layoutY="83.0" onAction="#filterLocal" prefWidth="150.0" />
     </children>
 </Pane>

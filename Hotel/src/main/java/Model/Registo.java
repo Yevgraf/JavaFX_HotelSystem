@@ -11,6 +11,8 @@ private String Local;
 private Timestamp Data;
 
 
+
+
     public Registo() {
     }
 
