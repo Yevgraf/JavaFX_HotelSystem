@@ -60,9 +60,7 @@ public class InserirServicoController implements Initializable {
     @FXML
     void clickAddBtn(ActionEvent event) throws SQLException {
         if (descricao.getText().isEmpty() == false && preco.getText().isEmpty() == false) {
-            if (MessageBoxes.ConfirmationBox("Confirma a criação do serviço?")) {
                 AddServico();
-            }
         }
         MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza todos os campos", "Erro");
     }

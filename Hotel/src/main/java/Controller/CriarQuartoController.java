@@ -104,9 +104,7 @@ public class CriarQuartoController implements Initializable {
     void clickAddQuarto(ActionEvent event) throws SQLException {
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-            if (MessageBoxes.ConfirmationBox("Confirma a criação do quarto?")) {
                 ADDQuarto();
-            }
         } else {
             EmptyMessage.setText("Preencha todos os campos");
         }

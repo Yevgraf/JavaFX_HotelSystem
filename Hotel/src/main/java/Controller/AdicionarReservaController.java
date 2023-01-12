@@ -126,18 +126,16 @@ public class AdicionarReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
-        if (MessageBoxes.ConfirmationBox("Confirma a criação da reserva?")){
-            ReservaBLL reservaBLL = new ReservaBLL();
-            Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
-                    DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
+        ReservaBLL reservaBLL = new ReservaBLL();
+        Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
+                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
 
-            reserva = reservaBLL.addReserva(reserva);
+        reserva = reservaBLL.addReserva(reserva);
 
-            txtPreco.setText(reserva.getPreco().toString());
+        txtPreco.setText(reserva.getPreco().toString());
 
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
-            addServicoReserva();
-        }
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
+        addServicoReserva();
     }
 
     private void addServicoReserva() throws IOException {
@@ -272,6 +270,13 @@ public class AdicionarReservaController implements Initializable {
                 setDisable(false);
             }
         });
+    }
+
+    @FXML
+    void clickDateFim(MouseEvent event) {
+        if (DatePickerInicio.getValue() == null) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione primeiro a data inicial!", "Erro:");
+        }
     }
 
     @FXML
