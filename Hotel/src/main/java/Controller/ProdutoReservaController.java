@@ -90,7 +90,7 @@ public class ProdutoReservaController implements Initializable {
         int selectQuarto = cmbQuarto.getValue().getIdQuarto();
         Produto selectedProduct = cmbProduto.getValue();
         int quantity = Integer.parseInt(txt_quantidade.getText());
-        if (selectedReservation != null && selectedProduct != null){
+        if (selectedReservation != null && selectedProduct != null) {
             if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
 
                 ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity, selectQuarto);
