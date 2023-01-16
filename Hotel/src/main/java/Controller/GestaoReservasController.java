@@ -109,7 +109,12 @@ public class GestaoReservasController implements Initializable {
     void clickEliminarReservaBtn(ActionEvent event) {
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation != null) {
-            ReservaBLL.deleteReservation(selectedReservation);
+            if (MessageBoxes.ConfirmationBox("Confirma a eliminação da reserva?")) {
+                ReservaBLL.deleteReservation(selectedReservation);
+                initTable();
+            }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione uma reserva para eliminar!", "Erro:");
         }
     }
 
@@ -146,11 +151,14 @@ public class GestaoReservasController implements Initializable {
         CheckoutBLL checkoutBLL = new CheckoutBLL();
         Reserva selectedReservation = tblReservas.getSelectionModel().getSelectedItem();
         if (selectedReservation == null) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione uma reserva para cancelar!", "Erro:");
             return;
         }
-        reservabll.cancelReservation(selectedReservation.getId());
-        checkoutBLL.voltaNaoConsumiveisAoStock(selectedReservation.getId());
+        if (MessageBoxes.ConfirmationBox("Confirma o cancelamento da reserva?")) {
+            reservabll.cancelReservation(selectedReservation.getId());
+            checkoutBLL.voltaNaoConsumiveisAoStock(selectedReservation.getId());
+            initTable();
+        }
     }
 
 

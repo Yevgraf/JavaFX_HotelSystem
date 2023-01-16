@@ -17,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import net.minidev.json.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
@@ -94,10 +95,9 @@ public class XMLReaderController implements Initializable {
     @FXML
     private Text urlText;
 
-    @FXML
-    private Button xmlBtn;
-
     XMLReaderBLL xmlreader;
+
+    JSONReaderBLL jsonreader = new JSONReaderBLL();
 
     @FXML
     private Text cidadeTxt;
@@ -132,27 +132,41 @@ public class XMLReaderController implements Initializable {
 
     @FXML
     void clickAddItens(ActionEvent event) {
-        produtoBLL.addProduto(produtos);
-        fornecedorBLL.addFornecedor(fornecedores);
-        entradaStockBLL.addEntradaStock(entradaStocks, fornecedores, stocks);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produtos inseridos com sucesso!", "Sucesso!");
+        EntradaStockBLL entradaBLL = new EntradaStockBLL();
+        if (!entradaBLL.verificaSeExisteEncomendaRepetida(ordemTxt.getText())) {
+            produtoBLL.addProduto(produtos);
+            fornecedorBLL.addFornecedor(fornecedores);
+            entradaStockBLL.addEntradaStock(entradaStocks, fornecedores, stocks);
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produtos inseridos com sucesso!", "Sucesso!");
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Já existe uma encomenda com esse número!", "Erro:");
+        }
     }
 
     //----------------------------------- Upload Ficheiro XML -----------------------------------
 
     @FXML
-    void clickXmlBtn(ActionEvent event) {
+    void clickXmlBtn(ActionEvent event) throws IOException, ParseException {
 
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML File", lstFile));
         File f = fc.showOpenDialog(null);
+        String fileName = f.getName();
         if (f != null) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
-            entradaStocks = xmlreader.lerXMLBody(path);
-            fornecedores = xmlreader.lerXMLHeader(path);
-            produtos = xmlreader.lerProduto(path);
-            stocks = xmlreader.lerStock(path);
+
+            if (fileName.substring(fileName.lastIndexOf(".") + 1).equals("xml") ||
+                    fileName.substring(fileName.lastIndexOf(".") + 1).equals("XML")) {
+                //Ler XML
+                ValidaXML.validarXML(f);
+                lerXML(path);
+            } else {
+                //Ler JSON
+                lerJSON(path);
+                // MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Formato JSON detetado", "Formato");
+                // return;
+            }
             if (entradaStocks.isEmpty() && fornecedores.isEmpty()) {
                 addItensBtn.setDisable(true);
             } else {
@@ -163,12 +177,28 @@ public class XMLReaderController implements Initializable {
         }
     }
 
+    public void lerJSON(String path) throws IOException {
+        entradaStocks = jsonreader.lerBody(path);
+        fornecedores = jsonreader.lerHeader(path);
+        produtos = jsonreader.lerProduto(path);
+        stocks = jsonreader.lerStock(path);
+    }
+
+    public void lerXML(String path) {
+        entradaStocks = xmlreader.lerXMLBody(path);
+        fornecedores = xmlreader.lerXMLHeader(path);
+        produtos = xmlreader.lerProduto(path);
+        stocks = xmlreader.lerStock(path);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         xmlreader = new XMLReaderBLL();
         lstFile = new ArrayList<>();
         lstFile.add("*.xml");
         lstFile.add("*.XML");
+        lstFile.add("*.json");
+        lstFile.add("*.JSON");
     }
 
     //----------------------------------- Popular Tabela EntradaStock -----------------------------------

@@ -152,18 +152,15 @@ public class CriarUtilizadoresController implements Initializable {
         String nome = txt_nome.getText();
         String nif = txt_nif.getText();
         String morada = txt_morada.getText();
-        Date dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
+        java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
         String email = txt_email.getText();
         String contacto = txt_contacto.getText();
         String utilizador = txt_utilizador.getText();
         String password = txt_password.getText();
         String tipoUser = cmb_tipoUtilizador.getValue();
 
-        dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
-        java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
-
         utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador criado!", "Informação:");
     }
 
     public boolean VerifyNIFColaborador() {

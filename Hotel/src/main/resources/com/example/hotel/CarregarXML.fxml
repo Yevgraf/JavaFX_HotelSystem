@@ -9,17 +9,17 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="727.0" prefWidth="1020.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.XMLReaderController">
    <children>
-      <Button id="xmlBtn" alignment="CENTER" layoutX="14.0" layoutY="81.0" mnemonicParsing="false" onAction="#clickXmlBtn" prefHeight="40.0" prefWidth="140.0" text="Carregar XML" textAlignment="CENTER" fx:id="xmlBtn">
+      <Button id="xmlBtn" alignment="CENTER" layoutX="14.0" layoutY="100.0" mnemonicParsing="false" onAction="#clickXmlBtn" prefHeight="40.0" prefWidth="164.0" text="Carregar ficheiro" textAlignment="CENTER" fx:id="xmlBtn">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Text layoutX="11.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carregue no botão abaixo para carregar ficheiro XML" wrappingWidth="215.056640625">
+      <Text layoutX="16.0" layoutY="37.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Carregue no botão abaixo para carregar ficheiro XML/JSON" wrappingWidth="215.056640625">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <Text fx:id="urlText" layoutX="14.0" layoutY="136.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="236.0" />
+      <Text fx:id="urlText" layoutX="17.0" layoutY="160.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="243.9999542236328" />
       <TableView fx:id="table" layoutX="17.0" layoutY="217.0" prefHeight="171.0" prefWidth="981.0">
         <columns>
           <TableColumn fx:id="identificacaoTable" prefWidth="121.60000228881836" text="Id do produto" />
@@ -57,7 +57,7 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <Text layoutX="567.0" layoutY="128.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Morada:">
+      <Text layoutX="567.0" layoutY="126.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Morada:">
          <font>
             <Font size="18.0" />
          </font>
