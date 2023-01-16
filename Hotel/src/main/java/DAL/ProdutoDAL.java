@@ -20,8 +20,8 @@ public class ProdutoDAL {
             for (int iteradorProduto = 0; iteradorProduto < produtos.size(); iteradorProduto++) {
                 String id = produtos.get(iteradorProduto).getIdProduto();
                 if (!verificaProdutoExistente(id, connection)) {
-                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade, consumivel)" +
-                            "VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade, consumivel, precoParaCliente)" +
+                            "VALUES (?,?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                     insertProduto(produtos.get(iteradorProduto), insertStatement);
                 }
@@ -50,6 +50,7 @@ public class ProdutoDAL {
         statement.setDouble(3, produto.getPeso());
         statement.setDouble(4, produto.getPrecoUnidade());
         statement.setBoolean(5, false);
+        statement.setDouble(6, 1.0);
         statement.executeUpdate();
         statement.close();
     }
@@ -65,6 +66,24 @@ public class ProdutoDAL {
                         rs.getDouble("precoPorUnidade"), rs.getDouble("peso"),
                         rs.getBoolean("consumivel"));
                 lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+            System.err.println("Erro: " + ex.getMessage());
+        }
+        return lista;
+    }
+
+    public static ObservableList<Produto> getAllProdutosPrecosClientes() {
+        ObservableList<Produto> lista = FXCollections.observableArrayList();
+        try {
+            String cmd = "SELECT * FROM Produto";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Produto obj = new Produto(rs.getString("id"), rs.getString("descricao"),
+                        rs.getDouble("precoPorUnidade"), rs.getDouble("precoParaCliente"));
+                        lista.add(obj);
             }
             st.close();
         } catch (Exception ex) {
@@ -98,6 +117,17 @@ public class ProdutoDAL {
             }
         }
         return null;
+    }
+
+    public void updatePrecoProdutoParaCliente(Produto selectedID, Double quantidade) throws SQLException {
+        PreparedStatement ps2;
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        ps2 = connection.prepareStatement("UPDATE Produto SET precoParaCliente = ? WHERE id = ?");
+        ps2.setDouble(1, quantidade);
+        ps2.setString(2, selectedID.getIdProduto());
+        ps2.executeUpdate();
     }
 
 }

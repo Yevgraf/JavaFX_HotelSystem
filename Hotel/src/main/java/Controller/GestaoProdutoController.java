@@ -65,7 +65,7 @@ public class GestaoProdutoController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoStock.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setTitle("Gestao Stock Gestor");
+            stage.setTitle("Gestao Stock");
             newStage.hide();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();

@@ -39,6 +39,10 @@ public class StockController implements Initializable {
     @FXML
     private Button GEntradaStock;
 
+
+    @FXML
+    private Button precoProdBtn;
+
     @FXML
     void clickTable(MouseEvent event) throws SQLException {
             StockDAL sdal = new StockDAL();
@@ -86,6 +90,17 @@ public class StockController implements Initializable {
         Stage stage = new Stage();
         Stage newStage = (Stage) btnVoltar.getScene().getWindow();
         stage.setTitle("Gestao Produtos");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void clickPrecoProdBtn(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PrecosProdutosCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) precoProdBtn.getScene().getWindow();
+        stage.setTitle("Preços Produtos");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
