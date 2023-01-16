@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.*;
+import DAL.EntradaStockDAL;
 import Model.*;
 import com.example.hotel.*;
 import javafx.collections.ObservableList;
@@ -17,9 +18,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import org.xml.sax.SAXException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -132,21 +135,27 @@ public class XMLReaderController implements Initializable {
 
     @FXML
     void clickAddItens(ActionEvent event) {
-        produtoBLL.addProduto(produtos);
-        fornecedorBLL.addFornecedor(fornecedores);
-        entradaStockBLL.addEntradaStock(entradaStocks, fornecedores, stocks);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produtos inseridos com sucesso!", "Sucesso!");
+        EntradaStockBLL entradaBLL = new EntradaStockBLL();
+        if (!entradaBLL.verificaSeExisteEncomendaRepetida(ordemTxt.getText())) {
+            produtoBLL.addProduto(produtos);
+            fornecedorBLL.addFornecedor(fornecedores);
+            entradaStockBLL.addEntradaStock(entradaStocks, fornecedores, stocks);
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produtos inseridos com sucesso!", "Sucesso!");
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Já existe uma encomenda com esse número!", "Erro:");
+        }
     }
 
     //----------------------------------- Upload Ficheiro XML -----------------------------------
 
     @FXML
-    void clickXmlBtn(ActionEvent event) {
+    void clickXmlBtn(ActionEvent event) throws URISyntaxException, SAXException {
+        //ValidaXML valida = new ValidaXML();
 
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML File", lstFile));
         File f = fc.showOpenDialog(null);
-        if (f != null) {
+        if (f != null && ValidaXML.validarXML(f)) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
             entradaStocks = xmlreader.lerXMLBody(path);

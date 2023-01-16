@@ -92,7 +92,7 @@ public class ProdutoReservaController implements Initializable {
         if (selectedReservation != null && selectedProduct != null){
             if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
                 ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity);
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso");
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso!");
                 initTable();
             } else {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A quantidade desejada é superior à existente em stock!", "Erro:");

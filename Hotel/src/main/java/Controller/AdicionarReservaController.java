@@ -89,6 +89,8 @@ public class AdicionarReservaController implements Initializable {
 
     List<LocalDate> dates = new ArrayList<>();
 
+    public static Boolean verifica = false;
+
     @FXML
     void clickAddReservaBrn(ActionEvent event) throws SQLException, IOException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
@@ -124,7 +126,6 @@ public class AdicionarReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
             return;
         }
-        MessageBoxes.ShowMessage(Alert.AlertType.CONFIRMATION, "Confirmar reserva", "Deseja criar esta reserva?");
         ReservaBLL reservaBLL = new ReservaBLL();
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
@@ -145,6 +146,7 @@ public class AdicionarReservaController implements Initializable {
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
+        verifica = true;
     }
 
     @Override
@@ -154,11 +156,7 @@ public class AdicionarReservaController implements Initializable {
     }
 
     private void initCombos() {
-
-        cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos().stream()
-                .filter(quarto -> !quarto.getAtivo())
-                .collect(Collectors.toList()));
-
+        cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
         cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
     }
 
@@ -272,6 +270,13 @@ public class AdicionarReservaController implements Initializable {
                 setDisable(false);
             }
         });
+    }
+
+    @FXML
+    void clickDateFim(MouseEvent event) {
+        if (DatePickerInicio.getValue() == null) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione primeiro a data inicial!", "Erro:");
+        }
     }
 
     @FXML
