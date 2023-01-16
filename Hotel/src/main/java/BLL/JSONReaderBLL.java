@@ -2,6 +2,8 @@ package BLL;
 
 import Model.EntradaStock;
 import Model.Fornecedor;
+import Model.Produto;
+import Model.Stock;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import com.fasterxml.jackson.databind.JsonNode;
@@ -11,13 +13,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class JSONReaderBLL {
+    //---------------------------------------------------- FORNECEDOR ----------------------------------------------------
     public ObservableList<EntradaStock> lerHeader(String path) throws IOException {
         ObservableList<EntradaStock> fornecedores = FXCollections.observableArrayList();
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(new File(path));
 
-        // access elements of JSON file
         JsonNode orderNode = rootNode.path("Order");
         JsonNode headerNode = orderNode.path("Header");
         String ordemNum = headerNode.path("OrderNumber").asText();
@@ -32,123 +34,134 @@ public class JSONReaderBLL {
         JsonNode countryNode = addressNode.path("Country");
         String paisFornecedor = countryNode.path("Value").asText();
 
-
-
-
-
         Fornecedor fornecedor = new Fornecedor(idFornecedor, nomeFornecedor, moradaFornecedor, codPostalFornecedor, paisFornecedor, cidadeFornecedor);
-        fornecedores.add(new EntradaStock(ordemNum, ordemData, fornecedor));
 
+        fornecedores.add(new EntradaStock(ordemNum, ordemData, fornecedor));
         return fornecedores;
     }
 
-    //-----------------------------------------------------------------------------------------------------
-
-
+    //-------------------------------------------------- ENTRADA STOCK ---------------------------------------------------
     public ObservableList<EntradaStock> lerBody(String path) throws IOException {
         ObservableList<EntradaStock> item = FXCollections.observableArrayList();
 
         ObjectMapper mapper = new ObjectMapper();
         JsonNode rootNode = mapper.readTree(new File(path));
 
-        // access elements of JSON file
-        JsonNode lineNode = rootNode.path("LineNumber");
-        for (JsonNode node : lineNode) {
-            JsonNode productNode = node.path("Product");
-            JsonNode productIdentifierNode = productNode.path("ProductIdentifier").get(0);
-            String idProduto = productIdentifierNode.path("Code").asText();
-            String productDescription = productNode.path("ProductDescription").asText();
-            JsonNode quantityNode = node.path("Quantity").path("Value");
-            String uom = quantityNode.path("UOM").asText();
-            int unidades = quantityNode.path("Value").asInt();
-            JsonNode informationalQuantityNode = node.path("InformationalQuantity").get(0).path("Value");
-            String informationalUom = informationalQuantityNode.path("UOM").asText();
-            int informationalValue = informationalQuantityNode.path("Value").asInt();
-            JsonNode pricePerUnitNode = node.path("PricePerUnit");
-            JsonNode currencyValueNode = pricePerUnitNode.path("CurrencyValue");
-            String currencyType = currencyValueNode.path("CurrencyType").asText();
-            double currencyValue = currencyValueNode.path("Value").asDouble();
-            JsonNode valueNode = pricePerUnitNode.path("Value");
-            JsonNode monetaryAdjustmentNode = node.path("MonetaryAdjustment");
-            JsonNode monetaryAdjustmentStartAmountNode = monetaryAdjustmentNode.path("MonetaryAdjustmentStartAmount").path("CurrencyValue");
-            double precoSemTaxa = monetaryAdjustmentStartAmountNode.path("Value").asDouble();
-            JsonNode taxAdjustmentNode = monetaryAdjustmentNode.path("TaxAdjustment");
-            Double taxa = taxAdjustmentNode.path("TaxPercent").asDouble();
-            JsonNode taxAmountNode = taxAdjustmentNode.path("TaxAmount").path("CurrencyValue");
-            double valorTaxa = taxAmountNode.path("Value").asDouble();
-            String local = taxAdjustmentNode.path("TaxLocation").asText();
-            JsonNode lineBaseAmountNode = node.path("LineBaseAmount").path("CurrencyValue");
-            double precoTotal = lineBaseAmountNode.path("Value").asDouble();
+        JsonNode orderNode = rootNode.path("Order");
+        JsonNode lineNode = orderNode.get("Line");
+        if (lineNode.isArray()) {
+            for (JsonNode lineArray : lineNode) {
+                String idProduto = "";
+                Integer unidades;
+                Double precoSemTaxa;
+                Double taxa;
+                Double valorTaxa;
+                String local;
+                Double precoTotal;
+                JsonNode productNode = lineArray.path("Product");
+                JsonNode productIdentNode = productNode.path("ProductIdentifier");
+                if (productIdentNode.isArray()) {
+                    for (JsonNode identifier : productIdentNode) {
+                        idProduto = identifier.path("Code").asText();
+                    }
+                }
+                JsonNode quantityNode = lineArray.path("Quantity");
+                JsonNode valueNode = quantityNode.path("Value");
+                unidades = (valueNode.path("Value").asInt());
+                JsonNode monAjustNode = lineArray.path("MonetaryAdjustment");
+                JsonNode monAjustStartNode = monAjustNode.path("MonetaryAdjustmentStartAmount");
+                JsonNode CurrencyValueNode = monAjustStartNode.path("CurrencyValue");
+                precoSemTaxa = (CurrencyValueNode.path("Value").asDouble());
+                JsonNode taxAdjustNode = monAjustNode.path("TaxAdjustment");
+                taxa = (taxAdjustNode.path("TaxPercent").asDouble());
+                JsonNode taxAmountNode = taxAdjustNode.path("TaxAmount");
+                JsonNode currencyValueNodeTax = taxAmountNode.path("CurrencyValue");
+                valorTaxa = (currencyValueNodeTax.path("Value").asDouble());
+                local = (taxAdjustNode.path("TaxLocation").asText());
+                JsonNode lineBaseNode = lineArray.path("LineBaseAmount");
+                JsonNode currencyValueNode = lineBaseNode.path("CurrencyValue");
+                precoTotal = (currencyValueNode.path("Value").asDouble());
 
-
-            item.add(new EntradaStock(taxa, 0, idProduto, local, precoSemTaxa, unidades, valorTaxa, precoTotal));
+                item.add(new EntradaStock(taxa, 1, idProduto, local, precoSemTaxa, unidades, valorTaxa, precoTotal));
+            }
         }
         return item;
     }
-}
 
-/* "LineNumber": 1,
-        "Product": {
-          "ProductIdentifier": [
-            {
-              "Agency": "Supplier",
-              "ProductIdentifierType": "PartNumber",
-              "Code": "63279196"
-            }
-          ],
-          "ProductDescription": "Croissant Brioche délifrance"
-        },
-		"Quantity": {
-          "Value": {
-            "UOM": "Unit",
-            "Value": 10000
-          }
-        },
-        "InformationalQuantity": [
-          {
-            "Value": {
-              "UOM": "Kilogram",
-              "Value": 600
-            }
-          }
-        ],
-         "PricePerUnit": {
-            "CurrencyValue": {
-              "CurrencyType": "EUR",
-              "Value": 0.25
-            },
-            "Value": {
-              "UOM": "Unit",
-              "Value": 1
-            }
-         },
-        "MonetaryAdjustment": {
-          "AdjustmentType": "Tax",
-          "MonetaryAdjustmentLine": 1,
-          "MonetaryAdjustmentStartAmount": {
-            "CurrencyValue": {
-              "CurrencyType": "EUR",
-              "Value": 2500
-            }
-          },
-          "TaxAdjustment": {
-            "TaxType": "VAT",
-            "TaxPercent": 20,
-            "TaxAmount": {
-              "CurrencyValue": {
-                "CurrencyType": "EUR",
-                "Value": 500
-              }
-            },
-            "TaxLocation": "FR"
-          }
-        },
+    //----------------------------------------------------- PRODUTO ------------------------------------------------------
+    public ObservableList<Produto> lerProduto(String path) throws IOException {
+        ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
-        "LineBaseAmount": {
-          "CurrencyValue": {
-            "CurrencyType": "EUR",
-            "Value": 3000
-          }
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(new File(path));
+
+        JsonNode orderNode = rootNode.path("Order");
+        JsonNode lineNode = orderNode.get("Line");
+        if (lineNode.isArray()) {
+            for (JsonNode lineArray : lineNode) {
+                String idProduto = "";
+                String descricao = "";
+                Double peso = 0.0;
+                Double precoUnidade = 0.0;
+                Integer unidades;
+                JsonNode productNode = lineArray.path("Product");
+                JsonNode productIdentNode = productNode.path("ProductIdentifier");
+                if (productIdentNode.isArray()) {
+                    for (JsonNode identifier : productIdentNode) {
+                        idProduto = identifier.path("Code").asText();
+                    }
+                }
+                descricao = productNode.path("ProductDescription").asText();
+                JsonNode infQuantNode = lineArray.path("InformationalQuantity");
+                if (productIdentNode.isArray()) {
+                    for (JsonNode quantity : infQuantNode) {
+                        JsonNode pesoNode = quantity.path("Value");
+                        peso = pesoNode.path("Value").asDouble();
+                    }
+                }
+                JsonNode pricePerUnitNode = lineArray.path("PricePerUnit");
+                JsonNode currencyValueNode = pricePerUnitNode.path("CurrencyValue");
+                precoUnidade = currencyValueNode.path("Value").asDouble();
+                JsonNode quantityNode = lineArray.path("Quantity");
+                JsonNode valueNode = quantityNode.path("Value");
+                unidades = (valueNode.path("Value").asInt());
+
+                Double pesoPorUnidade = (peso / unidades);
+
+                produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade,  false));
+            }
         }
-      }, */
+        return produtos;
+    }
+
+    //------------------------------------------------------- STOCK ------------------------------------------------------
+    public ObservableList<Stock> lerStock(String path) throws IOException {
+        ObservableList<Stock> stocks = FXCollections.observableArrayList();
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode rootNode = mapper.readTree(new File(path));
+
+        JsonNode orderNode = rootNode.path("Order");
+        JsonNode lineNode = orderNode.get("Line");
+        if (lineNode.isArray()) {
+            for (JsonNode lineArray : lineNode) {
+                String idProduto = "";
+                Integer unidades;
+                JsonNode productNode = lineArray.path("Product");
+                JsonNode productIdentNode = productNode.path("ProductIdentifier");
+                if (productIdentNode.isArray()) {
+                    for (JsonNode identifier : productIdentNode) {
+                        idProduto = identifier.path("Code").asText();
+                    }
+                }
+                JsonNode quantityNode = lineArray.path("Quantity");
+                JsonNode valueNode = quantityNode.path("Value");
+                unidades = (valueNode.path("Value").asInt());
+
+                stocks.add(new Stock(idProduto, unidades));
+            }
+        }
+        return stocks;
+    }
+}
 

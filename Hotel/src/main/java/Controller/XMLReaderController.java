@@ -179,9 +179,9 @@ public class XMLReaderController implements Initializable {
 
     public void lerJSON(String path) throws IOException {
         entradaStocks = jsonreader.lerBody(path);
-        fornecedores = jsonreader.lerBody(path);
-        // produtos = xmlreader.lerProduto(path);
-        // stocks = xmlreader.lerStock(path);
+        fornecedores = jsonreader.lerHeader(path);
+        produtos = jsonreader.lerProduto(path);
+        stocks = jsonreader.lerStock(path);
     }
 
     public void lerXML(String path) {
