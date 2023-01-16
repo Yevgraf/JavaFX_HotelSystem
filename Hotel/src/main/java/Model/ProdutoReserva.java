@@ -7,22 +7,34 @@ public class ProdutoReserva {
 
     private int quantidade;
 
+    private int idQuarto;
+
     public ProdutoReserva(){
 
     }
 
-    public ProdutoReserva(int id, int idReserva, String idProduto, int quantidade) {
+    public ProdutoReserva(int id, int idReserva, String idProduto, int quantidade, int idQuarto) {
         this.id = id;
         this.idReserva = idReserva;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
+        this.idQuarto = idQuarto;
     }
 
 
-    public ProdutoReserva(int idReserva, String idProduto, int quantidade) {
+    public ProdutoReserva(int idReserva, String idProduto, int quantidade, int idQuarto) {
         this.idReserva = idReserva;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
+        this.idQuarto = idQuarto;
+    }
+
+    public int getIdQuarto() {
+        return idQuarto;
+    }
+
+    public void setIdQuarto(int idQuarto) {
+        this.idQuarto = idQuarto;
     }
 
     public int getId() {
