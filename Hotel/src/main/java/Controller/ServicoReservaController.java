@@ -65,7 +65,7 @@ public class ServicoReservaController implements Initializable {
     }
 
     private void addProdutoReserva() throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoReserva.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) Voltar.getScene().getWindow();
         stage.setTitle("Produtos Reserva");

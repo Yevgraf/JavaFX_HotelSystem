@@ -98,6 +98,9 @@ public class CriarQuartoController implements Initializable {
     @FXML
     private Button voltarBtn;
 
+    @FXML
+    private Button addProdutosQuarto;
+
     private QuartoBLL quartoBLL = new QuartoBLL();
 
     @FXML
@@ -170,6 +173,17 @@ public class CriarQuartoController implements Initializable {
             stage.show();
         }
 
+    }
+
+    @FXML
+    void addProdutosQuartoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) addProdutosQuarto.getScene().getWindow();
+        stage.setTitle("Gestao Produtos Quarto");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
     }
 
 
