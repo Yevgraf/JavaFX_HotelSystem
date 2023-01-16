@@ -20,8 +20,8 @@ public class ProdutoDAL {
             for (int iteradorProduto = 0; iteradorProduto < produtos.size(); iteradorProduto++) {
                 String id = produtos.get(iteradorProduto).getIdProduto();
                 if (!verificaProdutoExistente(id, connection)) {
-                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade)" +
-                            "VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+                    PreparedStatement insertStatement = connection.prepareStatement("INSERT INTO Produto(id, descricao, peso, precoPorUnidade, consumivel)" +
+                            "VALUES (?,?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
                     insertProduto(produtos.get(iteradorProduto), insertStatement);
                 }
@@ -49,6 +49,7 @@ public class ProdutoDAL {
         statement.setString(2, produto.getDescricao());
         statement.setDouble(3, produto.getPeso());
         statement.setDouble(4, produto.getPrecoUnidade());
+        statement.setBoolean(5, false);
         statement.executeUpdate();
         statement.close();
     }
