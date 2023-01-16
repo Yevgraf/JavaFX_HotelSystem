@@ -7,8 +7,9 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ProdutoReservaDAL {
-    public static void addProductInReservation(int reservationId, String productId, int quantity) throws SQLException {
-        String query1 = "INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade) VALUES (?,?,?)";
+    public static void addProductInReservation(int reservationId, String productId, int quantity, int idQuarto) throws SQLException {
+
+        String query1 = "INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade, idQuarto) VALUES (?,?,?,?)";
         String query2 = "UPDATE Stock set quantidade=? WHERE idProduto=?";
         try (Connection connection = DBconn.getConn();
              PreparedStatement ps1 = connection.prepareStatement(query1);
@@ -16,6 +17,7 @@ public class ProdutoReservaDAL {
             ps1.setInt(1, reservationId);
             ps1.setString(2, productId);
             ps1.setInt(3, quantity);
+            ps1.setInt(4, idQuarto);
             ps1.executeUpdate();
             int newQuantity = selectStock(productId, connection) - quantity;
             ps2.setInt(1, newQuantity);
@@ -23,6 +25,7 @@ public class ProdutoReservaDAL {
             ps2.executeUpdate();
         }
     }
+
 
     private static int selectStock(String productId, Connection connection) throws SQLException {
         String query = "SELECT quantidade FROM Stock WHERE idProduto=?";
@@ -60,7 +63,7 @@ public class ProdutoReservaDAL {
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
                 ProdutoReserva obj = new ProdutoReserva(rs.getInt("id"), rs.getInt("idReserva"), rs.getString("idProduto"),
-                        rs.getInt("quantidade"));
+                        rs.getInt("quantidade"), rs.getInt("idQuarto"));
                 lista.add(obj);
             }
             st.close();
