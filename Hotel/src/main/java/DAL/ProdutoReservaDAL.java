@@ -7,8 +7,8 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ProdutoReservaDAL {
-    public static void addProductInReservation(int reservationId, String productId, int quantity) throws SQLException {
-        int idQuarto = getQuartoIdForReservation(reservationId);
+    public static void addProductInReservation(int reservationId, String productId, int quantity, int idQuarto) throws SQLException {
+
         String query1 = "INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade, idQuarto) VALUES (?,?,?,?)";
         String query2 = "UPDATE Stock set quantidade=? WHERE idProduto=?";
         try (Connection connection = DBconn.getConn();
@@ -26,19 +26,6 @@ public class ProdutoReservaDAL {
         }
     }
 
-    public static int getQuartoIdForReservation(int reservationId) throws SQLException {
-        String query = "SELECT idQuarto FROM Reserva WHERE id = ?";
-        int idQuarto = 0;
-        try (Connection connection = DBconn.getConn();
-             PreparedStatement ps = connection.prepareStatement(query)) {
-            ps.setInt(1, reservationId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                idQuarto = rs.getInt("idQuarto");
-            }
-        }
-        return idQuarto;
-    }
 
     private static int selectStock(String productId, Connection connection) throws SQLException {
         String query = "SELECT quantidade FROM Stock WHERE idProduto=?";
