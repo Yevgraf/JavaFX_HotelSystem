@@ -35,7 +35,6 @@ public class ReservaDAL {
             }
             if (reservationId > 0) {
                 addReservationState(reservationId, "pendente");
-
             }
             reserva.setId(reservationId);
             return reserva;
@@ -148,7 +147,7 @@ public class ReservaDAL {
             deleteServicoReservaForReservation(reservationId);
             deleteCheckoutForReservation(reservationId);
             deleteReservationById(reservationId);
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Reserva pendente apagada","Apagada");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!","Apagada:");
         }
     }
 
@@ -251,7 +250,7 @@ public class ReservaDAL {
         double total = 0;
 
         String sql = "SELECT SUM(PQ.quantidade * p.precoParaCliente) AS total FROM Reserva r " +
-                "INNER JOIN ProdutoQuarto PQ on r.idQuarto = PQ.idQuarto" +
+                "INNER JOIN ProdutoQuarto PQ on r.idQuarto = PQ.idQuarto " +
                 "INNER JOIN Produto P on P.id = PQ.idProduto WHERE r.id = ?";
 
         Connection conn = DBconn.getConn();
