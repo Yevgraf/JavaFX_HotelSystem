@@ -75,6 +75,11 @@ public class Quarto {
     public Quarto() {
     }
 
+    public Quarto(Integer id, String tipoQuarto) {
+        this.id = id;
+        this.tipoQuarto = tipoQuarto;
+    }
+
     @Override
     public String toString() {
         return "ID: " + id + ", Tipo de quarto: " + tipoQuarto + ", Piso: " + piso + ", Preço: " + preco;

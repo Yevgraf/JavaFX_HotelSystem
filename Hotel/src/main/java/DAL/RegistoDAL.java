@@ -73,6 +73,21 @@ public class RegistoDAL {
         return -1;
     }
 
+    public static int getRoomIdByClientId(int clientId) throws SQLException {
+        String sql = "SELECT r.idQuarto FROM Reserva r WHERE r.idCliente = ?";
+
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        PreparedStatement pstmt = connection.prepareStatement(sql);
+        pstmt.setInt(1, clientId);
+        ResultSet rs = pstmt.executeQuery();
+        if (rs.next()) {
+            return rs.getInt("idQuarto");
+        }
+        return -1;
+    }
+
     public static ObservableList<Registo> getRegistosByCartaoId(int idCartao) throws SQLException {
         String cmd = "SELECT * FROM Registo WHERE idCartao = ?";
         DBconn dbconn = new DBconn();

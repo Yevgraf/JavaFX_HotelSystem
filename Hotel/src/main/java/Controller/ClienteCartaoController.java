@@ -1,9 +1,12 @@
 package Controller;
 import BLL.RegistoBLL;
 import BLL.UtilizadorPreferences;
+import DAL.QuartoDAL;
+import DAL.ReservaDAL;
 import DAL.ServicoDAL;
 import DAL.StockDAL;
 import Model.MessageBoxes;
+import Model.Quarto;
 import Model.Servico;
 import Model.Stock;
 import com.example.hotel.Main;
@@ -38,6 +41,15 @@ public class ClienteCartaoController implements Initializable {
     private TableView<Servico> servicos;
 
     @FXML
+    private TableColumn<Quarto, String> descricaoQuarto;
+
+    @FXML
+    private TableColumn<Quarto, Integer> idQuarto;
+
+    @FXML
+    private TableView<Quarto> quartos;
+
+    @FXML
     private Button btnVoltar;
 
     @FXML
@@ -61,12 +73,15 @@ public class ClienteCartaoController implements Initializable {
         try {
             int idCliente = UtilizadorPreferences.utilizadorId();
             int idCartao = RegistoBLL.getCardIdByClientId(idCliente);
+            int idQuarto = RegistoBLL.getRoomIdByClientId(idCliente);
             String local = servicos.getSelectionModel().getSelectedItem().getServico();
+            String localQuarto = quartos.getSelectionModel().getSelectedItem().getTipoQuarto();
             Calendar calendar = Calendar.getInstance();
             java.util.Date utilDate = calendar.getTime();
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(utilDate.getTime());
 
             RegistoBLL.addNewRegisto( idCartao, idCliente, local, sqlTimestamp);
+            RegistoBLL.addNewRegistoQuarto(idQuarto, idCliente, localQuarto, sqlTimestamp);
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Registo gravado","Gravado");
         } catch (SQLException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"falha ao gravar registo","ERRO");
@@ -76,12 +91,15 @@ public class ClienteCartaoController implements Initializable {
 
 
     private void initTable() {
-        idTable.setResizable(false);
-        descricaoTable.setResizable(false);
+        ServicoDAL servicoDAL = new ServicoDAL();
 
-        idTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
-        descricaoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
-        servicos.setItems(ServicoDAL.getServicosByClientId());
+        idTable.setCellValueFactory(new PropertyValueFactory<>("idServico"));
+        descricaoTable.setCellValueFactory(new PropertyValueFactory<>("servico"));
+        idQuarto.setCellValueFactory(new PropertyValueFactory<>("id"));
+        descricaoQuarto.setCellValueFactory(new PropertyValueFactory<>("tipoQuarto"));
+
+        servicos.setItems(servicoDAL.getServicosByClientId());
+        quartos.setItems(QuartoDAL.getQuartoByClientId());
     }
 
     @Override

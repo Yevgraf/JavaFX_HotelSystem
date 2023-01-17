@@ -4,6 +4,7 @@ import BLL.UtilizadorBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
 import DAL.TipoUtilizadorDAL;
+import DAL.UtilizadorDAL;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import com.example.hotel.Main;
@@ -21,9 +22,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Period;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -31,8 +29,6 @@ import java.util.regex.Pattern;
 import java.util.regex.Matcher;
 
 import javafx.stage.Stage;
-
-import static DAL.UtilizadorDAL.nifUtilizador;
 
 
 public class CriarUtilizadoresController implements Initializable {
@@ -91,10 +87,8 @@ public class CriarUtilizadoresController implements Initializable {
     @FXML
     private Button VoltarBtn;
 
-    static boolean flag;
+    public static boolean flag;
     static boolean flagnome;
-
-    static boolean adulto;
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
@@ -137,13 +131,13 @@ public class CriarUtilizadoresController implements Initializable {
 
 
     public void onActionAddFuncionario(ActionEvent actionEvent) {
+        int nif = Integer.parseInt(txt_nif.getText());
         if (cmb_tipoUtilizador.getValue() != null) {
             String email = txt_email.getText();
           if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
                   txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
                   && txt_password.getText().isEmpty() == false   && cmb_tipoUtilizador.getItems().isEmpty() == false) {
-              if (VerifyNIFColaborador() == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true
-                      && VerifyNome() == true && isValidEmail(email) == true && ageAdult() == true) {
+              if (UtilizadorDAL.VerifyNIFColaborador(nif) == true && VerifyNIFColaboradorMin() == true && VerifyContacto() == true && VerifyNome() == true && isValidEmail(email) == true) {
                   RegistarUtilizador();
               } else {
                   MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Dados incorretos!","Erro");}
@@ -169,27 +163,6 @@ public class CriarUtilizadoresController implements Initializable {
 
         utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador criado!", "Informação:");
-    }
-
-    public boolean VerifyNIFColaborador() {
-        int nif = Integer.parseInt(txt_nif.getText());
-        String verificar = nifUtilizador(nif);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificar)){
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                if (rs.getInt(1) == 1) {
-                    VerificarNIF.setText("O nif já existe!");
-                    flag = false;
-                } else {
-                    VerificarNIF.setText("");
-                    flag = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return flag;
     }
 
     public boolean VerifyNIFColaboradorMin() {
@@ -238,20 +211,5 @@ public class CriarUtilizadoresController implements Initializable {
         if (email == null)
             return false;
         return pat.matcher(email).matches();
-    }
-
-    public boolean ageAdult() {
-            LocalDate currentDate = LocalDate.now();
-
-            LocalDate dateOfBirth = datePickerNasc.getValue();
-
-            Period age = Period.between(dateOfBirth, currentDate);
-
-            if (age.getYears() >= 18) {
-                adulto = true;
-            } else {
-                adulto = false;
-            }
-            return adulto;
     }
 }
