@@ -66,10 +66,15 @@ public class ReservaBLL {
         return reservaDAL.getTotalServicosReserva(reservationId);
     }
 
-    //private static double getTotalProdutosReserva(Integer reservationId) throws SQLException {
-    //    ReservaDAL reservaDAL = new ReservaDAL();
-    //    return reservaDAL.getTotalProdutosReserva(reservationId);
-    //}
+    private static double getTotalProdutosReserva(Integer reservationId) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        return reservaDAL.getTotalProdutosReserva(reservationId);
+    }
+
+    private static double getTotalProdutosQuarto(Integer reservationId) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        return reservaDAL.getTotalProdutosQuarto(reservationId);
+    }
 
     public static double getTotalReserva(Reserva reserva) throws SQLException {
         QuartoDAL quartoDAL = new QuartoDAL();
@@ -84,8 +89,11 @@ public class ReservaBLL {
 
         precoFinal += diasReserva * precoQuarto;
 
-        // Calculo do valor dos produtos
-        //precoFinal += getTotalProdutosReserva(reserva.getId());
+        // Calculo do valor dos produtos RESERVA
+        precoFinal += getTotalProdutosReserva(reserva.getId());
+
+        // Calculo do valor dos produtos QUARTO
+        precoFinal += getTotalProdutosQuarto(reserva.getId());
 
         // Calculo do valor dos servicos
         precoFinal += getTotalServicosReserva(reserva.getId());

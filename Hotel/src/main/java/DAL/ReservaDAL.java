@@ -58,7 +58,6 @@ public class ReservaDAL {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-
             ps = connection.prepareStatement("SELECT id FROM Servico WHERE servico = ?");
             ps.setString(1, service);
             ResultSet rs = ps.executeQuery();
@@ -67,7 +66,6 @@ public class ReservaDAL {
                 serviceId = rs.getInt(1);
             }
             ps.close();
-
 
             ps = connection.prepareStatement("INSERT INTO ServicoReserva(idReserva, idServico) VALUES (?, ?)");
             ps.setInt(1, reservationId);
@@ -100,7 +98,6 @@ public class ReservaDAL {
         }
         return reservas;
     }
-
 
     public static List<Reserva> getReservasPendentes() {
         List<Reserva> reservas = new ArrayList<>();
@@ -224,10 +221,12 @@ public class ReservaDAL {
         return 0;
     }
 
-    /*public double getTotalProdutosReserva(int reservationId) throws SQLException {
+    public double getTotalProdutosReserva(int reservationId) throws SQLException {
         double total = 0;
 
-        String sql = "SELECT SUM(pq.quantidade * p.precoPorUnidade) AS total FROM Reserva r INNER JOIN Quarto q ON r.idQuarto = q.id INNER JOIN ProdutoReserva pq ON q.id = pq.idQuarto INNER JOIN Produto p ON pq.idProduto = p.id WHERE r.id = ?";
+        String sql = "SELECT SUM(pr.quantidade * p.precoParaCliente) AS total " +
+                "FROM Reserva r INNER JOIN ProdutoReserva PR on r.id = PR.idReserva " +
+                "INNER JOIN Produto P on P.id = PR.idProduto WHERE r.id = ?";
 
         Connection conn = DBconn.getConn();
 
@@ -246,7 +245,33 @@ public class ReservaDAL {
         conn.close();
 
         return total;
-    }*/
+    }
+
+    public double getTotalProdutosQuarto(int reservationId) throws SQLException {
+        double total = 0;
+
+        String sql = "SELECT SUM(PQ.quantidade * p.precoParaCliente) AS total FROM Reserva r " +
+                "INNER JOIN ProdutoQuarto PQ on r.idQuarto = PQ.idQuarto" +
+                "INNER JOIN Produto P on P.id = PQ.idProduto WHERE r.id = ?";
+
+        Connection conn = DBconn.getConn();
+
+        PreparedStatement stmt = conn.prepareStatement(sql);
+
+        stmt.setInt(1, reservationId);
+
+        ResultSet rs = stmt.executeQuery();
+
+        if (rs.next()) {
+            total = rs.getDouble("total");
+        }
+
+        rs.close();
+        stmt.close();
+        conn.close();
+
+        return total;
+    }
 
 
     public void addReservationState(int reservationId, String estado) throws SQLException {
