@@ -2,6 +2,7 @@ package DAL;
 
 import BLL.UtilizadorPreferences;
 import Model.MessageBoxes;
+import Model.Quarto;
 import Model.Servico;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -76,19 +77,18 @@ public class ServicoDAL {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            String cmd = "SELECT s.id as sId, s.servico as servico " +
-                    "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " +
-                    "JOIN Reserva r ON r.id = SR.idReserva " +
-                    "WHERE r.idCliente = ?";
+            String cmd = "SELECT s.id as idServico, s.servico as servico FROM Servico s JOIN ServicoReserva SR " +
+                    "ON s.id = SR.idServico JOIN Reserva r ON r.id = SR.idReserva JOIN EstadoReserva er " +
+                    "ON er.reserva = r.id WHERE er.estado like 'checkin' and r.idCliente = " + id;
             PreparedStatement ps = connection.prepareStatement(cmd);
-            ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Servico obj = new Servico(rs.getInt("sId"), rs.getString("servico"));
+            if (rs.next()) {
+                Servico obj = new Servico(rs.getInt("idServico"), rs.getString("servico"));
                 lista.add(obj);
             }
             ps.close();
         } catch (Exception ex) {
+            ex.printStackTrace();
         }
         return lista;
     }

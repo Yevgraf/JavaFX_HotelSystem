@@ -1,6 +1,7 @@
 package DAL;
 
 import BLL.Encriptacao;
+import Controller.CriarUtilizadoresController;
 import Model.MessageBoxes;
 import Model.TipoUtilizador;
 import Model.Utilizador;
@@ -268,5 +269,24 @@ public class UtilizadorDAL {
         ps.setInt(1, id);
         ps.executeUpdate();
         return null;
+    }
+
+    public static boolean VerifyNIFColaborador(int nif) {
+        String verificar = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificar)){
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                if (rs.getInt(1) == 1) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"O nif já existe!", "ERRO");
+                    CriarUtilizadoresController.flag = false;
+                } else {
+                    CriarUtilizadoresController.flag = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return CriarUtilizadoresController.flag;
     }
 }

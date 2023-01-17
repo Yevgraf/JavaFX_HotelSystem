@@ -26,9 +26,18 @@ public class RegistoBLL {
         dal.addRegisto(registo);
     }
 
+    public static void addNewRegistoQuarto(int idQuarto, int IdCliente, String localQuarto, Timestamp data) throws SQLException {
+        RegistoDAL dal = new RegistoDAL();
+        Registo registo = new Registo(idQuarto, IdCliente, localQuarto, data);
+        dal.addRegisto(registo);
+    }
+
 
     public static int getCardIdByClientId(int clientId) throws SQLException {
         return RegistoDAL.getCardIdByClientId(clientId);
+    }
+    public static int getRoomIdByClientId(int clientId) throws SQLException {
+        return RegistoDAL.getRoomIdByClientId(clientId);
     }
 
 }

@@ -4,6 +4,7 @@ import BLL.CartaoBLL;
 import BLL.QuartoBLL;
 import BLL.UtilizadorPreferences;
 import DAL.DBconn;
+import DAL.QuartoDAL;
 import Model.Cartao;
 import Model.MessageBoxes;
 import Model.Quarto;
@@ -60,37 +61,37 @@ public class CriarQuartoController implements Initializable {
     private ImageView btnBack;
 
     @FXML
-    private ComboBox<String> cmbPiso;
+    private static ComboBox<String> cmbPiso;
 
     @FXML
-    private ComboBox<String> cmbTipoQuarto;
+    private static ComboBox<String> cmbTipoQuarto;
 
     @FXML
-    private TableColumn<Quarto, Integer> tbl_id;
+    private static TableColumn<Quarto, Integer> tbl_id;
 
     @FXML
-    private TableColumn<Quarto, String> tbl_piso;
+    private static TableColumn<Quarto, String> tbl_piso;
 
     @FXML
-    private TableColumn<Quarto, Double> tbl_preco;
+    private static TableColumn<Quarto, Double> tbl_preco;
 
     @FXML
-    private TableColumn<Quarto, String> tbl_tipQuarto;
+    private static TableColumn<Quarto, String> tbl_tipQuarto;
 
     @FXML
-    private TableColumn<Quarto, String> tbl_idCartao;
+    private static TableColumn<Quarto, String> tbl_idCartao;
 
     @FXML
-    private TableView<Quarto> tv_Quarto;
+    private static TableView<Quarto> tv_Quarto;
 
     @FXML
-    private TextField txt_numcartao;
+    private static TextField txt_numcartao;
 
     @FXML
     private TextField txt_piso;
 
     @FXML
-    private TextField txt_preco;
+    private static TextField txt_preco;
 
     @FXML
     private Button btnRmvQuarto;
@@ -100,31 +101,39 @@ public class CriarQuartoController implements Initializable {
     @FXML
     private Button voltarBtn;
 
-    private QuartoBLL quartoBLL = new QuartoBLL();
+    private static QuartoBLL quartoBLL = new QuartoBLL();
+
+    public static boolean vP;
+
+    public static boolean vTQ;
 
     @FXML
     void clickAddQuarto(ActionEvent event) throws SQLException {
-
+        int qtdQuartos;
+        String tipoquarto = cmbTipoQuarto.getValue();
+        int piso = Integer.parseInt(cmbPiso.getValue());
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-                ADDQuarto();
+
+            if(QuartoDAL.VerificarQuartoPiso(piso) == false){
+                EmptyMessage.setText("Limite de Quartos Alcancado!");
+            }else {
+                if (cmbTipoQuarto.getValue().equals("Singular")) {
+                    qtdQuartos = 7;
+                    QuartoDAL.VerificarTipoQuarto(qtdQuartos, tipoquarto);
+                } else if (cmbTipoQuarto.getValue().equals("Duplo")) {
+                    qtdQuartos = 10;
+                    QuartoDAL.VerificarTipoQuarto(qtdQuartos, tipoquarto);
+                } else if (cmbTipoQuarto.getValue().equals("Familiar")) {
+                    qtdQuartos = 3;
+                    QuartoDAL.VerificarTipoQuarto(qtdQuartos, tipoquarto);
+                }
+            }
         } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
-        if(cmbPiso.getValue().equals("1")){
-            VerificarQuartoPiso1();
-        }else
-            VerificarQuartoPiso2();
-
-        if (cmbTipoQuarto.getValue().equals("Singular")) {
-            VerificarQuartoSingular();
-        }
-        if (cmbTipoQuarto.getValue().equals("Duplo")) {
-            VerificarQuartoDuplo();
-        } else
-            VerificarQuartoFamiliar();
     }
 
-    public void ADDQuarto() throws SQLException {
+    public static void ADDQuarto() throws SQLException {
         try {
             // create a quarto object with the values from the UI controls
             Quarto quarto = new Quarto(
@@ -236,123 +245,13 @@ public class CriarQuartoController implements Initializable {
 
 
 
-    private void initTable() {
+    private static void initTable() {
         tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tbl_piso.setCellValueFactory(new PropertyValueFactory<>("piso"));
         tbl_preco.setCellValueFactory(new PropertyValueFactory<>("preco"));
         tbl_tipQuarto.setCellValueFactory(new PropertyValueFactory<>("tipoQuarto"));
         tbl_idCartao.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCartao().getId().toString()));
         tv_Quarto.setItems(QuartoBLL.getQuartos());
-    }
-
-    public boolean VerificarQuartoPiso1(){
-        boolean vQ1 = false;
-        int piso = Integer.parseInt(txt_piso.getText());
-        String verificarquarto1 = quartoPiso(piso);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt(1) >= 10 ) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vQ1 = false;
-                }else{
-                    vQ1 = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vQ1;
-    }
-
-    public boolean VerificarQuartoPiso2(){
-        boolean vQ1 = false;
-        int piso = Integer.parseInt(txt_piso.getText());
-        String verificarquarto1 = quartoPiso(piso);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt(1) >= 10 ) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vQ1 = false;
-                }else{
-                    vQ1 = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vQ1;
-    }
-
-    public boolean VerificarQuartoSingular(){
-        boolean vQ1 = false;
-        String tipoquarto = cmbTipoQuarto.getValue();
-        String verificarquarto1 = quartoTipo(tipoquarto);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt(1) >= 7 ) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vQ1 = false;
-                }else{
-                    vQ1 = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vQ1;
-    }
-
-    public boolean VerificarQuartoDuplo(){
-        boolean vQ1 = false;
-        String tipoquarto = cmbTipoQuarto.getValue();
-        String verificarquarto1 = quartoTipo(tipoquarto);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt(1) >= 10 ) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vQ1 = false;
-                }else{
-                    vQ1 = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vQ1;
-    }
-
-    public boolean VerificarQuartoFamiliar(){
-        boolean vQ1 = false;
-        String tipoquarto = cmbTipoQuarto.getValue();
-        String verificarquarto1 = quartoTipo(tipoquarto);
-        try (Connection conn = DBconn.getConn();
-             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                if (rs.getInt(1) >= 3 ) {
-                    EmptyMessage.setText("Limite de Quartos Alcancado!");
-                    vQ1 = false;
-                }else{
-                    vQ1 = true;
-                }
-            }
-        } catch (SQLException e) {
-            e.getCause();
-        }
-        return vQ1;
     }
 
 }
