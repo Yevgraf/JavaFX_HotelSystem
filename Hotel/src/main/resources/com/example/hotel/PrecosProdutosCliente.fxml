@@ -38,7 +38,7 @@
             <Font name="Modern No. 20" size="33.0" />
          </font>
       </Label>
-      <Label fx:id="lblGestaoProdutos" layoutX="71.0" layoutY="149.0" prefHeight="45.0" prefWidth="238.0" text="Produtos" textFill="WHITE">
+      <Label fx:id="lblGestaoProdutos" layoutX="71.0" layoutY="149.0" prefHeight="45.0" prefWidth="136.0" text="Produtos - " textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="31.0" />
          </font>
@@ -55,7 +55,7 @@
       </ImageView>
       <TableView fx:id="produtosTable" layoutX="14.0" layoutY="194.0" onMouseClicked="#clickTable" prefHeight="214.0" prefWidth="696.0">
         <columns>
-          <TableColumn fx:id="idTable" prefWidth="131.0" text="Id" />
+          <TableColumn fx:id="idTable" prefWidth="131.0" text="ID Produto" />
           <TableColumn fx:id="descricaoTable" prefWidth="286.0" text="Descrição" />
             <TableColumn fx:id="precoTable" prefWidth="136.0" text="Preço Unidade (€)" />
             <TableColumn fx:id="precoClienteTable" prefWidth="142.0" text="Preço para Cliente (€)" />
@@ -76,8 +76,13 @@
             <Image url="@../../../img/checked.png" />
          </image>
       </ImageView>
-      <TextField fx:id="quantidadeTxt" layoutX="280.0" layoutY="456.0" prefHeight="25.0" prefWidth="146.0" />
+      <TextField fx:id="quantidadeTxt" layoutX="280.0" layoutY="456.0" prefHeight="25.0" prefWidth="146.0" promptText="Novo preço" />
       <Label fx:id="lblGestaoProdutos2" layoutX="283.0" layoutY="412.0" prefHeight="45.0" prefWidth="156.0" text="Atualizar preço:" textFill="WHITE">
+         <font>
+            <Font name="Bernard MT Condensed" size="24.0" />
+         </font>
+      </Label>
+      <Label fx:id="lblGestaoProdutos3" layoutX="201.0" layoutY="149.0" prefHeight="45.0" prefWidth="280.0" text="Alterar preços para Clientes" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="24.0" />
          </font>

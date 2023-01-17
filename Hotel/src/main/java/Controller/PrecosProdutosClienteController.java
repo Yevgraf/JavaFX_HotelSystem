@@ -58,11 +58,12 @@ public class PrecosProdutosClienteController implements Initializable {
                 pdal.updatePrecoProdutoParaCliente(selectedID, quantidade);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Preço atualizado!", "Informação:");
                 initTable();
+                quantidadeTxt.setText("");
             } else {
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Introduza uma quantidade válida!", "Aviso:");
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza uma quantidade válida!", "Erro:");
             }
         } catch (NumberFormatException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Introduza uma quantidade válida!", "Aviso:");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza uma quantidade válida!", "Erro:");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

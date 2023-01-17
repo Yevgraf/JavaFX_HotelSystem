@@ -98,9 +98,9 @@
             <Font size="14.0" />
          </font>
       </Button>
-      <ImageView fx:id="imgGestorEntradaStock11" fitHeight="36.0" fitWidth="36.0" layoutX="551.0" layoutY="463.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imgGestorEntradaStock11" fitHeight="36.0" fitWidth="29.0" layoutX="553.0" layoutY="467.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../img/price-tag.png" />
+            <Image url="@../../../img/icons8-expensive-price-40.png" />
          </image>
       </ImageView>
    </children>
