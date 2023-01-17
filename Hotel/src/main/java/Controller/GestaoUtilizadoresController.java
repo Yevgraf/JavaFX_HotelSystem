@@ -108,6 +108,7 @@ public class GestaoUtilizadoresController implements Initializable {
         for (TipoUtilizador tipo : tipos) {
             cmbUtilizador.getItems().add(tipo.getTipo());
         }
+        cmbUtilizador.getItems().add("Todos");
     }
 
     @FXML
@@ -120,6 +121,9 @@ public class GestaoUtilizadoresController implements Initializable {
         } else if (cmbUtilizador.getValue().equals("Cliente")) {
             UtilizadorBLL.getAllClientes();
             initTableClientes();
+        } else if (cmbUtilizador.getValue().equals("Todos")) {
+            UtilizadorBLL.getAllClientes();
+            initTable();
         }
     }
 
@@ -139,14 +143,18 @@ public class GestaoUtilizadoresController implements Initializable {
         UtilizadorBLL ubll = new UtilizadorBLL();
         Utilizador selectedUtilizador = tblUtilizadores.getSelectionModel().getSelectedItem();
         if (selectedUtilizador != null) {
-            try {
-                ubll.removeUtilizador(selectedUtilizador.getId());
-                tblUtilizadores.getItems().remove(selectedUtilizador);
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Servico Removido", "Information");
-                initTable();
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+            if (MessageBoxes.ConfirmationBox("Confirma a eliminação do utilizador?")) {
+                try {
+                    ubll.removeUtilizador(selectedUtilizador.getId());
+                    tblUtilizadores.getItems().remove(selectedUtilizador);
+                    MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador Removido!", "Informação:");
+                    initTable();
+                } catch (SQLException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione um utilizador para eliminar!", "Erro:");
         }
     }
 
@@ -167,7 +175,7 @@ public class GestaoUtilizadoresController implements Initializable {
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
 
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
@@ -187,8 +195,8 @@ public class GestaoUtilizadoresController implements Initializable {
 
     }
 
-    private void disableEliminarParaFuncionario(){
-        if (!UtilizadorPreferences.comparaTipoLogin()){
+    private void disableEliminarParaFuncionario() {
+        if (!UtilizadorPreferences.comparaTipoLogin()) {
             btnGestorEliminar.setDisable(true);
         }
     }

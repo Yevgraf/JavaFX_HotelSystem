@@ -13,10 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -50,6 +47,9 @@ public class GestorComentariosController implements Initializable {
     private TableColumn<Comentario, Integer> idTable;
 
     @FXML
+    private ComboBox<String> cmbComentario;
+
+    @FXML
     void VoltarClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
         Stage stage = new Stage();
@@ -72,12 +72,46 @@ public class GestorComentariosController implements Initializable {
     private void initTable() {
         idTable.setCellValueFactory(new PropertyValueFactory<>("id"));
         idCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
-        comentario.setCellValueFactory(new PropertyValueFactory<>("comentario"));
+        comentario.setCellValueFactory(new PropertyValueFactory<>("tipoComentario"));
         comentarioTable.setItems(ComentarioBLL.getAllComentarios());
+    }
+
+    private void initTableSugestao() {
+        idTable.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        comentario.setCellValueFactory(new PropertyValueFactory<>("tipoComentario"));
+        comentarioTable.setItems(ComentarioBLL.getAllSugestoes());
+    }
+
+    private void initTableQueixa() {
+        idTable.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idCliente.setCellValueFactory(new PropertyValueFactory<>("idCliente"));
+        comentario.setCellValueFactory(new PropertyValueFactory<>("tipoComentario"));
+        comentarioTable.setItems(ComentarioBLL.getAllQueixas());
+    }
+
+    private void initCombos() {
+        cmbComentario.getItems().add("Sugestão");
+        cmbComentario.getItems().add("Queixa");
+        cmbComentario.getItems().add("Todos");
+    }
+
+    @FXML
+    void clickCmbComentario(ActionEvent event) {
+        if (cmbComentario.getValue().equals("Sugestão")) {
+            initTableSugestao();
+        } else if (cmbComentario.getValue().equals("Queixa")) {
+            UtilizadorBLL.getAllFuncionarios();
+            initTableQueixa();
+        } else if (cmbComentario.getValue().equals("Todos")) {
+            UtilizadorBLL.getAllClientes();
+            initTable();
+        }
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
+        initCombos();
     }
 }

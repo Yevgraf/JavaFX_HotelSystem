@@ -7,19 +7,33 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ProdutoQuartoDAL {
-    public static void addProductInRoom(int roomId, String productId, int quantity) throws SQLException {
-        String query1 = "INSERT INTO ProdutoQuarto (idQuarto,idProduto,quantidade) VALUES (?,?,?)";
-        String query2 = "UPDATE Stock set quantidade=? WHERE idProduto=?";
+
+    public static void addProductInQuarto(int quartoId, String productId, int quantity) throws SQLException {
+        String query1 = "INSERT INTO ProdutoQuarto (idQuarto, idProduto, quantidade) VALUES (?,?,?)";
+
         try (Connection connection = DBconn.getConn();
-             PreparedStatement ps1 = connection.prepareStatement(query1);
-             PreparedStatement ps2 = connection.prepareStatement(query2)) {
-            ps1.setInt(1, roomId);
+             PreparedStatement ps1 = connection.prepareStatement(query1)) {
+            ps1.setInt(1, quartoId);
             ps1.setString(2, productId);
             ps1.setInt(3, quantity);
             ps1.executeUpdate();
-            int newQuantity = selectStock(productId, connection) - quantity;
-            ps2.setInt(1, newQuantity);
-            ps2.setString(2, productId);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
+    public static void deleteProductFromQuarto(int productId) throws SQLException {
+        String query1 = "UPDATE Stock set quantidade = quantidade + (SELECT quantidade FROM ProdutoQuarto WHERE id = ?) WHERE idProduto = (SELECT idProduto FROM ProdutoQuarto WHERE id = ?)";
+        String query2 = "DELETE FROM ProdutoQuarto WHERE id = ?";
+        try (Connection connection = DBconn.getConn();
+             PreparedStatement ps1 = connection.prepareStatement(query1);
+             PreparedStatement ps2 = connection.prepareStatement(query2)) {
+            ps1.setInt(1, productId);
+            ps1.setInt(2, productId);
+            ps1.executeUpdate();
+            ps2.setInt(1, productId);
             ps2.executeUpdate();
         }
     }
@@ -37,36 +51,22 @@ public class ProdutoQuartoDAL {
         return 0;
     }
 
-    public static void deleteProductFromRoom(int productId) throws SQLException {
-        PreparedStatement ps2;
-        try {
-            DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
-
-            ps2 = connection.prepareStatement("DELETE FROM ProdutoQuarto WHERE id =?");
-            ps2.setInt(1, productId);
-            ps2.executeUpdate();
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    public static ObservableList<ProdutoQuarto> getProdutoQuarto() {
-        ObservableList<ProdutoQuarto> lista = FXCollections.observableArrayList();
-        try {
-            String cmd = "SELECT * FROM ProdutoQuarto";
-            Statement st = DBconn.getConn().createStatement();
-            ResultSet rs = st.executeQuery(cmd);
+    public static ObservableList<ProdutoQuarto> getProdutoQuarto() throws SQLException {
+        ObservableList<ProdutoQuarto> produtoQuartoList = FXCollections.observableArrayList();
+        String query = "SELECT * FROM ProdutoQuarto";
+        try (Connection conn = DBconn.getConn();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                ProdutoQuarto obj = new ProdutoQuarto(rs.getInt("id"),rs.getInt("idQuarto"),rs.getString("idProduto"),
-                        rs.getInt("quantidade"));
-                lista.add(obj);
+                int id = rs.getInt("id");
+                int idQuarto = rs.getInt("idQuarto");
+                String idProduto = rs.getString("idProduto");
+                int quantidade = rs.getInt("quantidade");
+                ProdutoQuarto produtoQuarto = new ProdutoQuarto(id, idQuarto, idProduto, quantidade);
+                produtoQuartoList.add(produtoQuarto);
             }
-            st.close();
-        } catch (Exception ex) {
-            System.err.println("Erro: " + ex.getMessage());
         }
-        return lista;
+        return produtoQuartoList;
     }
 
 }

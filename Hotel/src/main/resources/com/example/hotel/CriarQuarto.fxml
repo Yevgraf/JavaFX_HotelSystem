@@ -102,7 +102,6 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <Button fx:id="ProdutoQuarto" layoutX="324.0" layoutY="396.0" mnemonicParsing="false" onAction="#RedirectProdutoQuarto" prefHeight="25.0" prefWidth="126.0" text="Produtos Quarto" />
       <Label fx:id="ValidarPiso" layoutX="155.0" layoutY="219.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="ValidarCartao" layoutX="155.0" layoutY="375.0" prefHeight="17.0" prefWidth="172.0" textFill="RED" />
       <Label fx:id="EmptyMessage" layoutX="121.0" layoutY="436.0" prefHeight="17.0" prefWidth="236.0" textFill="RED" />
@@ -112,5 +111,6 @@
             <Font name="Bernard MT Condensed" size="25.0" />
          </font>
       </Label>
+      <Button fx:id="addProdutosQuarto" layoutX="325.0" layoutY="396.0" mnemonicParsing="false" onAction="#addProdutosQuartoClick" text="Adicionar Produtos ao Quarto" />
     </children>
 </AnchorPane>

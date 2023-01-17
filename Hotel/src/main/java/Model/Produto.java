@@ -1,12 +1,5 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 public class Produto {
 
     private String idProduto;
@@ -18,6 +11,16 @@ public class Produto {
     private Double peso;
 
     private Boolean consumivel;
+
+    private Double precoParaCliente;
+
+    public Double getPrecoParaCliente() {
+        return precoParaCliente;
+    }
+
+    public void setPrecoParaCliente(Double precoParaCliente) {
+        this.precoParaCliente = precoParaCliente;
+    }
 
     public String getIdProduto() {
         return idProduto;
@@ -60,6 +63,13 @@ public class Produto {
     }
 
     public Produto() {
+    }
+
+    public Produto(String idProduto, String descricao, Double precoUnidade, Double precoParaCliente) {
+        this.idProduto = idProduto;
+        this.descricao = descricao;
+        this.precoUnidade = precoUnidade;
+        this.precoParaCliente = precoParaCliente;
     }
 
     public Produto(String idProduto, String descricao, Double precoUnidade, Double peso, Boolean consumivel) {

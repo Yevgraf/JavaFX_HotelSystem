@@ -137,7 +137,7 @@ public class CriarUtilizadoresController implements Initializable {
 
 
     public void onActionAddFuncionario(ActionEvent actionEvent) {
-
+        if (cmb_tipoUtilizador.getValue() != null) {
             String email = txt_email.getText();
           if (txt_nome.getText().isEmpty() == false && txt_nif.getText().isEmpty() == false && txt_morada.getText().isEmpty() == false &&
                   txt_contacto.getText().isEmpty() == false && txt_email.getText().isEmpty() == false && txt_utilizador.getText().isEmpty() == false
@@ -150,6 +150,9 @@ public class CriarUtilizadoresController implements Initializable {
           } else {
               MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!","Erro");
           }
+    } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Escolha um tipo de utilizador.", "Aviso:");
+        }
     }
 
     void RegistarUtilizador() {
@@ -157,18 +160,15 @@ public class CriarUtilizadoresController implements Initializable {
         String nome = txt_nome.getText();
         String nif = txt_nif.getText();
         String morada = txt_morada.getText();
-        Date dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
+        java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
         String email = txt_email.getText();
         String contacto = txt_contacto.getText();
         String utilizador = txt_utilizador.getText();
         String password = txt_password.getText();
         String tipoUser = cmb_tipoUtilizador.getValue();
 
-        dataNascimento = new Date(datePickerNasc.getValue().toEpochDay());
-        java.sql.Date sqlDate = java.sql.Date.valueOf(datePickerNasc.getValue());
-
         utilizadorBLL.createUtilizador(nome, nif, morada, sqlDate, email, contacto, utilizador, password, tipoUser);
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador inserido", "Informação Utilizador");
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador criado!", "Informação:");
     }
 
     public boolean VerifyNIFColaborador() {

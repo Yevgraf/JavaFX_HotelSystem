@@ -17,4 +17,12 @@ public class ComentarioBLL {
         return ComentarioDAL.getAllComentarios();
     }
 
+    public static ObservableList<Comentario> getAllSugestoes() {
+        return ComentarioDAL.getAllSugestoes();
+    }
+
+    public static ObservableList<Comentario> getAllQueixas() {
+        return ComentarioDAL.getAllQueixas();
+    }
+
 }

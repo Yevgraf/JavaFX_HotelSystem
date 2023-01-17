@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.List;
 
 public class RegistoBLL {
@@ -19,10 +20,15 @@ public class RegistoBLL {
         return observableList;
     }
 
-    public void addNewRegisto(int id, int idCartao, int idCliente, String local, Date data) throws SQLException {
+    public static void addNewRegisto(int idCartao, int idCliente, String local, Timestamp data) throws SQLException {
         RegistoDAL dal = new RegistoDAL();
-        Registo registo = new Registo(id,idCartao, idCliente, local, data);
+        Registo registo = new Registo(idCartao, idCliente, local, data);
         dal.addRegisto(registo);
+    }
+
+
+    public static int getCardIdByClientId(int clientId) throws SQLException {
+        return RegistoDAL.getCardIdByClientId(clientId);
     }
 
 }

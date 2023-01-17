@@ -119,7 +119,7 @@ public class UtilizadorDAL {
 
         // Get user type object
         TipoUtilizador userType = TipoUtilizadorDAL.getByNome(tipoUser);
-        String encryptpass = Encriptacao.encrypt(password);
+        String encryptpass =  Encriptacao.encrypt(password);
         if (userType == null) {
             throw new IllegalArgumentException("Invalid user type: " + tipoUser);
         }
@@ -268,10 +268,5 @@ public class UtilizadorDAL {
         ps.setInt(1, id);
         ps.executeUpdate();
         return null;
-    }
-
-    public static String nifUtilizador(int nif){
-        String query = "SELECT count(1) FROM Utilizador WHERE nif =" + nif + "";
-        return query;
     }
 }

@@ -1,25 +1,20 @@
 package Model;
 
-import DAL.DBconn;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 public class ProdutoQuarto {
     private int id;
+
     private int idQuarto;
     private String idProduto;
-
     private int quantidade;
 
-    public ProdutoQuarto(){
-
+    public ProdutoQuarto(int id, int idQuarto, String idProduto, int quantidade) {
+        this.id = id;
+        this.idQuarto = idQuarto;
+        this.idProduto = idProduto;
+        this.quantidade = quantidade;
     }
 
-    public ProdutoQuarto(int id,int idQuarto, String idProduto, int quantidade) {
-        this.id = id;
+    public ProdutoQuarto(int idQuarto, String idProduto, int quantidade) {
         this.idQuarto = idQuarto;
         this.idProduto = idProduto;
         this.quantidade = quantidade;
@@ -55,14 +50,5 @@ public class ProdutoQuarto {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    @Override
-    public String toString() {
-        return "ProdutoQuartoController{" +
-                "idQuarto=" + idQuarto +
-                ", idProduto=" + idProduto +
-                ", quantidade=" + quantidade +
-                '}';
     }
 }

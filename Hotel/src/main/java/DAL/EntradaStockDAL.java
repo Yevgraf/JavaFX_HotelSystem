@@ -112,4 +112,37 @@ public class EntradaStockDAL {
         } catch (Exception e) {
         }
     }
+
+    public void updateStock(ObservableList<Stock> stocks, Connection connection) throws SQLException {
+        for (Stock stock : stocks) {
+            PreparedStatement updateStatement = connection.prepareStatement("UPDATE Stock SET quantidade = ? WHERE idProduto = ?",
+                    ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            Integer quantidade = selectStock(stock.getIdProduto(), connection);
+            updateStatement.setInt(1, stock.getQuantidade() + quantidade);
+            updateStatement.setString(2, stock.getIdProduto());
+            updateStatement.executeUpdate();
+            updateStatement.close();
+        }
+    }
+
+    public Boolean verificaSeExisteEncomendaRepetida(String idEncomenda) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "SELECT ordemNumero FROM EntradaStock WHERE ordemNumero =?";
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ps.setString(1, idEncomenda);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                ps.close();
+                return true;
+            } else {
+                ps.close();
+                return false;
+            }
+        } catch (Exception ex) {
+        }
+        return null;
+    }
+
 }

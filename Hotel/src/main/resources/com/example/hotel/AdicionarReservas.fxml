@@ -73,15 +73,15 @@
             <Font name="Bernard MT Condensed" size="18.0" />
          </font>
       </Label>
-      <ComboBox fx:id="cmbIDQuarto" layoutX="139.0" layoutY="289.0" onAction="#cmbIdQuartoAction" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
+      <ComboBox fx:id="cmbIDQuarto" layoutX="139.0" layoutY="289.0" onAction="#quartoAction" onMouseClicked="#cmbQuartoClick" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <Button fx:id="voltarBtn" layoutX="39.0" layoutY="449.0" mnemonicParsing="false" onAction="#clickVoltarBtn" prefHeight="38.0" prefWidth="100.0" style="-fx-background-color: #36F948; -fx-border-color: #ffffff;" text="Voltar">
          <font>
             <Font name="Bodoni MT Condensed" size="19.0" />
          </font>
       </Button>
       <ComboBox fx:id="cmbClientes" layoutX="139.0" layoutY="230.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
-      <DatePicker fx:id="DatePickerInicio" layoutX="473.0" layoutY="232.0" />
-      <DatePicker fx:id="DatePickerFim" layoutX="473.0" layoutY="291.0" />
+      <DatePicker fx:id="DatePickerInicio" editable="false" layoutX="473.0" layoutY="232.0" />
+      <DatePicker fx:id="DatePickerFim" editable="false" layoutX="473.0" layoutY="291.0" onMouseClicked="#clickDateFim" />
       <Button fx:id="btnRedictCriarCliente" layoutX="314.0" layoutY="398.0" mnemonicParsing="false" onAction="#btnRedictCriarCliente" prefHeight="26.0" prefWidth="126.0" text="Criar Cliente" />
       <Label fx:id="DataInicio" layoutX="477.0" layoutY="209.0" prefHeight="17.0" prefWidth="167.0" textFill="RED" />
       <Label fx:id="DataFim" layoutX="474.0" layoutY="268.0" prefHeight="17.0" prefWidth="115.0" textFill="RED" />

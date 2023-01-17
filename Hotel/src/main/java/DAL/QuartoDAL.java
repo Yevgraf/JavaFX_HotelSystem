@@ -79,7 +79,7 @@ public class QuartoDAL {
 
         try {
             String cmd = "SELECT q.*, c.id as cId FROM Quarto q " +
-                    "INNER JOIN Cartao c ON c.Id = q.idCartao";
+                    "LEFT OUTER JOIN Cartao c ON c.Id = q.idCartao";
 
             Statement st = DBconn.getConn().createStatement();
 

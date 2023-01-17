@@ -55,9 +55,6 @@ public class Servico {
 
     @Override
     public String toString() {
-        return
-                "idServico=" + idServico +
-                ", servico='" + servico + '\'' +
-                ", preco=" + preco;
+        return "Serviço: " + servico + ", Preço: " + preco;
     }
 }
