@@ -55,7 +55,7 @@
                 <Font size="18.0" />
             </font>
         </Text>
-      <ComboBox fx:id="cmbIdCartao" layoutX="186.0" layoutY="83.0" onAction="#filterIdCartao" prefWidth="150.0" />
-      <ComboBox fx:id="cmbLocal" layoutX="347.0" layoutY="83.0" onAction="#filterLocal" prefWidth="150.0" />
+      <ComboBox fx:id="cmbIdCartao" layoutX="186.0" layoutY="83.0" onAction="#filterIdCartao" prefWidth="150.0" promptText="Numero Cartão" />
+      <ComboBox fx:id="cmbLocal" layoutX="347.0" layoutY="83.0" onAction="#filterLocal" prefWidth="150.0" promptText="Local" />
     </children>
 </Pane>

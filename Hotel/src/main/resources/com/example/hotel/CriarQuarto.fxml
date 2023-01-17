@@ -111,5 +111,6 @@
             <Font name="Bernard MT Condensed" size="25.0" />
          </font>
       </Label>
+      <Button fx:id="addProdutosQuarto" layoutX="325.0" layoutY="396.0" mnemonicParsing="false" onAction="#addProdutosQuartoClick" text="Adicionar Produtos ao Quarto" />
     </children>
 </AnchorPane>

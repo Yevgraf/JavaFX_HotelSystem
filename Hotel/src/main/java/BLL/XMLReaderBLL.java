@@ -215,7 +215,24 @@ public class XMLReaderBLL {
                     Element ppuCurrencyValueElement = FindInChildren(ppuElement, "CurrencyValue");
                     double precoUnidade = Double.parseDouble(ppuCurrencyValueElement.getTextContent());
 
-                    produtos.add(new Produto(idProduto, descricao, peso, precoUnidade,  false));
+                    // Quantity
+                    Element elQuantity = FindInChildren(lineElement, "Quantity");
+                    Element elQuantityValue = FindInChildren(elQuantity, "Value");
+                    Integer caixas = Integer.valueOf(elQuantityValue.getTextContent());
+
+                    Element iqUnitsElement = FindInChildren(lineElement, "InformationalQuantity", 10);
+                    Integer unidades = 0;
+                    if (iqUnitsElement != null) {
+                        Element iQUnitsValueElement = FindInChildren(iqUnitsElement, "Value");
+                        unidades = Integer.valueOf(iQUnitsValueElement.getTextContent());
+                    }
+                    if (unidades == 0) {
+                        unidades = caixas;
+                    }
+
+                    Double pesoPorUnidade = (peso / unidades);
+
+                    produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade,  false));
 
                 }
             }

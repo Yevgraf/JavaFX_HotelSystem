@@ -1,7 +1,6 @@
 package Controller;
 
 import BLL.*;
-import DAL.EntradaStockDAL;
 import Model.*;
 import com.example.hotel.*;
 import javafx.collections.ObservableList;
@@ -18,11 +17,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import org.xml.sax.SAXException;
+import net.minidev.json.parser.ParseException;
 
 import java.io.File;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -97,10 +95,9 @@ public class XMLReaderController implements Initializable {
     @FXML
     private Text urlText;
 
-    @FXML
-    private Button xmlBtn;
-
     XMLReaderBLL xmlreader;
+
+    JSONReaderBLL jsonreader = new JSONReaderBLL();
 
     @FXML
     private Text cidadeTxt;
@@ -149,19 +146,27 @@ public class XMLReaderController implements Initializable {
     //----------------------------------- Upload Ficheiro XML -----------------------------------
 
     @FXML
-    void clickXmlBtn(ActionEvent event) throws URISyntaxException, SAXException {
-        //ValidaXML valida = new ValidaXML();
+    void clickXmlBtn(ActionEvent event) throws IOException, ParseException {
 
         FileChooser fc = new FileChooser();
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("XML File", lstFile));
         File f = fc.showOpenDialog(null);
-        if (f != null && ValidaXML.validarXML(f)) {
+        String fileName = f.getName();
+        if (f != null) {
             urlText.setText("Ficheiro selecionado: " + f.getAbsolutePath());
             String path = f.getAbsolutePath();
-            entradaStocks = xmlreader.lerXMLBody(path);
-            fornecedores = xmlreader.lerXMLHeader(path);
-            produtos = xmlreader.lerProduto(path);
-            stocks = xmlreader.lerStock(path);
+
+            if (fileName.substring(fileName.lastIndexOf(".") + 1).equals("xml") ||
+                    fileName.substring(fileName.lastIndexOf(".") + 1).equals("XML")) {
+                //Ler XML
+                ValidaXML.validarXML(f);
+                lerXML(path);
+            } else {
+                //Ler JSON
+                lerJSON(path);
+                // MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Formato JSON detetado", "Formato");
+                // return;
+            }
             if (entradaStocks.isEmpty() && fornecedores.isEmpty()) {
                 addItensBtn.setDisable(true);
             } else {
@@ -172,12 +177,28 @@ public class XMLReaderController implements Initializable {
         }
     }
 
+    public void lerJSON(String path) throws IOException {
+        entradaStocks = jsonreader.lerBody(path);
+        fornecedores = jsonreader.lerHeader(path);
+        produtos = jsonreader.lerProduto(path);
+        stocks = jsonreader.lerStock(path);
+    }
+
+    public void lerXML(String path) {
+        entradaStocks = xmlreader.lerXMLBody(path);
+        fornecedores = xmlreader.lerXMLHeader(path);
+        produtos = xmlreader.lerProduto(path);
+        stocks = xmlreader.lerStock(path);
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         xmlreader = new XMLReaderBLL();
         lstFile = new ArrayList<>();
         lstFile.add("*.xml");
         lstFile.add("*.XML");
+        lstFile.add("*.json");
+        lstFile.add("*.JSON");
     }
 
     //----------------------------------- Popular Tabela EntradaStock -----------------------------------

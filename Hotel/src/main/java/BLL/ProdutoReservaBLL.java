@@ -9,11 +9,11 @@ import java.sql.SQLException;
 
 public class ProdutoReservaBLL {
 
-    public static void addProductInRoom(int roomId, String productId, int quantity) {
+    public static void addProductInRoom(int roomId, String productId, int quantity, int idQuarto) {
         try {
-            ProdutoReservaDAL.addProductInReservation(roomId, productId, quantity);
+            ProdutoReservaDAL.addProductInReservation(roomId, productId, quantity,idQuarto);
         } catch (SQLException e) {
-
+            e.printStackTrace();
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro ao adicionar produto no quarto", "Erro");
         }
     }
@@ -27,4 +27,5 @@ public class ProdutoReservaBLL {
             throw new RuntimeException(ex);
         }
     }
+
 }

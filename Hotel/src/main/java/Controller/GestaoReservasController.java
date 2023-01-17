@@ -136,7 +136,7 @@ public class GestaoReservasController implements Initializable {
     }
 
     public void RedirectProdutoQuarto(ActionEvent actionEvent) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoReserva.fxml"));
         Stage stage = new Stage();
         Stage newStage = (Stage) ProdutoQuarto.getScene().getWindow();
         stage.setTitle("Adicionar Tipo de quarto");
