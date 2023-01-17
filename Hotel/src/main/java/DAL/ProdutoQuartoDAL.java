@@ -1,26 +1,23 @@
 package DAL;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import Model.ProdutoQuarto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.*;
 
 public class ProdutoQuartoDAL {
 
     public static void addProductInQuarto(int quartoId, String productId, int quantity) throws SQLException {
         String query1 = "INSERT INTO ProdutoQuarto (idQuarto, idProduto, quantidade) VALUES (?,?,?)";
-        String query2 = "UPDATE Stock set quantidade=? WHERE idProduto=?";
+
         try (Connection connection = DBconn.getConn();
-             PreparedStatement ps1 = connection.prepareStatement(query1);
-             PreparedStatement ps2 = connection.prepareStatement(query2)) {
+             PreparedStatement ps1 = connection.prepareStatement(query1)) {
             ps1.setInt(1, quartoId);
             ps1.setString(2, productId);
             ps1.setInt(3, quantity);
             ps1.executeUpdate();
-            int newQuantity = selectStock(productId, connection) - quantity;
-            ps2.setInt(1, newQuantity);
-            ps2.setString(2, productId);
-            ps2.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -53,4 +50,23 @@ public class ProdutoQuartoDAL {
         }
         return 0;
     }
+
+    public static ObservableList<ProdutoQuarto> getProdutoQuarto() throws SQLException {
+        ObservableList<ProdutoQuarto> produtoQuartoList = FXCollections.observableArrayList();
+        String query = "SELECT * FROM ProdutoQuarto";
+        try (Connection conn = DBconn.getConn();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int idQuarto = rs.getInt("idQuarto");
+                String idProduto = rs.getString("idProduto");
+                int quantidade = rs.getInt("quantidade");
+                ProdutoQuarto produtoQuarto = new ProdutoQuarto(id, idQuarto, idProduto, quantidade);
+                produtoQuartoList.add(produtoQuarto);
+            }
+        }
+        return produtoQuartoList;
+    }
+
 }
