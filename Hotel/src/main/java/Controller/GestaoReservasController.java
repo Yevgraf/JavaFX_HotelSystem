@@ -111,12 +111,14 @@ public class GestaoReservasController implements Initializable {
         if (selectedReservation != null) {
             if (MessageBoxes.ConfirmationBox("Confirma a eliminação da reserva?")) {
                 ReservaBLL.deleteReservation(selectedReservation);
-                initTable();
+                ReservaDAL reservaDAL = new ReservaDAL();
+                tblReservas.setItems(reservaDAL.getReservas());
             }
         } else {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Selecione uma reserva para eliminar!", "Erro:");
         }
     }
+
 
     private void disableEliminarParaFuncionario() {
         if (!UtilizadorPreferences.comparaTipoLogin()) {
@@ -159,6 +161,7 @@ public class GestaoReservasController implements Initializable {
             checkoutBLL.voltaNaoConsumiveisAoStock(selectedReservation.getId());
             initTable();
         }
+
     }
 
 
@@ -166,6 +169,7 @@ public class GestaoReservasController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
         disableEliminarParaFuncionario();
+        initComboBox();
     }
 
     private void initTable() {
@@ -177,11 +181,23 @@ public class GestaoReservasController implements Initializable {
         tblColDataIni.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataInicio"));
         tblColDataFim.setCellValueFactory(new PropertyValueFactory<Reserva, String>("dataFim"));
         tblCoPreco.setCellValueFactory(new PropertyValueFactory<Reserva, Double>("preco"));
-        cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout", "cancelada");
+        if (cbEstadoReserva.getItems().size() == 0) {
+            cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout", "cancelada");
+        }
         cbEstadoReserva.setValue("Todos");
 
         tblReservas.setItems(reservaDAL.getReservas());
 
+    }
+
+
+    private void initComboBox() {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        tblReservas.setItems(reservaDAL.getReservas());
+        if (cbEstadoReserva.getItems().isEmpty()) {
+            cbEstadoReserva.getItems().addAll("Todos", "pendente", "checkin", "checkout", "cancelada");
+        }
+        cbEstadoReserva.setValue("Todos");
         cbEstadoReserva.setOnAction(event -> {
             String estadoReserva = cbEstadoReserva.getSelectionModel().getSelectedItem();
             if (estadoReserva.equals("Todos")) {
@@ -192,4 +208,4 @@ public class GestaoReservasController implements Initializable {
         });
     }
 
-}
+    }
