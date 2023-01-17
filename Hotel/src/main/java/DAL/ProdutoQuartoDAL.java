@@ -10,18 +10,14 @@ public class ProdutoQuartoDAL {
 
     public static void addProductInQuarto(int quartoId, String productId, int quantity) throws SQLException {
         String query1 = "INSERT INTO ProdutoQuarto (idQuarto, idProduto, quantidade) VALUES (?,?,?)";
-        String query2 = "UPDATE Stock set quantidade=? WHERE idProduto=?";
+
         try (Connection connection = DBconn.getConn();
-             PreparedStatement ps1 = connection.prepareStatement(query1);
-             PreparedStatement ps2 = connection.prepareStatement(query2)) {
+             PreparedStatement ps1 = connection.prepareStatement(query1)) {
             ps1.setInt(1, quartoId);
             ps1.setString(2, productId);
             ps1.setInt(3, quantity);
             ps1.executeUpdate();
-            int newQuantity = selectStock(productId, connection) - quantity;
-            ps2.setInt(1, newQuantity);
-            ps2.setString(2, productId);
-            ps2.executeUpdate();
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
