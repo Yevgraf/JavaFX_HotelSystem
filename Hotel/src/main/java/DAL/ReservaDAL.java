@@ -175,14 +175,14 @@ public class ReservaDAL {
             deleteServicoReservaForReservation(reservationId);
             deleteCheckoutForReservation(reservationId);
             deleteReservationById(reservationId);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!","Apagada:");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!", "Apagada:");
         }
     }
 
 
     private static void deleteProdutoReserva(int reservationId) throws SQLException {
 
-        String cmd =("DELETE FROM ProdutoReserva WHERE idReserva = ?");
+        String cmd = ("DELETE FROM ProdutoReserva WHERE idReserva = ?");
         executeDelete(cmd, reservationId);
     }
 
@@ -377,7 +377,8 @@ public class ReservaDAL {
                     MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva já se encontra cancelada, não pode ser apagada.", "Reserva cancelada");
                     return;
                 }
-            }            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+            }
+            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
@@ -401,7 +402,6 @@ public class ReservaDAL {
     }
 
 
-
     public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         try {
@@ -422,6 +422,27 @@ public class ReservaDAL {
         return reservas;
     }
 
+    public void deductFromStock(String productId, int quantity) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE Stock set quantidade=quantidade-? WHERE idProduto=?");
+            ps.setInt(1, quantity);
+            ps.setString(2, productId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
 
     public void cancelReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";

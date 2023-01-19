@@ -18,6 +18,8 @@ public class CheckInBLL {
 
 
     public void checkIn(int reservationId) throws SQLException {
+        CheckInDAL checkin = new CheckInDAL();
+        checkin.updateStockOnCheckIn(reservationId);
         ReservaDAL dal = new ReservaDAL();
         dal.updateReservationState(reservationId, "checkin");
 
