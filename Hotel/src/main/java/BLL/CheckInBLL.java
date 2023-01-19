@@ -25,8 +25,6 @@ public class CheckInBLL {
 
         QuartoDAL quartoDal = new QuartoDAL();
         quartoDal.updateAtivo(reservationId, true);
-
-        dal.addServiceToReservation(reservationId, "Quarto");
     }
 
 }
