@@ -35,6 +35,7 @@ public class ReservaDAL {
             }
             if (reservationId > 0) {
                 addReservationState(reservationId, "pendente");
+                transferProdutosToProdutoReserva(reservationId, reserva.getIdQuarto());
             }
             reserva.setId(reservationId);
             return reserva;
@@ -50,6 +51,32 @@ public class ReservaDAL {
             }
         }
     }
+
+
+    private void transferProdutosToProdutoReserva(int reservationId, int roomId) {
+        try (Connection connection = DBconn.getConn();
+             PreparedStatement psSelect = connection.prepareStatement("SELECT idProduto, quantidade FROM ProdutoQuarto WHERE idQuarto = ?");
+             PreparedStatement psInsert = connection.prepareStatement("INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade, idQuarto) VALUES (?,?,?,?)")) {
+
+            psSelect.setInt(1, roomId);
+            ResultSet rs = psSelect.executeQuery();
+
+            while (rs.next()) {
+                String idProduto = rs.getString("idProduto");
+                int quantidade = rs.getInt("quantidade");
+
+                psInsert.setInt(1, reservationId);
+                psInsert.setString(2, idProduto);
+                psInsert.setInt(3, quantidade);
+                psInsert.setInt(4, roomId);
+                psInsert.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void addServiceToReservation(int reservationId, String service) throws SQLException {
         PreparedStatement ps = null;
@@ -144,6 +171,7 @@ public class ReservaDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível apagar esta reserva.", "Erro");
         } else {
             deleteEstadoReservaForReservation(reservationId);
+            deleteProdutoReserva(reservationId);
             deleteServicoReservaForReservation(reservationId);
             deleteCheckoutForReservation(reservationId);
             deleteReservationById(reservationId);
@@ -151,6 +179,12 @@ public class ReservaDAL {
         }
     }
 
+
+    private static void deleteProdutoReserva(int reservationId) throws SQLException {
+
+        String cmd =("DELETE FROM ProdutoReserva WHERE idReserva = ?");
+        executeDelete(cmd, reservationId);
+    }
 
 
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
