@@ -80,28 +80,32 @@ public class ReservaDAL {
 
     public void addServiceToReservation(int reservationId, String service) throws SQLException {
         PreparedStatement ps = null;
+        Connection connection = null;
         try {
             DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
+            connection = dbConn.getConn();
 
-            ps = connection.prepareStatement("SELECT id FROM Servico WHERE servico = ?");
+            String checkQuery = "SELECT COUNT(*) FROM Servico WHERE servico = ?";
+            ps = connection.prepareStatement(checkQuery);
             ps.setString(1, service);
-            ResultSet rs = ps.executeQuery();
-            int serviceId = -1;
-            if (rs.next()) {
-                serviceId = rs.getInt(1);
+            ResultSet checkResult = ps.executeQuery();
+            if (!checkResult.next() || checkResult.getInt(1) == 0) {
+                throw new SQLException("Este serviço não existe");
             }
-            ps.close();
 
-            ps = connection.prepareStatement("INSERT INTO ServicoReserva(idReserva, idServico) VALUES (?, ?)");
+            String insertQuery = "INSERT INTO ServicoReserva(idReserva, idServico) SELECT ?, id FROM Servico WHERE servico = ?";
+            ps = connection.prepareStatement(insertQuery);
             ps.setInt(1, reservationId);
-            ps.setInt(2, serviceId);
+            ps.setString(2, service);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {
                 ps.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
     }
