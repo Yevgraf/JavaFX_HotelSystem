@@ -83,7 +83,7 @@ public class CheckInController implements Initializable {
 
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) Voltar.getScene().getWindow();
@@ -101,6 +101,7 @@ public class CheckInController implements Initializable {
             stage.show();
         }
     }
+
     @FXML
     void checkoutBtnAction(ActionEvent event) {
         Reserva selectedReservation = listViewReservaComcheckin.getSelectionModel().getSelectedItem();
@@ -158,7 +159,7 @@ public class CheckInController implements Initializable {
             initListViews();
         } else {
 
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Por favor, selecione uma reserva da lista.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva da lista.");
         }
     }
 
@@ -168,7 +169,7 @@ public class CheckInController implements Initializable {
             checkInBll.checkIn(reservation.getId());
         } catch (SQLException e) {
 
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.", "ERRO");
         }
     }
 
@@ -179,14 +180,14 @@ public class CheckInController implements Initializable {
             listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
         } catch (SQLException e) {
 
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
 
         try {
             listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
         } catch (SQLException e) {
 
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro","Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
         }
     }
 

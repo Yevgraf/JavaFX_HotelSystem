@@ -47,6 +47,10 @@ public class ServicoReservaController implements Initializable {
     @FXML
     void btnAdicionar(ActionEvent event) throws IOException {
         Reserva selectedReservation = cmbReserva.getValue();
+        if (selectedReservation == null) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Por favor, selecione uma reserva antes de continuar.", "ERRO");
+            return;
+        }
         Servico selectedServico = listViewServicos.getSelectionModel().getSelectedItem();
         ServicoReserva servicoReserva = new ServicoReserva();
         servicoReserva.setIdReserva(selectedReservation.getId());

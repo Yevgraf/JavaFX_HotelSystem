@@ -35,6 +35,7 @@ public class ReservaDAL {
             }
             if (reservationId > 0) {
                 addReservationState(reservationId, "pendente");
+                transferProdutosToProdutoReserva(reservationId, reserva.getIdQuarto());
             }
             reserva.setId(reservationId);
             return reserva;
@@ -51,30 +52,60 @@ public class ReservaDAL {
         }
     }
 
+
+    private void transferProdutosToProdutoReserva(int reservationId, int roomId) {
+        try (Connection connection = DBconn.getConn();
+             PreparedStatement psSelect = connection.prepareStatement("SELECT idProduto, quantidade FROM ProdutoQuarto WHERE idQuarto = ?");
+             PreparedStatement psInsert = connection.prepareStatement("INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade, idQuarto) VALUES (?,?,?,?)")) {
+
+            psSelect.setInt(1, roomId);
+            ResultSet rs = psSelect.executeQuery();
+
+            while (rs.next()) {
+                String idProduto = rs.getString("idProduto");
+                int quantidade = rs.getInt("quantidade");
+
+                psInsert.setInt(1, reservationId);
+                psInsert.setString(2, idProduto);
+                psInsert.setInt(3, quantidade);
+                psInsert.setInt(4, roomId);
+                psInsert.executeUpdate();
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     public void addServiceToReservation(int reservationId, String service) throws SQLException {
         PreparedStatement ps = null;
+        Connection connection = null;
         try {
             DBconn dbConn = new DBconn();
-            Connection connection = dbConn.getConn();
+            connection = dbConn.getConn();
 
-            ps = connection.prepareStatement("SELECT id FROM Servico WHERE servico = ?");
+            String checkQuery = "SELECT COUNT(*) FROM Servico WHERE servico = ?";
+            ps = connection.prepareStatement(checkQuery);
             ps.setString(1, service);
-            ResultSet rs = ps.executeQuery();
-            int serviceId = -1;
-            if (rs.next()) {
-                serviceId = rs.getInt(1);
+            ResultSet checkResult = ps.executeQuery();
+            if (!checkResult.next() || checkResult.getInt(1) == 0) {
+                throw new SQLException("Este serviço não existe");
             }
-            ps.close();
 
-            ps = connection.prepareStatement("INSERT INTO ServicoReserva(idReserva, idServico) VALUES (?, ?)");
+            String insertQuery = "INSERT INTO ServicoReserva(idReserva, idServico) SELECT ?, id FROM Servico WHERE servico = ?";
+            ps = connection.prepareStatement(insertQuery);
             ps.setInt(1, reservationId);
-            ps.setInt(2, serviceId);
+            ps.setString(2, service);
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {
                 ps.close();
+            }
+            if (connection != null) {
+                connection.close();
             }
         }
     }
@@ -144,13 +175,20 @@ public class ReservaDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível apagar esta reserva.", "Erro");
         } else {
             deleteEstadoReservaForReservation(reservationId);
+            deleteProdutoReserva(reservationId);
             deleteServicoReservaForReservation(reservationId);
             deleteCheckoutForReservation(reservationId);
             deleteReservationById(reservationId);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!","Apagada:");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!", "Apagada:");
         }
     }
 
+
+    private static void deleteProdutoReserva(int reservationId) throws SQLException {
+
+        String cmd = ("DELETE FROM ProdutoReserva WHERE idReserva = ?");
+        executeDelete(cmd, reservationId);
+    }
 
 
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
@@ -343,7 +381,8 @@ public class ReservaDAL {
                     MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva já se encontra cancelada, não pode ser apagada.", "Reserva cancelada");
                     return;
                 }
-            }            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
+            }
+            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
             ps.setInt(1, reservationId);
             ps.executeUpdate();
 
@@ -365,7 +404,6 @@ public class ReservaDAL {
             }
         }
     }
-
 
 
     public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
@@ -407,6 +445,9 @@ public class ReservaDAL {
             if (estado == null || estado.equals("cancelada")) {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A reserva já se encontra cancelada.", "Erro");
             } else {
+                if(estado.equals("checkin")){
+                    returnProductToStock(reservationId);
+                }
                 cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
                 ps = connection.prepareStatement(cmd);
                 ps.setInt(1, reservationId);
@@ -416,6 +457,43 @@ public class ReservaDAL {
             }
         }
     }
+
+
+    private void returnProductToStock(int reservationId) throws SQLException {
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        connection.setAutoCommit(false);
+
+        try {
+            String query = "SELECT idProduto, quantidade FROM ProdutoReserva WHERE idReserva = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, reservationId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String productId = rs.getString("idProduto");
+                int quantity = rs.getInt("quantidade");
+
+                updateStock(productId, quantity, connection);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
+
+    private void updateStock(String productId, int quantity, Connection connection) throws SQLException {
+        String query2 = "UPDATE Stock set quantidade = quantidade + ? WHERE idProduto = ?";
+        PreparedStatement ps2 = connection.prepareStatement(query2);
+        ps2.setInt(1, quantity);
+        ps2.setString(2, productId);
+        ps2.executeUpdate();
+    }
+
 
     public List<LocalDate> getDataInicial(int idQuarto) {
         List<LocalDate> datasIniciais = new ArrayList<>();
