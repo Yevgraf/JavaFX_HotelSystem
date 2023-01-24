@@ -426,27 +426,6 @@ public class ReservaDAL {
         return reservas;
     }
 
-    public void deductFromStock(String productId, int quantity) throws SQLException {
-        PreparedStatement ps = null;
-        Connection connection = null;
-        try {
-            DBconn dbConn = new DBconn();
-            connection = dbConn.getConn();
-            ps = connection.prepareStatement("UPDATE Stock set quantidade=quantidade-? WHERE idProduto=?");
-            ps.setInt(1, quantity);
-            ps.setString(2, productId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
 
     public void cancelReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
@@ -466,6 +445,9 @@ public class ReservaDAL {
             if (estado == null || estado.equals("cancelada")) {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A reserva já se encontra cancelada.", "Erro");
             } else {
+                if(estado.equals("checkin")){
+                    returnProductToStock(reservationId);
+                }
                 cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
                 ps = connection.prepareStatement(cmd);
                 ps.setInt(1, reservationId);
@@ -475,6 +457,43 @@ public class ReservaDAL {
             }
         }
     }
+
+
+    private void returnProductToStock(int reservationId) throws SQLException {
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+
+        connection.setAutoCommit(false);
+
+        try {
+            String query = "SELECT idProduto, quantidade FROM ProdutoReserva WHERE idReserva = ?";
+            PreparedStatement ps = connection.prepareStatement(query);
+            ps.setInt(1, reservationId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                String productId = rs.getString("idProduto");
+                int quantity = rs.getInt("quantidade");
+
+                updateStock(productId, quantity, connection);
+            }
+            connection.commit();
+        } catch (SQLException e) {
+            connection.rollback();
+            throw e;
+        } finally {
+            connection.setAutoCommit(true);
+        }
+    }
+
+    private void updateStock(String productId, int quantity, Connection connection) throws SQLException {
+        String query2 = "UPDATE Stock set quantidade = quantidade + ? WHERE idProduto = ?";
+        PreparedStatement ps2 = connection.prepareStatement(query2);
+        ps2.setInt(1, quantity);
+        ps2.setString(2, productId);
+        ps2.executeUpdate();
+    }
+
 
     public List<LocalDate> getDataInicial(int idQuarto) {
         List<LocalDate> datasIniciais = new ArrayList<>();
