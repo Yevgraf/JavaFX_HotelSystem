@@ -19,6 +19,9 @@ public class FuncionarioController {
     private Button FCheck;
 
     @FXML
+    private Button btnPassarCartao;
+
+    @FXML
     private Button FEntradaStock;
 
     @FXML
@@ -129,4 +132,15 @@ public class FuncionarioController {
         UtilizadorPreferences.apagarTipoLogin();
     }
 
+
+    @FXML
+    void btnPassarCartaoAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartaoCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnPassarCartao.getScene().getWindow();
+        stage.setTitle("Passar Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 }

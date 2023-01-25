@@ -81,7 +81,13 @@ public class ClienteCartaoController implements Initializable {
 
         idTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
         descricaoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
-        servicos.setItems(ServicoDAL.getServicosByClientId());
+        if(UtilizadorPreferences.comparaTipoFuncionario()) {
+            servicos.setItems(ServicoDAL.getAllServicos());
+        } else if(UtilizadorPreferences.comparaTipoLogin()) {
+            servicos.setItems(ServicoDAL.getAllServicosAndQuartos());
+        }else {
+            servicos.setItems(ServicoDAL.getServicosByClientId());
+        }
     }
 
     @Override

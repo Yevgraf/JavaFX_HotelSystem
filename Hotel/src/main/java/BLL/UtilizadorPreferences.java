@@ -23,6 +23,9 @@ public class UtilizadorPreferences {
             return false;
         }
     }
+
+
+
     public static void guardaridCliente(Integer id) {
         // Set the client id
         utilizadorId = id;
@@ -38,6 +41,13 @@ public class UtilizadorPreferences {
         return tipoUtilizador;
     }
 
+    public static boolean comparaTipoFuncionario() {
+        if (tipoUtilizador.equals("Funcionario")){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 

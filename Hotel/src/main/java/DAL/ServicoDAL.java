@@ -11,10 +11,38 @@ import java.sql.*;
 
 public class ServicoDAL {
 
+
+    public static ObservableList<Servico> getAllServicosAndQuartos() {
+        ObservableList<Servico> lista = FXCollections.observableArrayList();
+        try {
+            // Retrieve all services
+            String cmd = "SELECT * FROM Servico";
+            Statement st = DBconn.getConn().createStatement();
+            ResultSet rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Servico obj = new Servico(rs.getInt("id"), rs.getString("servico"), rs.getDouble("preco"));
+                lista.add(obj);
+            }
+
+            // Retrieve all rooms
+            cmd = "SELECT * FROM Quarto";
+            rs = st.executeQuery(cmd);
+            while (rs.next()) {
+                Servico obj = new Servico(rs.getInt("id"), "Quarto " + rs.getString("numero"));
+                lista.add(obj);
+            }
+            st.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return lista;
+    }
+
+
     public void addServico(Servico servico) {
         try {
             if (isServicoExists(servico.getServico())) {
-                MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Serviço já existe!","ERRO");
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Serviço já existe!", "ERRO");
             } else {
                 DBconn dbConn = new DBconn();
                 Connection connection = dbConn.getConn();
@@ -76,12 +104,7 @@ public class ServicoDAL {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            String cmd = "SELECT s.id as sId, s.servico as servico, q.idCartao as idCartao " +
-                    "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " +
-                    "JOIN Reserva r ON r.id = SR.idReserva " +
-                    "JOIN EstadoReserva er ON er.reserva = r.id " +
-                    "JOIN Quarto q ON q.id = r.idQuarto " +
-                    "WHERE r.idCliente = ? AND er.estado = 'checkin'";
+            String cmd = "SELECT s.id as sId, s.servico as servico, q.idCartao as idCartao " + "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " + "JOIN Reserva r ON r.id = SR.idReserva " + "JOIN EstadoReserva er ON er.reserva = r.id " + "JOIN Quarto q ON q.id = r.idQuarto " + "WHERE r.idCliente = ? AND er.estado = 'checkin'";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -99,5 +122,4 @@ public class ServicoDAL {
     }
 
 
-
-        }
+}

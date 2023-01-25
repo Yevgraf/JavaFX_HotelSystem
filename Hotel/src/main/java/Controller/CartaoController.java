@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.RegistoBLL;
+import BLL.UtilizadorPreferences;
 import DAL.CartaoDAL;
 import DAL.RegistoDAL;
 import DAL.ServicoDAL;
@@ -81,15 +82,14 @@ public class CartaoController implements Initializable {
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
-
-            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
-            Stage stage = new Stage();
-            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-            stage.setTitle("Pagina cliente");
-            newStage.hide();
-            stage.setScene(new Scene(fxmlLoader.load()));
-            stage.show();
-        }
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+        stage.setTitle("Pagina cliente");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
 
 
     @Override
