@@ -1,10 +1,13 @@
 package BLL;
 
+import java.util.prefs.Preferences;
+
 public class UtilizadorPreferences {
 
     private static String tipoUtilizador = "";
 
     private static Integer utilizadorId;
+
 
     public static void guardartipoLogin(String tipo) {
         // Set the login type
@@ -14,6 +17,19 @@ public class UtilizadorPreferences {
     public static void apagarTipoLogin() {
         // Remove the login type preference
         tipoUtilizador = "";
+    }
+
+    public static int masterCardId() {
+        int masterCardId = 9999;
+        return masterCardId;
+    }
+
+    public static boolean useMasterCard() {
+        if (getTipoLogin().equals("Gestor") || getTipoLogin().equals("Funcionario")) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public static boolean comparaTipoLogin(){

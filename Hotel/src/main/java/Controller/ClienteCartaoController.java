@@ -25,6 +25,7 @@ import java.sql.SQLException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.ResourceBundle;
+import java.util.prefs.BackingStoreException;
 
 public class ClienteCartaoController implements Initializable {
 
@@ -58,21 +59,29 @@ public class ClienteCartaoController implements Initializable {
 
     @FXML
     void passarCartao(ActionEvent event) {
+        boolean useMasterCard = UtilizadorPreferences.useMasterCard();
         try {
             int idCliente = UtilizadorPreferences.utilizadorId();
-            int idCartao = RegistoBLL.getCardIdByClientId(idCliente);
+            int idCartao;
+            if (useMasterCard) {
+                idCartao = UtilizadorPreferences.masterCardId();
+            } else {
+                idCartao = RegistoBLL.getCardIdByClientId(idCliente);
+            }
             String local = servicos.getSelectionModel().getSelectedItem().getServico();
             Calendar calendar = Calendar.getInstance();
             java.util.Date utilDate = calendar.getTime();
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(utilDate.getTime());
 
-            RegistoBLL.addNewRegisto( idCartao, idCliente, local, sqlTimestamp);
+            RegistoBLL.addNewRegisto(idCartao, idCliente, local, sqlTimestamp);
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Registo gravado","Gravado");
         } catch (SQLException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"falha ao gravar registo","ERRO");
             e.printStackTrace();
         }
     }
+
+
 
 
     private void initTable() {
