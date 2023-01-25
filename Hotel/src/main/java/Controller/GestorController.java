@@ -16,6 +16,8 @@ import java.io.IOException;
 public class GestorController {
 
     @FXML
+    private Button btnPassarCartao;
+    @FXML
     private Button regCartao;
     @FXML
     private Button GCheck;
@@ -141,6 +143,17 @@ public class GestorController {
         Stage stage = new Stage();
         Stage newStage = (Stage) regCartao.getScene().getWindow();
         stage.setTitle("Registos Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void passarCartaoAction(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CartaoCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) btnPassarCartao.getScene().getWindow();
+        stage.setTitle("Passar Cartão");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
