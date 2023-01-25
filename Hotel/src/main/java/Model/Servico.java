@@ -14,6 +14,15 @@ public class Servico {
     private String servico;
 
     private Double preco;
+    private int idCartao;
+
+    public int getIdCartao() {
+        return idCartao;
+    }
+
+    public void setIdCartao(int idCartao) {
+        this.idCartao = idCartao;
+    }
 
     public Integer getIdServico() {
         return idServico;
@@ -44,6 +53,12 @@ public class Servico {
         this.servico = servico;
         this.preco = preco;
     }
+
+    public Servico(String servico, int idCartao) {
+        this.servico = servico;
+        this.idCartao = idCartao;
+    }
+
 
     public Servico(Integer idServico, String servico) {
         this.idServico = idServico;

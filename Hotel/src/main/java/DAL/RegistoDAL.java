@@ -1,6 +1,8 @@
 package DAL;
 
+import BLL.UtilizadorPreferences;
 import Model.Registo;
+import Model.Servico;
 import com.example.hotel.Main;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,7 +61,10 @@ public class RegistoDAL {
 
 
     public static int getCardIdByClientId(int clientId) throws SQLException {
-        String sql = "SELECT q.idCartao FROM Reserva r JOIN Quarto q ON r.idQuarto = q.id WHERE r.idCliente = ?";
+        String sql = "SELECT q.idCartao FROM Reserva r "
+                + "JOIN EstadoReserva er ON er.reserva = r.id "
+                + "JOIN Quarto q ON q.id = r.idQuarto "
+                + "WHERE r.idCliente = ? AND er.estado = 'checkin'";
 
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -72,6 +77,7 @@ public class RegistoDAL {
         }
         return -1;
     }
+
 
     public static ObservableList<Registo> getRegistosByCartaoId(int idCartao) throws SQLException {
         String cmd = "SELECT * FROM Registo WHERE idCartao = ?";
@@ -88,6 +94,7 @@ public class RegistoDAL {
         }
         return registos;
     }
+
 
     public static ObservableList<Registo> getRegistosByLocal(String local) throws SQLException {
         String cmd = "SELECT * FROM Registo WHERE local = ?";

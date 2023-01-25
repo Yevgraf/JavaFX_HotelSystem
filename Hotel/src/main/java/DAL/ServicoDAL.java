@@ -76,16 +76,21 @@ public class ServicoDAL {
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            String cmd = "SELECT s.id as sId, s.servico as servico " +
+            String cmd = "SELECT s.id as sId, s.servico as servico, q.idCartao as idCartao " +
                     "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " +
                     "JOIN Reserva r ON r.id = SR.idReserva " +
-                    "WHERE r.idCliente = ?";
+                    "JOIN EstadoReserva er ON er.reserva = r.id " +
+                    "JOIN Quarto q ON q.id = r.idQuarto " +
+                    "WHERE r.idCliente = ? AND er.estado = 'checkin'";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Servico obj = new Servico(rs.getInt("sId"), rs.getString("servico"));
                 lista.add(obj);
+                int idCartao = rs.getInt("idCartao");
+                Servico quarto = new Servico("Quarto", idCartao);
+                lista.add(quarto);
             }
             ps.close();
         } catch (Exception ex) {
@@ -93,4 +98,6 @@ public class ServicoDAL {
         return lista;
     }
 
-}
+
+
+        }
