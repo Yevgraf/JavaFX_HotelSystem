@@ -11,13 +11,15 @@ import java.sql.*;
 
 public class ServicoDAL {
 
-
     public static ObservableList<Servico> getAllServicosAndQuartos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
             // Retrieve all services
             String cmd = "SELECT * FROM Servico";
-            Statement st = DBconn.getConn().createStatement();
+            Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
                 Servico obj = new Servico(rs.getInt("id"), rs.getString("servico"), rs.getDouble("preco"));
@@ -28,7 +30,7 @@ public class ServicoDAL {
             cmd = "SELECT * FROM Quarto";
             rs = st.executeQuery(cmd);
             while (rs.next()) {
-                Servico obj = new Servico(rs.getInt("id"), "Quarto " + rs.getString("numero"));
+                Servico obj = new Servico(rs.getInt("id"), "Quarto" + rs.getInt("idCartao"), rs.getDouble("preco"));
                 lista.add(obj);
             }
             st.close();
@@ -37,6 +39,7 @@ public class ServicoDAL {
         }
         return lista;
     }
+
 
 
     public void addServico(Servico servico) {

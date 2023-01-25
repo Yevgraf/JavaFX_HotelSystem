@@ -24,6 +24,10 @@ public class Servico {
         this.idCartao = idCartao;
     }
 
+    public Servico(String servico) {
+        this.servico = servico;
+    }
+
     public Integer getIdServico() {
         return idServico;
     }
