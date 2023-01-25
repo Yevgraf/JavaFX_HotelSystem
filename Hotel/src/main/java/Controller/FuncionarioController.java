@@ -43,6 +43,9 @@ public class FuncionarioController {
     private ImageView btnLogOut;
 
     @FXML
+    private Button estacionamento;
+
+    @FXML
     void FCheckClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Checkin.fxml"));
         Stage stage = new Stage();
@@ -139,6 +142,17 @@ public class FuncionarioController {
         Stage stage = new Stage();
         Stage newStage = (Stage) btnPassarCartao.getScene().getWindow();
         stage.setTitle("Passar Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void estacionamentoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("EstacionamentoGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) estacionamento.getScene().getWindow();
+        stage.setTitle("Estacionamento");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

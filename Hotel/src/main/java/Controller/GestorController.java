@@ -46,6 +46,9 @@ public class GestorController {
     @FXML
     private ImageView btnLogOut;
 
+    @FXML
+    private Button estacionamento;
+
 
     @FXML
     void GCheckClick(ActionEvent event) throws IOException {
@@ -154,6 +157,17 @@ public class GestorController {
         Stage stage = new Stage();
         Stage newStage = (Stage) btnPassarCartao.getScene().getWindow();
         stage.setTitle("Passar Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void estacionamentoClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("EstacionamentoGestor.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) estacionamento.getScene().getWindow();
+        stage.setTitle("Estacionamento");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

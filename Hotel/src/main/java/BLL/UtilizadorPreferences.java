@@ -64,6 +64,14 @@ public class UtilizadorPreferences {
             return false;
         }
     }
+
+    public static boolean comparaTipoUtilizador() {
+        if (tipoUtilizador.equals("Cliente")){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 

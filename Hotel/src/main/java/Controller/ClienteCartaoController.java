@@ -48,13 +48,31 @@ public class ClienteCartaoController implements Initializable {
 
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
-        Stage stage = new Stage();
-        Stage newStage = (Stage) btnVoltar.getScene().getWindow();
-        stage.setTitle("Pagina cliente");
-        newStage.hide();
-        stage.setScene(new Scene(fxmlLoader.load()));
-        stage.show();
+        if (UtilizadorPreferences.comparaTipoLogin()) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Gestor");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else if (UtilizadorPreferences.comparaTipoFuncionario()){
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Funcionario");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        } else if (UtilizadorPreferences.comparaTipoUtilizador()) {
+            FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
+            Stage stage = new Stage();
+            Stage newStage = (Stage) btnVoltar.getScene().getWindow();
+            stage.setTitle("Pagina Cliente");
+            newStage.hide();
+            stage.setScene(new Scene(fxmlLoader.load()));
+            stage.show();
+        }
     }
 
     @FXML

@@ -5,6 +5,7 @@ import BLL.UtilizadorBLL;
 import Model.MessageBoxes;
 import Model.Utilizador;
 import com.example.hotel.Main;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +16,8 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeoutException;
 
 
 public class LoginController implements Initializable {

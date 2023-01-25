@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="roomservices" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FuncionarioController">
+<AnchorPane fx:id="roomservices" minWidth="-Infinity" prefHeight="609.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.FuncionarioController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -43,9 +43,9 @@
             <Image url="@../../../img/gestaoReservas.png" />
          </image>
       </ImageView>
-      <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
-      <Separator layoutY="548.0" prefHeight="3.0" prefWidth="721.0" />
-      <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="468.0" prefWidth="19.0" />
+      <Separator layoutX="-7.0" layoutY="82.0" orientation="VERTICAL" prefHeight="525.0" prefWidth="19.0" />
+      <Separator layoutY="606.0" prefHeight="3.0" prefWidth="721.0" />
+      <Separator layoutX="713.0" layoutY="79.0" orientation="VERTICAL" prefHeight="525.0" prefWidth="19.0" />
       <Separator layoutX="-184.0" layoutY="79.0" prefHeight="3.0" prefWidth="905.0" />
       <Button fx:id="FCheck" layoutX="58.0" layoutY="344.0" mnemonicParsing="false" onAction="#FCheckClick" prefHeight="61.0" prefWidth="229.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Check-In/Check-out" textFill="#dfc6ff">
          <font>
@@ -122,5 +122,20 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <ImageView fx:id="imgGestorColab11" fitHeight="42.0" fitWidth="36.0" layoutX="436.0" layoutY="443.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/bank-cards.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="estacionamento" alignment="CENTER" layoutX="421.0" layoutY="510.0" mnemonicParsing="false" onAction="#estacionamentoClick" prefHeight="68.0" prefWidth="229.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="   Estacionamento" textAlignment="CENTER" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="imgGestorColab111" fitHeight="42.0" fitWidth="36.0" layoutX="443.0" layoutY="526.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/signage.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>
