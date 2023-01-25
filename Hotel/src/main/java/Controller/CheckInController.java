@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class CheckInController implements Initializable {
@@ -165,13 +166,20 @@ public class CheckInController implements Initializable {
 
     private void performCheckIn(Reserva reservation) {
         CheckInBLL checkInBll = new CheckInBLL();
-        try {
-            checkInBll.checkIn(reservation.getId());
-        } catch (SQLException e) {
-
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.", "ERRO");
+        LocalDate today = LocalDate.now();
+        LocalDate reservationStart = LocalDate.parse(reservation.getDataInicio().toString());
+        if(today.isEqual(reservationStart)) {
+            try {
+                checkInBll.checkIn(reservation.getId());
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Check-in realizado com sucesso.", "Sucesso");
+            } catch (SQLException e) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.", "ERRO");
+            }
+        }else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Check-in não pode ser realizado pois a data de inicio da reserva não é hoje.", "ERRO");
         }
     }
+
 
 
     private void initListViews() {
@@ -179,15 +187,15 @@ public class CheckInController implements Initializable {
         try {
             listViewReservaSemCheckin.setItems(FXCollections.observableArrayList(bll.getPendingReservations()));
         } catch (SQLException e) {
-
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+            e.printStackTrace();
         }
 
         try {
             listViewReservaComcheckin.setItems(FXCollections.observableArrayList(bll.getCheckedInReservations()));
         } catch (SQLException e) {
-
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Ocorreu um problema ao recuperar as reservas pendentes. Por favor, tente novamente mais tarde.");
+            e.printStackTrace();
         }
     }
 
