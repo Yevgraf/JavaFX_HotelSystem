@@ -6,6 +6,7 @@ import DAL.QuartoDAL;
 import Model.*;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -87,7 +88,20 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private Button voltarBtn;
 
-    List<LocalDate> dates = new ArrayList<>();
+    @FXML
+    private CheckBox check;
+
+    @FXML
+    private ComboBox<StringBuilder> cmbEstacionamento;
+
+    @FXML
+    private RadioButton exterior;
+
+    @FXML
+    private RadioButton interior;
+
+    @FXML
+    private Label lugarLbl;
 
     public static Boolean verifica = false;
 
@@ -153,6 +167,7 @@ public class AdicionarReservaController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
         listenComboboxReserva();
+        listnerCheckBox();
     }
 
     private void initCombos() {
@@ -283,6 +298,26 @@ public class AdicionarReservaController implements Initializable {
     void cmbQuartoClick(MouseEvent event) {
         resetDatePickers();
     }
+
+    private void listnerCheckBox() {
+        check.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                if (check.isSelected()) {
+                    interior.setDisable(false);
+                    exterior.setDisable(false);
+                    cmbEstacionamento.setDisable(false);
+                    lugarLbl.setDisable(false);
+                } else {
+                    interior.setDisable(true);
+                    exterior.setDisable(true);
+                    cmbEstacionamento.setDisable(true);
+                    lugarLbl.setDisable(true);
+                }
+            }
+        });
+    }
+
 }
 
 

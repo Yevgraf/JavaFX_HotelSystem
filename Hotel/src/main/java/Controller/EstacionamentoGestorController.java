@@ -19,7 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 
-public class EstacionamentoController {
+public class EstacionamentoGestorController {
 
     @FXML
     private ImageView LogOut;
