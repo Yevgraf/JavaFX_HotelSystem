@@ -127,7 +127,7 @@
             <Image url="@../../../img/door-knob.png" />
          </image>
       </ImageView>
-      <Button fx:id="btnPassarCartao" layoutX="64.0" layoutY="533.0" mnemonicParsing="false" onAction="#passarCartaoAction" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="Passar Cartão" textAlignment="CENTER" textFill="#dfc6ff">
+      <Button fx:id="btnPassarCartao" layoutX="64.0" layoutY="533.0" mnemonicParsing="false" onAction="#passarCartaoAction" prefHeight="61.0" prefWidth="217.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="     Passar Cartão Mestre" textAlignment="CENTER" textFill="#dfc6ff">
          <font>
             <Font size="14.0" />
          </font>

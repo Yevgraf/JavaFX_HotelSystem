@@ -159,8 +159,12 @@ public class XMLReaderController implements Initializable {
             if (fileName.substring(fileName.lastIndexOf(".") + 1).equals("xml") ||
                     fileName.substring(fileName.lastIndexOf(".") + 1).equals("XML")) {
                 //Ler XML
-                ValidaXML.validarXML(f);
-                lerXML(path);
+                if (ValidaXML.validarXML(f)) {
+                    lerXML(path);
+                } else {
+                    urlText.setText("");
+                    return;
+                }
             } else {
                 //Ler JSON
                 lerJSON(path);
