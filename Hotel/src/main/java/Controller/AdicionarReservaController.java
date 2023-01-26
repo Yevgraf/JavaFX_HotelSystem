@@ -1,9 +1,11 @@
 package Controller;
 
+import BLL.EstacionamentoBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorBLL;
 import DAL.QuartoDAL;
 import Model.*;
+import Model.EstacionamentoAPI.Parking;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -24,7 +26,6 @@ import java.util.stream.Collectors;
 
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
-import javafx.util.Callback;
 
 public class AdicionarReservaController implements Initializable {
 
@@ -92,7 +93,7 @@ public class AdicionarReservaController implements Initializable {
     private CheckBox check;
 
     @FXML
-    private ComboBox<StringBuilder> cmbEstacionamento;
+    private ComboBox<String> cmbEstacionamento;
 
     @FXML
     private RadioButton exterior;
@@ -161,13 +162,6 @@ public class AdicionarReservaController implements Initializable {
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
         verifica = true;
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        initCombos();
-        listenComboboxReserva();
-        listnerCheckBox();
     }
 
     private void initCombos() {
@@ -316,6 +310,56 @@ public class AdicionarReservaController implements Initializable {
                 }
             }
         });
+    }
+
+    @FXML
+    void cmbEstacionamentoClick(ActionEvent event) {
+        if (interior.isSelected()) {
+            getEstacionamentoDisponivelInterno();
+        } else {
+            getEstacionamentoDisponivelExterno();
+        }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        initCombos();
+        listenComboboxReserva();
+        listnerCheckBox();
+        getEstacionamentoDisponivelExterno();
+        getEstacionamentoDisponivelInterno();
+    }
+
+    private List<StringBuilder> getEstacionamentoDisponivelInterno() {
+        List<StringBuilder> list = new ArrayList<>();
+        EstacionamentoBLL eBLL = new EstacionamentoBLL();
+        var lugares = eBLL.GetLugaresDisponiveis();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lugares.Parking.size(); i++) {
+            Parking currentParking = lugares.Parking.get(i);
+            if (currentParking.Indoor.equals("true") && currentParking.Occupied.equals("false")) {
+                sb.append("Lugar: " + currentParking.ParkingSpot + " Preço: " + currentParking.Price + "\n\n");
+                list.add(sb);
+            }
+        }
+        return list;
+    }
+
+    private List<StringBuilder> getEstacionamentoDisponivelExterno() {
+        List<StringBuilder> list = new ArrayList<>();
+        EstacionamentoBLL eBLL = new EstacionamentoBLL();
+        var lugares = eBLL.GetLugaresDisponiveis();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < lugares.Parking.size(); i++) {
+            Parking currentParking = lugares.Parking.get(i);
+            if (currentParking.Indoor.equals("false") && currentParking.Occupied.equals("false")) {
+                sb.append("Lugar: " + currentParking.ParkingSpot + " Preço: " + currentParking.Price + "\n\n");
+                list.add(sb);
+            }
+        }
+        return list;
     }
 
 }

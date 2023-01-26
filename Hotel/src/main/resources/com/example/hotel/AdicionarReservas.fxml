@@ -100,7 +100,7 @@
             <Font name="Bernard MT Condensed" size="14.0" />
          </font>
       </CheckBox>
-      <ComboBox fx:id="cmbEstacionamento" disable="true" layoutX="440.0" layoutY="407.0" onMouseClicked="#cmbQuartoClick" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
+      <ComboBox fx:id="cmbEstacionamento" disable="true" layoutX="440.0" layoutY="407.0" onAction="#cmbEstacionamentoClick" onMouseClicked="#cmbQuartoClick" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <Label fx:id="lugarLbl" disable="true" layoutX="386.0" layoutY="392.0" prefHeight="55.0" prefWidth="61.0" text="Lugar:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />
