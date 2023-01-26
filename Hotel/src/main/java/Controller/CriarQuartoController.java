@@ -107,7 +107,7 @@ public class CriarQuartoController implements Initializable {
     void clickAddQuarto(ActionEvent event) throws SQLException {
 
         if (cmbPiso.getItems().isEmpty() == false && cmbTipoQuarto.getItems().isEmpty() == false && txt_preco.getText().isEmpty() == false && txt_numcartao.getText().isEmpty() == false) {
-                ADDQuarto();
+            ADDQuarto();
         } else {
             EmptyMessage.setText("Preencha todos os campos");
         }
@@ -115,20 +115,27 @@ public class CriarQuartoController implements Initializable {
 
     public void ADDQuarto() throws SQLException {
         try {
-            // create a quarto object with the values from the UI controls
-            Quarto quarto = new Quarto(
-                    null,
-                    cmbTipoQuarto.getValue(),
-                    cmbPiso.getValue(),
-                    Double.parseDouble(txt_preco.getText()),
-                    false,
-                    // create a cartao object with the values from the UI controls
-                    new Cartao(Integer.parseInt(txt_numcartao.getText())));
+            String floor = cmbPiso.getValue();
+            String roomType = cmbTipoQuarto.getValue();
 
-            // add the quarto and cartao to the database using the BLL
-            quartoBLL.addQuarto(quarto);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Quarto e cartão criados com sucesso", "Aviso!");
-            initTable();
+            if (floor != null && (floor.equals("1") || floor.equals("2"))) {
+                if (roomType != null && (roomType.equals("Singular") || roomType.equals("Duplo") || roomType.equals("Familiar"))) {
+                    Quarto quarto = new Quarto(
+                            null,
+                            roomType,
+                            floor,
+                            Double.parseDouble(txt_preco.getText()),
+                            false,
+                            new Cartao(Integer.parseInt(txt_numcartao.getText())));
+
+                    quartoBLL.addQuarto(quarto);
+                    initTable();
+                } else {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Tipo quarto invalido", "Erro!");
+                }
+            } else {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Piso invalido", "Erro!");
+            }
         } catch (NumberFormatException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Apenas números para o ID Cartão", "Erro!");
             throw new RuntimeException(e);
@@ -136,14 +143,13 @@ public class CriarQuartoController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não foi possível adicionar o quarto.", "Erro!");
             throw new RuntimeException(e);
         }
-
     }
 
 
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
-        if (UtilizadorPreferences.comparaTipoLogin()){
+        if (UtilizadorPreferences.comparaTipoLogin()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) voltarBtn.getScene().getWindow();

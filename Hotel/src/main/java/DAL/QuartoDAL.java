@@ -1,60 +1,102 @@
 package DAL;
 
 import Model.Cartao;
+import Model.MessageBoxes;
 import Model.Quarto;
 import Model.TipoUtilizador;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.sql.*;
 
 public class QuartoDAL {
 
-        public void addQuarto(Quarto quarto) {
-            PreparedStatement ps2;
+    public void addQuarto(Quarto quarto) {
+        PreparedStatement ps2;
 
-            try {
-                // create a database connection
-                DBconn dbConn = new DBconn();
-                Connection connection = dbConn.getConn();
+        try {
 
-                // prepare the insert statement
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            if (checkRoomAvailability(quarto.getTipoQuarto(), quarto.getPiso())) {
+
                 ps2 = connection.prepareStatement("INSERT INTO Quarto (tipoQuarto,piso,preco,idCartao) VALUES (?,?,?,?)", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 
-                // set the values for the prepared statement
+
                 ps2.setString(1, quarto.getTipoQuarto());
                 ps2.setString(2, quarto.getPiso());
                 ps2.setDouble(3, quarto.getPreco());
                 ps2.setInt(4, quarto.getCartao().getId());
 
-                // execute the insert statement
                 ps2.executeUpdate();
-
-            } catch (SQLException ex) {
-                throw new RuntimeException(ex);
+                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto criado com sucesso", "Criado!");
+            } else {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não há quartos disponíveis para o tipo e piso selecionado", "Erro!");
             }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
         }
+    }
 
+
+    public boolean checkRoomAvailability(String roomType, String floor) {
+        try {
+
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+
+            PreparedStatement ps = connection.prepareStatement("SELECT COUNT(*) FROM Quarto WHERE tipoQuarto = ? AND piso = ?");
+            ps.setString(1, roomType);
+            ps.setString(2, floor);
+
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                int count = rs.getInt(1);
+                if (floor.equals("1")) {
+                    if (roomType.equals("Singular") && count >= 7) {
+                        return false;
+                    } else if (roomType.equals("Duplo") && count >= 10) {
+                        return false;
+                    } else if (roomType.equals("Familiar") && count >= 3) {
+                        return false;
+                    }
+                } else if (floor.equals("2")) {
+                    if (roomType.equals("Singular") && count >= 7) {
+                        return false;
+                    } else if (roomType.equals("Duplo") && count >= 10) {
+                        return false;
+                    } else if (roomType.equals("Familiar") && count >= 3) {
+                        return false;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return true;
+    }
 
 
     public void updateQuarto(Quarto quarto) {
         PreparedStatement ps2;
 
         try {
-            // create a database connection
+
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            // prepare the update statement
+
             ps2 = connection.prepareStatement("UPDATE Quarto SET tipoQuarto = ?, piso = ?, preco = ? WHERE id = ?");
 
-            // set the values for the prepared statement
+
             ps2.setString(1, quarto.getTipoQuarto());
             ps2.setString(2, quarto.getPiso());
             ps2.setDouble(3, quarto.getPreco());
             ps2.setInt(4, quarto.getId());
 
-            // execute the update statement
+
             ps2.executeUpdate();
 
         } catch (SQLException ex) {
@@ -73,7 +115,6 @@ public class QuartoDAL {
     }
 
 
-
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
 
@@ -88,7 +129,7 @@ public class QuartoDAL {
             while (rs.next()) {
                 Quarto objQuarto = new Quarto(rs.getInt("id"), rs.getString("tipoQuarto"),
                         rs.getString("piso"), rs.getDouble("preco"), rs.getBoolean("ativo"),
-                new Cartao(rs.getInt("cId")));
+                        new Cartao(rs.getInt("cId")));
                 list.add(objQuarto);
             }
 
