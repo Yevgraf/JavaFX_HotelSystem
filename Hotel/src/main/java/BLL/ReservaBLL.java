@@ -56,7 +56,7 @@ public class ReservaBLL {
         }
     }
 
-    public void updateReserva(Reserva reserva) throws SQLException {
+    public static void updateReserva(Reserva reserva) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         reservaDAL.updateReserva(reserva);
     }
@@ -100,6 +100,11 @@ public class ReservaBLL {
     public void cancelReservation(int reservationId) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
         reservaDAL.cancelReservation(reservationId);
+    }
+
+    public void updateReservationPrice(int reservationId, double newPrice) throws SQLException {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        reservaDAL.updateReservationPrice(reservationId,newPrice);
     }
 
     public List<LocalDate> getDataInicial(int idQuarto) {

@@ -27,6 +27,8 @@ import java.util.stream.Collectors;
 import javafx.scene.control.DateCell;
 import javafx.scene.control.DatePicker;
 
+import static BLL.ReservaBLL.getTotalReserva;
+
 public class AdicionarReservaController implements Initializable {
 
     @FXML
@@ -147,11 +149,15 @@ public class AdicionarReservaController implements Initializable {
 
         reserva = reservaBLL.addReserva(reserva);
 
-        txtPreco.setText(reserva.getPreco().toString());
+        double precoFinal = getTotalReserva(reserva);
+        reserva.setPreco(precoFinal);
 
-        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada", "Reserva");
+
+        txtPreco.setText(reserva.getPreco().toString());
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
         addServicoReserva();
     }
+
 
     private void addServicoReserva() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));

@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.ProdutoReservaBLL;
+import BLL.ReservaBLL;
 import BLL.StockBLL;
 import DAL.ProdutoDAL;
 import DAL.ProdutoReservaDAL;
@@ -26,6 +27,11 @@ public class ProdutoReservaController implements Initializable {
 
     @FXML
     private Button btnAddQuarto;
+
+
+    @FXML
+    private Label precoLabel;
+
 
     @FXML
     private ImageView btnBack;
@@ -81,7 +87,20 @@ public class ProdutoReservaController implements Initializable {
     private void initCombos() {
         cmbQuarto.getItems().addAll(ReservaDAL.getReservasPendentes());
         cmbProduto.getItems().addAll(ProdutoDAL.getAllProdutos());
+        cmbQuarto.valueProperty().addListener((obs, oldValue, newValue) -> {
+            if (newValue != null) {
+                Reserva selectedReservation = (Reserva) newValue;
+                double totalCost = 0;
+                try {
+                    totalCost = ReservaBLL.getTotalReserva(selectedReservation);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                precoLabel.setText(String.format("%.2f", totalCost));
+            }
+        });
     }
+
 
     @FXML
     void clickAddProdutoQuarto(ActionEvent event) throws SQLException {
@@ -94,6 +113,11 @@ public class ProdutoReservaController implements Initializable {
             if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
 
                 ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity, selectQuarto);
+
+                double totalCost = ReservaBLL.getTotalReserva(selectedReservation);
+
+                precoLabel.setText(String.valueOf(totalCost));
+
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso!");
                 initTable();
             } else {
@@ -103,6 +127,7 @@ public class ProdutoReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Preencha todos os campos!", "Aviso:");
         }
     }
+
 
 
     @FXML

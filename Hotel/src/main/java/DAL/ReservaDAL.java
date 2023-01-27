@@ -159,6 +159,28 @@ public class ReservaDAL {
         }
     }
 
+    public void updateReservationPrice(int reservationId, double newPrice) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("UPDATE Reserva SET preco = ? WHERE id = ?");
+            ps.setDouble(1, newPrice);
+            ps.setInt(2, reservationId);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
     public static void deleteReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
         DBconn dbConn = new DBconn();

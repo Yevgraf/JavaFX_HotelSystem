@@ -171,14 +171,18 @@ public class CheckInController implements Initializable {
         if(today.isEqual(reservationStart)) {
             try {
                 checkInBll.checkIn(reservation.getId());
+                double updatedTotal = ReservaBLL.getTotalReserva(reservation);
+                reservation.setPreco(updatedTotal);
+                ReservaBLL.updateReserva(reservation);
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Check-in realizado com sucesso.", "Sucesso");
             } catch (SQLException e) {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.", "ERRO");
             }
-        }else {
+        } else {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Check-in não pode ser realizado pois a data de inicio da reserva não é hoje.", "ERRO");
         }
     }
+
 
 
 

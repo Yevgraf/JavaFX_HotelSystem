@@ -15,10 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ListView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -39,13 +36,17 @@ public class ServicoReservaController implements Initializable {
     private Button Voltar;
 
     @FXML
+    private Label precoLabel;
+
+
+    @FXML
     private ComboBox<Reserva> cmbReserva;
 
     @FXML
     private ListView<Servico> listViewServicos;
 
     @FXML
-    void btnAdicionar(ActionEvent event) throws IOException {
+    void btnAdicionar(ActionEvent event) throws IOException, SQLException {
         Reserva selectedReservation = cmbReserva.getValue();
         if (selectedReservation == null) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Por favor, selecione uma reserva antes de continuar.", "ERRO");
@@ -60,13 +61,17 @@ public class ServicoReservaController implements Initializable {
         try {
             servicoReservaBLL.addServicosToReserva(List.of(servicoReserva), selectedReservation.getId());
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Serviço inserido à reserva", "Inserido");
+            double totalCost = ReservaBLL.getTotalReserva(selectedReservation);
+            precoLabel.setText(String.valueOf(totalCost));
         } catch (SQLException e) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro ao inserir Serviço", "Erro");
         }
         if (AdicionarReservaController.verifica == true) {
             addProdutoReserva();
+
         }
     }
+
 
     private void addProdutoReserva() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoReserva.fxml"));
@@ -90,6 +95,8 @@ public class ServicoReservaController implements Initializable {
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Removido","Servico removido da reserva");
     }
 
+
+
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
@@ -105,6 +112,18 @@ public class ServicoReservaController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
         initListView();
+
+        cmbReserva.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue != null) {
+                double total = 0;
+                try {
+                    total = ReservaBLL.getTotalReserva(newValue);
+                } catch (SQLException e) {
+                    throw new RuntimeException(e);
+                }
+                precoLabel.setText(String.valueOf(total));
+            }
+        });
     }
 
     private void initListView() {
