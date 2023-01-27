@@ -106,6 +106,12 @@ public class AdicionarReservaController implements Initializable {
     @FXML
     private Label lugarLbl;
 
+    @FXML
+    private Label matriculaLbl1;
+
+    @FXML
+    private TextField matriculaTxt;
+
     public static Boolean verifica = false;
 
     @FXML
@@ -309,6 +315,8 @@ public class AdicionarReservaController implements Initializable {
                     cmbEstacionamento.setDisable(false);
                     lugarLbl.setDisable(false);
                     interior.setSelected(true);
+                    matriculaTxt.setDisable(false);
+                    matriculaLbl1.setDisable(false);
                     cmbEstacionamento.getItems().clear();
                     cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
                 } else {
@@ -316,6 +324,8 @@ public class AdicionarReservaController implements Initializable {
                     exterior.setDisable(true);
                     cmbEstacionamento.setDisable(true);
                     lugarLbl.setDisable(true);
+                    matriculaTxt.setDisable(true);
+                    matriculaLbl1.setDisable(true);
                 }
             }
         });
