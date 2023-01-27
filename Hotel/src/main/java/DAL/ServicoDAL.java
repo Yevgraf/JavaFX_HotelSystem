@@ -8,6 +8,8 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ServicoDAL {
 
@@ -104,25 +106,31 @@ public class ServicoDAL {
     public static ObservableList<Servico> getServicosByClientId() {
         Integer id = UtilizadorPreferences.utilizadorId();
         ObservableList<Servico> lista = FXCollections.observableArrayList();
+        Set<Servico> servicos = new HashSet<>();
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
-            String cmd = "SELECT s.id as sId, s.servico as servico, q.idCartao as idCartao " + "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " + "JOIN Reserva r ON r.id = SR.idReserva " + "JOIN EstadoReserva er ON er.reserva = r.id " + "JOIN Quarto q ON q.id = r.idQuarto " + "WHERE r.idCliente = ? AND er.estado = 'checkin'";
+            String cmd = "SELECT s.id as sId, s.servico as servico, q.idCartao as idCartao " +
+                    "FROM Servico s JOIN ServicoReserva SR ON s.id = SR.idServico " + "JOIN Reserva r ON r.id = SR.idReserva " +
+                    "JOIN EstadoReserva er ON er.reserva = r.id " + "JOIN Quarto q ON q.id = r.idQuarto " + "WHERE r.idCliente = ? " +
+                    "AND er.estado = 'checkin'";
             PreparedStatement ps = connection.prepareStatement(cmd);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Servico obj = new Servico(rs.getInt("sId"), rs.getString("servico"));
-                lista.add(obj);
+                servicos.add(obj);
                 int idCartao = rs.getInt("idCartao");
                 Servico quarto = new Servico("Quarto", idCartao);
-                lista.add(quarto);
+                servicos.add(quarto);
             }
+            lista.addAll(servicos);
             ps.close();
         } catch (Exception ex) {
         }
         return lista;
     }
+
 
 
 }
