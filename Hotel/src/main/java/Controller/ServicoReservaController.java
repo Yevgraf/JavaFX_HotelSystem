@@ -21,7 +21,9 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ServicoReservaController implements Initializable {
@@ -45,6 +47,7 @@ public class ServicoReservaController implements Initializable {
     @FXML
     private ListView<Servico> listViewServicos;
 
+
     @FXML
     void btnAdicionar(ActionEvent event) throws IOException, SQLException {
         Reserva selectedReservation = cmbReserva.getValue();
@@ -67,8 +70,16 @@ public class ServicoReservaController implements Initializable {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro ao inserir Serviço", "Erro");
         }
         if (AdicionarReservaController.verifica == true) {
-            addProdutoReserva();
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Confirmação");
+            alert.setHeaderText("Adicionar serviços");
+            alert.setContentText("Deseja adicionar mais serviços à esta reserva?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK){
 
+            } else {
+                addProdutoReserva();
+            }
         }
     }
 
