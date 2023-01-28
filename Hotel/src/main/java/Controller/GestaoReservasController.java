@@ -217,14 +217,17 @@ public class GestaoReservasController implements Initializable {
     @FXML
     void SearchClienteTxtFieldAction(ActionEvent event) {
 
-        try {
-            ReservaBLL bll = new ReservaBLL();
-            String name = SearchClienteTxtField.getText();
-            List<Reserva> reservations = bll.searchReservationsByClientName(name);
-            tblReservas.setItems(FXCollections.observableList(reservations));
-        } catch (Exception e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza o nome corretamente", "Erro");
-            throw new RuntimeException(e);
-        }
+        SearchClienteTxtField.textProperty().addListener((observable, oldValue, newValue) -> {
+            try {
+                ReservaBLL bll = new ReservaBLL();
+                String name = newValue;
+                List<Reserva> reservations = bll.searchReservationsByClientName(name);
+                tblReservas.setItems(FXCollections.observableList(reservations));
+            } catch (Exception e) {
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza o nome corretamente", "Erro");
+                throw new RuntimeException(e);
+            }
+        });
+
     }
 }
