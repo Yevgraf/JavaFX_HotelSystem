@@ -108,16 +108,18 @@ public class ProdutoReservaController implements Initializable {
         Reserva selectedReservation = cmbQuarto.getValue();
         int selectQuarto = cmbQuarto.getValue().getIdQuarto();
         Produto selectedProduct = cmbProduto.getValue();
-        int quantity = Integer.parseInt(txt_quantidade.getText());
+        int quantity = 0;
+        try {
+            quantity = Integer.parseInt(txt_quantidade.getText());
+        } catch (NumberFormatException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Quantidade deve ser um número inteiro!", "Erro:");
+            return;
+        }
         if (selectedReservation != null && selectedProduct != null) {
             if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
-
                 ProdutoReservaBLL.addProductInRoom(selectedReservation.getId(), selectedProduct.getIdProduto(), quantity, selectQuarto);
-
                 double totalCost = ReservaBLL.getTotalReserva(selectedReservation);
-
                 precoLabel.setText(String.valueOf(totalCost));
-
                 MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado.", "Sucesso!");
                 initTable();
             } else {
