@@ -66,14 +66,20 @@ public class InserirServicoController implements Initializable {
     }
 
     public void AddServico() throws SQLException {
-        Servico servico = new Servico(
-                null,
-                descricao.getText(),
-                Double.parseDouble(preco.getText()));
+        try {
+            double precoServico = Double.parseDouble(preco.getText());
+            Servico servico = new Servico(
+                    null,
+                    descricao.getText(),
+                    precoServico);
 
-        servicoBLL.addServico(servico);
-        initTable();
+            servicoBLL.addServico(servico);
+            initTable();
+        } catch (NumberFormatException e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Erro ao inserir Serviço, O preco inserido não é valido", "Erro");
+        }
     }
+
 
     @FXML
     void clickRemoverBtn(ActionEvent event) {
