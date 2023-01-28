@@ -8,6 +8,7 @@ import DAL.ReservaDAL;
 import Model.MessageBoxes;
 import Model.Reserva;
 import com.example.hotel.Main;
+import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -29,6 +30,10 @@ public class GestaoReservasController implements Initializable {
 
     @FXML
     private Button adicionarReservaBtn;
+
+
+    @FXML
+    private TextField SearchClienteTxtField;
 
     @FXML
     private Button btnVoltar;
@@ -208,4 +213,18 @@ public class GestaoReservasController implements Initializable {
         });
     }
 
+
+    @FXML
+    void SearchClienteTxtFieldAction(ActionEvent event) {
+
+        try {
+            ReservaBLL bll = new ReservaBLL();
+            String name = SearchClienteTxtField.getText();
+            List<Reserva> reservations = bll.searchReservationsByClientName(name);
+            tblReservas.setItems(FXCollections.observableList(reservations));
+        } catch (Exception e) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza o nome corretamente", "Erro");
+            throw new RuntimeException(e);
+        }
     }
+}

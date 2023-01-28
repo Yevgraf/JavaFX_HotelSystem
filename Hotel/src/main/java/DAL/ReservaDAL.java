@@ -180,6 +180,43 @@ public class ReservaDAL {
             }
         }
     }
+    public List<Reserva> searchReservationsByClientName(String clientName) throws SQLException {
+        PreparedStatement ps = null;
+        Connection connection = null;
+        ResultSet rs = null;
+        List<Reserva> reservations = new ArrayList<>();
+        try {
+            DBconn dbConn = new DBconn();
+            connection = dbConn.getConn();
+            ps = connection.prepareStatement("SELECT r.id, r.idCliente, r.idQuarto, r.dataInicio, r.dataFim, r.preco FROM Reserva r JOIN Utilizador u ON r.idCliente = u.id WHERE u.nome LIKE ?");
+            ps.setString(1, "%"+clientName+"%");
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                Reserva reservation = new Reserva();
+                reservation.setId(rs.getInt("id"));
+                reservation.setIdCliente(rs.getInt("idCliente"));
+                reservation.setIdQuarto(rs.getInt("idQuarto"));
+                reservation.setDataInicio(String.valueOf(rs.getDate("dataInicio")));
+                reservation.setDataFim(String.valueOf(rs.getDate("dataFim")));
+                reservation.setPreco(rs.getDouble("preco"));
+                reservations.add(reservation);
+            }
+            return reservations;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (rs != null) {
+                rs.close();
+            }
+            if (ps != null) {
+                ps.close();
+            }
+            if (connection != null) {
+                connection.close();
+            }
+        }
+    }
+
 
     public static void deleteReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";

@@ -47,6 +47,17 @@ public class ReservaBLL {
         }
         return false;
     }
+    public List<Reserva> searchReservationsByClientName(String clientName) {
+        ReservaDAL reservationDAL = new ReservaDAL();
+        List<Reserva> reservations = null;
+        try {
+            reservations = reservationDAL.searchReservationsByClientName(clientName);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reservations;
+    }
+
 
     public static void deleteReservation(Reserva selectedReservation) {
         try {
