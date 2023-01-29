@@ -25,7 +25,10 @@ public class RegistoBLL {
         Registo registo = new Registo(idCartao, idCliente, local, data);
         dal.addRegisto(registo);
     }
-
+public void deleteRegisto(int id) throws SQLException {
+        RegistoDAL dal = new RegistoDAL();
+        dal.deleteRegisto(id);
+}
 
     public static int getCardIdByClientId(int clientId) throws SQLException {
         return RegistoDAL.getCardIdByClientId(clientId);

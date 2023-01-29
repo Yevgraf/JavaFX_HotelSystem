@@ -1,8 +1,7 @@
 package Controller;
 
-import BLL.ServicoBLL;
-import BLL.UtilizadorBLL;
-import BLL.UtilizadorPreferences;
+import BLL.*;
+import DAL.ComentarioDAL;
 import DAL.TipoUtilizadorDAL;
 import Model.MessageBoxes;
 import Model.Servico;
@@ -141,16 +140,25 @@ public class GestaoUtilizadoresController implements Initializable {
     @FXML
     void clickBtnGestorEliminar(ActionEvent event) {
         UtilizadorBLL ubll = new UtilizadorBLL();
+        ComentarioBLL cBll = new ComentarioBLL();
+        RegistoBLL rBll = new RegistoBLL();
         Utilizador selectedUtilizador = tblUtilizadores.getSelectionModel().getSelectedItem();
+        int selectedComentario = tblUtilizadores.getSelectionModel().getSelectedItem().getId();
         if (selectedUtilizador != null) {
             if (MessageBoxes.ConfirmationBox("Confirma a eliminação do utilizador?")) {
                 try {
+                    rBll.deleteRegisto(selectedComentario);
+                    cBll.deleteComentario(selectedComentario);
                     ubll.removeUtilizador(selectedUtilizador.getId());
                     tblUtilizadores.getItems().remove(selectedUtilizador);
                     MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Utilizador Removido!", "Informação:");
                     initTable();
                 } catch (SQLException ex) {
-                    throw new RuntimeException(ex);
+                    if (ex.getMessage().contains("The DELETE statement conflicted with the REFERENCE constraint")) {
+                        MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível remover o utilizador pois existe uma reserva associada a ele!", "Erro:");
+                    } else {
+                        throw new RuntimeException(ex);
+                    }
                 }
             }
         } else {

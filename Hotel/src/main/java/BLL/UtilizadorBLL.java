@@ -1,5 +1,6 @@
 package BLL;
 
+import DAL.ComentarioDAL;
 import DAL.UtilizadorDAL;
 import Model.Utilizador;
 import javafx.collections.ObservableList;

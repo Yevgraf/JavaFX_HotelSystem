@@ -121,4 +121,15 @@ public class ComentarioDAL {
         return null;
     }
 
+        public void deleteComentario(int clienteId) {
+            try (Connection con = DBconn.getConn();
+                 PreparedStatement stmt = con.prepareStatement("DELETE FROM dbo.Comentario WHERE idCliente = ?")) {
+
+                stmt.setInt(1, clienteId);
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
 }

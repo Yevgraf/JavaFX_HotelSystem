@@ -13,6 +13,11 @@ public class ComentarioBLL {
         dal.addComentario(comentario);
     }
 
+    public void deleteComentario(int id) throws SQLException{
+        ComentarioDAL dal = new ComentarioDAL();
+        dal.deleteComentario(id);
+    }
+
     public static ObservableList<Comentario> getAllComentarios() {
         return ComentarioDAL.getAllComentarios();
     }

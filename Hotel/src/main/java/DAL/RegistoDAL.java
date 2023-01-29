@@ -94,7 +94,14 @@ public class RegistoDAL {
         }
         return registos;
     }
-
+    public void deleteRegisto(int idCliente) throws SQLException {
+        String cmd = "DELETE FROM Registo WHERE idCliente = ?";
+        DBconn dbconn = new DBconn();
+        Connection connection = dbconn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, idCliente);
+        ps.executeUpdate();
+    }
 
     public static ObservableList<Registo> getRegistosByLocal(String local) throws SQLException {
         String cmd = "SELECT * FROM Registo WHERE local = ?";
