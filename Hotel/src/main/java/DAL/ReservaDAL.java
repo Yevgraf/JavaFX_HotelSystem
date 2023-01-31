@@ -1,5 +1,6 @@
 package DAL;
 
+import BLL.EstacionamentoBLL;
 import Model.EstacionamentoAPI.ResponseTicket;
 import Model.EstacionamentoAPI.TicketInfo;
 import Model.MessageBoxes;
@@ -235,6 +236,11 @@ public class ReservaDAL {
         if (estado == null || estado.equals("checkout") || estado.equals("checkin") || estado.equals("cancelada")) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não é possível apagar esta reserva.", "Erro");
         } else {
+            EstacionamentoBLL bll = new EstacionamentoBLL();
+            String ticketId = getTicketIdForReservation(reservationId);
+            if (ticketId != null) {
+                bll.DeleteTicket(ticketId);
+            }
             deleteEstadoReservaForReservation(reservationId);
             deleteProdutoReserva(reservationId);
             deleteServicoReservaForReservation(reservationId);
@@ -243,6 +249,27 @@ public class ReservaDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!", "Apagada:");
         }
     }
+
+    private static String getTicketIdForReservation(int reservationId) throws SQLException {
+        String cmd = "SELECT ticketID FROM Reserva WHERE id = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ResultSet rs = ps.executeQuery();
+        String ticketId = null;
+        if (rs.next()) {
+            ticketId = rs.getString("ticketID");
+        }
+        ps.close();
+
+        return ticketId;
+    }
+
+
+
+
+
 
 
     private static void deleteProdutoReserva(int reservationId) throws SQLException {
