@@ -1,9 +1,13 @@
 package BLL;
 
 import Model.EstacionamentoAPI.Estacionamento;
+import Model.EstacionamentoAPI.ResponseTicket;
+import Model.EstacionamentoAPI.Ticket;
+import Model.EstacionamentoAPI.TicketInfo;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -28,7 +32,7 @@ public class EstacionamentoBLL {
                 .build();
     }
 
-    public Estacionamento GetLugaresDisponiveis() {
+    public Estacionamento GetLugares() {
         try {
 
             String result = GETRequestParkingAPI("park");
@@ -41,6 +45,22 @@ public class EstacionamentoBLL {
             teste = mapper.readValue(result, Estacionamento.class);
 
             return teste;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Ticket GetTicketsCriados() {
+        try {
+
+            String result = GETRequestParkingAPI("ticket");
+
+            if (result.isEmpty())
+                return null;
+
+            ObjectMapper mapper = new ObjectMapper();
+
+            return mapper.readValue(result, Ticket.class);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -67,6 +87,61 @@ public class EstacionamentoBLL {
         } catch (ExecutionException e) {
             throw new RuntimeException(e);
         } catch (TimeoutException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ResponseTicket POSTCreateParkingReservation(TicketInfo body) {
+        try {
+            var objectMapper = new ObjectMapper();
+
+            String requestBody = objectMapper
+                    .writeValueAsString(body);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .setHeader("Content-Type", "application/json")
+                    .setHeader("Authorization", "Basic " + encondeAPICredentials(apiID, apiSecret))
+                    .uri(URI.create(parkAPIURL + "ticket"))
+                    .POST(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            String parsedResponse = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+
+            return objectMapper.readValue(parsedResponse, ResponseTicket.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Boolean DeleteTicket(String idTicket) {
+        try {
+            var request = HttpRequest.newBuilder()
+                    .uri(URI.create(parkAPIURL + "Ticket/" + idTicket))
+                    .setHeader("Content-Type", "application/json")
+                    .setHeader("Authorization", "Basic " + encondeAPICredentials(apiID, apiSecret))
+                    .DELETE()
+                    .build();
+
+            var client = HttpClient.newHttpClient();
+
+            var response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            if (response.statusCode() == 202) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
     }

@@ -2,6 +2,7 @@ package BLL;
 
 import DAL.QuartoDAL;
 import DAL.ReservaDAL;
+import Model.EstacionamentoAPI.TicketInfo;
 import Model.MessageBoxes;
 import Model.Reserva;
 import javafx.collections.FXCollections;
@@ -47,6 +48,7 @@ public class ReservaBLL {
         }
         return false;
     }
+
     public List<Reserva> searchReservationsByClientName(String clientName) {
         ReservaDAL reservationDAL = new ReservaDAL();
         List<Reserva> reservations = null;
@@ -115,7 +117,7 @@ public class ReservaBLL {
 
     public void updateReservationPrice(int reservationId, double newPrice) throws SQLException {
         ReservaDAL reservaDAL = new ReservaDAL();
-        reservaDAL.updateReservationPrice(reservationId,newPrice);
+        reservaDAL.updateReservationPrice(reservationId, newPrice);
     }
 
     public List<LocalDate> getDataInicial(int idQuarto) {
@@ -145,4 +147,17 @@ public class ReservaBLL {
         return proxData;
     }
 
+    public Reserva reservaEstacionamento(Reserva reserva, TicketInfo ticketInfo) {
+        try {
+            var reservaDAL = new ReservaDAL();
+            var estacionamentoBLL = new EstacionamentoBLL();
+
+            var pedido = estacionamentoBLL.POSTCreateParkingReservation(ticketInfo);
+            reservaDAL.updateReservaComResponseTicketID(reserva, pedido);
+
+            return reserva;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

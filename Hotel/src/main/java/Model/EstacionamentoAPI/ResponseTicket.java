@@ -1,9 +1,7 @@
 package Model.EstacionamentoAPI;
 
-import java.util.List;
-
-public class Ticket {
+public class ResponseTicket {
     public String Status;
-    public List<TicketInfo> Tickets;
+    public String TicketId;
     public String ParkingQR;
 }

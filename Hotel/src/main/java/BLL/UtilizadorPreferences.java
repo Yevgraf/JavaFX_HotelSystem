@@ -40,8 +40,6 @@ public class UtilizadorPreferences {
         }
     }
 
-
-
     public static void guardaridCliente(Integer id) {
         // Set the client id
         utilizadorId = id;

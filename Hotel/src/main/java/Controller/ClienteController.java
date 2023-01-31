@@ -23,6 +23,9 @@ public class ClienteController {
     @FXML
     private Button cartao;
 
+    @FXML
+    private Button qrCodeBtn;
+
 
     @FXML
     void ComentariosClick(ActionEvent event) throws IOException {
@@ -52,6 +55,17 @@ public class ClienteController {
         Stage stage = new Stage();
         Stage newStage = (Stage) cartao.getScene().getWindow();
         stage.setTitle("Passar Cartão");
+        newStage.hide();
+        stage.setScene(new Scene(fxmlLoader.load()));
+        stage.show();
+    }
+
+    @FXML
+    void qrCodeBtnClick(ActionEvent event) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("QRCodeCliente.fxml"));
+        Stage stage = new Stage();
+        Stage newStage = (Stage) qrCodeBtn.getScene().getWindow();
+        stage.setTitle("Codigo QR");
         newStage.hide();
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();

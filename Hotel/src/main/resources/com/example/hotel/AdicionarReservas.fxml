@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="517.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReservaController">
+<AnchorPane fx:id="PainelGestorProdutoAdicionar" minWidth="-Infinity" prefHeight="517.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.AdicionarReservaController">
    <children>
       <Pane layoutX="-3.0" layoutY="1.0" prefHeight="78.0" prefWidth="727.0" style="-fx-background-color: #c1c8e4;">
          <children>
@@ -100,7 +100,7 @@
             <Font name="Bernard MT Condensed" size="14.0" />
          </font>
       </CheckBox>
-      <ComboBox fx:id="cmbEstacionamento" disable="true" layoutX="448.0" layoutY="440.0" onMouseClicked="#cmbQuartoClick" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
+      <ComboBox fx:id="cmbEstacionamento" disable="true" layoutX="448.0" layoutY="440.0" prefHeight="25.0" prefWidth="206.0" promptText="Selecione" />
       <Label fx:id="lugarLbl" disable="true" layoutX="394.0" layoutY="425.0" prefHeight="55.0" prefWidth="61.0" text="Lugar:" textFill="WHITE">
          <font>
             <Font name="Bernard MT Condensed" size="18.0" />

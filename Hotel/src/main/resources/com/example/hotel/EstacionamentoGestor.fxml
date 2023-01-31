@@ -4,11 +4,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
 <AnchorPane fx:id="roomservices" minWidth="-Infinity" prefHeight="551.0" prefWidth="721.0" style="-fx-background-color: #2a1b3d;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EstacionamentoGestorController">
    <children>
@@ -56,5 +58,31 @@
             <Image url="@../../../img/voltar.jpeg" />
          </image>
       </ImageView>
+      <Button fx:id="getTodosTicket" alignment="CENTER" layoutX="27.0" layoutY="245.0" mnemonicParsing="false" onAction="#getTodosTicketClick" prefHeight="62.0" prefWidth="270.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Mostrar todos os tickets criados" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="imgGestorStock22" fitHeight="36.0" fitWidth="60.0" layoutX="37.0" layoutY="258.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/parking-ticket.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="deleteTicketBtn" alignment="CENTER" layoutX="98.0" layoutY="371.0" mnemonicParsing="false" onAction="#deleteTicketBtnClick" prefHeight="62.0" prefWidth="158.0" style="-fx-background-color: #111111; -fx-border-color: #ffffff;" text="        Apagar ticket" textFill="#dfc6ff">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="imgGestorStock221" fitHeight="36.0" fitWidth="60.0" layoutX="108.0" layoutY="384.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../img/icons8-delete-ticket-48.png" />
+         </image>
+      </ImageView>
+      <TextField fx:id="idDeleteTxT" layoutX="57.0" layoutY="330.0" prefHeight="26.0" prefWidth="240.0" />
+      <Text fill="WHITE" layoutX="27.0" layoutY="350.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ID:">
+         <font>
+            <Font name="Bernard MT Condensed" size="18.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>

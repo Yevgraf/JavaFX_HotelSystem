@@ -1,5 +1,7 @@
 package DAL;
 
+import Model.EstacionamentoAPI.ResponseTicket;
+import Model.EstacionamentoAPI.TicketInfo;
 import Model.MessageBoxes;
 import Model.Reserva;
 import javafx.collections.FXCollections;
@@ -40,7 +42,7 @@ public class ReservaDAL {
             reserva.setId(reservationId);
             return reserva;
         } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencher todos os campos!.", "Erro:");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencher todos os campos!", "Erro:");
             throw new RuntimeException(e);
         } finally {
             if (ps != null) {
@@ -292,6 +294,17 @@ public class ReservaDAL {
             stmt.setString(4, reserva.getDataFim());
             stmt.setDouble(5, reserva.getPreco());
             stmt.setInt(6, reserva.getId());
+            stmt.executeUpdate();
+        }
+    }
+
+    public void updateReservaComResponseTicketID(Reserva reserva, ResponseTicket responseTicket) throws SQLException {
+        String sql = "UPDATE Reserva SET ticketID = ? WHERE id = ?";
+
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, responseTicket.TicketId);
+            stmt.setInt(2, reserva.getId());
             stmt.executeUpdate();
         }
     }

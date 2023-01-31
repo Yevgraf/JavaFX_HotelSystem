@@ -3,16 +3,15 @@ package Controller;
 import BLL.EstacionamentoBLL;
 import BLL.UtilizadorPreferences;
 import Model.EstacionamentoAPI.Parking;
+import Model.EstacionamentoAPI.TicketInfo;
+import Model.MessageBoxes;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
@@ -47,14 +46,18 @@ public class EstacionamentoGestorController {
     private Button Voltar;
 
     @FXML
-    void ClickLogout(MouseEvent event) {
+    private TextField idDeleteTxT;
 
-    }
+    @FXML
+    private Button deleteTicketBtn;
+
+    @FXML
+    private Button getTodosTicket;
 
     @FXML
     void getLugaresClick(ActionEvent event) {
         EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugaresDisponiveis();
+        var lugares = eBLL.GetLugares();
 
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < lugares.Parking.size(); i++) {
@@ -64,6 +67,24 @@ public class EstacionamentoGestorController {
             sb.append("Preço: " + currentParking.Price + "\n");
             sb.append("Local: " + (currentParking.Indoor ? "Interior" : "Exterior") + "\n");
             sb.append("Vaga: " + (currentParking.Occupied ? "Ocupada" : "Desocupada") + "\n\n");
+        }
+        txtView.setText(sb.toString());
+    }
+
+    @FXML
+    void getTodosTicketClick(ActionEvent event) {
+        var ticketBLL = new EstacionamentoBLL();
+        var ticket = ticketBLL.GetTicketsCriados();
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < ticket.Tickets.size(); i++) {
+            TicketInfo currentTicket = ticket.Tickets.get(i);
+
+            sb.append("ID: " + currentTicket.Id + "\n");
+            sb.append("Cliente: " + currentTicket.ClientId + "\n");
+            sb.append("Data inicial: " + currentTicket.StartDate + "\n");
+            sb.append("Data final: " + currentTicket.EndDate + "\n");
+            sb.append("Lugar: " + currentTicket.ParkingSpot + "\n\n");
         }
         txtView.setText(sb.toString());
     }
@@ -86,6 +107,22 @@ public class EstacionamentoGestorController {
             newStage.hide();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
+        }
+    }
+
+    @FXML
+    void deleteTicketBtnClick(ActionEvent event) {
+        var ticketBLL = new EstacionamentoBLL();
+        if (idDeleteTxT.getText().isEmpty() || idDeleteTxT.getText().isBlank())  {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza um ID!", "ERRO:");
+            return;
+        }
+
+        if (ticketBLL.DeleteTicket(idDeleteTxT.getText().trim())){
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Ticket apagado com sucesso!","Sucesso!");
+            idDeleteTxT.setText("");
+        } else {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ticket não encontrado!","ERRO:");
         }
     }
 }

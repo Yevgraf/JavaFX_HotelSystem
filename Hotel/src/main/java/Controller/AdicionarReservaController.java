@@ -6,6 +6,7 @@ import BLL.UtilizadorBLL;
 import DAL.QuartoDAL;
 import Model.*;
 import Model.EstacionamentoAPI.Parking;
+import Model.EstacionamentoAPI.TicketInfo;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -145,10 +146,6 @@ public class AdicionarReservaController implements Initializable {
 
     @FXML
     void AdicionarReserva() throws SQLException, IOException {
-        if (DatePickerFim.getValue().isBefore(DatePickerInicio.getValue())) {
-            MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "A data final não pode ser inferior à data inicial.", "Aviso");
-            return;
-        }
         ReservaBLL reservaBLL = new ReservaBLL();
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
@@ -158,6 +155,15 @@ public class AdicionarReservaController implements Initializable {
         double precoFinal = getTotalReserva(reserva);
         reserva.setPreco(precoFinal);
 
+        TicketInfo ticketInfo = new TicketInfo(
+                Integer.toString(cmbClientes.getValue().getId()),
+                matriculaTxt.getText(),
+                DatePickerInicio.getValue().toString(),
+                DatePickerFim.getValue().toString(),
+                cmbEstacionamento.getValue(),
+                true);
+
+        reservaBLL.reservaEstacionamento(reserva, ticketInfo);
 
         txtPreco.setText(reserva.getPreco().toString());
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
@@ -305,27 +311,55 @@ public class AdicionarReservaController implements Initializable {
         resetDatePickers();
     }
 
+    private Boolean verificaSeDatasNaoSaoNull() {
+        if (DatePickerInicio.getValue() == null || DatePickerFim.getValue() == null) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     private void listnerCheckBox() {
         check.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                if (check.isSelected()) {
-                    interior.setDisable(false);
-                    exterior.setDisable(false);
-                    cmbEstacionamento.setDisable(false);
-                    lugarLbl.setDisable(false);
-                    interior.setSelected(true);
-                    matriculaTxt.setDisable(false);
-                    matriculaLbl1.setDisable(false);
-                    cmbEstacionamento.getItems().clear();
-                    cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
+                EstacionamentoBLL eBLL = new EstacionamentoBLL();
+                var lugares = eBLL.GetLugares();
+                int lugaresOcupados = 0;
+                for (int i = 0; i < lugares.Parking.size(); i++) {
+                    if (lugares.Parking.get(i).Occupied == false) {
+                        lugaresOcupados++;
+                    }
+                }
+
+                if (lugaresOcupados == lugares.Parking.size()) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não há estacionamentos disponíveis!", "Erro:");
+                    check.setSelected(false);
+                    return;
+                }
+
+                if (verificaSeDatasNaoSaoNull()) {
+                    if (check.isSelected()) {
+                        interior.setDisable(false);
+                        exterior.setDisable(false);
+                        cmbEstacionamento.setDisable(false);
+                        lugarLbl.setDisable(false);
+                        interior.setSelected(true);
+                        matriculaTxt.setDisable(false);
+                        matriculaLbl1.setDisable(false);
+                        cmbEstacionamento.getItems().clear();
+                        cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
+                    } else {
+                        interior.setDisable(true);
+                        exterior.setDisable(true);
+                        cmbEstacionamento.setDisable(true);
+                        lugarLbl.setDisable(true);
+                        matriculaTxt.setDisable(true);
+                        matriculaLbl1.setDisable(true);
+                    }
                 } else {
-                    interior.setDisable(true);
-                    exterior.setDisable(true);
-                    cmbEstacionamento.setDisable(true);
-                    lugarLbl.setDisable(true);
-                    matriculaTxt.setDisable(true);
-                    matriculaLbl1.setDisable(true);
+                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Preencher data inicial e final primeiro!", "Aviso:");
+                    check.setSelected(false);
                 }
             }
         });
@@ -342,12 +376,12 @@ public class AdicionarReservaController implements Initializable {
     private List<String> getEstacionamentoDisponivelInterno() {
         List<String> list = new ArrayList<>();
         EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugaresDisponiveis();
+        var lugares = eBLL.GetLugares();
 
         for (int i = 0; i < lugares.Parking.size(); i++) {
             Parking currentParking = lugares.Parking.get(i);
             if (currentParking.Indoor == true && currentParking.Occupied == false) {
-                list.add("Lugar: " + currentParking.ParkingSpot + " Preço: " + currentParking.Price + "\n\n");
+                list.add(currentParking.ParkingSpot);
             }
         }
         return list;
@@ -356,12 +390,12 @@ public class AdicionarReservaController implements Initializable {
     private List<String> getEstacionamentoDisponivelExterno() {
         List<String> list = new ArrayList<>();
         EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugaresDisponiveis();
+        var lugares = eBLL.GetLugares();
 
         for (int i = 0; i < lugares.Parking.size(); i++) {
             Parking currentParking = lugares.Parking.get(i);
             if (currentParking.Indoor == false && currentParking.Occupied == false) {
-                list.add("Lugar: " + currentParking.ParkingSpot + " Preço: " + currentParking.Price + "\n\n");
+                list.add(currentParking.ParkingSpot);
             }
         }
         return list;
