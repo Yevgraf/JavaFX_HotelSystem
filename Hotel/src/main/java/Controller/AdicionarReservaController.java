@@ -155,16 +155,19 @@ public class AdicionarReservaController implements Initializable {
         double precoFinal = getTotalReserva(reserva);
         reserva.setPreco(precoFinal);
 
-        TicketInfo ticketInfo = new TicketInfo(
-                Integer.toString(cmbClientes.getValue().getId()),
-                matriculaTxt.getText(),
-                DatePickerInicio.getValue().toString(),
-                DatePickerFim.getValue().toString(),
-                cmbEstacionamento.getValue(),
-                true);
-
-        reservaBLL.reservaEstacionamento(reserva, ticketInfo);
-
+       if (check.isSelected()){
+           TicketInfo ticketInfo = new TicketInfo(
+                   Integer.toString(cmbClientes.getValue().getId()),
+                   matriculaTxt.getText(),
+                   DatePickerInicio.getValue().toString(),
+                   DatePickerFim.getValue().toString(),
+                   cmbEstacionamento.getValue(),
+                   true);
+           reservaBLL.reservaEstacionamento(reserva, ticketInfo);
+       } else {
+           TicketInfo ticketInfo = new TicketInfo();
+           reservaBLL.reservaEstacionamento(reserva, ticketInfo);
+       }
         txtPreco.setText(reserva.getPreco().toString());
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
         addServicoReserva();
@@ -327,7 +330,7 @@ public class AdicionarReservaController implements Initializable {
                 var lugares = eBLL.GetLugares();
                 int lugaresOcupados = 0;
                 for (int i = 0; i < lugares.Parking.size(); i++) {
-                    if (lugares.Parking.get(i).Occupied == false) {
+                    if (lugares.Parking.get(i).Occupied == true) {
                         lugaresOcupados++;
                     }
                 }
