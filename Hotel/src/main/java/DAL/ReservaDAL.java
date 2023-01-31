@@ -182,6 +182,7 @@ public class ReservaDAL {
             }
         }
     }
+
     public List<Reserva> searchReservationsByClientName(String clientName) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -191,7 +192,7 @@ public class ReservaDAL {
             DBconn dbConn = new DBconn();
             connection = dbConn.getConn();
             ps = connection.prepareStatement("SELECT r.id, r.idCliente, r.idQuarto, r.dataInicio, r.dataFim, r.preco FROM Reserva r JOIN Utilizador u ON r.idCliente = u.id WHERE u.nome LIKE ?");
-            ps.setString(1, "%"+clientName+"%");
+            ps.setString(1, "%" + clientName + "%");
             rs = ps.executeQuery();
             while (rs.next()) {
                 Reserva reservation = new Reserva();
@@ -517,7 +518,7 @@ public class ReservaDAL {
             if (estado == null || estado.equals("cancelada")) {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A reserva já se encontra cancelada.", "Erro");
             } else {
-                if(estado.equals("checkin")){
+                if (estado.equals("checkin")) {
                     returnProductToStock(reservationId);
                 }
                 cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
@@ -656,5 +657,18 @@ public class ReservaDAL {
         } catch (Exception ex) {
         }
         return null;
+    }
+
+    public void updateTicketIDNaReservaToNullQuandoApagaTicket(String ticketID) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String query2 = "UPDATE Reserva set ticketID = null WHERE ticketID = ?";
+            PreparedStatement ps2 = connection.prepareStatement(query2);
+            ps2.setString(1, ticketID);
+            ps2.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

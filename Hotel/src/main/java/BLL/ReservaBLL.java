@@ -160,4 +160,9 @@ public class ReservaBLL {
             throw new RuntimeException(e);
         }
     }
+
+    public void updateTicketIDNaReservaToNullQuandoApagaTicket(String ticketID) {
+        ReservaDAL reservaDAL = new ReservaDAL();
+        reservaDAL.updateTicketIDNaReservaToNullQuandoApagaTicket(ticketID);
+    }
 }

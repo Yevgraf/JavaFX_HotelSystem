@@ -1,6 +1,7 @@
 package Controller;
 
 import BLL.EstacionamentoBLL;
+import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
 import Model.EstacionamentoAPI.Parking;
 import Model.EstacionamentoAPI.TicketInfo;
@@ -119,6 +120,8 @@ public class EstacionamentoGestorController {
         }
 
         if (ticketBLL.DeleteTicket(idDeleteTxT.getText().trim())){
+            ReservaBLL rBLL = new ReservaBLL();
+            rBLL.updateTicketIDNaReservaToNullQuandoApagaTicket(idDeleteTxT.getText().trim());
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Ticket apagado com sucesso!","Sucesso!");
             idDeleteTxT.setText("");
         } else {
