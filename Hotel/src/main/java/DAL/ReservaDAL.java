@@ -284,6 +284,25 @@ public class ReservaDAL {
         ps.close();
     }
 
+
+    public static List<Reserva> getReservasComTicket(int idUtilizador) throws SQLException {
+        String cmd = "SELECT * FROM Reserva WHERE idCliente = ? AND ticketID IS NOT NULL";
+        DBconn dbconn = new DBconn();
+        Connection connection = dbconn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, idUtilizador);
+        ResultSet rs = ps.executeQuery();
+        List<Reserva> reservas = new ArrayList<>();
+        while (rs.next()) {
+            Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
+                    rs.getInt("idQuarto"), rs.getString("dataInicio"), rs.getString("dataFim"),
+                    rs.getDouble("preco"), rs.getObject("ticketID").toString());
+            reservas.add(reserva);
+        }
+        return reservas;
+    }
+
+
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 

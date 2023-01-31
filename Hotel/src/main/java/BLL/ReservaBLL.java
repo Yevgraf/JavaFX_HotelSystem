@@ -48,6 +48,11 @@ public class ReservaBLL {
         }
         return false;
     }
+    public List<Reserva> getReservasComTicket(int idUtilizador) throws SQLException {
+        ReservaDAL rDAL = new ReservaDAL();
+        return rDAL.getReservasComTicket(idUtilizador);
+    }
+
 
     public List<Reserva> searchReservationsByClientName(String clientName) {
         ReservaDAL reservationDAL = new ReservaDAL();
