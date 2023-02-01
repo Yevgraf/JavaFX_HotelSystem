@@ -566,6 +566,11 @@ public class ReservaDAL {
                 if(estado.equals("checkin")){
                     returnProductToStock(reservationId);
                 }
+                String ticketId = getTicketIdForReservation(reservationId);
+                if (ticketId != null) {
+                    EstacionamentoBLL bll = new EstacionamentoBLL();
+                    bll.DeleteTicket(ticketId);
+                }
                 cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
                 ps = connection.prepareStatement(cmd);
                 ps.setInt(1, reservationId);
@@ -575,6 +580,9 @@ public class ReservaDAL {
             }
         }
     }
+
+
+
 
 
     private void returnProductToStock(int reservationId) throws SQLException {
