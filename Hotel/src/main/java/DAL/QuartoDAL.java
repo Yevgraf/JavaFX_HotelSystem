@@ -1,5 +1,7 @@
 package DAL;
 
+import BLL.UtilizadorPreferences;
+import Controller.CriarQuartoController;
 import Model.Cartao;
 import Model.MessageBoxes;
 import Model.Quarto;
@@ -214,4 +216,66 @@ public class QuartoDAL {
 
         return 0;
     }
+
+    public static boolean VerificarQuartoPiso(int piso){
+        String verificarquarto1 = "select count(id) from Quarto where piso = " + piso;
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= 10 ) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Limite de Quartos Alcancado!", "ERRO");
+                    CriarQuartoController.vP = false;
+                }else{
+                    CriarQuartoController.vP = true;
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return CriarQuartoController.vP;
+    }
+
+    public static boolean VerificarTipoQuarto(int qtdQuartos, String tipoquarto){
+        String verificarquarto1 = "select count(id) from Quarto where tipoQuarto = '" + tipoquarto + "'";
+        try (Connection conn = DBconn.getConn();
+             PreparedStatement stmt = conn.prepareStatement(verificarquarto1)){
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                if (rs.getInt(1) >= qtdQuartos ) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"Limite de Quartos Alcancado!", "ERRO");
+                    CriarQuartoController.vTQ = false;
+                }else{
+                    CriarQuartoController.vTQ = true;
+                    CriarQuartoController.ADDQuarto();
+                }
+            }
+        } catch (SQLException e) {
+            e.getCause();
+        }
+        return CriarQuartoController.vTQ;
+    }
+
+    public static ObservableList<Quarto> getQuartoByClientId() {
+        Integer id = UtilizadorPreferences.utilizadorId();
+        ObservableList<Quarto> lista = FXCollections.observableArrayList();
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String cmd = "Select q.id as sId, q.tipoQuarto as servico From Quarto q JOIN Reserva r On r.idQuarto = q.id JOIN EstadoReserva er " +
+                    "On er.reserva = r.id Where er.estado like 'checkin' and r.idCliente = " + id;
+            PreparedStatement ps = connection.prepareStatement(cmd);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Quarto obj = new Quarto(rs.getInt("sId"), rs.getString("servico"));
+                lista.add(obj);
+            }
+            ps.close();
+        } catch (Exception ex) {
+        }
+        return lista;
+    }
+
 }

@@ -3,24 +3,33 @@ package DAL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.sql.*;
+import java.util.List;
+
+import BLL.SearchFile;
 
 public class DBconn {
 
-    private static String url ="jdbc:sqlserver://ctespbd.dei.isep.ipp.pt;databaseName=2022_F_LP3_G4;TrustServerCertificate=True";
-    private static String user = "2022_F_LP3_G4";
-    private static String pass = "123+qwe*123";
+    static Connection connect = null;
 
     /**
      * A função getConn serve para fazer a conexão á base de dados
      * @return devolve a ligação da base de dados
      */
     public static Connection getConn() {
-        Connection conn = null;
+        List<String> list = SearchFile.SearchDB();
+        String[] array = list.toArray(new String[0]);
+        String url = array[0];
+        String user = array[1];
+        String pass = array[2];
         try {
-            conn= DriverManager.getConnection(url,user,pass);
-        }catch (SQLException ex)           {
-            System.err.println(ex.getMessage());
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            connect = DriverManager.getConnection(url, user, pass);
+
+        } catch (ClassNotFoundException | SQLException e) {
+            System.out.println("Erro ao conectar a base de dados! \n Erro: ");
+            e.printStackTrace();
         }
-        return conn;
+        return connect;
     }
 }

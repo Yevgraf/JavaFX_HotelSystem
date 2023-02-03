@@ -4,6 +4,7 @@ import BLL.CheckInBLL;
 import BLL.CheckoutBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
+import DAL.CheckInDAL;
 import Model.Checkout;
 import Model.MessageBoxes;
 import Model.Pagamento;
@@ -73,6 +74,8 @@ public class CheckInController implements Initializable {
 
     @FXML
     private ComboBox<Pagamento> metodoPagamento;
+
+    public static boolean vdci;
 
     private void initCombos() throws SQLException {
         CheckoutBLL checkoutBLL = new CheckoutBLL();
@@ -153,8 +156,8 @@ public class CheckInController implements Initializable {
 
 
         if (selectedReservation != null) {
-
-            performCheckIn(selectedReservation);
+            if (CheckInDAL.VerificarDataCheckIn(selectedReservation) == true)
+                performCheckIn(selectedReservation);
 
 
             initListViews();
