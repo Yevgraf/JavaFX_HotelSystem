@@ -9,6 +9,10 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ComentarioDAL {
+    /**
+     * A função addComentario serve para o cliente puder dar o feedback da sua estadia no hotel
+     * @param comentario recebe um comentario
+     */
     public void addComentario(Comentario comentario) {
         PreparedStatement ps2;
 
@@ -33,6 +37,10 @@ public class ComentarioDAL {
         }
     }
 
+    /**
+     * A função getAllComentarios serve para mostrar todos os comentarios guardadoos
+     * @return devolve uma lista de todos os comentários feitos
+     */
     public static ObservableList<Comentario> getAllComentarios() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 
@@ -56,6 +64,10 @@ public class ComentarioDAL {
         return list;
     }
 
+    /**
+     * A função getAllSugestoes serve para guardar todas as sugestoes
+     * @return devolve uma lista com todas as sugestoes
+     */
     public static ObservableList<Comentario> getAllSugestoes() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 
@@ -80,6 +92,10 @@ public class ComentarioDAL {
         return list;
     }
 
+    /**
+     * A função getAllQueixas serve para guardar todas as queixas
+     * @return devolve uma lista com todas as sugestoes
+     */
     public static ObservableList<Comentario> getAllQueixas() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 

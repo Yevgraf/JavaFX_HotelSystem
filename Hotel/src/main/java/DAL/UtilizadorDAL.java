@@ -16,6 +16,12 @@ import java.util.List;
 import static BLL.Encriptacao.encrypt;
 
 public class UtilizadorDAL {
+
+    /**
+     * A função getUsersByType guarda os utilizadores por tipo de utilizador
+     * @param i recebe o id
+     * @return devolve uma lista de todos os utilizadores
+     */
     public static List<Utilizador> getUsersByType(int i) {
         List<Utilizador> users = new ArrayList<>();
         try {
@@ -51,6 +57,12 @@ public class UtilizadorDAL {
         return users;
     }
 
+
+    /**
+     * A função getClientName vai guardar todos os nomes dos clientes
+     * @param idCliente recebe o id do cliente
+     * @return devolve uma lista de todos os nomes de clientes
+     */
     public static String getClientName(Integer idCliente) {
         String clientName = "";
         try {
@@ -72,6 +84,13 @@ public class UtilizadorDAL {
     }
 
 
+    /**
+     * A função Login serve para fazer o login de um utilizador
+     * @param utilizador recebe um utilizador
+     * @param password recebe uma password
+     * @return devolve a entrada na aplicação
+     * @throws SQLException mostra a informacao do erro
+     */
     public Utilizador Login(String utilizador, String password) throws SQLException {
         PreparedStatement ps;
         DBconn dbConn = new DBconn();
@@ -111,6 +130,20 @@ public class UtilizadorDAL {
     }
 
 
+    /**
+     * A função CriarUtilizador serve para criar um utilizador e guardar na base de dados
+     * @param nome recebe o nome do utilizador
+     * @param nif recebe o nif do utilizador
+     * @param morada recebe a morada do utilizador
+     * @param dataNascimento recebe a data de nascimento do utilizador
+     * @param email recebe o email do utilizador
+     * @param contacto recebe o contacto do utilizador
+     * @param utilizador recebe o nome da conta do utilizador
+     * @param password recebe a password do utilizador
+     * @param tipoUser recebe o tipo de utilizador
+     * @return devolve um utilizador
+     * @throws SQLException mostra a informacao do erro
+     */
     public static PreparedStatement CriarUtilizador(String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, String tipoUser) throws SQLException {
         // Validate input data
         if (nome == null || nif == null || morada == null || dataNascimento == null || email == null || contacto == null || utilizador == null || password == null || tipoUser == null) {
@@ -144,6 +177,10 @@ public class UtilizadorDAL {
     }
 
 
+    /**
+     * A função getTodosUtilizadores vai guardar todos os utilizadores
+     * @return devolve todos os utilizadores
+     */
     public static ObservableList<Utilizador> getTodosUtilizadores() {
         ObservableList<Utilizador> utilizadores = FXCollections.observableArrayList();
 
@@ -173,6 +210,11 @@ public class UtilizadorDAL {
         return utilizadores;
     }
 
+
+    /**
+     * A função getGestores vai guardar todos os gestores
+     * @return devolve uma lista de gestores
+     */
     public static ObservableList<Utilizador> getGestores() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -202,6 +244,11 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+
+    /**
+     * A função getFuncionario vai guardar um funcionario
+     * @return devolve uma lista de todos os funcionarios
+     */
     public static ObservableList<Utilizador> getFuncionario() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -231,6 +278,11 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+
+    /**
+     * A função getClientes vai guardar todos os clientes
+     * @return devolve todos os clientes
+     */
     public static ObservableList<Utilizador> getClientes() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -260,6 +312,13 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+
+    /**
+     * A função deleteUtilizador serve para eliminar os utilizadores
+     * @param id recebe o id do utilizador
+     * @return devolve o utilizador eliminado
+     * @throws SQLException mostra a informacao do erro
+     */
     public Utilizador deleteUtilizador(int id) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();

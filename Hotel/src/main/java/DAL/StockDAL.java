@@ -9,6 +9,13 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class StockDAL {
+
+    /**
+     * A função getDescricaoStock serve para ver a descrição do produto
+     * @param selectedID recebe o id do stock
+     * @return devolve a descrição do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public String getDescricaoStock(Stock selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
@@ -25,6 +32,11 @@ public class StockDAL {
         return null;
     }
 
+
+    /**
+     * A função getStock serve para guardar o Stock
+     * @return devolve uma lista do stock
+     */
     public static ObservableList<Stock> getStock() {
         ObservableList<Stock> lista = FXCollections.observableArrayList();
         try {
@@ -42,6 +54,13 @@ public class StockDAL {
         return lista;
     }
 
+
+    /**
+     * A função verificaSeProdutoTemQuantidadeSuficiente serve para verificar se o produto tem quantidade suficiente para ser usado
+     * @param idProduto recebe o id do produto
+     * @param quantDesejada recebe a quantidade desejada
+     * @return devolve se existe ou não quantidade suficiente
+     */
     public Boolean verificaSeProdutoTemQuantidadeSuficiente(String idProduto, int quantDesejada) {
         try {
             DBconn dbConn = new DBconn();

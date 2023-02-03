@@ -7,6 +7,13 @@ import java.sql.*;
 import java.util.List;
 
 public class TipoUtilizadorDAL {
+
+    /**
+     * A função getByNome serve para guardar o nome
+     * @param nome recebe o nome
+     * @return devolve o nome do utilizador
+     * @throws SQLException mostra a informacao do erro
+     */
     public static TipoUtilizador getByNome(String nome) throws SQLException {
         if (nome == null) {
             throw new IllegalArgumentException("Nome cannot be null");
@@ -41,6 +48,11 @@ public class TipoUtilizadorDAL {
         return null;
     }
 
+
+    /**
+     * A função getTipoUtilizador serve para guardar os tipo de utilizador
+     * @return devolve uma lista de utilizadores
+     */
     public static List<TipoUtilizador> getTipoUtilizador() {
         List<TipoUtilizador> lista = FXCollections.observableArrayList();
         try {

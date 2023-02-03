@@ -12,6 +12,11 @@ import javafx.scene.control.Alert;
 import java.sql.*;
 
 public class ProdutoDAL {
+
+    /**
+     * A função addProduto serve para verificar se é possivél adicionar o produto à base de dados
+     * @param produtos recebe o produto
+     */
     public void addProduto(ObservableList<Produto> produtos) {
         try {
             DBconn dbConn = new DBconn();
@@ -33,6 +38,12 @@ public class ProdutoDAL {
         }
     }
 
+    /**
+     * A função verificaProdutoExistente serve para verificar se o produto existe
+     * @param id recebe o id do produto
+     * @param connection recebe a conexão à base de dados
+     * @return devolve se existe ou não o produto
+     */
     private boolean verificaProdutoExistente(String id, Connection connection) {
         Statement ps2;
         try {
@@ -44,6 +55,12 @@ public class ProdutoDAL {
         }
     }
 
+    /**
+     * A função insertProduto serve para inserir o produto na base de dados
+     * @param produto recebe o produto
+     * @param statement recebe o statement
+     * @throws SQLException mostra a informacao do erro
+     */
     private void insertProduto(Produto produto, PreparedStatement statement) throws SQLException {
         statement.setString(1, produto.getIdProduto());
         statement.setString(2, produto.getDescricao());
@@ -55,6 +72,10 @@ public class ProdutoDAL {
         statement.close();
     }
 
+    /**
+     * A função getAllProdutos serve para guardar todos os produtos numa lista
+     * @return devolve a lista com os produtos
+     */
     public static ObservableList<Produto> getAllProdutos() {
         ObservableList<Produto> lista = FXCollections.observableArrayList();
         try {
@@ -74,6 +95,10 @@ public class ProdutoDAL {
         return lista;
     }
 
+    /**
+     * A função getAllProdutosPrecosClientes serve para guardar o produto só com o id, a descrição, preço por unidade e preço para cliente
+     * @return devolve uma lista com os produtos
+     */
     public static ObservableList<Produto> getAllProdutosPrecosClientes() {
         ObservableList<Produto> lista = FXCollections.observableArrayList();
         try {
@@ -92,6 +117,12 @@ public class ProdutoDAL {
         return lista;
     }
 
+    /**
+     * A função updateConsumivelProduto serve para atualizar todos os produtos consumivéis
+     * @param selectedID recebe o id do produto
+     * @param estado recebe o estado do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public void updateConsumivelProduto(Produto selectedID, boolean estado) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
@@ -103,6 +134,12 @@ public class ProdutoDAL {
         ps2.executeUpdate();
     }
 
+    /**
+     * A função getQuantidadeProduto serve para guardar a quantidade de um certo produto
+     * @param selectedID recebe o id do produto
+     * @return devolve a quantidade do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public Integer getQuantidadeProduto (Produto selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
@@ -119,6 +156,12 @@ public class ProdutoDAL {
         return null;
     }
 
+    /**
+     * A função updatePrecoProdutoParaCliente serve para atualizar o preço do produto para o cliente
+     * @param selectedID recebe o id do produto
+     * @param quantidade recebe a quantidade do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public void updatePrecoProdutoParaCliente(Produto selectedID, Double quantidade) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();

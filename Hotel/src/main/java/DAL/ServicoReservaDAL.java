@@ -13,6 +13,11 @@ import java.sql.SQLException;
 
 public class ServicoReservaDAL {
 
+    /**
+     * A função addServicoToReserva serve para guardar todos os servico na reservas
+     * @param servicoReserva recebe os serviços da reserva
+     * @throws SQLException mostra a informacao do erro
+     */
     public void addServicoToReserva(ServicoReserva servicoReserva) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -22,6 +27,13 @@ public class ServicoReservaDAL {
         ps.executeUpdate();
     }
 
+    /**
+     * A função isServicoExistsForReserva serve para verificar se o serviço existe na reserva
+     * @param idReserva recebe o id da reserva
+     * @param idServico recebe o id do serviço
+     * @return devolve se o serviço existe ou não
+     * @throws SQLException mostra a informacao do erro
+     */
     public boolean isServicoExistsForReserva(int idReserva, int idServico) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -38,6 +50,12 @@ public class ServicoReservaDAL {
         return count > 0;
     }
 
+    /**
+     * A função removeServicoFromReservation serve para eliminar um serviço reserva numa reserva
+     * @param selectedReservation recebe a reserva escolhida
+     * @param selectedServico recebe o serviço escolhido
+     * @throws SQLException mostra a informacao do erro
+     */
     public void removeServicoFromReservation(Reserva selectedReservation, Servico selectedServico) throws SQLException {
 
         DBconn dbConn = new DBconn();

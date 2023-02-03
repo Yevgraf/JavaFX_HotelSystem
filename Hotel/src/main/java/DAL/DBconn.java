@@ -10,6 +10,10 @@ public class DBconn {
     private static String user = "2022_F_LP3_G4";
     private static String pass = "123+qwe*123";
 
+    /**
+     * A função getConn serve para fazer a conexão á base de dados
+     * @return devolve a ligação da base de dados
+     */
     public static Connection getConn() {
         Connection conn = null;
         try {

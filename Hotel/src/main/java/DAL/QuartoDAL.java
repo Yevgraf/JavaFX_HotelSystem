@@ -12,6 +12,10 @@ import java.sql.*;
 
 public class QuartoDAL {
 
+    /**
+     * A função addQuarto serve para verificar se é possível adicionar o quarto
+     * @param quarto recebe o quarto
+     */
     public void addQuarto(Quarto quarto) {
         PreparedStatement ps2;
 
@@ -41,6 +45,12 @@ public class QuartoDAL {
     }
 
 
+    /**
+     * A função checkRoomAvailability serve para verificar se o quarto está disponivél
+     * @param roomType recebe o tipo de quarto
+     * @param floor recebe o piso
+     * @return devolve se está ou não disponível
+     */
     public boolean checkRoomAvailability(String roomType, String floor) {
         try {
 
@@ -79,6 +89,10 @@ public class QuartoDAL {
     }
 
 
+    /**
+     * A função updateQuarto serve para atualizar o quarto
+     * @param quarto recebe o quarto
+     */
     public void updateQuarto(Quarto quarto) {
         PreparedStatement ps2;
 
@@ -105,6 +119,11 @@ public class QuartoDAL {
     }
 
 
+    /**
+     * A função deleteQuarto serve para eliminar um quarto
+     * @param idCartao recebe o id do cartão
+     * @throws SQLException mostra a informacao do erro
+     */
     public void deleteQuarto(int idCartao) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -115,6 +134,10 @@ public class QuartoDAL {
     }
 
 
+    /**
+     * A função getAllQuartos serve para guardar os quartos
+     * @return devolve uma lista de todos os quartos
+     */
     public static ObservableList<Quarto> getAllQuartos() {
         ObservableList<Quarto> list = FXCollections.observableArrayList();
 
@@ -140,6 +163,12 @@ public class QuartoDAL {
         return list;
     }
 
+    /**
+     * A função updateAtivo serve para por o quarto ocupado
+     * @param reservationId recebe o id da reserva
+     * @param ativo recebe um boolean
+     * @throws SQLException mostra a informacao do erro
+     */
     public void updateAtivo(int reservationId, boolean ativo) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -162,6 +191,12 @@ public class QuartoDAL {
         }
     }
 
+    /**
+     * A função getPreco serve para guardar o preço do quarto
+     * @param quartoId recebe o id do quarto
+     * @return devolve o preço do quarto
+     * @throws SQLException mostra a informacao do erro
+     */
     public double getPreco(int quartoId) throws SQLException {
         String sql = "SELECT preco " +
                 "FROM Quarto q " +

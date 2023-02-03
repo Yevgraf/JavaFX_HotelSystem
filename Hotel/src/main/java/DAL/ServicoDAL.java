@@ -13,6 +13,11 @@ import java.util.Set;
 
 public class ServicoDAL {
 
+
+    /**
+     * A função getAllServicosAndQuartos serve para guardar todos os serviços de quartos
+     * @return devolve uma lista de todos os serviços
+     */
     public static ObservableList<Servico> getAllServicosAndQuartos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
@@ -43,7 +48,10 @@ public class ServicoDAL {
     }
 
 
-
+    /**
+     * A função addServico serve para verificar se é possível adicionar o serviço
+     * @param servico recebe o serviço
+     */
     public void addServico(Servico servico) {
         try {
             if (isServicoExists(servico.getServico())) {
@@ -61,6 +69,12 @@ public class ServicoDAL {
         }
     }
 
+    /**
+     * A função isServicoExists serve para verificar se o serviço existo
+     * @param servico recebe o serviço
+     * @return devolve se o serviço existe ou não
+     * @throws SQLException mostra a informacao do erro
+     */
     public boolean isServicoExists(String servico) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Servico WHERE servico = ?";
 
@@ -77,6 +91,12 @@ public class ServicoDAL {
     }
 
 
+    /**
+     * A função deleteServico serve para eliminar um serviço
+     * @param id recebe o id
+     * @return devolve o serviço eliminado
+     * @throws SQLException mostra a informacao do erro
+     */
     public Servico deleteServico(int id) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -87,6 +107,10 @@ public class ServicoDAL {
         return null;
     }
 
+    /**
+     * A função getAllServicos serve para guardar todos os serviços
+     * @return devolve uma lista com todos os serviços
+     */
     public static ObservableList<Servico> getAllServicos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
@@ -103,6 +127,10 @@ public class ServicoDAL {
         return lista;
     }
 
+    /**
+     * A função getServicosByClientId serve para guardar os serviços pelo id do cliente
+     * @return devolve uma lista de todos os serviços
+     */
     public static ObservableList<Servico> getServicosByClientId() {
         Integer id = UtilizadorPreferences.utilizadorId();
         ObservableList<Servico> lista = FXCollections.observableArrayList();
