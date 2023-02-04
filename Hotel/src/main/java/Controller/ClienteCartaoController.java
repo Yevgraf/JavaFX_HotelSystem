@@ -1,4 +1,5 @@
 package Controller;
+
 import BLL.RegistoBLL;
 import BLL.UtilizadorPreferences;
 import DAL.ServicoDAL;
@@ -45,7 +46,6 @@ public class ClienteCartaoController implements Initializable {
     private Button passarCartao;
 
 
-
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
         if (UtilizadorPreferences.comparaTipoLogin()) {
@@ -56,7 +56,7 @@ public class ClienteCartaoController implements Initializable {
             newStage.hide();
             stage.setScene(new Scene(fxmlLoader.load()));
             stage.show();
-        } else if (UtilizadorPreferences.comparaTipoFuncionario()){
+        } else if (UtilizadorPreferences.comparaTipoFuncionario()) {
             FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelFuncionario.fxml"));
             Stage stage = new Stage();
             Stage newStage = (Stage) btnVoltar.getScene().getWindow();
@@ -92,14 +92,12 @@ public class ClienteCartaoController implements Initializable {
             java.sql.Timestamp sqlTimestamp = new java.sql.Timestamp(utilDate.getTime());
 
             RegistoBLL.addNewRegisto(idCartao, idCliente, local, sqlTimestamp);
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION,"Registo gravado","Gravado");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Registo gravado", "Gravado");
         } catch (SQLException e) {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR,"falha ao gravar registo","ERRO");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "falha ao gravar registo", "ERRO");
             e.printStackTrace();
         }
     }
-
-
 
 
     private void initTable() {
@@ -108,11 +106,11 @@ public class ClienteCartaoController implements Initializable {
 
         idTable.setCellValueFactory(new PropertyValueFactory<Servico, Integer>("idServico"));
         descricaoTable.setCellValueFactory(new PropertyValueFactory<Servico, String>("servico"));
-        if(UtilizadorPreferences.comparaTipoFuncionario()) {
+        if (UtilizadorPreferences.comparaTipoFuncionario()) {
             servicos.setItems(ServicoDAL.getAllServicos());
-        } else if(UtilizadorPreferences.comparaTipoLogin()) {
+        } else if (UtilizadorPreferences.comparaTipoLogin()) {
             servicos.setItems(ServicoDAL.getAllServicosAndQuartos());
-        }else {
+        } else {
             servicos.setItems(ServicoDAL.getServicosByClientId());
         }
     }
