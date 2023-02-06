@@ -821,6 +821,11 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * Recebe por parametro o ID de uma reserva e retorna o ID do ticket.
+     *
+     * @param idReserva ID do ticket correspondente a reserva
+     */
     public String retornaTicketIDDeUmaReserva(String idReserva) {
         try {
             DBconn dbConn = new DBconn();
