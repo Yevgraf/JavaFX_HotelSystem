@@ -126,7 +126,11 @@ public class AdicionarReservaController implements Initializable {
 
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
             // if (VerificarDisponibilidade() == true){
-            AdicionarReserva();
+            if (check.isSelected()){
+                AdicionarReservaEEstacionamento();
+            } else {
+                AdicionarReservaSemEstacionamento();
+            }
             //   }
         } else {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!", "Erro");
@@ -144,8 +148,7 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
-    @FXML
-    void AdicionarReserva() throws SQLException, IOException {
+    void AdicionarReservaSemEstacionamento() throws SQLException, IOException {
         ReservaBLL reservaBLL = new ReservaBLL();
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
                 DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
@@ -155,7 +158,23 @@ public class AdicionarReservaController implements Initializable {
         double precoFinal = getTotalReserva(reserva);
         reserva.setPreco(precoFinal);
 
-       if (check.isSelected()){
+        txtPreco.setText(reserva.getPreco().toString());
+        MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
+        addServicoReserva();
+    }
+
+
+    @FXML
+    void AdicionarReservaEEstacionamento() throws SQLException, IOException {
+        ReservaBLL reservaBLL = new ReservaBLL();
+        Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
+                DatePickerInicio.getValue().toString(), DatePickerFim.getValue().toString(), 0.0);
+
+        reserva = reservaBLL.addReserva(reserva);
+
+        double precoFinal = getTotalReserva(reserva);
+        reserva.setPreco(precoFinal);
+
            TicketInfo ticketInfo = new TicketInfo(
                    Integer.toString(cmbClientes.getValue().getId()),
                    matriculaTxt.getText(),
@@ -164,10 +183,7 @@ public class AdicionarReservaController implements Initializable {
                    cmbEstacionamento.getValue(),
                    true);
            reservaBLL.reservaEstacionamento(reserva, ticketInfo);
-       } else {
-           TicketInfo ticketInfo = new TicketInfo();
-           reservaBLL.reservaEstacionamento(reserva, ticketInfo);
-       }
+
         txtPreco.setText(reserva.getPreco().toString());
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
         addServicoReserva();
@@ -326,6 +342,7 @@ public class AdicionarReservaController implements Initializable {
         check.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+                //conta nº de lugares ocupados
                 EstacionamentoBLL eBLL = new EstacionamentoBLL();
                 var lugares = eBLL.GetLugares();
                 int lugaresOcupados = 0;
@@ -334,7 +351,7 @@ public class AdicionarReservaController implements Initializable {
                         lugaresOcupados++;
                     }
                 }
-
+                // verifica se estão todos ocupados e dá erro se estiverem
                 if (lugaresOcupados == lugares.Parking.size()) {
                     MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não há estacionamentos disponíveis!", "Erro:");
                     check.setSelected(false);
