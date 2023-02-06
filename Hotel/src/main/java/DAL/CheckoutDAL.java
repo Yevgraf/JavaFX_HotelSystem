@@ -1,5 +1,6 @@
 package DAL;
 
+import BLL.EstacionamentoBLL;
 import Model.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -24,8 +25,38 @@ public class CheckoutDAL {
         ps.setTimestamp(4, Timestamp.valueOf(LocalDateTime.now()));
 
         ps.executeUpdate();
-    }
 
+        EstacionamentoBLL estacionamentoBLL = new EstacionamentoBLL();
+        String ticketId = getTicketIdForReservation(checkout.getIdReserva());
+        if (ticketId != null) {
+            estacionamentoBLL.DeleteTicket(ticketId);
+            updateReservaTableAfterTicketDeletion(checkout.getIdReserva());
+        }
+    }
+    private void updateReservaTableAfterTicketDeletion(int reservationId) throws SQLException {
+        String cmd = "UPDATE Reserva SET ticketID = null WHERE id = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ps.executeUpdate();
+        ps.close();
+    }
+    private String getTicketIdForReservation(int reservationId) throws SQLException {
+        String cmd = "SELECT ticketID FROM Reserva WHERE id = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ResultSet rs = ps.executeQuery();
+        String ticketId = null;
+        if (rs.next()) {
+            ticketId = rs.getString("ticketID");
+        }
+        ps.close();
+
+        return ticketId;
+    }
     public ObservableList<Pagamento> getPagamentos() throws SQLException {
         ObservableList<Pagamento> pagamentos = FXCollections.observableArrayList();
 

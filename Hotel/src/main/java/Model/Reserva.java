@@ -94,7 +94,7 @@ public class Reserva {
     @Override
     public String toString() {
         String clientName = UtilizadorDAL.getClientName(idCliente);
-        return clientName + " - Quarto: " + idQuarto;
+        return clientName + " - Quarto: " + idQuarto + " - " + dataInicio;
     }
 
 

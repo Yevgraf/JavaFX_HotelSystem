@@ -213,7 +213,6 @@ public class GestaoReservasController implements Initializable {
         });
     }
 
-
     //Event listener criado para procurar cliente enquanto se escreve no textField
     @FXML
     void SearchClienteTxtFieldAction(ActionEvent event) {
