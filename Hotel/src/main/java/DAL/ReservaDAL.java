@@ -250,6 +250,15 @@ public class ReservaDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!", "Apagada:");
         }
     }
+    private static void updateReservaTableAfterTicketDeletion(int reservationId) throws SQLException {
+        String cmd = "UPDATE Reserva SET ticketID = null WHERE id = ?";
+        DBconn dbConn = new DBconn();
+        Connection connection = dbConn.getConn();
+        PreparedStatement ps = connection.prepareStatement(cmd);
+        ps.setInt(1, reservationId);
+        ps.executeUpdate();
+        ps.close();
+    }
 
     private static String getTicketIdForReservation(int reservationId) throws SQLException {
         String cmd = "SELECT ticketID FROM Reserva WHERE id = ?";
@@ -474,55 +483,6 @@ public class ReservaDAL {
         }
     }
 
-    public static void deleteEstadoReserva(int reservationId) throws SQLException {
-        PreparedStatement ps = null;
-        Connection connection = null;
-        try {
-            DBconn dbConn = new DBconn();
-            connection = dbConn.getConn();
-            ps = connection.prepareStatement("SELECT estado FROM EstadoReserva WHERE reserva=?");
-            ps.setInt(1, reservationId);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                String estado = rs.getString("estado");
-                if (estado.equals("checkin") || estado.equals("cancelada") || estado.equals("checkout")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva não pode ser apagada, já se encontra em checkin ou cancelada", "Reserva iniciada");
-                    return;
-                }
-            }
-
-            ps = connection.prepareStatement("SELECT estado FROM Reserva WHERE id = ?");
-            ps.setInt(1, reservationId);
-            rs = ps.executeQuery();
-            if (rs.next()) {
-                String estado = rs.getString("estado");
-                if (estado.equals("cancelada")) {
-                    MessageBoxes.ShowMessage(Alert.AlertType.WARNING, "Reserva já se encontra cancelada, não pode ser apagada.", "Reserva cancelada");
-                    return;
-                }
-            }
-            ps = connection.prepareStatement("DELETE FROM Checkout WHERE reservaId=?");
-            ps.setInt(1, reservationId);
-            ps.executeUpdate();
-
-            ps = connection.prepareStatement("DELETE FROM EstadoReserva WHERE reserva=?");
-            ps.setInt(1, reservationId);
-            ps.executeUpdate();
-
-            ps = connection.prepareStatement("DELETE FROM Reserva WHERE id=?");
-            ps.setInt(1, reservationId);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
 
 
     public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
@@ -571,6 +531,7 @@ public class ReservaDAL {
                 if (ticketId != null) {
                     EstacionamentoBLL bll = new EstacionamentoBLL();
                     bll.DeleteTicket(ticketId);
+                    updateReservaTableAfterTicketDeletion(reservationId);
                 }
                 cmd = "UPDATE EstadoReserva SET estado = 'cancelada' WHERE reserva = ?";
                 ps = connection.prepareStatement(cmd);
