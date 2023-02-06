@@ -168,7 +168,8 @@ public class CheckInController implements Initializable {
         CheckInBLL checkInBll = new CheckInBLL();
         LocalDate today = LocalDate.now();
         LocalDate reservationStart = LocalDate.parse(reservation.getDataInicio().toString());
-        if(today.isEqual(reservationStart)) {
+        LocalDate reservationEnd = LocalDate.parse(reservation.getDataFim().toString());
+        if (today.isAfter(reservationStart) && today.isBefore(reservationEnd)) {
             try {
                 checkInBll.checkIn(reservation.getId());
                 double updatedTotal = ReservaBLL.getTotalReserva(reservation);
@@ -179,9 +180,10 @@ public class CheckInController implements Initializable {
                 MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ocorreu um problema ao realizar o check-in. Por favor, tente novamente mais tarde.", "ERRO");
             }
         } else {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Check-in não pode ser realizado pois a data de inicio da reserva não é hoje.", "ERRO");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Check-in não pode ser realizado pois hoje não está dentro do período da reserva.", "ERRO");
         }
     }
+
 
 
 
