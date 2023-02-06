@@ -322,7 +322,9 @@ public class ReservaDAL {
 
 
     public static List<Reserva> getReservasComTicket(int idUtilizador) throws SQLException {
-        String cmd = "SELECT * FROM Reserva WHERE idCliente = ? AND ticketID IS NOT NULL";
+        String cmd = "SELECT r.* FROM Reserva r " +
+                "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                "WHERE r.idCliente = ? AND r.ticketID IS NOT NULL AND (er.estado = 'pendente' OR er.estado = 'checkin')";
         DBconn dbconn = new DBconn();
         Connection connection = dbconn.getConn();
         PreparedStatement ps = connection.prepareStatement(cmd);

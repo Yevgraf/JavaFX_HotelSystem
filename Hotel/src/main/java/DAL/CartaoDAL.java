@@ -7,7 +7,11 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class CartaoDAL {
-
+    /**
+     * A função addCartao serve para adicionar o cartao na base de dados
+     * @param cartao recebe os campos de um cartao
+     * @throws SQLException mostra a informacao do erro
+     */
     public void addCartao(Cartao cartao) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
