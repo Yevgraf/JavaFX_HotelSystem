@@ -2,6 +2,8 @@ package BLL;
 
 import DAL.QuartoDAL;
 import DAL.ReservaDAL;
+import Model.EstacionamentoAPI.ResponseTicket;
+import Model.EstacionamentoAPI.Ticket;
 import Model.EstacionamentoAPI.TicketInfo;
 import Model.MessageBoxes;
 import Model.Reserva;
@@ -169,5 +171,20 @@ public class ReservaBLL {
     public void updateTicketIDNaReservaToNullQuandoApagaTicket(String ticketID) {
         ReservaDAL reservaDAL = new ReservaDAL();
         reservaDAL.updateTicketIDNaReservaToNullQuandoApagaTicket(ticketID);
+    }
+
+    public String retornaTicketIDDeUmaReserva(String idReserva) {
+        try {
+            ReservaDAL reservaDAL = new ReservaDAL();
+            EstacionamentoBLL eBLL = new EstacionamentoBLL();
+
+            String ticketId = reservaDAL.retornaTicketIDDeUmaReserva(idReserva);
+
+            Ticket ticket = eBLL.GETParkingTicket(ticketId);
+
+            return ticket.ParkingQR;
+        }catch(Exception ex) {
+            throw ex;
+        }
     }
 }

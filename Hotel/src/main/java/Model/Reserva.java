@@ -12,6 +12,8 @@ public class Reserva {
     private Double preco;
     private String ticketID;
 
+    private String clientName;
+
     public Reserva() {
     }
 
@@ -32,6 +34,17 @@ public class Reserva {
         this.dataFim = dataFim;
         this.preco = preco;
         this.ticketID = ticketID;
+    }
+
+    public Reserva(Integer id, Integer idCliente, Integer idQuarto, String dataInicio, String dataFim, Double preco, String ticketID, String clientName) {
+        this.id = id;
+        this.idCliente = idCliente;
+        this.idQuarto = idQuarto;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.preco = preco;
+        this.ticketID = ticketID;
+        this.clientName = clientName;
     }
 
     public Integer getId() {
@@ -93,10 +106,11 @@ public class Reserva {
 
     @Override
     public String toString() {
-        String clientName = UtilizadorDAL.getClientName(idCliente);
-        return clientName + " - Quarto: " + idQuarto + " - " + dataInicio;
+        var name = clientName == null || clientName.isEmpty() || clientName.isBlank()
+                ? UtilizadorDAL.getClientName(idCliente)
+                : clientName;
+
+        return name + " - Quarto: " + idQuarto + " - " + dataInicio;
     }
-
-
 }
 

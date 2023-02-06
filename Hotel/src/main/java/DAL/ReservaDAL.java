@@ -135,13 +135,16 @@ public class ReservaDAL {
     public static List<Reserva> getReservasPendentes() {
         List<Reserva> reservas = new ArrayList<>();
         try {
-            String cmd = "SELECT r.* FROM Reserva r INNER JOIN EstadoReserva e ON r.id = e.reserva WHERE e.estado = 'pendente' OR e.estado = 'checkin'";
+            String cmd = "SELECT r.*, u.nome FROM Reserva r " +
+                    "INNER JOIN EstadoReserva e ON r.id = e.reserva "+
+                    "INNER JOIN Utilizador u ON r.idCliente = u.id " +
+                    "WHERE e.estado = 'pendente' OR e.estado = 'checkin'";
             Statement st = DBconn.getConn().createStatement();
             ResultSet rs = st.executeQuery(cmd);
             while (rs.next()) {
                 Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"), rs.getInt("idQuarto"),
                         rs.getString("dataInicio"), rs.getString("dataFim"),
-                        rs.getDouble("preco"));
+                        rs.getDouble("preco"), "", rs.getString("nome"));
                 reservas.add(reserva);
             }
             st.close();
@@ -322,8 +325,9 @@ public class ReservaDAL {
 
 
     public static List<Reserva> getReservasComTicket(int idUtilizador) throws SQLException {
-        String cmd = "SELECT r.* FROM Reserva r " +
+        String cmd = "SELECT r.*, u.nome FROM Reserva r " +
                 "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
+                "INNER JOIN Utilizador u ON r.idCliente = u.id " +
                 "WHERE r.idCliente = ? AND r.ticketID IS NOT NULL AND (er.estado = 'pendente' OR er.estado = 'checkin')";
         DBconn dbconn = new DBconn();
         Connection connection = dbconn.getConn();
@@ -334,7 +338,7 @@ public class ReservaDAL {
         while (rs.next()) {
             Reserva reserva = new Reserva(rs.getInt("id"), rs.getInt("idCliente"),
                     rs.getInt("idQuarto"), rs.getString("dataInicio"), rs.getString("dataFim"),
-                    rs.getDouble("preco"), rs.getObject("ticketID").toString());
+                    rs.getDouble("preco"), rs.getObject("ticketID").toString(), rs.getString("nome"));
             reservas.add(reserva);
         }
         return reservas;
@@ -688,4 +692,23 @@ public class ReservaDAL {
             throw new RuntimeException(e);
         }
     }
+
+    public String retornaTicketIDDeUmaReserva(String idReserva) {
+        try {
+            DBconn dbConn = new DBconn();
+            Connection connection = dbConn.getConn();
+            String query2 = "SELECT Reserva.ticketID FROM Reserva WHERE Reserva.id = ?";
+            PreparedStatement ps2 = connection.prepareStatement(query2);
+            ps2.setString(1, idReserva);
+            ResultSet rs = ps2.executeQuery();
+            while (rs.next()) {
+                String ticketID = rs.getString("ticketID");
+                return ticketID;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
 }

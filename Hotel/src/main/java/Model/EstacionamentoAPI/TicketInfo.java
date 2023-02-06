@@ -1,7 +1,5 @@
 package Model.EstacionamentoAPI;
 
-import java.util.Date;
-
 public class TicketInfo {
     public String Id;
     public String GroupId;

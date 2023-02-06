@@ -91,6 +91,22 @@ public class EstacionamentoBLL {
         }
     }
 
+    public Ticket GETParkingTicket(String id) {
+        try {
+            String result = GETRequestParkingAPI("ticket/" + id);
+            if (result.isEmpty())
+                return null;
+
+            ObjectMapper mapper = new ObjectMapper();
+            Ticket teste = null;
+            teste = mapper.readValue(result, Ticket.class);
+
+            return teste;
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ResponseTicket POSTCreateParkingReservation(TicketInfo body) {
         try {
             var objectMapper = new ObjectMapper();
