@@ -10,7 +10,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CheckInDAL {
-
+    /**
+     * A função getPendingReservations serve para obter todas as reservas pendentes
+     *
+     * @return lista de reservas pendentes
+     * @throws SQLException mostra a informaca do erro de SQL
+     */
     public List<Reserva> getPendingReservations() throws SQLException {
         List<Reserva> pendingReservations = new ArrayList<>();
 
@@ -34,6 +39,12 @@ public class CheckInDAL {
         return pendingReservations;
     }
 
+    /**
+     * A função updateStockOnCheckIn serve para atualizar os produtos do stock quando é feito CheckIN
+     *
+     * @param reservationId recebe o id da reserva
+     * @throws SQLException mostra a informacao do erro de SQL
+     */
     public void updateStockOnCheckIn(int reservationId) throws SQLException {
         String query = "SELECT idProduto, quantidade FROM ProdutoReserva WHERE idReserva = ?";
         Connection connection = null;
@@ -60,6 +71,15 @@ public class CheckInDAL {
             }
         }
     }
+
+    /**
+     * A função updateStock serve para atualizar os produtos do stock quando os mesmos sao utilizados
+     *
+     * @param productId  recebe o id do produto
+     * @param quantity   recebe a quantidade do produto
+     * @param connection recebe a conexao da base de dados
+     * @throws SQLException mostra a informacaoo do erro de SQL
+     */
     private void updateStock(String productId, int quantity, Connection connection) throws SQLException {
         String query2 = "UPDATE Stock set quantidade = quantidade - ? WHERE idProduto = ?";
         PreparedStatement ps2 = connection.prepareStatement(query2);

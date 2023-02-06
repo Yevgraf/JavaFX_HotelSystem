@@ -8,6 +8,14 @@ import java.sql.*;
 
 public class ProdutoQuartoDAL {
 
+    /**
+     * A função addProdutoInQuarto serve para verificar se é possível adicionar produtos ao quarto
+     *
+     * @param quartoId  recebe o id do quarto
+     * @param productId recebe o id do produto
+     * @param quantity  recebe a quantidade do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public static void addProductInQuarto(int quartoId, String productId, int quantity) throws SQLException {
         String query1 = "INSERT INTO ProdutoQuarto (idQuarto, idProduto, quantidade) VALUES (?,?,?)";
 
@@ -23,7 +31,12 @@ public class ProdutoQuartoDAL {
         }
     }
 
-
+    /**
+     * A função deleteProductFromQuarto serve para eliminar um produto de um quarto
+     *
+     * @param productId recebe o id do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public static void deleteProductFromQuarto(int productId) throws SQLException {
         String query1 = "UPDATE Stock set quantidade = quantidade + (SELECT quantidade FROM ProdutoQuarto WHERE id = ?) WHERE idProduto = (SELECT idProduto FROM ProdutoQuarto WHERE id = ?)";
         String query2 = "DELETE FROM ProdutoQuarto WHERE id = ?";
@@ -38,19 +51,12 @@ public class ProdutoQuartoDAL {
         }
     }
 
-    private static int selectStock(String productId, Connection connection) throws SQLException {
-        String query = "SELECT quantidade FROM Stock WHERE idProduto=?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, productId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        }
-        return 0;
-    }
-
+    /**
+     * A função getProdutoQuarto serve guardar todos os produtos quarto
+     *
+     * @return devolve uma lista dos produto quarto
+     * @throws SQLException mostra a informacao do erro
+     */
     public static ObservableList<ProdutoQuarto> getProdutoQuarto() throws SQLException {
         ObservableList<ProdutoQuarto> produtoQuartoList = FXCollections.observableArrayList();
         String query = "SELECT * FROM ProdutoQuarto";

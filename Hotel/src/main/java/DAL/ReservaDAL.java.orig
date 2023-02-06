@@ -820,6 +820,7 @@ public class ReservaDAL {
             throw new RuntimeException(e);
         }
     }
+<<<<<<< HEAD
 
     public String retornaTicketIDDeUmaReserva(String idReserva) {
         try {
@@ -840,3 +841,6 @@ public class ReservaDAL {
     }
 
 }
+=======
+}
+>>>>>>> 00e51f8e3abe2f1734f114ac72e246ffc10e967d

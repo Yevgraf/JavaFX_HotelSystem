@@ -9,6 +9,7 @@ import java.sql.*;
 public class CartaoDAL {
     /**
      * A função addCartao serve para adicionar o cartao na base de dados
+     *
      * @param cartao recebe os campos de um cartao
      * @throws SQLException mostra a informacao do erro
      */
@@ -21,6 +22,11 @@ public class CartaoDAL {
         ps.executeUpdate();
     }
 
+    /**
+     * A função getAllCartoes serve para obter todos os cartoes da base de dados
+     *
+     * @return devolve uma lista de cartoes
+     */
     public static ObservableList<Cartao> getAllCartoes() {
         ObservableList<Cartao> list = FXCollections.observableArrayList();
 
@@ -43,6 +49,12 @@ public class CartaoDAL {
         return list;
     }
 
+    /**
+     * A função deleteCartao serve para eleminar um cartao da base de dados
+     *
+     * @param idCartao recebe o Id de um cartao
+     * @throws SQLException mostra a informacao do erro
+     */
     public void deleteCartao(int idCartao) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
