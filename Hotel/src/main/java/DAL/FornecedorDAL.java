@@ -6,6 +6,12 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class FornecedorDAL {
+
+    /**
+     * A função addFornecedor serve para adicionar o fornecedor à base de dados
+     *
+     * @param fornecedores recebe o fornecedor da encomenda
+     */
     public void addFornecedor(ObservableList<EntradaStock> fornecedores) {
         PreparedStatement ps2;
         try {
@@ -29,6 +35,13 @@ public class FornecedorDAL {
         }
     }
 
+    /**
+     * A função verificaFornecedorExistente serve para verificar se o fornecedor já existe
+     *
+     * @param id         recebe o id do fornecedor
+     * @param connection recebe a conexão à base de dados
+     * @return devolve se existe ou não o fornecedor
+     */
     private boolean verificaFornecedorExistente(String id, Connection connection) {
         Statement ps2;
         try {

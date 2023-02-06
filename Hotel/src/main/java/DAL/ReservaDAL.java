@@ -16,6 +16,13 @@ import java.util.List;
 
 public class ReservaDAL {
 
+    /**
+     * A função `addReserva` serve para adicionar uma reserva à base de dados.
+     *
+     * @param reserva Um objeto do tipo `Reserva` que representa a reserva a ser adicionada.
+     * @return Um objeto do tipo `Reserva` que representa a reserva adicionada, com um ID gerado automaticamente.
+     * @throws SQLException Em caso de erro ao acessar a base de dados, uma exceção será lançada com informações sobre o erro.
+     */
     public Reserva addReserva(Reserva reserva) throws SQLException {
         PreparedStatement ps = null;
         int reservationId = -1;
@@ -55,7 +62,12 @@ public class ReservaDAL {
         }
     }
 
-
+    /**
+     * A função transferProdutosToProdutoReserva serve para transferir os produtos de uma reserva para a tabela ProdutoReserva.
+     *
+     * @param reservationId recebe o id da reserva
+     * @param roomId        recebe o id do quarto
+     */
     private void transferProdutosToProdutoReserva(int reservationId, int roomId) {
         try (Connection connection = DBconn.getConn();
              PreparedStatement psSelect = connection.prepareStatement("SELECT idProduto, quantidade FROM ProdutoQuarto WHERE idQuarto = ?");
@@ -80,40 +92,11 @@ public class ReservaDAL {
         }
     }
 
-
-    public void addServiceToReservation(int reservationId, String service) throws SQLException {
-        PreparedStatement ps = null;
-        Connection connection = null;
-        try {
-            DBconn dbConn = new DBconn();
-            connection = dbConn.getConn();
-
-            String checkQuery = "SELECT COUNT(*) FROM Servico WHERE servico = ?";
-            ps = connection.prepareStatement(checkQuery);
-            ps.setString(1, service);
-            ResultSet checkResult = ps.executeQuery();
-            if (!checkResult.next() || checkResult.getInt(1) == 0) {
-                throw new SQLException("Este serviço não existe");
-            }
-
-            String insertQuery = "INSERT INTO ServicoReserva(idReserva, idServico) SELECT ?, id FROM Servico WHERE servico = ?";
-            ps = connection.prepareStatement(insertQuery);
-            ps.setInt(1, reservationId);
-            ps.setString(2, service);
-            ps.executeUpdate();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (ps != null) {
-                ps.close();
-            }
-            if (connection != null) {
-                connection.close();
-            }
-        }
-    }
-
-
+    /**
+     * A função getReservas devolve uma lista de objetos Reserva recuperados do banco de dados.
+     *
+     * @return Devolve uma lista observável de objetos Reserva
+     */
     public static ObservableList<Reserva> getReservas() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         try {
@@ -132,6 +115,11 @@ public class ReservaDAL {
         return reservas;
     }
 
+    /**
+     * Obtém a lista de reservas pendentes (com estado "pendente" ou "checkin").
+     *
+     * @return a lista de reservas pendentes.
+     */
     public static List<Reserva> getReservasPendentes() {
         List<Reserva> reservas = new ArrayList<>();
         try {
@@ -150,7 +138,14 @@ public class ReservaDAL {
         return reservas;
     }
 
-
+    /**
+     * Verifica se o quarto está disponível no determinado data de início.
+     *
+     * @param roomId    ID do quarto
+     * @param startDate Data de início
+     * @return Retorna verdadeiro se o quarto estiver disponível, falso caso contrário
+     * @throws SQLException Se ocorrer um erro durante a execução da consulta SQL
+     */
     public static boolean isRoomAvailable(int roomId, LocalDate startDate) throws SQLException {
         String query = "SELECT dataInicio, dataFim FROM Reserva WHERE idQuarto = ? And dataInicio = ?";
         try (PreparedStatement stmt = DBconn.getConn().prepareStatement(query)) {
@@ -162,6 +157,13 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * Atualiza o preço de uma reserva.
+     *
+     * @param reservationId ID da reserva a ser atualizada.
+     * @param newPrice      Novo preço da reserva.
+     * @throws SQLException caso haja algum problema com a conexão com o banco de dados.
+     */
     public void updateReservationPrice(int reservationId, double newPrice) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -184,6 +186,13 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * A função searchReservationByClientName serve para procurar a reserva pelo nome do cliente
+     *
+     * @param clientName recebe o nome do cliente
+     * @return devolve a reserva
+     * @throws SQLException mostra a informacao do erro
+     */
     public List<Reserva> searchReservationsByClientName(String clientName) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -221,7 +230,12 @@ public class ReservaDAL {
         }
     }
 
-
+    /**
+     * A função deleteReservation serve para eliminar uma reserva
+     *
+     * @param reservationId recebe o id da reserva
+     * @throws SQLException mostra a informacao do erro
+     */
     public static void deleteReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
         DBconn dbConn = new DBconn();
@@ -250,6 +264,14 @@ public class ReservaDAL {
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva pendente apagada!", "Apagada:");
         }
     }
+
+
+    /**
+     * Atualiza a tabela de reservas após a exclusão de um ticket.
+     *
+     * @param reservationId ID da reserva a ser atualizada
+     * @throws SQLException caso ocorra algum erro durante a atualização da tabela
+     */
     private static void updateReservaTableAfterTicketDeletion(int reservationId) throws SQLException {
         String cmd = "UPDATE Reserva SET ticketID = null WHERE id = ?";
         DBconn dbConn = new DBconn();
@@ -260,6 +282,14 @@ public class ReservaDAL {
         ps.close();
     }
 
+
+    /**
+     * Obtém o ID do bilhete associado à reserva especificada.
+     *
+     * @param reservationId O ID da reserva.
+     * @return O ID do bilhete, ou nulo caso a reserva não esteja associada a um ticket.
+     * @throws SQLException Caso ocorra algum erro na execução da consulta à base de dados.
+     */
     private static String getTicketIdForReservation(int reservationId) throws SQLException {
         String cmd = "SELECT ticketID FROM Reserva WHERE id = ?";
         DBconn dbConn = new DBconn();
@@ -276,41 +306,71 @@ public class ReservaDAL {
         return ticketId;
     }
 
-
-
-
-
-
-
+    /**
+     * Método responsável por apagar uma reserva específica da tabela 'ProdutoReserva'.
+     *
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void deleteProdutoReserva(int reservationId) throws SQLException {
 
         String cmd = ("DELETE FROM ProdutoReserva WHERE idReserva = ?");
         executeDelete(cmd, reservationId);
     }
 
-
+    /**
+     * Método responsável por apagar as informações de estado de uma reserva específica na tabela 'EstadoReserva'.
+     *
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void deleteEstadoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM EstadoReserva WHERE reserva = ?";
 
         executeDelete(cmd, reservationId);
     }
 
+    /**
+     * Método responsável por apagar as informações de serviço de uma reserva específica na tabela 'ServicoReserva'.
+     *
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void deleteServicoReservaForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM ServicoReserva WHERE idReserva = ?";
         executeDelete(cmd, reservationId);
     }
 
+    /**
+     * Método responsável por apagar as informações de checkout de uma reserva específica na tabela 'Checkout'.
+     *
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void deleteCheckoutForReservation(int reservationId) throws SQLException {
         String cmd = "DELETE FROM Checkout WHERE reservaId = ?";
         executeDelete(cmd, reservationId);
     }
 
 
+    /**
+     * Método responsável por apagar uma reserva específica da tabela 'Reserva'.
+     *
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void deleteReservationById(int reservationId) throws SQLException {
         String cmd = "DELETE FROM Reserva WHERE id = ?";
         executeDelete(cmd, reservationId);
     }
 
+    /**
+     * Método privado auxiliar para executar operações de apagar.
+     *
+     * @param cmd           O comando SQL a ser executado.
+     * @param reservationId O identificador da reserva.
+     * @throws SQLException Caso ocorra algum erro durante a conexão com o banco de dados.
+     */
     private static void executeDelete(String cmd, int reservationId) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -320,7 +380,13 @@ public class ReservaDAL {
         ps.close();
     }
 
-
+    /**
+     * Método para obter as reservas de um utilizador que possuem um ticket associado.
+     *
+     * @param idUtilizador O ID do utilizador cujas reservas se deseja obter
+     * @return Uma lista de objetos Reserva, onde cada reserva é uma reserva do utilizador que possui um ticket associado
+     * @throws SQLException caso ocorra um erro ao aceder à base de dados
+     */
     public static List<Reserva> getReservasComTicket(int idUtilizador) throws SQLException {
         String cmd = "SELECT r.* FROM Reserva r " +
                 "INNER JOIN EstadoReserva er ON r.id = er.reserva " +
@@ -340,7 +406,12 @@ public class ReservaDAL {
         return reservas;
     }
 
-
+    /**
+     * Atualiza as informações de uma reserva existente na base de dados.
+     *
+     * @param reserva A reserva com as novas informações.
+     * @throws SQLException Caso ocorra algum erro na execução da query SQL.
+     */
     public void updateReserva(Reserva reserva) throws SQLException {
         String sql = "UPDATE Reserva SET idCliente = ?, idQuarto = ?, dataInicio = ?, dataFim = ?, preco = ? WHERE id = ?";
 
@@ -356,6 +427,13 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * Atualiza o ticketID da reserva no banco de dados.
+     *
+     * @param reserva        a reserva a ser atualizada
+     * @param responseTicket o ticket da resposta para atualizar o ticketID da reserva
+     * @throws SQLException se ocorrer algum erro com o banco de dados
+     */
     public void updateReservaComResponseTicketID(Reserva reserva, ResponseTicket responseTicket) throws SQLException {
         String sql = "UPDATE Reserva SET ticketID = ? WHERE id = ?";
 
@@ -367,7 +445,13 @@ public class ReservaDAL {
         }
     }
 
-
+    /**
+     * Calcula o preço total dos serviços de uma reserva específica.
+     *
+     * @param reservationId o ID da reserva para calcular o preço total dos serviços
+     * @return o preço total dos serviços para a reserva especificada, ou 0 se não houver serviços para a reserva
+     * @throws SQLException se houver um erro ao acessar o banco de dados
+     */
     public double getTotalServicosReserva(int reservationId) throws SQLException {
         String sql = "SELECT SUM(s.preco) as preco " +
                 "FROM Reserva r " +
@@ -388,6 +472,13 @@ public class ReservaDAL {
         return 0;
     }
 
+    /**
+     * Obtém o total de produtos associados a uma reserva.
+     *
+     * @param reservationId O ID da reserva.
+     * @return O total dos produtos associados à reserva.
+     * @throws SQLException Se houver algum erro ao acessar o banco de dados.
+     */
     public double getTotalProdutosReserva(int reservationId) throws SQLException {
         double total = 0;
 
@@ -414,33 +505,13 @@ public class ReservaDAL {
         return total;
     }
 
-    public double getTotalProdutosQuarto(int reservationId) throws SQLException {
-        double total = 0;
-
-        String sql = "SELECT SUM(PQ.quantidade * p.precoParaCliente) AS total FROM Reserva r " +
-                "INNER JOIN ProdutoQuarto PQ on r.idQuarto = PQ.idQuarto " +
-                "INNER JOIN Produto P on P.id = PQ.idProduto WHERE r.id = ?";
-
-        Connection conn = DBconn.getConn();
-
-        PreparedStatement stmt = conn.prepareStatement(sql);
-
-        stmt.setInt(1, reservationId);
-
-        ResultSet rs = stmt.executeQuery();
-
-        if (rs.next()) {
-            total = rs.getDouble("total");
-        }
-
-        rs.close();
-        stmt.close();
-        conn.close();
-
-        return total;
-    }
-
-
+    /**
+     * Adiciona um estado à uma reserva.
+     *
+     * @param reservationId ID da reserva
+     * @param estado        Estado da reserva
+     * @throws SQLException Se houver algum erro com a conexão com o banco de dados
+     */
     public void addReservationState(int reservationId, String estado) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -463,6 +534,13 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * Atualiza o estado da reserva identificada pelo ID fornecido.
+     *
+     * @param reservationId O ID da reserva a ser atualizada.
+     * @param estado        O novo estado da reserva.
+     * @throws SQLException Se houver algum problema ao acessar o banco de dados.
+     */
     public void updateReservationState(int reservationId, String estado) throws SQLException {
         PreparedStatement ps = null;
         Connection connection = null;
@@ -485,8 +563,12 @@ public class ReservaDAL {
         }
     }
 
-
-
+    /**
+     * Obtém as reservas associadas a um determinado estado de reserva.
+     *
+     * @param estadoReserva o estado de reserva para o qual se pretendem obter as reservas
+     * @return uma lista observável de reservas associadas ao estado de reserva fornecido
+     */
     public static ObservableList<Reserva> getReservasByEstadoReserva(String estadoReserva) {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         try {
@@ -507,7 +589,12 @@ public class ReservaDAL {
         return reservas;
     }
 
-
+    /**
+     * Cancela uma reserva especificada.
+     *
+     * @param reservationId o ID da reserva a ser cancelada
+     * @throws SQLException caso ocorra um erro de SQL
+     */
     public void cancelReservation(int reservationId) throws SQLException {
         String cmd = "SELECT estado FROM EstadoReserva WHERE reserva = ?";
         DBconn dbConn = new DBconn();
@@ -545,10 +632,12 @@ public class ReservaDAL {
         }
     }
 
-
-
-
-
+    /**
+     * Método que devolve um produto para o stock.
+     *
+     * @param reservationId ID da reserva associada ao produto a ser devolvido.
+     * @throws SQLException Se houver erro ao acessar o banco de dados.
+     */
     private void returnProductToStock(int reservationId) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -576,6 +665,14 @@ public class ReservaDAL {
         }
     }
 
+    /**
+     * Atualiza o stock de um produto específico.
+     *
+     * @param productId  ID do produto a ser atualizado
+     * @param quantity   Quantidade a ser adicionada ao estoque do produto
+     * @param connection Conexão com a base de dados
+     * @throws SQLException Se ocorrer algum erro na atualização do estoque do produto
+     */
     private void updateStock(String productId, int quantity, Connection connection) throws SQLException {
         String query2 = "UPDATE Stock set quantidade = quantidade + ? WHERE idProduto = ?";
         PreparedStatement ps2 = connection.prepareStatement(query2);
@@ -584,7 +681,12 @@ public class ReservaDAL {
         ps2.executeUpdate();
     }
 
-
+    /**
+     * Recupera a data inicial de todas as reservas ativas ou com check-in pendente para um quarto específico.
+     *
+     * @param idQuarto ID do quarto para o qual deseja-se recuperar as datas iniciais de reserva.
+     * @return Uma lista de objetos LocalDate representando as datas iniciais de todas as reservas ativas ou com check-in pendente para o quarto especificado. Retorna null em caso de erro.
+     */
     public List<LocalDate> getDataInicial(int idQuarto) {
         List<LocalDate> datasIniciais = new ArrayList<>();
         try {
@@ -608,6 +710,13 @@ public class ReservaDAL {
         return null;
     }
 
+    /**
+     * Obtém as datas finais de reserva de um quarto específico.
+     *
+     * @param idQuarto ID do quarto
+     * @return lista de datas finais ou nulo em caso de erro
+     * @throws SQLException em caso de problemas com o banco de dados
+     */
     public List<LocalDate> getDataFinal(int idQuarto) {
         List<LocalDate> datasFinais = new ArrayList<>();
         try {
@@ -631,6 +740,14 @@ public class ReservaDAL {
         return null;
     }
 
+    /**
+     * Retorna a próxima data de uma reserva em que o quarto especificado esteja ocupado.
+     *
+     * @param idQuarto O ID do quarto a ser verificado
+     * @param ultData  A data mais recente da verificação
+     * @return A próxima data em que o quarto estiver ocupado, ou null se não houver reservas futuras
+     * @throws SQLException em caso de erro de acesso ao banco de dados
+     */
     public LocalDate getProximaData(int idQuarto, LocalDate ultData) {
         try {
             DBconn dbConn = new DBconn();
@@ -654,6 +771,12 @@ public class ReservaDAL {
         return null;
     }
 
+    /**
+     * Verifica se existe uma reserva para o quarto especificado.
+     *
+     * @param idQuarto O ID do quarto a ser verificado.
+     * @return Retorna verdadeiro se existir uma reserva para o quarto especificado, falso se não existir e nulo em caso de erro.
+     */
     public Boolean verificaSeExisteReserva(int idQuarto) {
         try {
             DBconn dbConn = new DBconn();
@@ -676,6 +799,11 @@ public class ReservaDAL {
         return null;
     }
 
+    /**
+     * Atualiza a coluna ticketID na tabela Reserva para nulo quando um ticket é apagado.
+     *
+     * @param ticketID ID do ticket que foi apagado
+     */
     public void updateTicketIDNaReservaToNullQuandoApagaTicket(String ticketID) {
         try {
             DBconn dbConn = new DBconn();

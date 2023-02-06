@@ -13,7 +13,12 @@ import java.util.List;
 
 public class CheckoutDAL {
 
-
+    /**
+     * A função addCheckout serve para adicionar o checkout na base de dados
+     *
+     * @param checkout recebe os parametros do checkout
+     * @throws SQLException mostra a informacaoo do erro de SQL
+     */
     public void addCheckout(Checkout checkout) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -33,6 +38,12 @@ public class CheckoutDAL {
             updateReservaTableAfterTicketDeletion(checkout.getIdReserva());
         }
     }
+
+    /**
+     * A função updateReservaTableAfterTicketDeletion serva para atualizar a tabela
+     * ao quando se remove um ticket da reserva
+     * @throws SQLException mostra a informacao do erro de SQL
+     */
     private void updateReservaTableAfterTicketDeletion(int reservationId) throws SQLException {
         String cmd = "UPDATE Reserva SET ticketID = null WHERE id = ?";
         DBconn dbConn = new DBconn();
@@ -42,6 +53,12 @@ public class CheckoutDAL {
         ps.executeUpdate();
         ps.close();
     }
+
+    /**
+     * A função getTicketIdForReservation serva para ir buscar o id do Ticket de uma reserva
+     * @return retorna o id do Ticket
+     * @throws SQLException mostra a informacao do erro de SQL
+     */
     private String getTicketIdForReservation(int reservationId) throws SQLException {
         String cmd = "SELECT ticketID FROM Reserva WHERE id = ?";
         DBconn dbConn = new DBconn();
@@ -57,6 +74,13 @@ public class CheckoutDAL {
 
         return ticketId;
     }
+
+    /**
+     * +     * A função getPagamentos serve para obter tipos de pagamentos
+     * +     * @return devolve a lista de toodos os pagamentos
+     * +     * @throws SQLException mostra a informacao do erro de SQL
+     * +
+     */
     public ObservableList<Pagamento> getPagamentos() throws SQLException {
         ObservableList<Pagamento> pagamentos = FXCollections.observableArrayList();
 
@@ -77,6 +101,12 @@ public class CheckoutDAL {
         return pagamentos;
     }
 
+    /**
+     * A função getCheckedInReservations serve para obter todas as reservas em que o checkin foi feito
+     *
+     * @return devolve as reservas com o checkin feito
+     * @throws SQLException mostra a informacao do erro de SQL
+     */
     public List<Reserva> getCheckedInReservations() throws SQLException {
         List<Reserva> pendingReservations = new ArrayList<>();
 
@@ -100,7 +130,12 @@ public class CheckoutDAL {
         return pendingReservations;
     }
 
-
+    /**
+     * A função voltaNaoConsumiveisAoStock serve para os produtos que não são consumiveis voltarem ao stock
+     *
+     * @param idReserva recebe o id da reserva
+     * @throws SQLException mostra a informacao do erro de SQL
+     */
     public void voltaNaoConsumiveisAoStock(int idReserva) throws SQLException {
         EntradaStockDAL entradaStockDAL = new EntradaStockDAL();
         ObservableList<Stock> lista = FXCollections.observableArrayList();

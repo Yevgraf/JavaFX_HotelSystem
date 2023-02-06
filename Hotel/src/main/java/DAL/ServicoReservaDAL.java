@@ -13,6 +13,12 @@ import java.sql.SQLException;
 
 public class ServicoReservaDAL {
 
+    /**
+     * Adiciona um serviço a uma reserva existente.
+     *
+     * @param servicoReserva objeto contendo informações sobre a reserva e o serviço a ser adicionado
+     * @throws SQLException se ocorrer um erro ao acessar o banco de dados
+     */
     public void addServicoToReserva(ServicoReserva servicoReserva) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -22,6 +28,14 @@ public class ServicoReservaDAL {
         ps.executeUpdate();
     }
 
+    /**
+     * Verifica se o serviço já existe para a reserva.
+     *
+     * @param idReserva ID da reserva a verificar.
+     * @param idServico ID do serviço a verificar.
+     * @return Retorna verdadeiro se o serviço já existir para a reserva, senão retorna falso.
+     * @throws SQLException Lançada se houver algum problema com a consulta ao banco de dados.
+     */
     public boolean isServicoExistsForReserva(int idReserva, int idServico) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -38,6 +52,13 @@ public class ServicoReservaDAL {
         return count > 0;
     }
 
+    /**
+     * Método para remover um serviço de uma reserva.
+     *
+     * @param selectedReservation reserva selecionada
+     * @param selectedServico     serviço selecionado
+     * @throws SQLException caso ocorra algum erro ao acessar o banco de dados
+     */
     public void removeServicoFromReservation(Reserva selectedReservation, Servico selectedServico) throws SQLException {
 
         DBconn dbConn = new DBconn();

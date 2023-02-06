@@ -9,6 +9,14 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class StockDAL {
+
+    /**
+     * Obtém a descrição de um produto a partir de uma instância de Stock.
+     *
+     * @param selectedID a instância de Stock para a qual se deseja obter a descrição do produto
+     * @return a descrição do produto
+     * @throws SQLException se houver uma falha ao acessar o banco de dados
+     */
     public String getDescricaoStock(Stock selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
@@ -25,6 +33,11 @@ public class StockDAL {
         return null;
     }
 
+    /**
+     * Obtém a lista de Stock de um produto.
+     *
+     * @return Lista de Stock de um produto.
+     */
     public static ObservableList<Stock> getStock() {
         ObservableList<Stock> lista = FXCollections.observableArrayList();
         try {
@@ -42,6 +55,14 @@ public class StockDAL {
         return lista;
     }
 
+    /**
+     * Verifica se o produto tem quantidade suficiente para ser vendido.
+     *
+     * @param idProduto     ID do produto
+     * @param quantDesejada quantidade desejada do produto
+     * @return true se houver quantidade suficiente do produto, false caso contrário, null se houver erro.
+     * @throws Exception
+     */
     public Boolean verificaSeProdutoTemQuantidadeSuficiente(String idProduto, int quantDesejada) {
         try {
             DBconn dbConn = new DBconn();

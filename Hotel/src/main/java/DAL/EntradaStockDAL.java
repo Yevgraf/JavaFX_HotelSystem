@@ -7,6 +7,14 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class EntradaStockDAL {
+
+    /**
+     * A função addEntradaStock serve para inserir todas os produtos importados
+     *
+     * @param entradaStocks recebe os produtos importados
+     * @param fornecedores  recebe os fornecedores que entregaram os proodutos
+     * @param stocks        recebe o stock atual
+     */
     public void addEntradaStock(ObservableList<EntradaStock> entradaStocks,
                                 ObservableList<EntradaStock> fornecedores,
                                 ObservableList<Stock> stocks) {
@@ -35,6 +43,14 @@ public class EntradaStockDAL {
         }
     }
 
+    /**
+     * A função insertEntradaStock serve para adicionar os produtos e os fornecedores à base de dados
+     *
+     * @param entradaStock recebe os produtos importados
+     * @param fornecedores recebe os fornecedores que entregaram os proodutos
+     * @param statement    recebe o statement
+     * @throws SQLException mostra a informacao do erro
+     */
     private void insertEntradaStock(EntradaStock entradaStock, EntradaStock fornecedores, PreparedStatement statement) throws SQLException {
         statement.setString(1, entradaStock.getIdProduto());
         statement.setInt(2, entradaStock.getCaixas());
@@ -51,6 +67,14 @@ public class EntradaStockDAL {
         statement.close();
     }
 
+
+    /**
+     * A função verificaStockExistente serve para verificar que produtos existem na base de dados
+     *
+     * @param id         recebe o id do produto
+     * @param connection recebe a conexão da base de dados
+     * @return devolve se existe ou não o produto na base de dados
+     */
     private boolean verificaStockExistente(String id, Connection connection) {
         Statement ps2;
         try {
@@ -62,6 +86,16 @@ public class EntradaStockDAL {
         }
     }
 
+
+    /**
+     * A função updateStock serve para atualizar a quantidade dos produtos que estão no stock
+     *
+     * @param connection   recebe a conexão da base de dados
+     * @param stocks       recebe o stock existente
+     * @param entradaStock recebe o stock importado
+     * @param idProduto    recebe o id do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     private void updateStock(Connection connection, ObservableList<Stock> stocks, EntradaStock entradaStock, String idProduto) throws SQLException {
         Stock stock = null;
 
@@ -85,6 +119,15 @@ public class EntradaStockDAL {
         }
     }
 
+
+    /**
+     * A função selectStock serve para descobrir a quantidade do produto em stock
+     *
+     * @param idProduto  recebe o id do produto
+     * @param connection recebe a conexão da base de dados
+     * @return recebe a quantidade do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     private Integer selectStock(String idProduto, Connection connection) throws SQLException {
         Statement statement = connection.createStatement();
 
@@ -97,6 +140,13 @@ public class EntradaStockDAL {
         return quantidade;
     }
 
+
+    /**
+     * A função insertStock serve para adicionar o novo stock à base de dados
+     *
+     * @param stocks     recebe o stock
+     * @param connection recebe a conexão á base de dados
+     */
     void insertStock(ObservableList<Stock> stocks, Connection connection) {
         try {
             PreparedStatement ps2 = connection.prepareStatement("INSERT INTO Stock(idProduto, quantidade)" +
@@ -113,6 +163,13 @@ public class EntradaStockDAL {
         }
     }
 
+    /**
+     * A função updateStock serve para atualizar a quantidade do produto
+     *
+     * @param stocks     recebe o stock atual
+     * @param connection recebe a conexão à base de dados
+     * @throws SQLException mostra a informacao do erro
+     */
     public void updateStock(ObservableList<Stock> stocks, Connection connection) throws SQLException {
         for (Stock stock : stocks) {
             PreparedStatement updateStatement = connection.prepareStatement("UPDATE Stock SET quantidade = ? WHERE idProduto = ?",
@@ -125,6 +182,12 @@ public class EntradaStockDAL {
         }
     }
 
+    /**
+     * A função verificaSeExisteEncomendaRepetida serve para validar se a encomenda já foi feita
+     *
+     * @param idEncomenda recebe o id da encomenda
+     * @return devolve se existe ou não a encomenda
+     */
     public Boolean verificaSeExisteEncomendaRepetida(String idEncomenda) {
         try {
             DBconn dbConn = new DBconn();

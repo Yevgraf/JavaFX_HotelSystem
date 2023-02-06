@@ -9,6 +9,12 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ComentarioDAL {
+
+    /**
+     * A função addComentario serve para o cliente puder dar o feedback da sua estadia no hotel
+     *
+     * @param comentario recebe um comentario
+     */
     public void addComentario(Comentario comentario) {
         PreparedStatement ps2;
 
@@ -33,6 +39,12 @@ public class ComentarioDAL {
         }
     }
 
+
+    /**
+     * A função getAllComentarios serve para mostrar todos os comentarios guardadoos
+     *
+     * @return devolve uma lista de todos os comentários feitos
+     */
     public static ObservableList<Comentario> getAllComentarios() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 
@@ -56,6 +68,11 @@ public class ComentarioDAL {
         return list;
     }
 
+    /**
+     * A função getAllSugestoes serve para guardar todas as sugestoes
+     *
+     * @return devolve uma lista com todas as sugestoes
+     */
     public static ObservableList<Comentario> getAllSugestoes() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 
@@ -80,6 +97,12 @@ public class ComentarioDAL {
         return list;
     }
 
+
+    /**
+     * A função getAllQueixas serve para guardar todas as queixas
+     *
+     * @return devolve uma lista com todas as sugestoes
+     */
     public static ObservableList<Comentario> getAllQueixas() {
         ObservableList<Comentario> list = FXCollections.observableArrayList();
 
@@ -104,7 +127,9 @@ public class ComentarioDAL {
         return list;
     }
 
-
+    /**
+     * A função getComentario serve para receber o comentario de um cliente
+     */
     public String getComentario(Comentario selectedID) throws SQLException {
         PreparedStatement ps2;
         DBconn dbConn = new DBconn();
@@ -121,15 +146,18 @@ public class ComentarioDAL {
         return null;
     }
 
-        public void deleteComentario(int clienteId) {
-            try (Connection con = DBconn.getConn();
-                 PreparedStatement stmt = con.prepareStatement("DELETE FROM dbo.Comentario WHERE idCliente = ?")) {
+    /**
+     * A função getComentario serve para apagar um comentario
+     */
+    public void deleteComentario(int clienteId) {
+        try (Connection con = DBconn.getConn();
+             PreparedStatement stmt = con.prepareStatement("DELETE FROM dbo.Comentario WHERE idCliente = ?")) {
 
-                stmt.setInt(1, clienteId);
-                stmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            stmt.setInt(1, clienteId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+    }
 
 }

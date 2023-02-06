@@ -13,13 +13,19 @@ import java.util.Set;
 
 public class ServicoDAL {
 
+
+    /**
+     * Recupera todos os serviços e quartos registrados no banco de dados.
+     *
+     * @return Uma lista observável de objetos {@link Servico}.
+     */
     public static ObservableList<Servico> getAllServicosAndQuartos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
             DBconn dbConn = new DBconn();
             Connection connection = dbConn.getConn();
 
-            // Retrieve all services
+
             String cmd = "SELECT * FROM Servico";
             Statement st = connection.createStatement();
             ResultSet rs = st.executeQuery(cmd);
@@ -28,7 +34,7 @@ public class ServicoDAL {
                 lista.add(obj);
             }
 
-            // Retrieve all rooms
+
             cmd = "SELECT * FROM Quarto";
             rs = st.executeQuery(cmd);
             while (rs.next()) {
@@ -43,7 +49,11 @@ public class ServicoDAL {
     }
 
 
-
+    /**
+     * Adiciona um serviço ao banco de dados.
+     *
+     * @param servico O serviço a ser adicionado.
+     */
     public void addServico(Servico servico) {
         try {
             if (isServicoExists(servico.getServico())) {
@@ -61,6 +71,13 @@ public class ServicoDAL {
         }
     }
 
+    /**
+     * Verifica se já existe o serviço no banco de dados.
+     *
+     * @param servico O nome do serviço a ser verificado.
+     * @return True se o serviço existir no banco de dados, False caso contrário.
+     * @throws SQLException Caso ocorra algum erro com o acesso ao banco de dados.
+     */
     public boolean isServicoExists(String servico) throws SQLException {
         String sql = "SELECT COUNT(*) FROM Servico WHERE servico = ?";
 
@@ -76,7 +93,13 @@ public class ServicoDAL {
         return false;
     }
 
-
+    /**
+     * Remove um serviço da base de dados a partir do seu ID.
+     *
+     * @param id ID do serviço a ser removido.
+     * @return Nada é retornado.
+     * @throws SQLException Caso ocorra algum erro de SQL durante a execução da operação.
+     */
     public Servico deleteServico(int id) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();
@@ -87,6 +110,11 @@ public class ServicoDAL {
         return null;
     }
 
+    /**
+     * Método que obtém todos os serviços a partir da tabela Serviço.
+     *
+     * @return lista - Lista de objetos do tipo Serviço com todos os serviços.
+     */
     public static ObservableList<Servico> getAllServicos() {
         ObservableList<Servico> lista = FXCollections.observableArrayList();
         try {
@@ -103,6 +131,12 @@ public class ServicoDAL {
         return lista;
     }
 
+    /**
+     * Obtém todos os serviços prestados a um cliente específico.
+     *
+     * @return Lista observável de serviços prestados a um cliente.
+     * @throws SQLException
+     */
     public static ObservableList<Servico> getServicosByClientId() {
         Integer id = UtilizadorPreferences.utilizadorId();
         ObservableList<Servico> lista = FXCollections.observableArrayList();
@@ -130,7 +164,6 @@ public class ServicoDAL {
         }
         return lista;
     }
-
 
 
 }

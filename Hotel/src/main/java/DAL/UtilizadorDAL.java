@@ -16,6 +16,13 @@ import java.util.List;
 import static BLL.Encriptacao.encrypt;
 
 public class UtilizadorDAL {
+
+    /**
+     * Obtém uma lista de utilizadores a partir do tipo de utilizador especificado.
+     *
+     * @param i O ID do tipo de utilizador a partir do qual a lista de utilizadores será obtida.
+     * @return Uma lista de utilizadores que são do tipo especificado pelo ID fornecido.
+     */
     public static List<Utilizador> getUsersByType(int i) {
         List<Utilizador> users = new ArrayList<>();
         try {
@@ -51,6 +58,12 @@ public class UtilizadorDAL {
         return users;
     }
 
+    /**
+     * Recupera o nome de um cliente com base no seu identificador.
+     *
+     * @param idCliente Identificador do cliente.
+     * @return Nome do cliente.
+     */
     public static String getClientName(Integer idCliente) {
         String clientName = "";
         try {
@@ -71,7 +84,14 @@ public class UtilizadorDAL {
         return clientName;
     }
 
-
+    /**
+     * Realiza o login de um utilizador.
+     *
+     * @param utilizador Nome de utilizador
+     * @param password   Palavra-passe de acesso
+     * @return Utilizador O utilizador que realizou o login ou null se o login falhar
+     * @throws SQLException Exceção gerada pelo acesso à base de dados
+     */
     public Utilizador Login(String utilizador, String password) throws SQLException {
         PreparedStatement ps;
         DBconn dbConn = new DBconn();
@@ -110,16 +130,31 @@ public class UtilizadorDAL {
         return null;
     }
 
-
+    /**
+     * Cria um utilizador na base de dados.
+     *
+     * @param nome           Nome do utilizador.
+     * @param nif            NIF do utilizador.
+     * @param morada         Morada do utilizador.
+     * @param dataNascimento Data de nascimento do utilizador.
+     * @param email          Email do utilizador.
+     * @param contacto       Contacto do utilizador.
+     * @param utilizador     Nome de utilizador do utilizador.
+     * @param password       Palavra-passe do utilizador.
+     * @param tipoUser       Tipo de utilizador.
+     * @return PreparedStatement object.
+     * @throws SQLException             se erros na base de dados ocurerem.
+     * @throws IllegalArgumentException se algum parametro for null ou tipoUser invalido is invalid.
+     */
     public static PreparedStatement CriarUtilizador(String nome, String nif, String morada, Date dataNascimento, String email, String contacto, String utilizador, String password, String tipoUser) throws SQLException {
-        // Validate input data
+
         if (nome == null || nif == null || morada == null || dataNascimento == null || email == null || contacto == null || utilizador == null || password == null || tipoUser == null) {
             throw new IllegalArgumentException("All fields are required");
         }
 
-        // Get user type object
+
         TipoUtilizador userType = TipoUtilizadorDAL.getByNome(tipoUser);
-        String encryptpass =  Encriptacao.encrypt(password);
+        String encryptpass = Encriptacao.encrypt(password);
         if (userType == null) {
             throw new IllegalArgumentException("Invalid user type: " + tipoUser);
         }
@@ -128,13 +163,13 @@ public class UtilizadorDAL {
         Connection connection = dbConn.getConn();
         PreparedStatement ps = connection.prepareStatement("INSERT INTO Utilizador (nome, nif, morada, dataNascimento, email, contacto, utilizador, palavrapasse, idTipoUtilizador) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
 
-        ps.setString(1,nome);
-        ps.setString(2,nif);
-        ps.setString(3,morada);
+        ps.setString(1, nome);
+        ps.setString(2, nif);
+        ps.setString(3, morada);
         ps.setDate(4, (java.sql.Date) dataNascimento);
-        ps.setString(5,email);
-        ps.setString(6,contacto);
-        ps.setString(7,utilizador);
+        ps.setString(5, email);
+        ps.setString(6, contacto);
+        ps.setString(7, utilizador);
         ps.setString(8, encryptpass);
         ps.setInt(9, userType.getId());
         ps.executeUpdate();
@@ -143,7 +178,11 @@ public class UtilizadorDAL {
 
     }
 
-
+    /**
+     * Seleciona todos os utilizadores existentes na base de dados.
+     *
+     * @return ObservableList de objetos Utilizador que representa todos os utilizadores existentes.
+     */
     public static ObservableList<Utilizador> getTodosUtilizadores() {
         ObservableList<Utilizador> utilizadores = FXCollections.observableArrayList();
 
@@ -173,6 +212,11 @@ public class UtilizadorDAL {
         return utilizadores;
     }
 
+    /**
+     * Obtém uma lista observável de utilizadores do tipo Gestor.
+     *
+     * @return ObservableList<Utilizador> - Lista observável de utilizadores do tipo Gestor
+     */
     public static ObservableList<Utilizador> getGestores() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -202,6 +246,11 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+    /**
+     * Obtém a lista de utilizadores do tipo Funcionário.
+     *
+     * @return ObservableList de Utilizadores do tipo Funcionário.
+     */
     public static ObservableList<Utilizador> getFuncionario() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -231,6 +280,11 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+    /**
+     * Obtém a lista de clientes a partir da base de dados.
+     *
+     * @return A lista de clientes.
+     */
     public static ObservableList<Utilizador> getClientes() {
         ObservableList<Utilizador> clientes = FXCollections.observableArrayList();
 
@@ -260,6 +314,13 @@ public class UtilizadorDAL {
         return clientes;
     }
 
+    /**
+     * Método que remove um utilizador da base de dados.
+     *
+     * @param id O id do utilizador a ser removido
+     * @return Não retorna nada, apenas remove o utilizador da base de dados
+     * @throws SQLException Se houver algum erro na execução da operação de remoção
+     */
     public Utilizador deleteUtilizador(int id) throws SQLException {
         DBconn dbConn = new DBconn();
         Connection connection = dbConn.getConn();

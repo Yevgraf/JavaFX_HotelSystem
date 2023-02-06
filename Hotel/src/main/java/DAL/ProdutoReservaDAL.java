@@ -7,6 +7,16 @@ import javafx.collections.ObservableList;
 import java.sql.*;
 
 public class ProdutoReservaDAL {
+
+    /**
+     * A função addProductInReservation serve para verificar se é possível adicionar os produtos à reserva
+     *
+     * @param reservationId recebe o id da reserva
+     * @param productId     recebe o id do produto
+     * @param quantity      recebe a quantidade do produto
+     * @param idQuarto      recebe o id do quarto
+     * @throws SQLException mostra a informacao do erro
+     */
     public static void addProductInReservation(int reservationId, String productId, int quantity, int idQuarto) throws SQLException {
 
         String query1 = "INSERT INTO ProdutoReserva (idReserva, idProduto, quantidade, idQuarto) VALUES (?,?,?,?)";
@@ -20,20 +30,12 @@ public class ProdutoReservaDAL {
         }
     }
 
-
-    private static int selectStock(String productId, Connection connection) throws SQLException {
-        String query = "SELECT quantidade FROM Stock WHERE idProduto=?";
-        try (PreparedStatement stmt = connection.prepareStatement(query)) {
-            stmt.setString(1, productId);
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
-            }
-        }
-        return 0;
-    }
-
+    /**
+     * A função deleteProductFromReservation serve para eliminar os produtos da reserva
+     *
+     * @param productId recebe o id do produto
+     * @throws SQLException mostra a informacao do erro
+     */
     public static void deleteProductFromReservation(int productId) throws SQLException {
         PreparedStatement ps2;
         try {
@@ -49,6 +51,11 @@ public class ProdutoReservaDAL {
     }
 
 
+    /**
+     * A função getProdutoReserva serve para guardar os produtos da reserva
+     *
+     * @return devolve uma lista dos produtos da reserva
+     */
     public static ObservableList<ProdutoReserva> getProdutoReserva() {
         ObservableList<ProdutoReserva> lista = FXCollections.observableArrayList();
         try {
