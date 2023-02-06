@@ -66,8 +66,8 @@ public class EstacionamentoGestorController {
 
             sb.append("Lugar: " + currentParking.ParkingSpot + "\n");
             sb.append("Preço: " + currentParking.Price + "\n");
-            sb.append("Local: " + (currentParking.Indoor ? "Interior" : "Exterior") + "\n");
-            sb.append("Vaga: " + (currentParking.Occupied ? "Ocupada" : "Desocupada") + "\n\n");
+            sb.append("Local: " + (currentParking.Indoor ? "Interior" : "Exterior") + "\n\n");
+            //sb.append("Vaga: " + (currentParking.Occupied ? "Ocupada" : "Desocupada") + "\n\n");
         }
         txtView.setText(sb.toString());
     }

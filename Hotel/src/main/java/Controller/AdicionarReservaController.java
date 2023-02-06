@@ -126,8 +126,12 @@ public class AdicionarReservaController implements Initializable {
 
         if (cmbClientes.getItems().isEmpty() == false && cmbIDQuarto.getItems().isEmpty() == false) {
             // if (VerificarDisponibilidade() == true){
-            if (check.isSelected()){
-                AdicionarReservaEEstacionamento();
+            if (check.isSelected()) {
+                if (matriculaTxt.getText().isEmpty() || cmbEstacionamento.getValue() == null) {
+                    MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Preencha todos os campos!", "Erro");
+                } else {
+                    AdicionarReservaEEstacionamento();
+                }
             } else {
                 AdicionarReservaSemEstacionamento();
             }
@@ -175,14 +179,14 @@ public class AdicionarReservaController implements Initializable {
         double precoFinal = getTotalReserva(reserva);
         reserva.setPreco(precoFinal);
 
-           TicketInfo ticketInfo = new TicketInfo(
-                   Integer.toString(cmbClientes.getValue().getId()),
-                   matriculaTxt.getText(),
-                   DatePickerInicio.getValue().toString(),
-                   DatePickerFim.getValue().toString(),
-                   cmbEstacionamento.getValue(),
-                   true);
-           reservaBLL.reservaEstacionamento(reserva, ticketInfo);
+        TicketInfo ticketInfo = new TicketInfo(
+                Integer.toString(cmbClientes.getValue().getId()),
+                matriculaTxt.getText(),
+                DatePickerInicio.getValue().toString(),
+                DatePickerFim.getValue().toString(),
+                cmbEstacionamento.getValue(),
+                true);
+        reservaBLL.reservaEstacionamento(reserva, ticketInfo);
 
         txtPreco.setText(reserva.getPreco().toString());
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
@@ -344,15 +348,14 @@ public class AdicionarReservaController implements Initializable {
             public void handle(ActionEvent event) {
                 //conta nº de lugares ocupados
                 EstacionamentoBLL eBLL = new EstacionamentoBLL();
-                var lugares = eBLL.GetLugares();
-                int lugaresOcupados = 0;
-                for (int i = 0; i < lugares.Parking.size(); i++) {
-                    if (lugares.Parking.get(i).Occupied == true) {
-                        lugaresOcupados++;
-                    }
+                var lugares = eBLL.GetTicketsCriados();
+                var estacionamentos = eBLL.GetLugares();
+                int ticketsCriados = 0;
+                for (int i = 0; i < lugares.Tickets.size(); i++) {
+                    ticketsCriados++;
                 }
                 // verifica se estão todos ocupados e dá erro se estiverem
-                if (lugaresOcupados == lugares.Parking.size()) {
+                if (ticketsCriados == estacionamentos.Parking.size()) {
                     MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Não há estacionamentos disponíveis!", "Erro:");
                     check.setSelected(false);
                     return;
