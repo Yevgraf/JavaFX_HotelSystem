@@ -11,12 +11,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 public class CheckInBLL {
-    private CheckInDAL checkInDAL = new CheckInDAL();
-    private ReservaDAL reservaDAL = new ReservaDAL();
 
-
-
-
+    /**
+     * Recebe por parametro o ID de uma reserva para atualizar o stock quando feito o
+     * checkin e atualiza o estado da reserva para "checkin".
+     * Marca o respetivo quarto como "ativo".
+     *
+     * @param reservationId ID da reserva
+     */
     public void checkIn(int reservationId) throws SQLException {
         CheckInDAL checkin = new CheckInDAL();
         checkin.updateStockOnCheckIn(reservationId);

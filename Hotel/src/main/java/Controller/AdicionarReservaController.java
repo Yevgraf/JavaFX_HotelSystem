@@ -5,7 +5,9 @@ import BLL.ReservaBLL;
 import BLL.UtilizadorBLL;
 import DAL.QuartoDAL;
 import Model.*;
+import Model.EstacionamentoAPI.Estacionamento;
 import Model.EstacionamentoAPI.Parking;
+import Model.EstacionamentoAPI.Ticket;
 import Model.EstacionamentoAPI.TicketInfo;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -22,6 +24,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -181,10 +185,10 @@ public class AdicionarReservaController implements Initializable {
 
         TicketInfo ticketInfo = new TicketInfo(
                 Integer.toString(cmbClientes.getValue().getId()),
-                matriculaTxt.getText(),
+                matriculaTxt.getText().trim(),
                 DatePickerInicio.getValue().toString(),
                 DatePickerFim.getValue().toString(),
-                cmbEstacionamento.getValue(),
+                cmbEstacionamento.getValue().trim(),
                 true);
         reservaBLL.reservaEstacionamento(reserva, ticketInfo);
 
@@ -192,7 +196,6 @@ public class AdicionarReservaController implements Initializable {
         MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Reserva criada com sucesso.\nPreco total: " + precoFinal, "Reserva");
         addServicoReserva();
     }
-
 
     private void addServicoReserva() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
@@ -371,7 +374,7 @@ public class AdicionarReservaController implements Initializable {
                         matriculaTxt.setDisable(false);
                         matriculaLbl1.setDisable(false);
                         cmbEstacionamento.getItems().clear();
-                        cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
+                        cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivel(true));
                     } else {
                         interior.setDisable(true);
                         exterior.setDisable(true);
@@ -396,45 +399,53 @@ public class AdicionarReservaController implements Initializable {
         popularCmbEstacionamentoConsoanteOpcaoRadioButton();
     }
 
-    private List<String> getEstacionamentoDisponivelInterno() {
-        List<String> list = new ArrayList<>();
-        EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugares();
+    /*
+     Mostra todos os desocupados entre as datas escolhidas
+     dos DatePaickers (não incluindo os proprios dias)
+     */
+    private List<String> getEstacionamentoDisponivel(Boolean indoor) {
+        try {
+            LocalDate dataInicial = DatePickerInicio.getValue();
+            LocalDate dataFinal = DatePickerFim.getValue();
+            List<String> list = new ArrayList<>();
+            EstacionamentoBLL eBLL = new EstacionamentoBLL();
+            var ticket = eBLL.GetTicketsCriados();
+            var lugares = eBLL.GetLugares();
 
-        for (int i = 0; i < lugares.Parking.size(); i++) {
-            Parking currentParking = lugares.Parking.get(i);
-            if (currentParking.Indoor == true && currentParking.Occupied == false) {
+            for (int i = 0; i < ticket.Tickets.size(); i++) {for (int j = 0; j < lugares.Parking.size(); j++) {
+                Parking estacionamento = lugares.Parking.get(j);
+                    TicketInfo currentParking = ticket.Tickets.get(i);
+                    LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
+                    LocalDate startDate = offSetStartDate.toLocalDate();
+                    LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
+                    LocalDate endDate = offSetEncDate.toLocalDate();
+                    if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
+                            estacionamento.Occupied == false
+                                && estacionamento.Indoor == indoor
+                                && (endDate.plusDays(1).isBefore(dataInicial)
+                                || startDate.minusDays(1).isAfter(dataFinal))) {
+                           // list.add(currentParking.ParkingSpot);
                 list.add(currentParking.ParkingSpot);
-            }
+                        }
+                    }
+                }
+            return list;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return list;
-    }
-
-    private List<String> getEstacionamentoDisponivelExterno() {
-        List<String> list = new ArrayList<>();
-        EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugares();
-
-        for (int i = 0; i < lugares.Parking.size(); i++) {
-            Parking currentParking = lugares.Parking.get(i);
-            if (currentParking.Indoor == false && currentParking.Occupied == false) {
-                list.add(currentParking.ParkingSpot);
-            }
-        }
-        return list;
     }
 
     private void popularCmbEstacionamentoConsoanteOpcaoRadioButton() {
         interior.setOnAction(event -> {
             if (interior.isSelected()) {
                 cmbEstacionamento.getItems().clear();
-                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
+                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivel(true));
             }
         });
         exterior.setOnAction(event -> {
             if (exterior.isSelected()) {
                 cmbEstacionamento.getItems().clear();
-                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelExterno());
+                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivel(false));
             }
         });
     }

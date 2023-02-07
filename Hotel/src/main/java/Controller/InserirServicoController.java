@@ -58,19 +58,21 @@ public class InserirServicoController implements Initializable {
     private ServicoBLL servicoBLL = new ServicoBLL();
 
     @FXML
-    void clickAddBtn(ActionEvent event) throws SQLException {
-        if (descricao.getText().isEmpty() == false && preco.getText().isEmpty() == false) {
-                AddServico();
+    void clickAddBtn(ActionEvent event){
+        if (descricao.getText().isEmpty() || preco.getText().isEmpty()
+                || descricao.getText().isBlank() || preco.getText().isBlank()) {
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza todos os campos", "Erro");
+        } else {
+            AddServico();
         }
-        MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza todos os campos", "Erro");
     }
 
-    public void AddServico() throws SQLException {
+    public void AddServico() {
         try {
-            double precoServico = Double.parseDouble(preco.getText());
+            double precoServico = Double.parseDouble(preco.getText().trim());
             Servico servico = new Servico(
                     null,
-                    descricao.getText(),
+                    descricao.getText().trim(),
                     precoServico);
 
             servicoBLL.addServico(servico);

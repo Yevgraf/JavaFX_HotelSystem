@@ -138,6 +138,38 @@ public class EstacionamentoBLL {
         }
     }
 
+    public ResponseTicket PUTCreateParkingReservation(TicketInfo body, String ticketID) {
+        try {
+            var objectMapper = new ObjectMapper();
+
+            String requestBody = objectMapper
+                    .writeValueAsString(body);
+
+            HttpRequest request = HttpRequest.newBuilder()
+                    .setHeader("Content-Type", "application/json")
+                    .setHeader("Authorization", "Basic " + encondeAPICredentials(apiID, apiSecret))
+                    .uri(URI.create(parkAPIURL + "ticket/" + ticketID))
+                    .PUT(HttpRequest.BodyPublishers.ofString(requestBody))
+                    .build();
+
+            CompletableFuture<HttpResponse<String>> response =
+                    httpClient.sendAsync(request, HttpResponse.BodyHandlers.ofString());
+
+            String parsedResponse = response.thenApply(HttpResponse::body).get(5, TimeUnit.SECONDS);
+
+            return objectMapper.readValue(parsedResponse, ResponseTicket.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (TimeoutException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     public Boolean DeleteTicket(String idTicket) {
         try {
             var request = HttpRequest.newBuilder()

@@ -1,11 +1,9 @@
 package Controller;
 
-import BLL.EstacionamentoBLL;
 import BLL.ReservaBLL;
 import BLL.UtilizadorPreferences;
 import Model.Reserva;
 import com.example.hotel.Main;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -65,7 +63,7 @@ public class QRCodeClienteController implements Initializable {
         ReservaBLL rBLL = new ReservaBLL();
 
         reservaCmb.setOnAction(event -> {
-            String ticketIDDaReservaSelecionada = rBLL.retornaTicketIDDeUmaReserva(reservaCmb.getValue().getId().toString());
+            String ticketIDDaReservaSelecionada = rBLL.retornaQRCodeDDeUmaReserva(reservaCmb.getValue().getId().toString());
 
             qrImage.setImage(new Image(ticketIDDaReservaSelecionada));
         });
