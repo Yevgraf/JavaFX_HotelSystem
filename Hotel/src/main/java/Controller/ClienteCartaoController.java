@@ -45,7 +45,13 @@ public class ClienteCartaoController implements Initializable {
     @FXML
     private Button passarCartao;
 
-
+    /**
+     * Método que é chamado ao clicar no botão "Voltar".
+     * Ele é responsável por verificar o tipo de usuário logado atualmente, e, de acordo com isso, abre a janela correspondente.
+     *
+     * @param event evento de clique no botão "Voltar"
+     * @throws IOException caso ocorra um problema ao carregar o arquivo FXML correspondente
+     */
     @FXML
     void clickBtnVoltar(ActionEvent event) throws IOException {
         if (UtilizadorPreferences.comparaTipoLogin()) {
@@ -75,6 +81,15 @@ public class ClienteCartaoController implements Initializable {
         }
     }
 
+    /**
+     * Método que é chamado quando o botão "passarCartao" é clicado.
+     * Este método registra a informação do local e data/hora no banco de dados.
+     * A informação do local é selecionada na combo box "servicos".
+     * A informação de data/hora é obtida a partir do sistema.
+     * A informação do ID do cliente e do ID do cartão é obtida a partir das preferências do usuário.
+     *
+     * @param event O evento de clique no botão "passarCartao".
+     */
     @FXML
     void passarCartao(ActionEvent event) {
         boolean useMasterCard = UtilizadorPreferences.useMasterCard();
@@ -99,7 +114,15 @@ public class ClienteCartaoController implements Initializable {
         }
     }
 
-
+    /**
+     * Inicializa a tabela de serviços com valores específicos, dependendo do tipo de utilizador.
+     * A tabela é composta por duas colunas: 'ID' e 'Serviço'.
+     * A coluna 'ID' apresenta o ID do serviço.
+     * A coluna 'Serviço' apresenta o nome do serviço.
+     * Se o tipo de utilizador for 'Funcionário', todos os serviços são apresentados.
+     * Se o tipo de utilizador for 'Gestor', todos os serviços e quartos são apresentados.
+     * Se o tipo de utilizador for 'Cliente', apenas os serviços associados ao cliente específico são apresentados.
+     */
     private void initTable() {
         idTable.setResizable(false);
         descricaoTable.setResizable(false);
@@ -114,7 +137,6 @@ public class ClienteCartaoController implements Initializable {
             servicos.setItems(ServicoDAL.getServicosByClientId());
         }
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();

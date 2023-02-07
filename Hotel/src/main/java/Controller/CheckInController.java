@@ -74,6 +74,13 @@ public class CheckInController implements Initializable {
     @FXML
     private ComboBox<Pagamento> metodoPagamento;
 
+    /**
+     * O método initCombos inicializa o combo box de pagamentos.
+     * Ele adiciona uma lista de objetos do tipo Pagamento ao combo box.
+     * A lista é obtida a partir da chamada ao método getPagamentos na classe CheckoutBLL.
+     *
+     * @throws SQLException é lançada quando ocorre um erro ao obter dados do banco de dados.
+     */
     private void initCombos() throws SQLException {
         CheckoutBLL checkoutBLL = new CheckoutBLL();
         ObservableList<Pagamento> pagamentos = checkoutBLL.getPagamentos();
@@ -81,7 +88,15 @@ public class CheckInController implements Initializable {
 
     }
 
-
+    /**
+     * Método que controla o evento de clique no botão "Voltar".
+     * Verifica o tipo de utilizador logado através da classe UtilizadorPreferences, e abre a página correspondente.
+     * Se o utilizador for do tipo gestor, abre a página "PainelGestor.fxml".
+     * Se o utilizador for do tipo funcionário, abre a página "PainelFuncionario.fxml".
+     *
+     * @param event evento de clique no botão "Voltar".
+     * @throws IOException pode ocorrer uma exceção de entrada/saída.
+     */
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
         if (UtilizadorPreferences.comparaTipoLogin()) {
@@ -103,6 +118,18 @@ public class CheckInController implements Initializable {
         }
     }
 
+    /**
+     * Método responsável pelo checkout da reserva selecionada.
+     * Verifica se uma reserva foi selecionada na lista de reservas com check-in realizado. Se não for selecionada, é mostrado uma mensagem de erro.
+     * Verifica se um método de pagamento foi selecionado. Se não for selecionado, é mostrado uma mensagem de erro.
+     * Atualiza o estado da reserva selecionada para checkout.
+     * Devolve os não consumíveis da reserva de volta ao estoque.
+     * Calcula o custo total da reserva selecionada.
+     * Adiciona um novo checkout a base de dados com o id da reserva, o custo total e o método de pagamento selecionado.
+     * Mostra um recibo com o id da reserva, o custo total e o método de pagamento selecionado.
+     *
+     * @param event O evento de clique no botão de checkout.
+     */
     @FXML
     void checkoutBtnAction(ActionEvent event) {
         Reserva selectedReservation = listViewReservaComcheckin.getSelectionModel().getSelectedItem();
@@ -145,7 +172,14 @@ public class CheckInController implements Initializable {
         }
     }
 
-
+    /**
+     * O método handleCheckInButtonAction é invocado quando o botão de check-in é pressionado.
+     * Ele irá selecionar uma reserva da lista de reservas sem check-in, e irá realizar o check-in para essa reserva.
+     * Se uma reserva for selecionada, o método {@link #performCheckIn(Reserva)} é invocado para realizar o check-in.
+     * Se não houver reserva selecionada, uma mensagem de erro é exibida ao usuário.
+     *
+     * @param event O evento que disparou a ação.
+     */
     @FXML
     void handleCheckInButtonAction(ActionEvent event) {
 
@@ -160,10 +194,15 @@ public class CheckInController implements Initializable {
             initListViews();
         } else {
 
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Erro", "Por favor, selecione uma reserva da lista.");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Por favor, selecione uma reserva da lista.", "Erro");
         }
     }
 
+    /**
+     * Realiza o check-in de uma reserva.
+     *
+     * @param reservation a reserva que será realizada o check-in
+     */
     private void performCheckIn(Reserva reservation) {
         CheckInBLL checkInBll = new CheckInBLL();
         LocalDate today = LocalDate.now();
@@ -185,9 +224,9 @@ public class CheckInController implements Initializable {
     }
 
 
-
-
-
+    /**
+     * Método para inicializar as list views de reservas.
+     */
     private void initListViews() {
         CheckoutBLL bll = new CheckoutBLL();
         try {
@@ -205,6 +244,12 @@ public class CheckInController implements Initializable {
         }
     }
 
+    /**
+     * Método inicializa as combo boxes e as list views.
+     *
+     * @param location  URL do local da inicialização
+     * @param resources Recursos da inicialização
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {

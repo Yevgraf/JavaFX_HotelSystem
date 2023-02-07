@@ -79,7 +79,13 @@ public class CartaoController implements Initializable {
     @FXML
     private Button btnVoltar;
 
-
+    /**
+     * Método responsável por gerir o evento de clique no botão de voltar.
+     * Carrega a janela "PainelGestor.fxml" e esconde a janela atual.
+     *
+     * @param event O evento de clique no botão "Voltar".
+     * @throws IOException Caso ocorra algum erro ao carregar a janela "PainelGestor.fxml".
+     */
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelGestor.fxml"));
@@ -91,18 +97,34 @@ public class CartaoController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Método de inicialização da classe.
+     * Inicializa a tabela e os comboboxes.
+     *
+     * @param location  URL da localização
+     * @param resources Recursos utilizados na inicialização
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
         initCombos();
     }
 
+    /**
+     * Inicializa os componentes do tipo ComboBox.
+     * Adiciona todos os cartões existentes à ComboBox cmbIdCartao.
+     * Adiciona todos os serviços existentes à ComboBox cmbLocal.
+     */
     private void initCombos() {
         cmbIdCartao.getItems().addAll(CartaoDAL.getAllCartoes());
         cmbLocal.getItems().addAll(ServicoDAL.getAllServicos());
     }
 
+    /**
+     * Método para inicializar a tabela de registos.
+     * Busca todos os registos através da classe RegistoBLL e atribui os valores correspondentes às colunas da tabela.
+     * Caso ocorra uma exceção SQL, é imprimido o erro.
+     */
     private void initTable() {
 
         RegistoBLL registoBLL = new RegistoBLL();
@@ -120,7 +142,16 @@ public class CartaoController implements Initializable {
         }
     }
 
-
+    /**
+     * Método responsável por filtrar os registos de estacionamento por id do cartão.
+     * Este método é chamado ao clicar no botão de filtragem por id do cartão.
+     * Ele seleciona o cartão selecionado no combo box cmbIdCartao e, se existir um cartão selecionado,
+     * filtra os registos de estacionamento associados a esse cartão através da chamada ao método
+     * RegistoDAL.getRegistosByCartaoId. O resultado é colocado na tabela tv_registosCartao.
+     * Em caso de exceção, o erro é impresso com o método e.printStackTrace().
+     *
+     * @param event evento de clique no botão de filtragem por id do cartão
+     */
     @FXML
     void filterIdCartao(ActionEvent event) {
         Cartao selectedCartao = cmbIdCartao.getSelectionModel().getSelectedItem();
@@ -134,7 +165,11 @@ public class CartaoController implements Initializable {
         }
     }
 
-
+    /**
+     * Filtra os registos da tabela de acordo com o local selecionado.
+     *
+     * @param event evento de clique do botão.
+     */
     @FXML
     void filterLocal(ActionEvent event) {
         Servico selectedServico = cmbLocal.getSelectionModel().getSelectedItem();
