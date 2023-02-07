@@ -17,6 +17,13 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 
 public class XMLReaderBLL {
+
+    /**
+     * Lê o cabeçalho do arquivo XML fornecido e retorna uma lista de entradas de stock.
+     *
+     * @param path O caminho para o arquivo XML a ser lido.
+     * @return Uma ObservableList de entradas de estoque lidas do arquivo.
+     */
     public ObservableList<EntradaStock> lerXMLHeader(String path) {
         ObservableList<EntradaStock> fornecedores = FXCollections.observableArrayList();
 
@@ -89,6 +96,12 @@ public class XMLReaderBLL {
     }
     //----------------------------------- BODY -----------------------------------
 
+    /**
+     * Lê o arquivo XML especificado em 'path' e retorna uma lista observável de objetos EntradaStock.
+     *
+     * @param path Caminho do arquivo XML a ser lido
+     * @return ObservableList de objetos EntradaStock
+     */
     public ObservableList<EntradaStock> lerXMLBody(String path) {
         ObservableList<EntradaStock> item = FXCollections.observableArrayList();
 
@@ -166,6 +179,12 @@ public class XMLReaderBLL {
 
     //----------------------------------- Criar Produto -----------------------------------
 
+    /**
+     * Método que lê um arquivo XML e retorna umaObservableList Produto.
+     *
+     * @param path Caminho para o arquivo XML.
+     * @return ObservableList doss Produto.
+     */
     public ObservableList<Produto> lerProduto(String path) {
         ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
@@ -225,7 +244,7 @@ public class XMLReaderBLL {
 
                     Double pesoPorUnidade = (peso / unidades);
 
-                    produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade,  false));
+                    produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade, false));
 
                 }
             }
@@ -237,6 +256,12 @@ public class XMLReaderBLL {
 
     //----------------------------------- Cria StockController -----------------------------------
 
+    /**
+     * Método para ler informações de estoque de um ficheiro XML
+     *
+     * @param path Caminho do ficheiro XML
+     * @return ObservableList Stock com informações de stock lidas do ficheiro
+     */
     public ObservableList<Stock> lerStock(String path) {
         ObservableList<Stock> stocks = FXCollections.observableArrayList();
 
@@ -292,6 +317,13 @@ public class XMLReaderBLL {
 
     //----------------------------------- FindInChildren -----------------------------------
 
+    /**
+     * Método privado que procura um child element específico num parent element.
+     *
+     * @param parent       O parent element que será percorrido.
+     * @param elementToGet O nome do child element que será procurado.
+     * @return O child element encontrado, ou nulo caso não seja encontrado.
+     */
     private Element FindInChildren(Element parent, String elementToGet) {
         NodeList list = parent.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
@@ -303,6 +335,14 @@ public class XMLReaderBLL {
         return null;
     }
 
+    /**
+     * Este método busca um child element específico em um parent element.
+     *
+     * @param parent       Parent element.
+     * @param elementToGet Nome do child element que deseja obter.
+     * @param elementCount Número do child element desejado.
+     * @return O child element encontrado ou nulo caso não exista.
+     */
     private Element FindInChildren(Element parent, String elementToGet, int elementCount) {
         NodeList list = parent.getChildNodes();
         for (int i = 0; i < list.getLength(); i++) {
