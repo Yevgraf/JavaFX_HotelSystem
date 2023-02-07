@@ -5,9 +5,7 @@ import BLL.ReservaBLL;
 import BLL.UtilizadorBLL;
 import DAL.QuartoDAL;
 import Model.*;
-import Model.EstacionamentoAPI.Estacionamento;
 import Model.EstacionamentoAPI.Parking;
-import Model.EstacionamentoAPI.Ticket;
 import Model.EstacionamentoAPI.TicketInfo;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -25,7 +23,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -197,11 +194,6 @@ public class AdicionarReservaController implements Initializable {
         addServicoReserva();
     }
 
-    /**
-     * Adiciona os serviços a uma reserva existente.
-     *
-     * @throws IOException
-     */
     private void addServicoReserva() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
         Stage stage = new Stage();
@@ -416,71 +408,41 @@ public class AdicionarReservaController implements Initializable {
             EstacionamentoBLL eBLL = new EstacionamentoBLL();
             var ticket = eBLL.GetTicketsCriados();
             var lugares = eBLL.GetLugares();
-    /**
-     * Método que retorna uma lista de estacionamentos internos disponíveis.
-     *
-     * @return lista de estacionamentos internos disponíveis
-     */
-    private List<String> getEstacionamentoDisponivelInterno() {
-        List<String> list = new ArrayList<>();
-        EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugares();
 
             for (int i = 0; i < ticket.Tickets.size(); i++) {for (int j = 0; j < lugares.Parking.size(); j++) {
                 Parking estacionamento = lugares.Parking.get(j);
-                    TicketInfo currentParking = ticket.Tickets.get(i);
-                    LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
-                    LocalDate startDate = offSetStartDate.toLocalDate();
-                    LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
-                    LocalDate endDate = offSetEncDate.toLocalDate();
-                    if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
-                            estacionamento.Occupied == false
-                                && estacionamento.Indoor == indoor
-                                && (endDate.plusDays(1).isBefore(dataInicial)
-                                || startDate.minusDays(1).isAfter(dataFinal))) {
-                           // list.add(currentParking.ParkingSpot);
-                list.add(currentParking.ParkingSpot);
-            }
-        }
-        return list;
-    }
-
-    /**
-     * Método que retorna uma lista de estacionamentos externos disponíveis.
-     *
-     * @return list - Lista de estacionamentos externos disponíveis.
-     */
-    private List<String> getEstacionamentoDisponivelExterno() {
-        List<String> list = new ArrayList<>();
-        EstacionamentoBLL eBLL = new EstacionamentoBLL();
-        var lugares = eBLL.GetLugares();
-
-        for (int i = 0; i < lugares.Parking.size(); i++) {
-            Parking currentParking = lugares.Parking.get(i);
-            if (currentParking.Indoor == false && currentParking.Occupied == false) {
-                list.add(currentParking.ParkingSpot);
-            }
-                        }
-                    }
+                TicketInfo currentParking = ticket.Tickets.get(i);
+                LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
+                LocalDate startDate = offSetStartDate.toLocalDate();
+                LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
+                LocalDate endDate = offSetEncDate.toLocalDate();
+                if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
+                        estacionamento.Occupied == false
+                        && estacionamento.Indoor == indoor
+                        && (endDate.plusDays(1).isBefore(dataInicial)
+                        || startDate.minusDays(1).isAfter(dataFinal))) {
+                    // list.add(currentParking.ParkingSpot);
+                    list.add(currentParking.ParkingSpot);
                 }
+            }
+            }
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return list;
     }
 
     private void popularCmbEstacionamentoConsoanteOpcaoRadioButton() {
         interior.setOnAction(event -> {
             if (interior.isSelected()) {
                 cmbEstacionamento.getItems().clear();
-                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelInterno());
+                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivel(true));
             }
         });
         exterior.setOnAction(event -> {
             if (exterior.isSelected()) {
                 cmbEstacionamento.getItems().clear();
-                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivelExterno());
+                cmbEstacionamento.getItems().addAll(getEstacionamentoDisponivel(false));
             }
         });
     }
