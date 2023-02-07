@@ -5,9 +5,7 @@ import BLL.ReservaBLL;
 import BLL.UtilizadorBLL;
 import DAL.QuartoDAL;
 import Model.*;
-import Model.EstacionamentoAPI.Estacionamento;
 import Model.EstacionamentoAPI.Parking;
-import Model.EstacionamentoAPI.Ticket;
 import Model.EstacionamentoAPI.TicketInfo;
 import com.example.hotel.Main;
 import javafx.event.ActionEvent;
@@ -25,7 +23,6 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -412,8 +409,9 @@ public class AdicionarReservaController implements Initializable {
             var ticket = eBLL.GetTicketsCriados();
             var lugares = eBLL.GetLugares();
 
-            for (int i = 0; i < ticket.Tickets.size(); i++) {for (int j = 0; j < lugares.Parking.size(); j++) {
-                Parking estacionamento = lugares.Parking.get(j);
+            for (int i = 0; i < ticket.Tickets.size(); i++) {
+                for (int j = 0; j < lugares.Parking.size(); j++) {
+                    Parking estacionamento = lugares.Parking.get(j);
                     TicketInfo currentParking = ticket.Tickets.get(i);
                     LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
                     LocalDate startDate = offSetStartDate.toLocalDate();
@@ -421,14 +419,13 @@ public class AdicionarReservaController implements Initializable {
                     LocalDate endDate = offSetEncDate.toLocalDate();
                     if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
                             estacionamento.Occupied == false
-                                && estacionamento.Indoor == indoor
-                                && (endDate.plusDays(1).isBefore(dataInicial)
-                                || startDate.minusDays(1).isAfter(dataFinal))) {
-                           // list.add(currentParking.ParkingSpot);
-                list.add(currentParking.ParkingSpot);
-                        }
+                            && estacionamento.Indoor == indoor
+                            && (startDate.isAfter(dataInicial) && startDate.isBefore(dataFinal))
+                            || (endDate.isAfter(dataInicial) && endDate.isBefore(dataFinal))) {
+                        list.add(currentParking.ParkingSpot);
                     }
                 }
+            }
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);
