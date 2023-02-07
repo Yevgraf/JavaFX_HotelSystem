@@ -46,6 +46,11 @@ public class ClienteComentariosController implements Initializable {
 
     private ComentarioBLL comentarioBLL = new ComentarioBLL();
 
+    /**
+     * O método "SubmeterClick" é executado quando o botão "Submeter" é pressionado. Verifica se o tipo de comentário foi selecionado e o conteúdo do campo de mensagem não está vazio. Se tudo estiver correto, adiciona um novo comentário ao banco de dados.
+     *
+     * @param event evento associado a ação de clique no botão "Submeter"
+     */
     @FXML
     void SubmeterClick(ActionEvent event) {
         if (tipoComentario.getValue() != null) {
@@ -73,6 +78,11 @@ public class ClienteComentariosController implements Initializable {
         }
     }
 
+    /**
+     * Método para controlar o número de caracteres no campo de comentário.
+     * Verifica se o número de caracteres ultrapassa 300 e, se sim, impede a inserção de mais caracteres.
+     * A contagem de caracteres é exibida na interface gráfica através da ligação de propriedade com o elemento de texto "numLetras".
+     */
     private void contaLetras() {
         int tamanhoTexto = 300;
         campoComentario.textProperty().addListener(
@@ -84,7 +94,12 @@ public class ClienteComentariosController implements Initializable {
                 .asString("%d"));
     }
 
-
+    /**
+     * Método de ação de clique do botão Voltar.
+     *
+     * @param event O evento gerado ao clicar no botão.
+     * @throws IOException caso haja erro ao carregar o arquivo FXML.
+     */
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("PainelCliente.fxml"));
@@ -96,6 +111,11 @@ public class ClienteComentariosController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Verifica o tipo de comentário selecionado pelo utilizador.
+     *
+     * @return Uma string indicando o tipo de comentário, "sugestão" ou "queixa".
+     */
     private String verificaTipoComentario() {
         String comentario;
         if (tipoComentario.getValue().equals("Sugestão")) {
@@ -107,12 +127,22 @@ public class ClienteComentariosController implements Initializable {
         }
     }
 
+    /**
+     * Inicializa as opções disponíveis para o tipo de comentário.
+     */
     private void initCombos() {
         tipoComentario.getItems().add("Sugestão");
         tipoComentario.getItems().add("Queixa");
     }
 
-
+    /**
+     * Método para inicializar a interface de utilizador.
+     * Este método é executado automaticamente quando a tela é carregada.
+     * Ele inicializa o contador de letras e preenche as combo boxes.
+     *
+     * @param location  URL que especifica o local da classe.
+     * @param resources objeto ResourceBundle que contem as informações de recursos.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         contaLetras();

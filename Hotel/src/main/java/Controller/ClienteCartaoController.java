@@ -137,6 +137,13 @@ public class ClienteCartaoController implements Initializable {
             servicos.setItems(ServicoDAL.getServicosByClientId());
         }
     }
+
+    /**
+     * Método que inicializa a tabela de serviços.
+     *
+     * @param location  URL do local da inicialização
+     * @param resources Recursos usados para inicializar
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTable();
