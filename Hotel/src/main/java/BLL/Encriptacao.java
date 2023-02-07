@@ -1,8 +1,15 @@
 package BLL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.SQLException;
 
 public class Encriptacao {
+
+    /**
+     * Cifra a palavrapasse e retorna a palavrapasse cifrada
+     * @param password palavrapasse plain text
+     * @return retorna palavra passe cifrada
+     */
     public static String encrypt(String password) {
         String encryptedpassword = null;
         try {
