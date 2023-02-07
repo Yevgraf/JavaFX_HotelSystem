@@ -3,6 +3,7 @@ package Controller;
 
 import BLL.ProdutoQuartoBLL;
 import BLL.QuartoBLL;
+import BLL.StockBLL;
 import DAL.ProdutoDAL;
 import DAL.ProdutoQuartoDAL;
 import Model.MessageBoxes;
@@ -95,15 +96,21 @@ public class GestaoProdutoQuartoController implements Initializable {
     @FXML
     void clickAddProdutoQuarto(ActionEvent event) {
         Quarto selectedQuarto = cmbQuarto.getValue();
+        StockBLL sBLL = new StockBLL();
         Produto selectedProduct = cmbProduto.getValue();
         int quantity = Integer.parseInt(txt_quantidade.getText());
         if (selectedQuarto != null && selectedProduct != null){
-            try {
-                ProdutoQuartoBLL.addProductToQuarto(selectedQuarto.getId(), selectedProduct.getIdProduto(), quantity);
-                MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado ao quarto.", "Sucesso!");
-                initTable();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            if (sBLL.verificaSeProdutoTemQuantidadeSuficiente(selectedProduct.getIdProduto(), quantity)) {
+                try {
+                    ProdutoQuartoBLL.addProductToQuarto(selectedQuarto.getId(), selectedProduct.getIdProduto(), quantity);
+                    MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Produto adicionado ao quarto.", "Sucesso!");
+                    initTable();
+                } catch (SQLException e) {
+
+                    e.printStackTrace();
+                }
+            }else{
+                MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "A quantidade desejada é superior à existente em stock!", "Erro:");
             }
         } else {
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Preencha todos os campos!", "Aviso:");

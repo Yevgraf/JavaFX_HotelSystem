@@ -103,6 +103,13 @@ public class CriarQuartoController implements Initializable {
 
     private QuartoBLL quartoBLL = new QuartoBLL();
 
+    /**
+     * Este método é executado quando o botão "Adicionar Quarto" é clicado. Verifica se todos os campos necessários (piso, tipo de quarto, preço, número de cartão) foram preenchidos e, se sim, chama o método ADDQuarto(). Se não, exibe uma mensagem de erro informando que todos os campos precisam ser preenchidos.
+     *
+     * @param event O evento de clique do botão.
+     * @throws SQLException Se houver um erro de conexão com o banco de dados.
+     */
+
     @FXML
     void clickAddQuarto(ActionEvent event) throws SQLException {
 
@@ -113,6 +120,17 @@ public class CriarQuartoController implements Initializable {
         }
     }
 
+    /**
+     * Método para adicionar um quarto.
+     * Verifica se o piso e o tipo de quarto são válidos, cria um objeto {@link Quarto} com os valores selecionados pelo usuário
+     * e chama o método {@link QuartoBLL#addQuarto(Quarto)} para adicionar o quarto no banco de dados.
+     * Caso ocorra algum erro, o método {@link MessageBoxes#ShowMessage(Alert.AlertType, String, String)} é chamado para exibir
+     * uma mensagem de erro ao usuário.
+     *
+     * @throws SQLException          se ocorrer algum erro ao acessar o banco de dados
+     * @throws NumberFormatException se o ID do cartão inserido pelo usuário não for um número válido
+     * @throws RuntimeException      se ocorrer algum erro durante a adição do quarto
+     */
     public void ADDQuarto() throws SQLException {
         try {
             String floor = cmbPiso.getValue();
@@ -146,6 +164,12 @@ public class CriarQuartoController implements Initializable {
     }
 
 
+    /**
+     * Método que gere o evento do botão "Voltar". É responsável por trocar de cena, levando o utilizador para o painel de gestor ou funcionário, consoante o tipo de utilizador que se encontra logado.
+     *
+     * @param event O evento de clique do botão "Voltar".
+     * @throws IOException Lança uma exceção caso haja algum erro ao carregar a nova cena.
+     */
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
 
@@ -169,6 +193,13 @@ public class CriarQuartoController implements Initializable {
 
     }
 
+    /**
+     * Método que é executado quando o botão "addProdutosQuarto" é clicado.
+     * Este método carrega a página "GestaoProdutoQuarto.fxml".
+     *
+     * @param event Evento gerado pelo clique do botão.
+     * @throws IOException Caso ocorra um erro ao carregar o arquivo "GestaoProdutoQuarto.fxml".
+     */
     @FXML
     void addProdutosQuartoClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoProdutoQuarto.fxml"));
@@ -180,7 +211,9 @@ public class CriarQuartoController implements Initializable {
         stage.show();
     }
 
-
+    /**
+     * Método que inicializa os ComboBoxes cmbTipoQuarto e cmbPiso com os valores "Singular", "Duplo", "Familiar" e "1", "2", respectivamente.
+     */
     private void initCombos() {
         cmbTipoQuarto.getItems().add("Singular");
         cmbTipoQuarto.getItems().add("Duplo");
@@ -189,42 +222,65 @@ public class CriarQuartoController implements Initializable {
         cmbPiso.getItems().add("2");
     }
 
+    /**
+     * Método inicial que é chamado ao carregar a tabela.
+     * Inicializa os combos cmbTipoQuarto e cmbPiso com as opções disponíveis.
+     * Chama o método initTable para inicializar a tabela de quartos.
+     *
+     * @param location  URL do local onde o arquivo fxml está localizado.
+     * @param resources Recursos usados na tela.
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
         initTable();
     }
 
-
+    /**
+     * Este método é invocado ao clicar no botão "Editar".
+     * Ele atualiza o quarto selecionado na tabela com as informações fornecidas nos campos da interface.
+     * Primeiro, o quarto selecionado é obtido da tabela.
+     * Em seguida, os valores de tipo de quarto, piso e preço são atualizados com as informações fornecidas na interface.
+     * Por fim, a atualização é enviada para a camada de negócios (quartoBLL) para ser persistida no banco de dados.
+     * Uma mensagem é exibida ao usuário para indicar que a operação foi realizada com sucesso.
+     *
+     * @param actionEvent O evento de ação disparado ao clicar no botão "Editar".
+     */
     public void clickEditar(ActionEvent actionEvent) {
-        // get the selected quarto
+
         Quarto selectedQuarto = tv_Quarto.getSelectionModel().getSelectedItem();
 
-        // check if a quarto is selected
+
         if (selectedQuarto != null) {
-            // update the quarto with the values from the UI controls
+
             selectedQuarto.setTipoQuarto(cmbTipoQuarto.getValue());
             selectedQuarto.setPiso(cmbPiso.getValue());
             selectedQuarto.setPreco(Double.parseDouble(txt_preco.getText()));
 
-            // update the quarto in the database using the BLL
+
             quartoBLL.updateQuarto(selectedQuarto);
 
-            // show a success message
+
             MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Quarto alterado", "Information");
         }
     }
 
+    /**
+     * Método responsável pela ação de remoção de um quarto.
+     * Verifica se um quarto foi selecionado na tabela de quartos, e se foi, remove o quarto e seu respectivo cartão do banco de dados.
+     *
+     * @param actionEvent Evento de clique do botão "Remover Quarto".
+     */
     public void clickRmvQuarto(ActionEvent actionEvent) {
         QuartoBLL quartoBLL = new QuartoBLL();
         CartaoBLL cartaoBLL = new CartaoBLL();
         Quarto selectedQuarto = tv_Quarto.getSelectionModel().getSelectedItem();
         if (selectedQuarto != null) {
             try {
-                // delete the entry in the Quarto table
+
                 quartoBLL.removeQuarto(selectedQuarto.getId());
 
-                // delete the entry in the Cartao table
+
                 cartaoBLL.deleteCartao(selectedQuarto.getCartao().getId());
 
                 tv_Quarto.getItems().remove(selectedQuarto);
@@ -238,6 +294,16 @@ public class CriarQuartoController implements Initializable {
         }
     }
 
+    /**
+     * Inicializa a tabela "tv_Quarto" com as colunas "tbl_id", "tbl_piso", "tbl_preco", "tbl_tipQuarto", "tbl_idCartao".
+     * O valor de cada coluna é obtido através da chamada do método "setCellValueFactory".
+     * A coluna "tbl_id" obtém o valor do atributo "id" de cada objeto da lista.
+     * A coluna "tbl_piso" obtém o valor do atributo "piso" de cada objeto da lista.
+     * A coluna "tbl_preco" obtém o valor do atributo "preco" de cada objeto da lista.
+     * A coluna "tbl_tipQuarto" obtém o valor do atributo "tipoQuarto" de cada objeto da lista.
+     * A coluna "tbl_idCartao" obtém o valor do atributo "id" do objeto "Cartao" associado a cada objeto "Quarto".
+     * Finalmente, a lista de "Quartos" é definida como o conteúdo da tabela "tv_Quarto", obtida através do método "getQuartos" da classe "QuartoBLL".
+     */
     private void initTable() {
         tbl_id.setCellValueFactory(new PropertyValueFactory<>("id"));
         tbl_piso.setCellValueFactory(new PropertyValueFactory<>("piso"));

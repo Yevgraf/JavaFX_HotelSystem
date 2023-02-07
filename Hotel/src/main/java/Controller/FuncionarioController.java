@@ -45,6 +45,12 @@ public class FuncionarioController {
     @FXML
     private Button estacionamento;
 
+    /**
+
+     Método para abrir a página de Check-In quando o botão "FCheck" é clicado.
+     @param event evento do clique no botão "FCheck"
+     @throws IOException exceção lançada caso ocorra um erro ao carregar a página FXML.
+     */
     @FXML
     void FCheckClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("Checkin.fxml"));
@@ -68,6 +74,13 @@ public class FuncionarioController {
         stage.show();
     }
 
+    /**
+
+     Método que responde ao clique do botão "FQuartos".
+     Este método carrega uma nova janela "CriarQuarto.fxml".
+     @param event O evento de clique do botão "FQuartos".
+     @throws IOException Caso haja algum problema na leitura do arquivo "CriarQuarto.fxml".
+     */
     @FXML
     void FQuartosClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("CriarQuarto.fxml"));
@@ -78,7 +91,12 @@ public class FuncionarioController {
         stage.setScene(new Scene(fxmlLoader.load()));
         stage.show();
     }
+    /**
 
+     Método que é invocado quando o botão "FReserva" é clicado. Este método abre a janela "Gerir Reservas".
+     @param event O evento que ocorreu ao clicar no botão "FReserva".
+     @throws IOException Pode ser lançada se o arquivo "GestaoReservas.fxml" não puder ser carregado.
+     */
     @FXML
     void FReservaClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
@@ -90,6 +108,12 @@ public class FuncionarioController {
         stage.show();
     }
 
+    /**
+
+     Este método é chamado quando o botão "FServiços" é clicado. Abre a janela "Gestão Serviços".
+     @param event O evento de clique no botão "FServiços".
+     @throws IOException
+     */
     @FXML
     void FServicosClick(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoServicos.fxml"));

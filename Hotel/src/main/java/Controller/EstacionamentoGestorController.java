@@ -55,6 +55,11 @@ public class EstacionamentoGestorController {
     @FXML
     private Button getTodosTicket;
 
+    /**
+     * Obtém a lista de lugares disponíveis no estacionamento e exibe as informações de cada lugar no componente de texto.
+     *
+     * @param event O evento que gerou a chamada a este método.
+     */
     @FXML
     void getLugaresClick(ActionEvent event) {
         EstacionamentoBLL eBLL = new EstacionamentoBLL();
@@ -72,6 +77,13 @@ public class EstacionamentoGestorController {
         txtView.setText(sb.toString());
     }
 
+    /**
+     * Este método é um controlador de evento para o botão "getTodosTicketClick".
+     * Ele busca todos os bilhetes criados no sistema usando a classe EstacionamentoBLL.
+     * A informação dos bilhetes é então exibida na área de texto txtView.
+     *
+     * @param event O evento disparado pelo clique no botão "getTodosTicketClick".
+     */
     @FXML
     void getTodosTicketClick(ActionEvent event) {
         var ticketBLL = new EstacionamentoBLL();
@@ -90,6 +102,13 @@ public class EstacionamentoGestorController {
         txtView.setText(sb.toString());
     }
 
+    /**
+     * Controlador do evento de clique no botão "Voltar".
+     * Verifica se o utilizador logado é gestor ou funcionário e abre a respectiva página.
+     *
+     * @param event evento de clique no botão
+     * @throws IOException em caso de erro de entrada/saída
+     */
     @FXML
     void VoltarClick(ActionEvent event) throws IOException {
         if (UtilizadorPreferences.comparaTipoLogin()) {
@@ -111,21 +130,29 @@ public class EstacionamentoGestorController {
         }
     }
 
+    /**
+     * Método de manipulação de evento responsável por apagar um ticket.
+     * Verifica se o campo "idDeleteTxT" está vazio ou em branco. Se estiver, mostra uma mensagem de erro.
+     * Se não estiver, chama o método "DeleteTicket" na classe "EstacionamentoBLL" com o id do ticket a ser apagado.
+     * Se o ticket for apagado com sucesso, mostra uma mensagem de sucesso. Caso contrário, mostra uma mensagem de erro.
+     *
+     * @param event O evento de clique no botão "deleteTicketBtn".
+     */
     @FXML
     void deleteTicketBtnClick(ActionEvent event) {
         var ticketBLL = new EstacionamentoBLL();
-        if (idDeleteTxT.getText().isEmpty() || idDeleteTxT.getText().isBlank())  {
+        if (idDeleteTxT.getText().isEmpty() || idDeleteTxT.getText().isBlank()) {
             MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Introduza um ID!", "ERRO:");
             return;
         }
 
-        if (ticketBLL.DeleteTicket(idDeleteTxT.getText().trim())){
+        if (ticketBLL.DeleteTicket(idDeleteTxT.getText().trim())) {
             ReservaBLL rBLL = new ReservaBLL();
             rBLL.updateTicketIDNaReservaToNullQuandoApagaTicket(idDeleteTxT.getText().trim());
-            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Ticket apagado com sucesso!","Sucesso!");
+            MessageBoxes.ShowMessage(Alert.AlertType.INFORMATION, "Ticket apagado com sucesso!", "Sucesso!");
             idDeleteTxT.setText("");
         } else {
-            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ticket não encontrado!","ERRO:");
+            MessageBoxes.ShowMessage(Alert.AlertType.ERROR, "Ticket não encontrado!", "ERRO:");
         }
     }
 }
