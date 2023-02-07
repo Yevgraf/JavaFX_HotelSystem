@@ -22,7 +22,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -498,31 +497,23 @@ public class AdicionarReservaController implements Initializable {
      */
     private List<String> getEstacionamentoDisponivel(Boolean indoor) {
         try {
-            LocalDate dataInicial = DatePickerInicio.getValue();
-            LocalDate dataFinal = DatePickerFim.getValue();
+            //LocalDate dataInicial = DatePickerInicio.getValue();
+            //LocalDate dataFinal = DatePickerFim.getValue();
             List<String> list = new ArrayList<>();
             EstacionamentoBLL eBLL = new EstacionamentoBLL();
-            var ticket = eBLL.GetTicketsCriados();
+            //var ticket = eBLL.GetTicketsCriados();
             var lugares = eBLL.GetLugares();
 
-            for (int i = 0; i < ticket.Tickets.size(); i++) {
                 for (int j = 0; j < lugares.Parking.size(); j++) {
                     Parking estacionamento = lugares.Parking.get(j);
-                    TicketInfo currentParking = ticket.Tickets.get(i);
-                    LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
-                    LocalDate startDate = offSetStartDate.toLocalDate();
-                    LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
-                    LocalDate endDate = offSetEncDate.toLocalDate();
-                    if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
-                            estacionamento.Occupied == false
-                            && estacionamento.Indoor == indoor
-                            && (endDate.plusDays(1).isBefore(dataInicial)
-                            || startDate.minusDays(1).isAfter(dataFinal))) {
-                        // list.add(currentParking.ParkingSpot);
-                        list.add(currentParking.ParkingSpot);
+                  // LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
+                  // LocalDate startDate = offSetStartDate.toLocalDate();
+                  // LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
+                  // LocalDate endDate = offSetEncDate.toLocalDate();
+                    if (estacionamento.Occupied == false && estacionamento.Indoor == indoor) {
+                        list.add(estacionamento.ParkingSpot);
                     }
                 }
-            }
             return list;
         } catch (Exception e) {
             throw new RuntimeException(e);

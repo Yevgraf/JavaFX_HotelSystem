@@ -21,8 +21,6 @@ public class Cartao {
 
     @Override
     public String toString() {
-        return
-                "id:" + id ;
-
+        return "id:" + id;
     }
 }

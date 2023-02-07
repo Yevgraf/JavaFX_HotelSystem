@@ -13,19 +13,22 @@ import java.io.File;
 public class ValidaXML {
     private static final String userDirectory = System.getProperty("user.dir");
     private static final String filePath = userDirectory + "/src/main/resources/lib/HotelAgencyPT.xsd";
+
+    /**
+     * Método que valida um ficheiro XML com base num esquema XSD especificado.
+     *
+     * @param xmlFile Ficheiro XML a ser validado.
+     * @return Retorna 'true' se o ficheiro XML for válido, 'false' caso contrário. Em caso de erro, é exibida uma mensagem de erro.
+     */
     public static Boolean validarXML(File xmlFile) {
         try {
-            // Create a SchemaFactory capable of understanding WXS schemas.
             SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
 
-            // Load the schema file
             File schemaLocation = new File(filePath);
             Schema schema = factory.newSchema(schemaLocation);
 
-            // Create a Validator object, which can be used to validate an instance document.
             Validator validator = schema.newValidator();
 
-            // Validate the XML file
             StreamSource source = new StreamSource(xmlFile);
             validator.validate(source);
             return true;
