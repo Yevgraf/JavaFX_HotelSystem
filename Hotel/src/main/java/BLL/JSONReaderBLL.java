@@ -14,6 +14,14 @@ import java.io.IOException;
 
 public class JSONReaderBLL {
     //---------------------------------------------------- FORNECEDOR ----------------------------------------------------
+
+    /**
+     * Método que lê o cabeçalho de uma ordem de compra a partir de um ficheiro JSON.
+     *
+     * @param path Caminho para o ficheiro JSON
+     * @return Uma ObservableList de objetos EntradaStock
+     * @throws IOException Se ocorrer algum erro ao ler o arquivo JSON.
+     */
     public ObservableList<EntradaStock> lerHeader(String path) throws IOException {
         ObservableList<EntradaStock> fornecedores = FXCollections.observableArrayList();
 
@@ -41,6 +49,14 @@ public class JSONReaderBLL {
     }
 
     //-------------------------------------------------- ENTRADA STOCK ---------------------------------------------------
+
+    /**
+     * Método que lê o corpo de um arquivo JSON de entrada de stock.
+     *
+     * @param path Caminho para o arquivo JSON de entrada de stock.
+     * @return Uma ObservableList de objetos EntradaStock.
+     * @throws IOException Se ocorrer algum erro ao ler o arquivo JSON.
+     */
     public ObservableList<EntradaStock> lerBody(String path) throws IOException {
         ObservableList<EntradaStock> item = FXCollections.observableArrayList();
 
@@ -89,6 +105,15 @@ public class JSONReaderBLL {
     }
 
     //----------------------------------------------------- PRODUTO ------------------------------------------------------
+
+    /**
+     * Lê um arquivo JSON e retorna uma lista de objetos Produto.
+     *
+     * @param path O caminho para o arquivo JSON a ser lido.
+     * @return Uma ObservableList de objetos Produto.
+     * @throws IOException Se ocorrer algum erro ao ler o arquivo JSON.
+     */
+
     public ObservableList<Produto> lerProduto(String path) throws IOException {
         ObservableList<Produto> produtos = FXCollections.observableArrayList();
 
@@ -128,13 +153,21 @@ public class JSONReaderBLL {
 
                 Double pesoPorUnidade = (peso / unidades);
 
-                produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade,  false));
+                produtos.add(new Produto(idProduto, descricao, precoUnidade, pesoPorUnidade, false));
             }
         }
         return produtos;
     }
 
     //------------------------------------------------------- STOCK ------------------------------------------------------
+
+    /**
+     * Método para ler o arquivo JSON de Stock.
+     *
+     * @param path Caminho do arquivo JSON de Stock.
+     * @return ObservableList de objetos Stock.
+     * @throws IOException Se ocorrer algum erro ao ler o arquivo JSON.
+     */
     public ObservableList<Stock> lerStock(String path) throws IOException {
         ObservableList<Stock> stocks = FXCollections.observableArrayList();
 

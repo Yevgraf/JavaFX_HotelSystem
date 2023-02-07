@@ -2,14 +2,11 @@ package BLL;
 
 import DAL.QuartoDAL;
 import DAL.ReservaDAL;
-import Model.EstacionamentoAPI.ResponseTicket;
 import Model.EstacionamentoAPI.Ticket;
 import Model.EstacionamentoAPI.TicketInfo;
-import Model.MessageBoxes;
 import Model.Reserva;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -173,7 +170,7 @@ public class ReservaBLL {
         reservaDAL.updateTicketIDNaReservaToNullQuandoApagaTicket(ticketID);
     }
 
-    public String retornaTicketIDDeUmaReserva(String idReserva) {
+    public String retornaQRCodeDDeUmaReserva(String idReserva) {
         try {
             ReservaDAL reservaDAL = new ReservaDAL();
             EstacionamentoBLL eBLL = new EstacionamentoBLL();
@@ -183,6 +180,15 @@ public class ReservaBLL {
             Ticket ticket = eBLL.GETParkingTicket(ticketId);
 
             return ticket.ParkingQR;
+        }catch(Exception ex) {
+            throw ex;
+        }
+    }
+
+    public String retornaTicketIDDeUmaReserva(String idReserva) {
+        try {
+            ReservaDAL reservaDAL = new ReservaDAL();
+            return reservaDAL.retornaTicketIDDeUmaReserva(idReserva);
         }catch(Exception ex) {
             throw ex;
         }

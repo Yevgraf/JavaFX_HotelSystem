@@ -1,10 +1,8 @@
 package Controller;
 
-import BLL.CheckInBLL;
-import BLL.CheckoutBLL;
-import BLL.ReservaBLL;
-import BLL.UtilizadorPreferences;
+import BLL.*;
 import Model.Checkout;
+import Model.EstacionamentoAPI.Ticket;
 import Model.MessageBoxes;
 import Model.Pagamento;
 import Model.Reserva;
@@ -148,10 +146,17 @@ public class CheckInController implements Initializable {
 
         CheckoutBLL checkoutBll = new CheckoutBLL();
         try {
+           // ReservaBLL rBLL = new ReservaBLL();
+           // EstacionamentoBLL eBLL = new EstacionamentoBLL();
+
             checkoutBll.updateReservationStateCheckout(selectedReservation.getId());
 
             checkoutBll.voltaNaoConsumiveisAoStock(selectedReservation.getId());
-
+           //String ticketIDDaReserva = rBLL.retornaTicketIDDeUmaReserva(selectedReservation.getId().toString());
+           //Ticket ticket = eBLL.GETParkingTicket(selectedReservation.getId().toString());
+           //var ticketBody = ticket.TicketInfo.get(0);
+           //ticketBody.Active = false;
+            // eBLL.PUTCreateParkingReservation(ticketBody, ticketIDDaReserva);
             ReservaBLL reservaBLL = new ReservaBLL();
             double totalCost = reservaBLL.getTotalReserva(selectedReservation);
 
@@ -205,10 +210,9 @@ public class CheckInController implements Initializable {
      */
     private void performCheckIn(Reserva reservation) {
         CheckInBLL checkInBll = new CheckInBLL();
-        LocalDate today = LocalDate.now();
+        LocalDate today = LocalDate.parse(LocalDate.now().toString());
         LocalDate reservationStart = LocalDate.parse(reservation.getDataInicio().toString());
-        LocalDate reservationEnd = LocalDate.parse(reservation.getDataFim().toString());
-        if (today.isAfter(reservationStart) && today.isBefore(reservationEnd)) {
+        if (today.isEqual(reservationStart)) {
             try {
                 checkInBll.checkIn(reservation.getId());
                 double updatedTotal = ReservaBLL.getTotalReserva(reservation);

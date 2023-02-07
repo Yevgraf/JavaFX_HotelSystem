@@ -76,10 +76,9 @@ public class CheckoutDAL {
     }
 
     /**
-     * +     * A função getPagamentos serve para obter tipos de pagamentos
-     * +     * @return devolve a lista de toodos os pagamentos
-     * +     * @throws SQLException mostra a informacao do erro de SQL
-     * +
+     * A função getPagamentos serve para obter tipos de pagamentos
+     * @return devolve a lista de todos os pagamentos
+     * @throws SQLException mostra a informacao do erro de SQL
      */
     public ObservableList<Pagamento> getPagamentos() throws SQLException {
         ObservableList<Pagamento> pagamentos = FXCollections.observableArrayList();

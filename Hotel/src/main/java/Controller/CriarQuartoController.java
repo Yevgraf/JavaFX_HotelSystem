@@ -124,9 +124,9 @@ public class CriarQuartoController implements Initializable {
                             null,
                             roomType,
                             floor,
-                            Double.parseDouble(txt_preco.getText()),
+                            Double.parseDouble(txt_preco.getText().trim()),
                             false,
-                            new Cartao(Integer.parseInt(txt_numcartao.getText())));
+                            new Cartao(Integer.parseInt(txt_numcartao.getText().trim())));
 
                     quartoBLL.addQuarto(quarto);
                     initTable();
