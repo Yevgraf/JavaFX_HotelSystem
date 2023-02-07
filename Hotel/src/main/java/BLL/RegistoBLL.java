@@ -41,12 +41,24 @@ public class RegistoBLL {
         dal.addRegisto(registo);
     }
 
-
+    /**
+     * Delete um novo registo.
+     *
+     * @param id  O ID do cartão associado ao registo.
+     * @throws SQLException Se houver algum erro ao acessar o banco de dados.
+     */
     public void deleteRegisto(int id) throws SQLException {
         RegistoDAL dal = new RegistoDAL();
         dal.deleteRegisto(id);
     }
 
+    /**
+     * Retorna o ID do cartão pelo ID do cliente.
+     *
+     * @param clientId  O ID do cliente.
+     * @return O ID do cartão
+     * @throws SQLException Se houver algum erro ao acessar o banco de dados.
+     */
     public static int getCardIdByClientId(int clientId) throws SQLException {
         return RegistoDAL.getCardIdByClientId(clientId);
     }
