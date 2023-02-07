@@ -116,6 +116,13 @@ public class AdicionarReservaController implements Initializable {
 
     public static Boolean verifica = false;
 
+    /**
+     * Método de controlo do botão "Adicionar Reserva". Adiciona uma nova reserva ao sistema.
+     *
+     * @param event evento que provocou a chamada ao método
+     * @throws SQLException exceção lançada em caso de erro na interação com a base de dados
+     * @throws IOException  exceção lançada em caso de erro de input/output
+     */
     @FXML
     void clickAddReservaBrn(ActionEvent event) throws SQLException, IOException {
         Quarto selectedRoom = cmbIDQuarto.getValue();
@@ -142,6 +149,13 @@ public class AdicionarReservaController implements Initializable {
         }
     }
 
+    /**
+     * Método para lidar com o evento de clique no botão de Voltar na janela de adição de reservas.
+     * Carrega a janela de gestão de reservas e esconde a janela atual.
+     *
+     * @param event O evento de clique no botão.
+     * @throws IOException Se houver um problema ao carregar a janela de gestão de reservas.
+     */
     @FXML
     void clickVoltarBtn(ActionEvent event) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoReservas.fxml"));
@@ -153,6 +167,12 @@ public class AdicionarReservaController implements Initializable {
         stage.show();
     }
 
+    /**
+     * Adiciona uma reserva sem estacionamento.
+     *
+     * @throws SQLException Exceção lançada em caso de erro ao acessar o banco de dados
+     * @throws IOException  Exceção lançada em caso de erro ao acessar recursos de I/O
+     */
     void AdicionarReservaSemEstacionamento() throws SQLException, IOException {
         ReservaBLL reservaBLL = new ReservaBLL();
         Reserva reserva = new Reserva(null, cmbClientes.getValue().getId(), cmbIDQuarto.getValue().getId(),
@@ -168,7 +188,12 @@ public class AdicionarReservaController implements Initializable {
         addServicoReserva();
     }
 
-
+    /**
+     * Método que adiciona uma reserva e estacionamento ao mesmo tempo.
+     *
+     * @throws SQLException
+     * @throws IOException
+     */
     @FXML
     void AdicionarReservaEEstacionamento() throws SQLException, IOException {
         ReservaBLL reservaBLL = new ReservaBLL();
@@ -194,6 +219,11 @@ public class AdicionarReservaController implements Initializable {
         addServicoReserva();
     }
 
+    /**
+     * Adiciona os serviços a uma reserva existente.
+     *
+     * @throws IOException
+     */
     private void addServicoReserva() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("ServicoReserva.fxml"));
         Stage stage = new Stage();
@@ -205,11 +235,22 @@ public class AdicionarReservaController implements Initializable {
         verifica = true;
     }
 
+    /**
+     * Inicializa as combobox da interface.
+     * Adiciona todos os quartos retornados pela função getAllQuartos() do QuartoDAL à combobox cmbIDQuarto.
+     * Adiciona todos os clientes retornados pela função getAllClientes() do UtilizadorBLL à combobox cmbClientes.
+     */
     private void initCombos() {
         cmbIDQuarto.getItems().addAll(QuartoDAL.getAllQuartos());
         cmbClientes.getItems().addAll(UtilizadorBLL.getAllClientes().stream().collect(Collectors.toList()));
     }
 
+    /**
+     * Método que redireciona para a janela de gestão de utilizadores.
+     *
+     * @param actionEvent evento de ação ocorrido no botão
+     * @throws IOException se ocorrer algum erro de entrada/saída durante o carregamento da janela
+     */
     public void btnRedictCriarCliente(ActionEvent actionEvent) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Main.class.getResource("GestaoUtilizadores.fxml"));
         Stage stage = new Stage();
@@ -226,6 +267,11 @@ public class AdicionarReservaController implements Initializable {
         resetDatePickers();
     }
 
+    /**
+     * Método para desativar os dias ocupados no picker de data inicial.
+     *
+     * @param idQuarto Id do quarto que será verificado
+     */
     private void desativarDiasOcupadosDatePickerInicio(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
         List<LocalDate> listaDatasIniciais = rBLL.getDataInicial(idQuarto);
@@ -251,6 +297,11 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Método para desativar as datas ocupadas em um date picker.
+     *
+     * @param dataInicio a data inicial selecionada
+     */
     private void desativarDiasOcupadosDatePickerFim(LocalDate dataInicio) {
         int idQuarto = cmbIDQuarto.getValue().getId();
         ReservaBLL rBLL = new ReservaBLL();
@@ -268,6 +319,11 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Desativa as datas ocupadas no date picker de fim de reserva quando não há nenhuma data de fim disponível.
+     *
+     * @param dataInicio data de inicio da reserva
+     */
     private void desativarDiasOcupadosDatePickerFimCasoNull(LocalDate dataInicio) {
         DatePickerFim.setDayCellFactory(picker -> new DateCell() {
             @Override
@@ -280,6 +336,11 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Método que adiciona um listener ao ComboBox da reserva para verificar se já existe uma reserva para o quarto selecionado.
+     * Caso exista, o método {@link #desativarDiasOcupadosDatePickerInicio(int)} é invocado para desativar os dias ocupados na escolha da data de início.
+     * Caso contrário, o método {@link #listenDatePickerInicio(int)} é invocado para permitir a escolha da data de início.
+     */
     private void listenComboboxReserva() {
         ReservaBLL rBLL = new ReservaBLL();
         cmbIDQuarto.setOnAction(event -> {
@@ -293,6 +354,13 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Adiciona um listener ao DatePickerInicio para desabilitar os dias ocupados de acordo com a escolha do quarto.
+     * Se houver uma reserva anterior para o quarto escolhido, os dias ocupados serão desabilitados no DatePickerFim.
+     * Caso contrário, todas as datas antes da data escolhida no DatePickerInicio serão desabilitadas no DatePickerFim.
+     *
+     * @param idQuarto ID do quarto escolhido.
+     */
     private void listenDatePickerInicio(int idQuarto) {
         ReservaBLL rBLL = new ReservaBLL();
         DatePickerInicio.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -305,6 +373,10 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Método para resetar os valores dos componentes de seleção de data (DatePicker) de Início e Fim.
+     * Define a data para nula e torna todas as datas disponíveis para seleção.
+     */
     private void resetDatePickers() {
         DatePickerInicio.setValue(null);
         DatePickerInicio.setDayCellFactory(picker -> new DateCell() {
@@ -322,6 +394,12 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Método para tratar o evento de clique no DatePickerFim.
+     * Verifica se a data inicial já foi selecionada. Se não foi, exibe uma mensagem de erro ao usuário.
+     *
+     * @param event Evento de clique no DatePickerFim
+     */
     @FXML
     void clickDateFim(MouseEvent event) {
         if (DatePickerInicio.getValue() == null) {
@@ -334,6 +412,11 @@ public class AdicionarReservaController implements Initializable {
         resetDatePickers();
     }
 
+    /**
+     * Verifica se as datas selecionadas nos DatePickers não são nulas.
+     *
+     * @return retorna "false" se as datas são nulas, e "true" caso contrário.
+     */
     private Boolean verificaSeDatasNaoSaoNull() {
         if (DatePickerInicio.getValue() == null || DatePickerFim.getValue() == null) {
             return false;
@@ -342,6 +425,11 @@ public class AdicionarReservaController implements Initializable {
         }
     }
 
+    /**
+     * Método que adiciona um listener ao checkbox para habilitar ou desabilitar a seleção de estacionamento.
+     * Verifica se as datas inicial e final foram selecionadas antes de permitir a seleção de estacionamento.
+     * Se todos os estacionamentos estiverem ocupados, exibe uma mensagem de erro.
+     */
     private void listnerCheckBox() {
         check.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -388,6 +476,12 @@ public class AdicionarReservaController implements Initializable {
         });
     }
 
+    /**
+     * Método que inicializa os componentes da interface gráfica.
+     *
+     * @param location  URL
+     * @param resources ResourceBundle
+     */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initCombos();
@@ -396,9 +490,11 @@ public class AdicionarReservaController implements Initializable {
         popularCmbEstacionamentoConsoanteOpcaoRadioButton();
     }
 
-    /*
-     Mostra todos os desocupados entre as datas escolhidas
-     dos DatePaickers (não incluindo os proprios dias)
+
+    /**
+     * Método que retorna uma lista de estacionamentos disponíveis.
+     *
+     * @return lista de estacionamentos disponíveis
      */
     private List<String> getEstacionamentoDisponivel(Boolean indoor) {
         try {
@@ -409,22 +505,23 @@ public class AdicionarReservaController implements Initializable {
             var ticket = eBLL.GetTicketsCriados();
             var lugares = eBLL.GetLugares();
 
-            for (int i = 0; i < ticket.Tickets.size(); i++) {for (int j = 0; j < lugares.Parking.size(); j++) {
-                Parking estacionamento = lugares.Parking.get(j);
-                TicketInfo currentParking = ticket.Tickets.get(i);
-                LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
-                LocalDate startDate = offSetStartDate.toLocalDate();
-                LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
-                LocalDate endDate = offSetEncDate.toLocalDate();
-                if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
-                        estacionamento.Occupied == false
-                        && estacionamento.Indoor == indoor
-                        && (endDate.plusDays(1).isBefore(dataInicial)
-                        || startDate.minusDays(1).isAfter(dataFinal))) {
-                    // list.add(currentParking.ParkingSpot);
-                    list.add(currentParking.ParkingSpot);
+            for (int i = 0; i < ticket.Tickets.size(); i++) {
+                for (int j = 0; j < lugares.Parking.size(); j++) {
+                    Parking estacionamento = lugares.Parking.get(j);
+                    TicketInfo currentParking = ticket.Tickets.get(i);
+                    LocalDateTime offSetStartDate = LocalDateTime.parse(currentParking.StartDate);
+                    LocalDate startDate = offSetStartDate.toLocalDate();
+                    LocalDateTime offSetEncDate = LocalDateTime.parse(currentParking.StartDate);
+                    LocalDate endDate = offSetEncDate.toLocalDate();
+                    if (estacionamento.ParkingSpot == currentParking.ParkingSpot &&
+                            estacionamento.Occupied == false
+                            && estacionamento.Indoor == indoor
+                            && (endDate.plusDays(1).isBefore(dataInicial)
+                            || startDate.minusDays(1).isAfter(dataFinal))) {
+                        // list.add(currentParking.ParkingSpot);
+                        list.add(currentParking.ParkingSpot);
+                    }
                 }
-            }
             }
             return list;
         } catch (Exception e) {
@@ -432,6 +529,11 @@ public class AdicionarReservaController implements Initializable {
         }
     }
 
+    /**
+     * Este método popular o ComboBox de estacionamento com base na opção selecionada no RadioButton interior ou exterior.
+     * Caso o RadioButton interior seja selecionado, o ComboBox será populado com lugares de estacionamento interno disponíveis.
+     * Caso o RadioButton exterior seja selecionado, o ComboBox será populado com lugares de estacionamento externo disponíveis.
+     */
     private void popularCmbEstacionamentoConsoanteOpcaoRadioButton() {
         interior.setOnAction(event -> {
             if (interior.isSelected()) {
